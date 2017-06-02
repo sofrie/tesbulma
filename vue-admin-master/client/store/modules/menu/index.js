@@ -16,7 +16,7 @@ const state = {
       name: 'Dashboard',
       path: '/dashboard',
       meta: {
-        icon: 'fa-tachometer',
+        icon: 'fa-table',
         link: 'dashboard/index.vue'
       },
       component: lazyLoading('dashboard', true)

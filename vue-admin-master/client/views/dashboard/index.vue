@@ -1,45 +1,53 @@
 <template>
 <div>
   <div class="tile is-parent">
+
   <form>
 	Month :  &nbsp
+    <span class="select">
 	<select>
 	  <option value="januari">Januari</option>
 	  <option value="februari">Februari</option>
 	  <option value="maret">Maret</option>
 	  <option value="april">April</option>
 	</select>
-	&emsp;
+    </span>	&emsp;
 	&emsp;
 	Year :  &nbsp
+    <span class="select">
 	<select>
 	  <option value="2016">2016</option>
 	  <option value="2017">2017</option>
 	</select>
+    </span>
 	&emsp;
 	&emsp;
 	Status :  &nbsp
+    <span class="select">
 	<select>
 	  <option value="open">Open</option>
 	  <option value="submit">Submit</option>
 	  <option value="approved">Approved</option>
-	</select>	
+	</select>
+    </span>
 	&emsp;
 	&emsp;
 	Logistic :  &nbsp
+    <span class="select">
 	<select>
 	  <option value="alogistic">A logistic</option>
 	  <option value="blogistic">B logistic</option>
 	  <option value="clogistic">C logistic</option>
 	  <option value="dlogistic">D logistic</option>
-	</select>            
+	</select>
+    </span>
 	&emsp;
 	&emsp;
-	<button class="button is-info is-small">Search</button>
+	<button class="button is-info ">Search</button>
 	</form>
 	</div>
-	
-	
+
+
     <div class="tile is-ancestor">
       <div class="tile is-parent">
         <article class="tile is-child box">
@@ -55,7 +63,7 @@
 				  <th>Status</th>
 				  <th>Last Modified</th>
                 </tr>
-              </thead>              
+              </thead>
               <tbody>
                 <tr>
                   <td>
@@ -63,7 +71,7 @@
                   </td>
                   <td>
                     2017
-                  </td>                  
+                  </td>
                   <td >
                     Rp. x.xxx.xxx
                   </td>

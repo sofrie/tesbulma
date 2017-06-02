@@ -1,37 +1,35 @@
 <template>
   <div>
     <div class="tile is-parent">
+      <form>
       Month :  &nbsp
+        <span class="select">
       <select>
         <option value="januari">Januari</option>
         <option value="februari">Februari</option>
         <option value="maret">Maret</option>
         <option value="april">April</option>
       </select>
-      &emsp;
+        </span>      &emsp;
       &emsp;
       Year :  &nbsp
+        <span class="select">
       <select>
         <option value="2016">2016</option>
         <option value="2017">2017</option>
       </select>
+        </span>
       &emsp;
       &emsp;
       Logistic :  &nbsp
+        <span class="select">
       <select>
         <option value="alogistic">A logistic</option>
         <option value="blogistic">B logistic</option>
         <option value="clogistic">C logistic</option>
         <option value="dlogistic">D logistic</option>
       </select>
-      &emsp;
-      &emsp;
-      Year :  &nbsp
-      <select>
-        <option value="2016">2016</option>
-        <option value="2017">2017</option>
-      </select>
-
+        </span>
       &emsp;
       &emsp;<button class="button is-info"> Search</button>
       &emsp;
@@ -93,8 +91,11 @@
                 <tr>
                 </tr>
                 <tr>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
                   <td colspan="2">
-                    <button class="button is-info is-small">Submit Upload</button>
+                    <button class="button is-info ">Submit Upload</button>
                   </td>
                 </tr>
               </table>
@@ -104,7 +105,7 @@
         </div>
       </div>
       <div id="fade2" class="black_overlay"></div>
-
+      </form>
     </div>
     <div class="block">
       <article class="tile is-child box">
@@ -515,8 +516,8 @@
     display: none;
     position: fixed;
     left: 30%;
-    width: 30%;
-    height: 50%;
+    width: 25%;
+    height: 60%;
     padding: 1px;
     border: 2px solid black;
     background-color: white;

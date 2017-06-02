@@ -4,7 +4,7 @@ export default {
   name: 'AWB',
   path: '/charts',
   meta: {
-    icon: 'fa-bar-chart-o',
+    icon: 'fa-file',
     expanded: false,
     link: 'charts/index.vue'
   },

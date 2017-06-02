@@ -2,6 +2,7 @@
   <div>
     <div class="tile is-parent">
       <div class="control is-horizontal">
+        <form>
 <table >
   <tr>
     <td>
@@ -64,6 +65,7 @@
 
   </tr>
 </table>
+        </form>
       </div>
 
 

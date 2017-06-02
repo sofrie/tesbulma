@@ -4,7 +4,7 @@ export default {
   name: 'Invoice',
   path: '/invoice',
   meta: {
-    icon: 'fa-bar-chart-o',
+    icon: 'fa-file-excel-o',
     expanded: false,
     link: 'invoice/index.vue'
   },
