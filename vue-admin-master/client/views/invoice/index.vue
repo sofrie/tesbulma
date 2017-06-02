@@ -109,27 +109,21 @@
     </div>
     <div class="block">
       <article class="tile is-child box">
-        <h1 class="title">Summary</h1>
-
-        <p class="control">
-          Month : January
-        </p>
-        <p class="control">
-          Year 2017
-        <p class="control">
-          Logistic : A logistic
-        <p class="control">
-          Status : Open
-        </p>
-        <p class="control">
-          OK : 29527 data
-        </p>
-        <p class="control">
-          Problem Exists : 219 data
-        </p>
-        <p class="control">
-          Jumlah Tagihan : Rp.xx.xxx.xxx
-        </p>
+        <h2 class="title">Summary - Invoice A Logistic / Januari / 2017</h2>
+        <div class="tile is-parent is-8">
+        <table >
+          <tr>
+            <td >
+              <b >OK :298527 data</b></td>
+            <td>
+              <b>Problem Exiist : 219 data</b></td>
+            <td>
+              <b>Status:Open</b></td>
+            <td>
+              <b>Jumlah Tagihan:Rp.xx.xxx</b></td>
+          </tr>
+        </table>
+        </div>
 
         <button class="button is-info">View Data</button>
         <button class="button is-info">Download</button>
@@ -359,7 +353,7 @@
                   Done
                 </td>
                 <td>
-                  3 Februari 2017 09:05:10
+                  03 Februari 2017 09:05:10
                 </td>
               </tr>
               <tr>
@@ -385,7 +379,7 @@
                   Done
                 </td>
                 <td>
-                  9 Februari 2017 11:05:10
+                   09 Februari 2017 11:05:10
                 </td>
               </tr>
               <tr>
@@ -411,7 +405,7 @@
                   Done
                 </td>
                 <td>
-                  27 Februari 2017 10:05:10
+                  27 Februari 2017 10:15:11
                 </td>
               </tr>
               <tr>
@@ -463,7 +457,7 @@
                   Uploaded
                 </td>
                 <td>
-                  3 Februari 2017 15:05:10
+                  03 Februari 2017 15:05:10
                 </td>
               </tr>
               </tbody>
