@@ -32,8 +32,8 @@ const routes = [
         path: 'invoice',
         alias: '',
         component: InvoiceView,
-        name: 'Invoice',
-        meta: {description: 'Overview of environment'}
+        name: 'Invoice'
+        // meta: {description: 'Overview of environment'}
       }, {
         path: 'tables',
         component: TablesView,

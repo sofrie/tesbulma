@@ -2,18 +2,23 @@
   <div :class="['wrapper', classes]">
     <header class="main-header">
 	<span class="logo-mini">
-		<a href="/"><img src="/static/img/copilot-logo-white.svg" alt="Logo" class="img-responsive center-block logo"></a>
+		<a href="javascript:;" class="sidebar-toggle" data-toggle="offcanvas" role="button"><img src="/static/img/copilot-logo-white.svg" alt="Logo" class=" logo">
+    </a>
 	</span>
+
       <!-- Header Navbar -->
       <nav class="navbar navbar-static-top" role="navigation">
+
         <!-- Sidebar toggle button-->
-        <a href="javascript:;" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-          <span class="sr-only">Toggle navigation</span>
-        </a>
+        <!--<a href="javascript:;" class="sidebar-toggle" data-toggle="offcanvas" role="button">-->
+          <!--<span class="sr-only">Toggle navigation</span>-->
+        <!--</a>-->
         <!-- Navbar Right Menu -->
+
         <div class="navbar-custom-menu">
           <ul class="nav navbar-nav">
             <!-- Messages-->
+
             <li class="dropdown messages-menu">
               <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-envelope-o"></i>
@@ -47,7 +52,7 @@
               </ul>
             </li>
             <!-- /.messages-menu -->
-  
+
             <!-- Notifications Menu -->
             <li class="dropdown notifications-menu">
               <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
@@ -73,7 +78,7 @@
                 </li>
               </ul>
             </li>
-  
+
             <!-- Tasks Menu -->
             <li class="dropdown tasks-menu">
               <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
@@ -110,7 +115,7 @@
                 </li>
               </ul>
             </li>
-  
+
             <!-- User Account Menu -->
             <li class="dropdown user user-menu">
               <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
@@ -120,13 +125,14 @@
                 <span class="hidden-xs">{{ demo.displayName }}</span>
               </a>
             </li>
+
           </ul>
         </div>
       </nav>
     </header>
     <!-- Left side column. contains the logo and sidebar -->
     <sidebar :display-name="demo.displayName" :picture-url="demo.avatar" />
-  
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
@@ -143,11 +149,11 @@
           <li class="active">{{$route.name.toUpperCase()}}</li>
         </ol>
       </section>
-  
+
       <router-view></router-view>
     </div>
     <!-- /.content-wrapper -->
-  
+
     <!-- Main Footer -->
     <footer class="main-footer">
       <strong>Copyright &copy; {{year}}

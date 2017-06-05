@@ -1,6 +1,6 @@
 <template>
   <ul class="sidebar-menu">
-    <li class="header">TOOLS</li>
+    <!--<li class="header">TOOLS</li>-->
     <li class="active pageLink" v-on:click="toggleMenu">
       <router-link to="/"><i class="fa fa-desktop"></i>
         <span class="page">Dashboard</span>
@@ -17,7 +17,7 @@
       </router-link>
     </li>
 
-    <li class="header">ME</li>
+    <!--<li class="header">ME</li>-->
     <li class="pageLink" v-on:click="toggleMenu">
       <router-link to="/tasks">
         <i class="fa fa-tasks"></i>
@@ -57,7 +57,7 @@
       </ul>
     </li>
 
-    <li class="header">LOGS</li>
+    <!--<li class="header">LOGS</li>-->
     <li class="pageLink" v-on:click="toggleMenu">
       <router-link to="/access"><i class="fa fa-book"></i>
         <span class="page">Access</span>
@@ -75,7 +75,7 @@
       </router-link>
     </li>
 
-    <li class="header">PAGES</li>
+    <!--<li class="header">PAGES</li>-->
     <li class="pageLink" v-on:click="toggleMenu">
       <router-link to="/login">
         <i class="fa fa-circle-o text-yellow"></i>
