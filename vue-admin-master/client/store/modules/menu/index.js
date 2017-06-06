@@ -1,7 +1,7 @@
 import * as types from '../../mutation-types'
 import lazyLoading from './lazyLoading'
 import uifeatures from './uifeatures'
-import charts from './charts'
+import awb from './awb'
 import components from './components'
 import tables from './tables'
 import invoices from './invoices'
@@ -22,7 +22,7 @@ const state = {
       component: lazyLoading('dashboard', true)
     },
     invoices,
-    charts,
+    awb,
     uifeatures,
     components,
     tables
