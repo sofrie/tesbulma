@@ -1,6 +1,10 @@
 <template>
   <ul class="sidebar-menu">
+<<<<<<< HEAD
    <!--  <li class="header">TOOLS</li> -->
+=======
+    <!--<li class="header">TOOLS</li>-->
+>>>>>>> e92dc4a1518246faa5ea12c7b94eeda4f9930579
     <li class="active pageLink" v-on:click="toggleMenu">
       <router-link to="/"><i class="fa fa-desktop"></i>
         <span class="page">Dashboard</span>
@@ -17,7 +21,11 @@
       </router-link>
     </li>
 
+<<<<<<< HEAD
    <!--  <li class="header">ME</li> -->
+=======
+    <!--<li class="header">ME</li>-->
+>>>>>>> e92dc4a1518246faa5ea12c7b94eeda4f9930579
     <li class="pageLink" v-on:click="toggleMenu">
       <router-link to="/tasks">
         <i class="fa fa-tasks"></i>
@@ -57,7 +65,11 @@
       </ul>
     </li>
 
+<<<<<<< HEAD
    <!--  <li class="header">LOGS</li> -->
+=======
+    <!--<li class="header">LOGS</li>-->
+>>>>>>> e92dc4a1518246faa5ea12c7b94eeda4f9930579
     <li class="pageLink" v-on:click="toggleMenu">
       <router-link to="/access"><i class="fa fa-book"></i>
         <span class="page">Access</span>
@@ -75,7 +87,11 @@
       </router-link>
     </li>
 
+<<<<<<< HEAD
    <!--  <li class="header">PAGES</li> -->
+=======
+    <!--<li class="header">PAGES</li>-->
+>>>>>>> e92dc4a1518246faa5ea12c7b94eeda4f9930579
     <li class="pageLink" v-on:click="toggleMenu">
       <router-link to="/login">
         <i class="fa fa-circle-o text-yellow"></i>

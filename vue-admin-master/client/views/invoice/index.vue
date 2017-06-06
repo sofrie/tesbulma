@@ -33,8 +33,7 @@
       &emsp;
       &emsp;<button class="button is-info"> Search</button>
       &emsp;
-      <button class="button is-info"
-              onclick="document.getElementById('light2').style.display='block';document.getElementById('fade2').style.display='block'">
+      <button class="button is-info" @click="openModalCard()">
         Upload
       </button>
       <div id="light2" class="white_content">
@@ -129,185 +128,7 @@
         <button class="button is-info">Download</button>
         <button class="button is-info pull-right one">Approve</button>
         <button class="button is-info pull-right">Submit</button>
-        <!--<button class="button is-info" onclick="document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">	-->
-        <!--View Data-->
-        <!--</button>-->
-        <!--<div id="light" class="white_content2">-->
-        <!--<p class="control has-addons has-addons-right">-->
-        <!--<a onclick="document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">X &nbsp;</a>-->
-        <!--</p>-->
-        <!--<div class="tile is-parent">-->
-        <!--<article class="tile is-child box " >-->
 
-        <!--<div class="block ">-->
-        <!--<h4 class="title">Data History</h4>-->
-        <!--<div class="table-responsive">-->
-        <!--<table class="table is-bordered is-striped is-narrow">-->
-        <!--<thead>-->
-        <!--<tr>-->
-        <!--<th>Month</th>-->
-        <!--<th>Year</th>-->
-        <!--<th>OK</th>-->
-        <!--<th>Problem Exists</th>-->
-        <!--<th>Jumlah Tagihan</th>-->
-        <!--<th>Logistic</th>-->
-        <!--<th>Status</th>-->
-        <!--<th>Last Modified</th>-->
-        <!--</tr>-->
-        <!--</thead>-->
-        <!--<tbody>-->
-        <!--<tr>-->
-        <!--<td>-->
-        <!--Januari-->
-        <!--</td>-->
-        <!--<td>-->
-        <!--2017-->
-        <!--</td>-->
-        <!--<td>-->
-        <!--297227-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--30000-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--Rp. x.xxx.xxx-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--A-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--Done-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--3 Februari 2017 09:05:10-->
-        <!--</td>-->
-        <!--</tr>-->
-        <!--<tr>-->
-        <!--<td>-->
-        <!--Januari-->
-        <!--</td>-->
-        <!--<td>-->
-        <!--2017-->
-        <!--</td>-->
-        <!--<td>-->
-        <!--300-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--10-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--Rp. x.xxx.xxx-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--A-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--Done-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--9 Februari 2017 11:05:10-->
-        <!--</td>-->
-        <!--</tr>-->
-        <!--<tr>-->
-        <!--<td>-->
-        <!--Januari-->
-        <!--</td>-->
-        <!--<td>-->
-        <!--2017-->
-        <!--</td>-->
-        <!--<td>-->
-        <!--1000-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--141-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--Rp. x.xxx.xxx-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--A-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--Done-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--27 Februari 2017 10:05:10-->
-        <!--</td>-->
-        <!--</tr>-->
-        <!--<tr>-->
-        <!--<td>-->
-        <!--Januari-->
-        <!--</td>-->
-        <!--<td>-->
-        <!--2017-->
-        <!--</td>-->
-        <!--<td>-->
-        <!--0-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--0-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--Rp. x.xxx.xxx-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--A-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--Done-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--28 Februari 2017 15:05:10-->
-        <!--</td>-->
-        <!--</tr>-->
-        <!--<tr>-->
-        <!--<td>-->
-        <!--Januari-->
-        <!--</td>-->
-        <!--<td>-->
-        <!--2017-->
-        <!--</td>-->
-        <!--<td>-->
-        <!--0-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--0-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--Rp. x.xxx.xxx-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--A-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--Done-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--3 Februari 2017 15:05:10-->
-        <!--</td>-->
-        <!--</tr>-->
-        <!--<tr>-->
-        <!--<td colspan="3">-->
-        <!--111111-->
-        <!--</td>-->
-        <!--<td >-->
-        <!--4000-->
-        <!--</td>-->
-        <!--<td colspan="4">-->
-        <!--Rp. x.xxx.xxx-->
-        <!--</td>-->
-        <!--</tr>-->
-        <!--</tbody>-->
-        <!--</table>-->
-        <!--</div>-->
-        <!--</div>-->
-
-        <!--</article>-->
-        <!--</div>-->
-        <!--<div id="fade" class="black_overlay2"></div>-->
-
-
-        <!--</div>-->
       </article>
     </div>
 
@@ -471,10 +292,49 @@
 <script>
   import {Collapse, Item as CollapseItem} from 'vue-bulma-collapse'
 
+  import Vue from 'vue'
+  import UploadModal from './modals/UploadModal'
+  import Modal from './modals/Modal'
+
+  const UploadModalComponent = Vue.extend(UploadModal)
+
+  const openCardModal = (propsData = {
+    visible: true
+  }) => {
+    return new UploadModalComponent({
+      el: document.createElement('div'),
+      propsData
+    })
+  }
+
   export default {
     components: {
+      Modal,
       Collapse,
       CollapseItem
+    },
+
+    data () {
+      return {
+        showModal: true,
+        cardModal: null,
+        imageModal: null
+      }
+    },
+
+    methods: {
+      openModalBasic () {
+        this.showModal = true
+      },
+
+      closeModalBasic () {
+        this.showModal = false
+      },
+
+      openModalCard () {
+        const cardModal = this.AWBdetailModal || (this.AWBdetailModal = openCardModal({title: 'Upload Invoice', url: this.$store.state.pkg.homepage}))
+        cardModal.$children[0].active()
+      }
     }
   }
 </script>
