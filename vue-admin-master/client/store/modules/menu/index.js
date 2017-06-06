@@ -23,6 +23,24 @@ const state = {
     },
     invoices,
     awb,
+    {
+      name: 'Logistic',
+      path: '/logistic',
+      meta: {
+        icon: 'fa-table',
+        link: 'logistic/index.vue'
+      },
+      component: lazyLoading('logistic', true)
+    },
+    {
+      name: 'Setting',
+      path: '/setting',
+      meta: {
+        icon: 'fa-table',
+        link: 'setting/index.vue'
+      },
+      component: lazyLoading('setting', true)
+    },
     uifeatures,
     components,
     tables
