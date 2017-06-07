@@ -1,7 +1,7 @@
 import * as types from '../../mutation-types'
 import lazyLoading from './lazyLoading'
 import uifeatures from './uifeatures'
-import charts from './charts'
+import awb from './awb'
 import components from './components'
 import tables from './tables'
 import invoices from './invoices'
@@ -22,7 +22,25 @@ const state = {
       component: lazyLoading('dashboard', true)
     },
     invoices,
-    charts,
+    awb,
+    {
+      name: 'Logistic',
+      path: '/logistic',
+      meta: {
+        icon: 'fa-table',
+        link: 'logistic/index.vue'
+      },
+      component: lazyLoading('logistic', true)
+    },
+    {
+      name: 'Setting',
+      path: '/setting',
+      meta: {
+        icon: 'fa-table',
+        link: 'setting/index.vue'
+      },
+      component: lazyLoading('setting', true)
+    },
     uifeatures,
     components,
     tables
