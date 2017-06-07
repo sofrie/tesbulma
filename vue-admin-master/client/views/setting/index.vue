@@ -8,49 +8,115 @@
 
           <div class="columns">
             <div class="column">
-              <div class="control">
-                <label class="label">Credit card number</label>
-                <cleave class="input" placeholder="Enter credit card number" :options="{ creditCard: true }"></cleave>
-              </div>
-              <div class="control">
-                <label class="label">Phone number</label>
-                <cleave class="input" type="tel" placeholder="Enter phone number" :options="{ phone: true, phoneRegionCode: 'cn' }"></cleave>
-              </div>
-              <div class="control">
-                <label class="label">Numeral</label>
-                <cleave class="input" placeholder="Enter numeral" :options="{ numeral: true, numeralThousandsGroupStyle: 'thousand' }"></cleave>
-              </div>
+            <table>
+              <tr>
+              <td colspan="3"><label class="label">Total Shipping</label></td>
+              </tr>
+              <tr>
+              <td><label>Tolerance Persentage</label></td>
+              <td><input class="input" type="text" placeholder="AWB"></td>
+              </tr>
+              <tr>
+              &nbsp;
+              </tr>
+              <tr>
+              <td><label>Tolerance Amount</label></td>
+              <td><input class="input" type="text" placeholder="AWB"></td>
+              </tr>
+            </table>
+            <div>&nbsp</div>
+              <table>
+              <tr>
+              <td colspan="3"><label class="label">Weight</label></td>
+              </tr>
+              <tr>
+              <td><label>Tolerance Persentage</label></td>
+              <td><input class="input" type="text" placeholder="AWB"></td>
+              </tr>
+              <tr>
+              &nbsp;
+              </tr>
+              <tr>
+              <td><label>Tolerance Amount</label></td>
+              <td><input class="input" type="text" placeholder="AWB"></td>
+              </tr>
+            </table>
+            <div>&nbsp</div>
+              <table>
+              <tr>
+              <td colspan="3"><label class="label">Insurance Charge</label></td>
+              </tr>
+              <tr>
+              <td><label>Tolerance Persentage</label></td>
+              <td><input class="input" type="text" placeholder="AWB"></td>
+              </tr>
+              <tr>
+              &nbsp;
+              </tr>
+              <tr>
+              <td><label>Tolerance Amount</label></td>
+              <td><input class="input" type="text" placeholder="AWB"></td>
+              </tr>
+            </table>
+
             </div>
             <div class="column">
-              <div class="control">
-                <label class="label">Date</label>
-                <cleave class="input" placeholder="YYYY/MM/DD" :value="'20160901'" :options="{ date: true, datePattern: ['Y', 'm', 'd'] }"></cleave>
-              </div>
-              <div class="control">
-                <cleave class="input" placeholder="MM/YY" :options="{ date: true, datePattern: ['m', 'y'] }"></cleave>
-              </div>
-              <div class="control">
-                <label class="label">Raw Value</label>
-                <cleave
-                  class="input"
-                  v-model="demo.value"
-                  @rawValueChanged="onRawValueChanged"
-                  placeholder="Enter phone number"
-                  :options="{ blocks: [0, 3, 3, 4], numericOnly: true, delimiters: ['(', ') ', '-'], maxLength: 14 }">
-                </cleave>
-              </div>
-            </div>
-            <div class="column">
-              <div class="control">
-                <label class="label">Custom options</label>
-                <cleave class="input" placeholder="Blocks: [4, 3, 3, 4]" :options="{ blocks: [4, 3, 3, 4], uppercase: true }"></cleave>
-              </div>
-              <div class="control">
-                <cleave class="input" placeholder="Delimiter: '·'" :options="{ delimiter: '·', blocks: [3, 3, 3, 3], uppercase: true }"></cleave>
-              </div>
-              <div class="control">
-                <cleave class="input" :options="{ prefix: 'PREFIX', delimiter: '-', blocks: [6, 4, 4, 4], uppercase: true }"></cleave>
-              </div>
+              <table>
+              <tr>
+              <td colspan="3"><label class="label">Price/Kg</label></td>
+              </tr>
+              <tr>
+              <td><label>Tolerance Persentage</label></td>
+              <td><input class="input" type="text" placeholder="AWB"></td>
+              </tr>
+              <tr>
+              &nbsp;
+              </tr>
+              <tr>
+              <td><label>Tolerance Amount</label></td>
+              <td><input class="input" type="text" placeholder="AWB"></td>
+              </tr>
+            </table>
+            <div>&nbsp</div>
+              <table>
+              <tr>
+              <td colspan="3"><label class="label">Gift Wrap Charge</label></td>
+              </tr>
+              <tr>
+              <td><label>Tolerance Persentage</label></td>
+              <td><input class="input" type="text" placeholder="AWB"></td>
+              </tr>
+              <tr>
+              &nbsp;
+              </tr>
+              <tr>
+              <td><label>Tolerance Amount</label></td>
+              <td><input class="input" type="text" placeholder="AWB"></td>
+              </tr>
+            </table>
+            <div>&nbsp</div>
+            <table>
+              <tr>
+              <td colspan="3"><label class="label">Other Charge</label></td>
+              </tr>
+              <tr>
+              <td><label>Tolerance Persentage</label></td>
+              <td><input class="input" type="text" placeholder="AWB"></td>
+              </tr>
+              <tr>
+              &nbsp;
+              </tr>
+              <tr>
+              <td><label>Tolerance Amount</label></td>
+              <td><input class="input" type="text" placeholder="AWB"></td>
+              </tr>
+            </table>
+            <table>
+              <tr>
+              <td> <button class="button pull-right">Cancel</button> 
+               <button class="button is-info pull-right marginright">Submit</button> </td>
+              </tr>
+            </table>
             </div>
           </div>
         </div>
@@ -117,5 +183,8 @@
         flex-shrink: 1;
       }
     }
+  }
+  .marginright {
+    margin-right: 10px;
   }
 </style>
