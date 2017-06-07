@@ -2,7 +2,7 @@
   <div>
     <form>
       <div class="tile is-ancestor">
-        <button class="button is-info leftleft">Add Logistic</button>
+        <button class="button is-info leftleft" @click="openModalCard()">Add Logistic</button>
         <div class="select rightright">
 
           <select>
@@ -59,15 +59,51 @@
   </div>
 </template>
 <script>
-  import {Collapse, Item as CollapseItem} from 'vue-bulma-collapse'
+  import Vue from 'vue'
+  import Modal from './modals/Modal'
+  import AddLogisticModal from './modals/AddLogisticModal'
+
+  const AddLogisticModalComponent = Vue.extend(AddLogisticModal)
+
+  const openCardModal = (propsData = {
+    visible: true
+  }) => {
+    return new AddLogisticModalComponent({
+      el: document.createElement('div'),
+      propsData
+    })
+  }
 
   export default {
     components: {
-      Collapse,
-      CollapseItem
+      Modal
+    },
+
+    data () {
+      return {
+        showModal: true,
+        cardModal: null,
+        imageModal: null
+      }
+    },
+
+    methods: {
+      openModalBasic () {
+        this.showModal = true
+      },
+
+      closeModalBasic () {
+        this.showModal = false
+      },
+
+      openModalCard () {
+        const cardModal = this.AddLogisticModal || (this.AddLogisticModal = openCardModal({title: 'Add Logistic', url: this.$store.state.pkg.homepage}))
+        cardModal.$children[0].active()
+      }
     }
   }
 </script>
+
 <style lang="scss">
   .table-responsive {
     display: block;
@@ -106,6 +142,7 @@
     margin-left: 1%;
   }
   .rightright {
+    position: relative;
     margin-left: 84%;
   }
 </style>

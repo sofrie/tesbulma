@@ -10,110 +10,104 @@
             <div class="column">
             <table>
               <tr>
-              <td colspan="3"><label class="label">Total Shipping</label></td>
+              <td colspan="3" class="tdcenter"><label class="label">Total Shipping</label></td>
               </tr>
               <tr>
-              <td><label>Tolerance Persentage</label></td>
-              <td><input class="input" type="text" placeholder="AWB"></td>
+                <td class="tdright"><label>Tolerance Persentage : &nbsp;</label></td>
+                <td><input class="input" type="text" placeholder="3"></td>
+              </tr>
+              <tr>              &nbsp;
               </tr>
               <tr>
-              &nbsp;
-              </tr>
-              <tr>
-              <td><label>Tolerance Amount</label></td>
-              <td><input class="input" type="text" placeholder="AWB"></td>
+                <td class="tdright"><label>Tolerance Amount : &nbsp;</label></td>
+                <td><input class="input" type="text" placeholder="20"></td>
               </tr>
             </table>
             <div>&nbsp</div>
               <table>
               <tr>
-              <td colspan="3"><label class="label">Weight</label></td>
+              <td colspan="3" class="tdcenter"><label class="label">Weight</label></td>
               </tr>
-              <tr>
-              <td><label>Tolerance Persentage</label></td>
-              <td><input class="input" type="text" placeholder="AWB"></td>
-              </tr>
-              <tr>
-              &nbsp;
-              </tr>
-              <tr>
-              <td><label>Tolerance Amount</label></td>
-              <td><input class="input" type="text" placeholder="AWB"></td>
-              </tr>
+                <tr>
+                  <td class="tdright"><label>Tolerance Persentage : &nbsp;</label></td>
+                  <td><input class="input" type="text" placeholder="10"></td>
+                </tr>
+                <tr>              &nbsp;
+                </tr>
+                <tr>
+                  <td class="tdright"><label>Tolerance Amount : &nbsp;</label></td>
+                  <td><input class="input" type="text" placeholder="1"></td>
+                </tr>
             </table>
             <div>&nbsp</div>
               <table>
               <tr>
-              <td colspan="3"><label class="label">Insurance Charge</label></td>
+              <td colspan="3" class="tdcenter"><label class="label">Insurance Charge</label></td>
               </tr>
-              <tr>
-              <td><label>Tolerance Persentage</label></td>
-              <td><input class="input" type="text" placeholder="AWB"></td>
-              </tr>
-              <tr>
-              &nbsp;
-              </tr>
-              <tr>
-              <td><label>Tolerance Amount</label></td>
-              <td><input class="input" type="text" placeholder="AWB"></td>
-              </tr>
+                <tr>
+                  <td class="tdright"><label>Tolerance Persentage : &nbsp;</label></td>
+                  <td><input class="input" type="text" placeholder="10"></td>
+                </tr>
+                <tr>              &nbsp;
+                </tr>
+                <tr>
+                  <td class="tdright"><label>Tolerance Amount : &nbsp;</label></td>
+                  <td><input class="input" type="text" placeholder="2000"></td>
+                </tr>
             </table>
 
             </div>
             <div class="column">
               <table>
               <tr>
-              <td colspan="3"><label class="label">Price/Kg</label></td>
+              <td colspan="3" class="tdcenter"><label class="label">Price/Kg</label></td>
               </tr>
-              <tr>
-              <td><label>Tolerance Persentage</label></td>
-              <td><input class="input" type="text" placeholder="AWB"></td>
-              </tr>
-              <tr>
-              &nbsp;
-              </tr>
-              <tr>
-              <td><label>Tolerance Amount</label></td>
-              <td><input class="input" type="text" placeholder="AWB"></td>
-              </tr>
+                <tr>
+                  <td class="tdright"><label>Tolerance Persentage : &nbsp;</label></td>
+                  <td><input class="input" type="text" placeholder="2"></td>
+                </tr>
+                <tr>              &nbsp;
+                </tr>
+                <tr>
+                  <td class="tdright"><label>Tolerance Amount : &nbsp;</label></td>
+                  <td><input class="input" type="text" placeholder="1000"></td>
+                </tr>
             </table>
             <div>&nbsp</div>
               <table>
               <tr>
-              <td colspan="3"><label class="label">Gift Wrap Charge</label></td>
+              <td colspan="3" class="tdcenter"><label class="label">Gift Wrap Charge</label></td>
               </tr>
-              <tr>
-              <td><label>Tolerance Persentage</label></td>
-              <td><input class="input" type="text" placeholder="AWB"></td>
-              </tr>
-              <tr>
-              &nbsp;
-              </tr>
-              <tr>
-              <td><label>Tolerance Amount</label></td>
-              <td><input class="input" type="text" placeholder="AWB"></td>
-              </tr>
+                <tr>
+                  <td class="tdright"><label>Tolerance Persentage : &nbsp;</label></td>
+                  <td><input class="input" type="text" placeholder="15"></td>
+                </tr>
+                <tr>              &nbsp;
+                </tr>
+                <tr>
+                  <td class="tdright"><label>Tolerance Amount : &nbsp;</label></td>
+                  <td><input class="input" type="text" placeholder="3000"></td>
+                </tr>
             </table>
             <div>&nbsp</div>
             <table>
               <tr>
-              <td colspan="3"><label class="label">Other Charge</label></td>
+              <td colspan="3" class="tdcenter"><label class="label">Other Charge</label></td>
               </tr>
               <tr>
-              <td><label>Tolerance Persentage</label></td>
-              <td><input class="input" type="text" placeholder="AWB"></td>
+                <td class="tdright"><label>Tolerance Persentage : &nbsp;</label></td>
+              <td><input class="input" type="text" placeholder="3.5"></td>
+              </tr>
+              <tr>              &nbsp;
               </tr>
               <tr>
-              &nbsp;
-              </tr>
-              <tr>
-              <td><label>Tolerance Amount</label></td>
-              <td><input class="input" type="text" placeholder="AWB"></td>
+              <td class="tdright"><label>Tolerance Amount : &nbsp;</label></td>
+              <td><input class="input" type="text" placeholder="1000"></td>
               </tr>
             </table>
             <table>
               <tr>
-              <td> <button class="button pull-right">Cancel</button> 
+              <td> <button class="button pull-right">Cancel</button>
                <button class="button is-info pull-right marginright">Submit</button> </td>
               </tr>
             </table>
@@ -186,5 +180,11 @@
   }
   .marginright {
     margin-right: 10px;
+  }
+  .tdright {
+    text-align: right;
+  }
+  .tdcenter {
+    padding-left: 20%;
   }
 </style>

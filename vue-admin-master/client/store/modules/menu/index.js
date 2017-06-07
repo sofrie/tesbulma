@@ -2,6 +2,7 @@ import * as types from '../../mutation-types'
 import lazyLoading from './lazyLoading'
 import uifeatures from './uifeatures'
 import awb from './awb'
+import logistic from './logistics'
 import components from './components'
 import tables from './tables'
 import invoices from './invoices'
@@ -23,20 +24,12 @@ const state = {
     },
     invoices,
     awb,
-    {
-      name: 'Logistic',
-      path: '/logistic',
-      meta: {
-        icon: 'fa-table',
-        link: 'logistic/index.vue'
-      },
-      component: lazyLoading('logistic', true)
-    },
+    logistic,
     {
       name: 'Setting',
       path: '/setting',
       meta: {
-        icon: 'fa-table',
+        icon: 'fa-cogs',
         link: 'setting/index.vue'
       },
       component: lazyLoading('setting', true)
