@@ -4,14 +4,14 @@ import menuModule from 'vuex-store/modules/menu'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'hash', // Demo is living in GitHub.io, so required!
+  mode: 'history', // Demo is living in GitHub.io, so required!
   linkActiveClass: 'is-active',
   scrollBehavior: () => ({ y: 0 }),
   routes: [
     {
-      name: 'Home',
+      name: 'Dashboard',
       path: '/',
-      component: require('../views/Home')
+      component: require('../views/Dashboard/index.vue')
     },
     {
       name: 'Login',

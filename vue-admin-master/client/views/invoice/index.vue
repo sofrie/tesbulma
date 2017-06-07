@@ -33,77 +33,77 @@
       &emsp;
       &emsp;<button class="button is-info"> Search</button>
       &emsp;
-      <button class="button is-info" @click="openModalCard()">
+      <a class="button is-info" @click="openModalCard()">
         Upload
-      </button>
-      <div id="light2" class="white_content">
-        <p class="control has-addons has-addons-right">
-          <a
-            onclick="document.getElementById('light2').style.display='none';document.getElementById('fade2').style.display='none'">X &nbsp;</a>
-        </p>
-        <div class="tile is-parent">
-          <article class="tile is-child box ">
+      </a>
+      <!--<div id="light2" class="white_content">-->
+        <!--<p class="control has-addons has-addons-right">-->
+          <!--<a-->
+            <!--onclick="document.getElementById('light2').style.display='none';document.getElementById('fade2').style.display='none'">X &nbsp;</a>-->
+        <!--</p>-->
+        <!--<div class="tile is-parent">-->
+          <!--<article class="tile is-child box ">-->
 
-            <h1 class="title">Upload Invoice</h1>
+            <!--<h1 class="title">Upload Invoice</h1>-->
 
-            <div class="block ">
-              <table class="tablepopup" width="200px" margin="10px">
-                <tr>
-                  <td>Month</td>
-                  <td>
-              <span class="select">
-                <select>
-                  <option>January</option>
-                  <option>Februari</option>
-                </select>
-              </span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Year </td>
-                  <td>
-              <span class="select">
-                <select>
-                  <option>2017</option>
-                </select>
-              </span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Logistic </td>
-                  <td>
-              <span class="select">
-                <select>
-                  <option>A Logistic</option>
-				  <option>B Logistic</option>
-				  <option>C Logistic</option>
-                </select>
-              </span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>File</td>
-                  <td>
-                    <input type="file" name="datafile" size="40">
-                  </td>
-                </tr>
-                <tr>
-                </tr>
-                <tr>
-                  <td>&nbsp;</td>
-                </tr>
-                <tr>
-                  <td colspan="2">
-                    <button class="button is-info ">Submit Upload</button>
-                  </td>
-                </tr>
-              </table>
-            </div>
+            <!--<div class="block ">-->
+              <!--<table class="tablepopup" width="200px" margin="10px">-->
+                <!--<tr>-->
+                  <!--<td>Month</td>-->
+                  <!--<td>-->
+              <!--<span class="select">-->
+                <!--<select>-->
+                  <!--<option>January</option>-->
+                  <!--<option>Februari</option>-->
+                <!--</select>-->
+              <!--</span>-->
+                  <!--</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                  <!--<td>Year </td>-->
+                  <!--<td>-->
+              <!--<span class="select">-->
+                <!--<select>-->
+                  <!--<option>2017</option>-->
+                <!--</select>-->
+              <!--</span>-->
+                  <!--</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                  <!--<td>Logistic </td>-->
+                  <!--<td>-->
+              <!--<span class="select">-->
+                <!--<select>-->
+                  <!--<option>A Logistic</option>-->
+				  <!--<option>B Logistic</option>-->
+				  <!--<option>C Logistic</option>-->
+                <!--</select>-->
+              <!--</span>-->
+                  <!--</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                  <!--<td>File</td>-->
+                  <!--<td>-->
+                    <!--<input type="file" name="datafile" size="40">-->
+                  <!--</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                  <!--<td>&nbsp;</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                  <!--<td colspan="2">-->
+                    <!--<button class="button is-info ">Submit Upload</button>-->
+                  <!--</td>-->
+                <!--</tr>-->
+              <!--</table>-->
+            <!--</div>-->
 
-          </article>
-        </div>
-      </div>
-      <div id="fade2" class="black_overlay"></div>
+          <!--</article>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div id="fade2" class="black_overlay"></div>-->
       </form>
     </div>
     <div class="block">
@@ -353,58 +353,58 @@
     padding: 50px;
   }
 
-  .black_overlay {
-    display: none;
-    position: fixed;
-    top: 0%;
-    left: 0%;
-    width: 100%;
-    height: 100%;
-    z-index: 1001;
-    -moz-opacity: 0.8;
-    opacity: .80;
-    filter: alpha(opacity=80);
-  }
+  /*.black_overlay {*/
+    /*display: none;*/
+    /*position: fixed;*/
+    /*top: 0%;*/
+    /*left: 0%;*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*z-index: 1001;*/
+    /*-moz-opacity: 0.8;*/
+    /*opacity: .80;*/
+    /*filter: alpha(opacity=80);*/
+  /*}*/
 
-  .white_content {
-    display: none;
-    position: fixed;
-    left: 30%;
-    width: 25%;
-    height: 60%;
-    padding: 1px;
-    border: 2px solid black;
-    background-color: white;
-    z-index: 1002;
-    overflow: auto;
-  }
+  /*.white_content {*/
+    /*display: none;*/
+    /*position: fixed;*/
+    /*left: 30%;*/
+    /*width: 25%;*/
+    /*height: 60%;*/
+    /*padding: 1px;*/
+    /*border: 2px solid black;*/
+    /*background-color: white;*/
+    /*z-index: 1002;*/
+    /*overflow: auto;*/
+  /*}*/
 
-  .black_overlay2 {
-    display: none;
-    position: fixed;
-    top: -30%;
-    left: 0%;
-    width: 100%;
-    height: 100%;
-    z-index: 1001;
-    -moz-opacity: 0.8;
-    opacity: .80;
-    filter: alpha(opacity=80);
-  }
+  /*<!--.black_overlay2 {-->*/
+    /*<!--display: none;-->*/
+    /*<!--position: fixed;-->*/
+    /*<!--top: -30%;-->*/
+    /*<!--left: 0%;-->*/
+    /*<!--width: 100%;-->*/
+    /*<!--height: 100%;-->*/
+    /*<!--z-index: 1001;-->*/
+    /*<!-- -moz-opacity: 0.8;-->*/
+    /*<!--opacity: .80;-->*/
+    /*<!--filter: alpha(opacity=80);-->*/
+  /*<!--}-->*/
 
-  .white_content2 {
-    display: none;
-    position: fixed;
-    top: 10%;
-    left: 25%;
-    width: 50%;
-    height: 80%;
-    padding: 1px;
-    border: 2px solid black;
-    background-color: white;
-    z-index: 1002;
-    overflow: auto;
-  }
+  /*<!--.white_content2 {-->*/
+    /*<!--display: none;-->*/
+    /*<!--position: fixed;-->*/
+    /*<!--top: 10%;-->*/
+    /*<!--left: 25%;-->*/
+    /*<!--width: 50%;-->*/
+    /*<!--height: 80%;-->*/
+    /*<!--padding: 1px;-->*/
+    /*<!--border: 2px solid black;-->*/
+    /*<!--background-color: white;-->*/
+    /*<!--z-index: 1002;-->*/
+    /*<!--overflow: auto;-->*/
+  /*<!--}-->*/
   .one {
     margin-left: 5px;
   }

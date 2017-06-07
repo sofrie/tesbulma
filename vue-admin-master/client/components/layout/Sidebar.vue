@@ -1,6 +1,6 @@
 <template>
   <aside class="menu app-sidebar animated" :class="{ slideInLeft: show, slideOutLeft: !show }">
-    
+
     <ul class="menu-list">
       <li v-for="(item, index) in menu">
         <router-link :to="item.path" :exact="true" :aria-expanded="isExpanded(item) ? 'true' : 'false'" v-if="item.path" @click.native="toggle(index, item)">
@@ -136,7 +136,7 @@ export default {
 
 .app-sidebar {
   position: fixed;
-  top: 50px;
+  top: 30px;
   left: 0;
   bottom: 0;
   padding: 20px 0 50px;
@@ -149,7 +149,7 @@ export default {
   box-shadow: 0 2px 3px rgba(17, 17, 17, 0.1), 0 0 0 1px rgba(17, 17, 17, 0.1);
   overflow-y: auto;
   overflow-x: hidden;
-  
+
 
   @include mobile() {
     transform: translate3d(-180px, 0, 0);
@@ -178,9 +178,8 @@ export default {
     }
 
     li a + ul {
-      margin: 0 10px 0 15px;
+      margin: 0 10px 0 35px;
     }
   }
-
 }
 </style>

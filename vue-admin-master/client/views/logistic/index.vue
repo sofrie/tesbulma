@@ -2,7 +2,7 @@
   <div>
     <form>
       <div class="tile is-ancestor">
-        <button class="button is-info leftleft" @click="openModalCard()">Add Logistic</button>
+        <a class="button is-info leftleft" @click="openModalCard()">Add Logistic</a>
         <div class="select rightright">
 
           <select>

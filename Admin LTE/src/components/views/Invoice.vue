@@ -75,42 +75,40 @@
                       </p>
                       <div class="tile is-parent">
                         <article class="tile is-child box ">
-
                           <h1 class="title">Upload Invoice</h1>
-
                           <div class="block ">
                             <table class="tablepopup" width="200px" margin="10px">
                               <tr>
                                 <td>Month</td>
                                 <td>
-              <span class="select">
-                <select>
-                  <option>January</option>
-                  <option>Februari</option>
-                </select>
-              </span>
+                                  <span class="select">
+                                    <select>
+                                      <option>January</option>
+                                      <option>Februari</option>
+                                    </select>
+                                  </span>
                                 </td>
                               </tr>
                               <tr>
                                 <td>Year </td>
                                 <td>
-              <span class="select">
-                <select>
-                  <option>2017</option>
-                </select>
-              </span>
+                                  <span class="select">
+                                    <select>
+                                      <option>2017</option>
+                                    </select>
+                                  </span>
                                 </td>
                               </tr>
                               <tr>
                                 <td>Logistic </td>
                                 <td>
-              <span class="select">
-                <select>
-                  <option>A Logistic</option>
-				  <option>B Logistic</option>
-				  <option>C Logistic</option>
-                </select>
-              </span>
+                                  <span class="select">
+                                    <select>
+                                      <option>A Logistic</option>
+                                      <option>B Logistic</option>
+                                      <option>C Logistic</option>
+                                    </select>
+                                  </span>
                                 </td>
                               </tr>
                               <tr>
@@ -131,7 +129,6 @@
                               </tr>
                             </table>
                           </div>
-
                         </article>
                       </div>
                     </div>
@@ -139,40 +136,7 @@
                   </td>
                 </tr>
               </table>
-
-              <!--<label for="exampleInputEmail1 " class=" control-label col-md-1">Month : </label>-->
-              <!--<span class="selectoption col-md-3">-->
-                  <!--<select class="form-control controlleft">-->
-                    <!--<option>Januari</option>-->
-                    <!--<option>Februari</option>-->
-                    <!--<option>Maret</option>-->
-                    <!--<option>April</option>-->
-                  <!--</select>-->
-                <!--</span>-->
-              <!--&emsp;-->
-              <!--<span class="form-group">-->
-                  <!--<label for="exampleInputEmail1 " class=" control-label col-md-1">Year : </label>-->
-                  <!--<span class="selectoption col-md-3">-->
-                  <!--<select class="form-control controlleft">-->
-                    <!--<option>2016</option>-->
-                    <!--<option>2017</option>-->
-                  <!--</select>-->
-                <!--</span>-->
-              <!--</span>-->
-              <!--&emsp;-->
-              <!--<span class="form-group">-->
-                  <!--<label for="exampleInputEmail1 " class=" control-label col-md-1">Logistic : </label>-->
-                  <!--<span class="selectoption col-md-3">-->
-                  <!--<select class="form-control controlleft">-->
-                    <!--<option>A Logistic</option>-->
-                    <!--<option>B Logistic</option>-->
-                  <!--</select>-->
-                <!--</span>-->
-              <!--</span>-->
-              <!--<button type="submit" class="btn btn-info btn-sm">Search</button>-->
-              <!--<button type="submit" class="btn btn-info btn-sm">Upload</button>-->
             </div>
-
 
           </div>
           <!-- /.box-body -->
@@ -186,7 +150,6 @@
           <!-- /.box-header -->
           <!-- form start -->
           <div class="box-body table-responsive ">
-
             <table class="table">
               <tr>
                 <td><label for="inputEmail3">OK  : 298527 data</label></td>
@@ -211,24 +174,41 @@
               <div class="row">
                 <div class="col-sm-6">
                   <div id="example1_length" class="dataTables_length">
-
                   </div>
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-sm-12 table-responsive">
-                  <table aria-describedby="example1_info" role="grid" id="example1" class="table table-bordered table-striped dataTable">
+                  <table aria-describedby="example1_info" role="grid" id="example1"
+                         class="table table-bordered table-striped dataTable">
                     <thead>
                     <tr role="row">
-                      <th aria-label="Month: activate to sort column descending" aria-sort="ascending" style="width: 167px;" colspan="1" rowspan="1" aria-controls="example1" tabindex="0" class="sorting_asc">Month</th>
-                      <th aria-label="Year: activate to sort column ascending" style="width: 207px;" colspan="1" rowspan="1" aria-controls="example1" tabindex="0" class="sorting">Year</th>
-                      <th aria-label="OK: activate to sort column ascending" style="width: 182px;" colspan="1" rowspan="1" aria-controls="example1" tabindex="0" class="sorting">OK</th>
-                      <th aria-label="Problem Exist: activate to sort column ascending" style="width: 142px;" colspan="1" rowspan="1" aria-controls="example1" tabindex="0" class="sorting">Problem Exist</th>
-                      <th aria-label="Jumlah Tagihan: activate to sort column ascending" style="width: 101px;" colspan="1" rowspan="1" aria-controls="example1" tabindex="0" class="sorting">Jumlah Tagihan</th>
-                      <th aria-label="Logistic: activate to sort column ascending" style="width: 182px;" colspan="1" rowspan="1" aria-controls="example1" tabindex="0" class="sorting">Logistic</th>
-                      <th aria-label="Status: activate to sort column ascending" style="width: 182px;" colspan="1" rowspan="1" aria-controls="example1" tabindex="0" class="sorting">Status</th>
-                      <th aria-label="Last Modified: activate to sort column ascending" style="width: 182px;" colspan="1" rowspan="1" aria-controls="example1" tabindex="0" class="sorting">Last Modified</th>
+                      <th aria-label="Month: activate to sort column descending" aria-sort="ascending"
+                          style="width: 167px;" colspan="1" rowspan="1" aria-controls="example1" tabindex="0"
+                          class="sorting_asc">Month
+                      </th>
+                      <th aria-label="Year: activate to sort column ascending" style="width: 207px;" colspan="1"
+                          rowspan="1" aria-controls="example1" tabindex="0" class="sorting">Year
+                      </th>
+                      <th aria-label="OK: activate to sort column ascending" style="width: 182px;" colspan="1"
+                          rowspan="1" aria-controls="example1" tabindex="0" class="sorting">OK
+                      </th>
+                      <th aria-label="Problem Exist: activate to sort column ascending" style="width: 142px;"
+                          colspan="1" rowspan="1" aria-controls="example1" tabindex="0" class="sorting">Problem Exist
+                      </th>
+                      <th aria-label="Jumlah Tagihan: activate to sort column ascending" style="width: 101px;"
+                          colspan="1" rowspan="1" aria-controls="example1" tabindex="0" class="sorting">Jumlah Tagihan
+                      </th>
+                      <th aria-label="Logistic: activate to sort column ascending" style="width: 182px;" colspan="1"
+                          rowspan="1" aria-controls="example1" tabindex="0" class="sorting">Logistic
+                      </th>
+                      <th aria-label="Status: activate to sort column ascending" style="width: 182px;" colspan="1"
+                          rowspan="1" aria-controls="example1" tabindex="0" class="sorting">Status
+                      </th>
+                      <th aria-label="Last Modified: activate to sort column ascending" style="width: 182px;"
+                          colspan="1" rowspan="1" aria-controls="example1" tabindex="0" class="sorting">Last Modified
+                      </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -266,11 +246,11 @@
                     </tbody>
                     <!--<tfoot>-->
                     <!--<tr>-->
-                      <!--<th colspan="1" rowspan="1">Rendering engine</th>-->
-                      <!--<th colspan="1" rowspan="1">Browser</th>-->
-                      <!--<th colspan="1" rowspan="1">Platform(s)</th>-->
-                      <!--<th colspan="1" rowspan="1">Engine version</th>-->
-                      <!--<th colspan="1" rowspan="1">CSS grade</th>-->
+                    <!--<th colspan="1" rowspan="1">Rendering engine</th>-->
+                    <!--<th colspan="1" rowspan="1">Browser</th>-->
+                    <!--<th colspan="1" rowspan="1">Platform(s)</th>-->
+                    <!--<th colspan="1" rowspan="1">Engine version</th>-->
+                    <!--<th colspan="1" rowspan="1">CSS grade</th>-->
                     <!--</tr>-->
                     <!--</tfoot>-->
                   </table>
@@ -281,7 +261,7 @@
           </div>
         </div>
       </div>
-          </div>
+    </div>
 
     <!-- /.row -->
   </section>
@@ -330,8 +310,10 @@
     padding-left: 0px;
     padding-right: 0px;
   }
+
   .controlleft {
   }
+
   .black_overlay {
     display: none;
     position: fixed;
@@ -384,6 +366,7 @@
     z-index: 1002;
     overflow: auto;
   }
+
   .one {
     margin-left: 5px;
   }
