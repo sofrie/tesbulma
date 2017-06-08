@@ -1,40 +1,46 @@
 <template>
-  <card-modal :visible="visible" @close="close" :title="title" transition="zoom" class="classmodalleft">
+<div>
+  <card-modal :visible="visible" :title="title" transition="zoom" class="classmodalleft">
     <div class="tile is-parent">
       <article class="tile is-child ">
-
+      <form>
         <!--<h1 class="title">Upload Invoice</h1>-->
-
         <div class="block ">
           <table class="tablemodal" >
             <tr>
               <td>Logistic Name</td>
 
               <td>
-              <input class="input" type="text" placeholder="Name">
+              <input ref="idname" class="input" type="text" placeholder="Name" value="hahaha">
               </td>
             </tr>
             <tr>
               <td>Status </td>
               <td>
-              <span class="select">
-                <select>
-                  <option>Active</option>
-                  <option>Inactive</option>
+              <span class="select" id="apps1">
+                <select v-model="selected" ref="aa">
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
                 </select>
+
               </span>
               </td>
             </tr>
             <tr>
+            <td>
+             <span>Selected: {{ selected }}</span>
+             </td>
+            </tr>
+            <tr>
               <td>Discount </td>
               <td>
-              <input class="input" type="text" placeholder="Discount %">
+              <input ref="iddiscount" class="input" type="text" placeholder="Discount %">
               </td>
             </tr>
             <tr>
               <td>VAT</td>
               <td>
-                <input class="input" type="text" placeholder="VAT %">
+                <input ref="idvat" class="input" type="text" placeholder="VAT %">
               </td>
             </tr>
             <tr>
@@ -42,14 +48,23 @@
             </tr>
           </table>
         </div>
+        <button type="submit" class="button btnclick is-primary" v-on:click="ok" > Submit </button>
+              <a class="button" v-on:click="cancel">Cancel</a>
+        </form>
       </article>
     </div>
+
   </card-modal>
+  </div>
 </template>
 
 <script>
   import { CardModal } from 'vue-bulma-modal'
-
+  import axios from 'axios'
+  import Vue from 'vue'
+  new Vue({
+      el:'#apps1'
+  });
   export default {
     components: {
       CardModal
@@ -60,20 +75,32 @@
       title: String,
       url: String
     },
-
-    data () {
-      return {
-        src: require('assets/logo.svg')
+    data: () => ({
+      posts: [],
+      errors: [],
+      selected: ""
       }
-    },
+    ),
 
     methods: {
       open (url) {
-        window.open(url)
+      window.open(url)
       },
-
       close () {
         this.$emit('close')
+      },
+      ok () {
+      axios.post(`http://127.0.0.1:8080/api/logisticss`, {
+        id: 9,
+        name: this.$refs.idname.value,
+        status: this.selected,
+        discount: this.$refs.iddiscount.value,
+        vat: this.$refs.idvat.value,
+      })
+        this.$emit('ok')
+      },
+      cancel () {
+        this.$emit('cancel')
       }
     }
   }
@@ -86,7 +113,7 @@
   }
   .modal-card {
     width: 35%;
-    height: 50%;
+    height: 45%;
   }
   .tablemodal {
     margin-left: 10%;
@@ -94,5 +121,8 @@
   }
   .centerbutton {
     padding-left: 40%;
+  }
+  .modal-card-foot {
+  height:100%;
   }
 </style>

@@ -24,33 +24,38 @@
                 <th>VAT</th>
               </tr>
               </thead>
-              <tbody>
-              <tr>
-                <td>A Logistic</td>
-                <td>Active</td>
-                <td>5%</td>
-                <td>1%</td>
-              </tr>
-              <tr>
-                <td>B Logistic</td>
-                <td>Active</td>
-                <td>2.25%</td>
-                <td>1%</td>
-              </tr>
-              <tr>
-                <td>C Logistic</td>
-                <td>Active</td>
-                <td>3.15%</td>
-                <td>1%</td>
-              </tr>
-              <tr>
-                <td>D Logistic</td>
-                <td>Inactive</td>
-                <td>1.75%</td>
-                <td>1%</td>
+              <!--<tbody>-->
+              <!--<tr>-->
+                <!--<td>A Logistic</td>-->
+                <!--<td>Active</td>-->
+                <!--<td>5%</td>-->
+                <!--<td>1%</td>-->
+              <!--</tr>-->
+              <!--<tr>-->
+                <!--<td>B Logistic</td>-->
+                <!--<td>Active</td>-->
+                <!--<td>2.25%</td>-->
+                <!--<td>1%</td>-->
+              <!--</tr>-->
+              <!--<tr>-->
+                <!--<td>C Logistic</td>-->
+                <!--<td>Active</td>-->
+                <!--<td>3.15%</td>-->
+                <!--<td>1%</td>-->
+              <!--</tr>-->
+              <tr v-for="post of posts">
+                <td>{{post.name}}</td>
+                <td>{{post.status}}</td>
+                <td>{{post.discount}}%</td>
+                <td>{{post.vat}}%</td>
               </tr>
 
-              </tbody>
+              <!--</tbody>-->
+              <!--<tr>-->
+                <!--<td v-for="post of posts">-->
+                  <!--<p><strong>{{post.name}}</strong></p>-->
+                <!--</td>-->
+              <!--</tr>-->
             </table>
           </div>
         </div>
@@ -63,8 +68,8 @@
   import Modal from './modals/Modal'
   import AddLogisticModal from './modals/AddLogisticModal'
 
+  import axios from 'axios'
   const AddLogisticModalComponent = Vue.extend(AddLogisticModal)
-
   const openCardModal = (propsData = {
     visible: true
   }) => {
@@ -73,20 +78,18 @@
       propsData
     })
   }
-
   export default {
     components: {
       Modal
     },
-
-    data () {
-      return {
-        showModal: true,
-        cardModal: null,
-        imageModal: null
-      }
-    },
-
+    data: () => ({
+      posts: [],
+      errors: [],
+      showModal: true,
+      cardModal: null,
+      imageModal: null
+    }
+    ),
     methods: {
       openModalBasic () {
         this.showModal = true
@@ -100,6 +103,27 @@
         const cardModal = this.AddLogisticModal || (this.AddLogisticModal = openCardModal({title: 'Add Logistic', url: this.$store.state.pkg.homepage}))
         cardModal.$children[0].active()
       }
+    },
+
+    // Fetches posts when the component is created.
+    created () {
+      axios.get(`http://127.0.0.1:8080/api/logisticss`)
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.posts = response.data
+        })
+        .catch(e => {
+          this.errors.push(e)
+        })
+
+      // async / await version (created() becomes async created())
+      //
+      // try {
+      //   const response = await axios.get(`http://jsonplaceholder.typicode.com/posts`)
+      //   this.posts = response.data
+      // } catch (e) {
+      //   this.errors.push(e)
+      // }
     }
   }
 </script>

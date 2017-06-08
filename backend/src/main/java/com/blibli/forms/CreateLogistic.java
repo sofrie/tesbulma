@@ -10,14 +10,41 @@ package com.blibli.forms;
  * @author sofri
  */
 public class CreateLogistic {
-    private String id;
+    private Integer id;
     private String name;
+    private String status;
+    private Double discount;
+    private Double vat;
 
-    public String getId() {
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
+    }
+
+    public Double getVat() {
+        return vat;
+    }
+
+    public void setVat(Double vat) {
+        this.vat = vat;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
