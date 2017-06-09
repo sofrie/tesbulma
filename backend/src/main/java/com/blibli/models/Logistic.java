@@ -16,6 +16,10 @@ public class Logistic {
     private Double discount;
     private Double vat;
 
+    public Logistic() {
+    }
+
+    
     public String getStatus() {
         return status;
     }
