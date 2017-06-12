@@ -135,14 +135,7 @@
   </div>
 </template>
 <script>
-  import {Collapse, Item as CollapseItem} from 'vue-bulma-collapse'
-
-  export default {
-    components: {
-      Collapse,
-      CollapseItem
-    }
-  }
+import axios from 'axios';
 </script>
 <style lang="scss">
   .table-responsive {
