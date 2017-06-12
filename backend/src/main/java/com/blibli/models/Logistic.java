@@ -10,18 +10,56 @@ package com.blibli.models;
  * @author sofri
  */
 public class Logistic {
-    private String id; 
+    private Integer id; 
     private String name;
+    private String status;
+    private Double discount;
+    private Double vat;
 
-    public Logistic(String id, String name) {
+    public Logistic() {
+    }
+
+    
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
+    }
+
+    public Double getVat() {
+        return vat;
+    }
+
+    public void setVat(Double vat) {
+        this.vat = vat;
+    }
+    public Logistic(Integer id, String name)
+    {
         this.id = id;
         this.name = name;
+    }
+    public Logistic(Integer id, String name, String status, Double discount, Double vat) {
+        this.id = id;
+        this.name = name;
+        this.status=status;
+        this.discount=discount;
+        this.vat=vat;
     }    
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -135,7 +135,39 @@
   </div>
 </template>
 <script>
+<<<<<<< HEAD
 import axios from 'axios';
+=======
+  import axios from 'axios'
+
+  export default {
+    data: () => ({
+      posts: [],
+      errors: []
+    }),
+
+    // Fetches posts when the component is created.
+    created () {
+      axios.get(`http://demo4092590.mockable.io/tesapi`)
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.posts = response.data
+        })
+        .catch(e => {
+          this.errors.push(e)
+        })
+
+      // async / await version (created() becomes async created())
+      //
+      // try {
+      //   const response = await axios.get(`http://jsonplaceholder.typicode.com/posts`)
+      //   this.posts = response.data
+      // } catch (e) {
+      //   this.errors.push(e)
+      // }
+    }
+  }
+>>>>>>> a925e7a30c68a732afc021a4798b0345981b1e34
 </script>
 <style lang="scss">
   .table-responsive {

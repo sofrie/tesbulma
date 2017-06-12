@@ -11,6 +11,22 @@ package com.blibli.models;
  */
 public class AWB {
     private String id;
+    private String month;
+    private Integer year;
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+    private String name;
+    private String status;
+    private String merchantcode;
+    private String gdnref;
+    
+    /*
     private Integer correct;
     private Integer wrong;
     private Integer status;//status AWB nya not approval, checked, approval
@@ -124,7 +140,62 @@ public class AWB {
     public void setBatch(String batch) {
         this.batch = batch;
     }
-    
-    
-    
+*/
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getMerchantcode() {
+        return merchantcode;
+    }
+
+    public void setMerchantcode(String merchantcode) {
+        this.merchantcode = merchantcode;
+    }
+
+    public String getGdnref() {
+        return gdnref;
+    }
+
+    public void setGdnref(String gdnref) {
+        this.gdnref = gdnref;
+    }
+
+    public AWB(String id, String month, Integer year, String name, String status, String merchantcode, String gdnref) {
+        this.id = id;
+        this.month = month;
+        this.year = year;
+        this.name = name;
+        this.status = status;
+        this.merchantcode = merchantcode;
+        this.gdnref = gdnref;
+    }
 }

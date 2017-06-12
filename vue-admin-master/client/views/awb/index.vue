@@ -133,121 +133,129 @@
               </thead>
               <tbody>
 
-              <tr @click="openModalCard()">
-                <td >
-                  Januari
-                </td>
-                <td>
-                  2017
-                </td>
-                <td >
-                  A
-                </td>
-                <td >
-                  AWB12345
-                </td>
-                <td>
-                  OK
-                </td>
-                <td>
-                  MERCH-CODE-0001
-                </td>
-                <td>
-                  GDN-REF-ABC1
-                </td>
+              <tr @click="openModalCard()"  v-for="post of posts">
+                <td>{{post.month}}</td>
+                <td>{{post.year}}</td>
+                <td>{{post.name}}</td>
+                <td>{{post.id}}</td>
+                <td>{{post.status}}</td>
+                <td>{{post.merchantcode}}</td>
+                <td>{{post.gdnref}}</td>
               </tr>
-              <tr >
-                <td>
-                  Januari
-                </td>
-                <td>
-                  2017
-                </td>
-                <td>
-                  A
-                </td>
-                <td>
-                  AWB23456
-                </td>
-                <td>
-                  Problem Exist
-                </td>
-                <td>
-                  MERCH-CODE-0001
-                </td>
-                <td>
-                  GDN-REF-ABC1
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Januari
-                </td>
-                <td>
-                  2017
-                </td>
-                <td>
-                  A
-                </td>
-                <td>
-                  AWB34567
-                </td>
-                <td>
-                  Problem Exist
-                </td>
-                <td>
-                  MERCH-CODE-0001
-                </td>
-                <td>
-                  GDN-REF-ABC1
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Januari
-                </td>
-                <td>
-                  2017
-                </td>
-                <td>
-                  A
-                </td>
-                <td>
-                  AWB45678
-                </td>
-                <td>
-                  OK
-                </td>
-                <td>
-                  MERCH-CODE-0001
-                </td>
-                <td>
-                  GDN-REF-ABC1
-                </td>
-              </tr>
-              <tr >
-                <td>
-                  Januari
-                </td>
-                <td>
-                  2017
-                </td>
-                <td>
-                  A
-                </td>
-                <td>
-                  AWB56789
-                </td>
-                <td>
-                  Problem Exist
-                </td>
-                <td>
-                  MERCH-CODE-0001
-                </td>
-                <td>
-                  GDN-REF-ABC1
-                </td>
-              </tr>
+                <!--<td >-->
+                  <!--Januari-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--2017-->
+                <!--</td>-->
+                <!--<td >-->
+                  <!--A-->
+                <!--</td>-->
+                <!--<td >-->
+                  <!--AWB12345-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--OK-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--MERCH-CODE-0001-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--GDN-REF-ABC1-->
+                <!--</td>-->
+              <!--</tr>-->
+              <!--<tr >-->
+                <!--<td>-->
+                  <!--Januari-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--2017-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--A-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--AWB23456-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--Problem Exist-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--MERCH-CODE-0001-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--GDN-REF-ABC1-->
+                <!--</td>-->
+              <!--</tr>-->
+              <!--<tr>-->
+                <!--<td>-->
+                  <!--Januari-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--2017-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--A-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--AWB34567-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--Problem Exist-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--MERCH-CODE-0001-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--GDN-REF-ABC1-->
+                <!--</td>-->
+              <!--</tr>-->
+              <!--<tr>-->
+                <!--<td>-->
+                  <!--Januari-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--2017-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--A-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--AWB45678-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--OK-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--MERCH-CODE-0001-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--GDN-REF-ABC1-->
+                <!--</td>-->
+              <!--</tr>-->
+              <!--<tr >-->
+                <!--<td>-->
+                  <!--Januari-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--2017-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--A-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--AWB56789-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--Problem Exist-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--MERCH-CODE-0001-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--GDN-REF-ABC1-->
+                <!--</td>-->
+              <!--</tr>-->
               </tbody>
             </table>
             <div id="light2" class="white_content">
@@ -412,8 +420,8 @@
   import Modal from './modals/Modal'
   import AWBdetailModal from './modals/AWBdetailModal'
 
+  import axios from 'axios'
   const AWBdetailModalComponent = Vue.extend(AWBdetailModal)
-
   const openCardModal = (propsData = {
     visible: true
   }) => {
@@ -422,20 +430,18 @@
       propsData
     })
   }
-
   export default {
     components: {
       Modal
     },
-
-    data () {
-      return {
-        showModal: true,
-        cardModal: null,
-        imageModal: null
-      }
-    },
-
+    data: () => ({
+      posts: [],
+      errors: [],
+      showModal: true,
+      cardModal: null,
+      imageModal: null
+    }
+    ),
     methods: {
       openModalBasic () {
         this.showModal = true
@@ -449,6 +455,27 @@
         const cardModal = this.AWBdetailModal || (this.AWBdetailModal = openCardModal({title: 'AWB13245 / GDN Ref-#1 (Problem Exist)', url: this.$store.state.pkg.homepage}))
         cardModal.$children[0].active()
       }
+    },
+
+    // Fetches posts when the component is created.
+    created () {
+      axios.get(`http://127.0.0.1:8080/api/awb`)
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.posts = response.data
+        })
+        .catch(e => {
+          this.errors.push(e)
+        })
+
+      // async / await version (created() becomes async created())
+      //
+      // try {
+      //   const response = await axios.get(`http://jsonplaceholder.typicode.com/posts`)
+      //   this.posts = response.data
+      // } catch (e) {
+      //   this.errors.push(e)
+      // }
     }
   }
 </script>
