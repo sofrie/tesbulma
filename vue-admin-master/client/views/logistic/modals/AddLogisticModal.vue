@@ -11,16 +11,17 @@
               <td>Logistic Name</td>
 
               <td>
-              <input ref="idname" class="input" type="text" placeholder="Name" value="hahaha">
+              <input ref="idname" class="input" type="text" placeholder="Name" >
               </td>
             </tr>
             <tr>
               <td>Status </td>
               <td>
               <span class="select" id="apps1">
-                <select v-model="selected" ref="aa">
-                  <option value="Active">Active</option>
-                  <option value="Inactive">Inactive</option>
+                <select v-model="selected">
+                  <option v-for="option in options" v-bind:value="option.value">
+                    {{ option.text }}
+                  </option>
                 </select>
 
               </span>
@@ -61,15 +62,10 @@
 <script>
   import { CardModal } from 'vue-bulma-modal'
   import axios from 'axios'
-  import Vue from 'vue'
-  new Vue({
-      el:'#apps1'
-  });
   export default {
     components: {
       CardModal
     },
-
     props: {
       visible: Boolean,
       title: String,
@@ -78,25 +74,29 @@
     data: () => ({
       posts: [],
       errors: [],
-      selected: ""
-      }
+      selected: 'Active',
+      options: [
+            { text: 'Active', value: 'Active' },
+            { text: 'Inactive', value: 'Inactive' }
+      ]
+    }
     ),
 
     methods: {
       open (url) {
-      window.open(url)
+        window.open(url)
       },
       close () {
         this.$emit('close')
       },
       ok () {
-      axios.post(`http://127.0.0.1:8080/api/logisticss`, {
-        id: 9,
-        name: this.$refs.idname.value,
-        status: this.selected,
-        discount: this.$refs.iddiscount.value,
-        vat: this.$refs.idvat.value,
-      })
+        axios.post(`http://127.0.0.1:8080/api/logisticsss`, {
+          logisticCode: 'haha',
+          logisticName: this.$refs.idname.value,
+          status: this.selected,
+          discount: this.$refs.iddiscount.value,
+          vat: this.$refs.idvat.value
+        })
         this.$emit('ok')
       },
       cancel () {

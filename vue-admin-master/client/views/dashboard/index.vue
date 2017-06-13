@@ -135,9 +135,6 @@
   </div>
 </template>
 <script>
-<<<<<<< HEAD
-import axios from 'axios';
-=======
   import axios from 'axios'
 
   export default {
@@ -167,7 +164,6 @@ import axios from 'axios';
       // }
     }
   }
->>>>>>> a925e7a30c68a732afc021a4798b0345981b1e34
 </script>
 <style lang="scss">
   .table-responsive {

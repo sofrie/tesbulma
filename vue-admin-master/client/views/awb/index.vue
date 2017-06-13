@@ -3,15 +3,16 @@
     <div class="tile is-parent">
       <div class="control is-horizontal">
         <form>
+
           <table>
             <tr>
               <td>
-                <label>Month : </label>
+                <label> {{selected}} : </label>
 
                 <span class="select">
-                <select>
-                  <option>Januari</option>
-                  <option>Februari</option>
+                <select v-model="selected" v-on:change="changeMonth">
+                  <option value="January">January</option>
+                  <option value="February">February</option>
                 </select>
               </span>
               </td>
@@ -81,12 +82,12 @@
             </td>
             <td>
               &nbsp;
-              <label>Status :</label>
+              <label>{{statusawb}} :</label>
               <span class="select">
-          <select class="select">
-            <option value="alogistic">All</option>
-            <option value="blogistic">OK</option>
-            <option value="clogistic">Problem Exist</option>
+          <select class="select" v-model="statusawb" v-on:change="changeStatus">
+            <option value="All">All</option>
+            <option value="OK">OK</option>
+            <option value="Problem Exist">Problem Exist</option>
           </select>
           </span>
 
@@ -133,129 +134,16 @@
               </thead>
               <tbody>
 
-              <tr @click="openModalCard()"  v-for="post of posts">
+              <tr v-for="post of posts">
                 <td>{{post.month}}</td>
                 <td>{{post.year}}</td>
-                <td>{{post.name}}</td>
-                <td>{{post.id}}</td>
-                <td>{{post.status}}</td>
-                <td>{{post.merchantcode}}</td>
-                <td>{{post.gdnref}}</td>
+                <td>{{post.logisticName}}</td>
+                <td>{{post.awbNumber}}</td>
+                <td>{{post.reconStatus}}</td>
+                <td>{{post.merchantCode}}</td>
+                <td>{{post.gdnRef}}</td>
               </tr>
-                <!--<td >-->
-                  <!--Januari-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--2017-->
-                <!--</td>-->
-                <!--<td >-->
-                  <!--A-->
-                <!--</td>-->
-                <!--<td >-->
-                  <!--AWB12345-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--OK-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--MERCH-CODE-0001-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--GDN-REF-ABC1-->
-                <!--</td>-->
-              <!--</tr>-->
-              <!--<tr >-->
-                <!--<td>-->
-                  <!--Januari-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--2017-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--A-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--AWB23456-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--Problem Exist-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--MERCH-CODE-0001-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--GDN-REF-ABC1-->
-                <!--</td>-->
-              <!--</tr>-->
-              <!--<tr>-->
-                <!--<td>-->
-                  <!--Januari-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--2017-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--A-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--AWB34567-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--Problem Exist-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--MERCH-CODE-0001-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--GDN-REF-ABC1-->
-                <!--</td>-->
-              <!--</tr>-->
-              <!--<tr>-->
-                <!--<td>-->
-                  <!--Januari-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--2017-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--A-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--AWB45678-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--OK-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--MERCH-CODE-0001-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--GDN-REF-ABC1-->
-                <!--</td>-->
-              <!--</tr>-->
-              <!--<tr >-->
-                <!--<td>-->
-                  <!--Januari-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--2017-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--A-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--AWB56789-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--Problem Exist-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--MERCH-CODE-0001-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--GDN-REF-ABC1-->
-                <!--</td>-->
-              <!--</tr>-->
+
               </tbody>
             </table>
             <div id="light2" class="white_content">
@@ -439,7 +327,9 @@
       errors: [],
       showModal: true,
       cardModal: null,
-      imageModal: null
+      imageModal: null,
+      selected: 'January',
+      statusawb: 'All'
     }
     ),
     methods: {
@@ -455,6 +345,27 @@
         const cardModal = this.AWBdetailModal || (this.AWBdetailModal = openCardModal({title: 'AWB13245 / GDN Ref-#1 (Problem Exist)', url: this.$store.state.pkg.homepage}))
         cardModal.$children[0].active()
       }
+    },
+    changeStatus () {
+      axios.get('http://127.0.0.1:8080/api/awb/' + this.statusawb)
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.posts = response.data
+        })
+        .catch(e => {
+          this.errors.push(e)
+        })
+    },
+
+    changeMonth () {
+      axios.get('http://127.0.0.1:8080/api/awb/January')
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.posts = response.data
+        })
+        .catch(e => {
+          this.errors.push(e)
+        })
     },
 
     // Fetches posts when the component is created.

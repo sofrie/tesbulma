@@ -5,17 +5,17 @@
         <a class="button is-info leftleft" @click="openModalCard()">Add Logistic</a>
         <div class="select rightright">
 
-          <select>
-            <option value="2016">All</option>
-            <option value="2017">Active</option>
-            <option value="2017">Inactive</option>
+          <select v-model="selected" v-on:change="changeStatus">
+            <option value="All">All</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
           </select>
         </div>
       </div>
       <div class="tile is-ancestor">
         <div class="tile is-parent">
           <div class="table-responsive">
-            <table class="table is-bordered is-striped is-narrow">
+            <table v-model="selected2" class="table is-bordered is-striped is-narrow">
               <thead>
               <tr>
                 <th>Logistic Name</th>
@@ -24,27 +24,8 @@
                 <th>VAT</th>
               </tr>
               </thead>
-              <!--<tbody>-->
-              <!--<tr>-->
-                <!--<td>A Logistic</td>-->
-                <!--<td>Active</td>-->
-                <!--<td>5%</td>-->
-                <!--<td>1%</td>-->
-              <!--</tr>-->
-              <!--<tr>-->
-                <!--<td>B Logistic</td>-->
-                <!--<td>Active</td>-->
-                <!--<td>2.25%</td>-->
-                <!--<td>1%</td>-->
-              <!--</tr>-->
-              <!--<tr>-->
-                <!--<td>C Logistic</td>-->
-                <!--<td>Active</td>-->
-                <!--<td>3.15%</td>-->
-                <!--<td>1%</td>-->
-              <!--</tr>-->
               <tr v-for="post of posts">
-                <td>{{post.name}}</td>
+                <td v-on:click="sayConsole(post.id)">{{post.logisticName}}</td>
                 <td>{{post.status}}</td>
                 <td>{{post.discount}}%</td>
                 <td>{{post.vat}}%</td>
@@ -87,7 +68,13 @@
       errors: [],
       showModal: true,
       cardModal: null,
-      imageModal: null
+      imageModal: null,
+      selected: 'All',
+      selected2: 1,
+      options: [
+        { text: 'Active', value: 'Active' },
+        { text: 'Inactive', value: 'Inactive' }
+      ]
     }
     ),
     methods: {
@@ -102,12 +89,22 @@
       openModalCard () {
         const cardModal = this.AddLogisticModal || (this.AddLogisticModal = openCardModal({title: 'Add Logistic', url: this.$store.state.pkg.homepage}))
         cardModal.$children[0].active()
+      },
+      changeStatus () {
+        axios.get('http://127.0.0.1:8080/api/logistics/' + this.selected)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
       }
     },
 
     // Fetches posts when the component is created.
     created () {
-      axios.get(`http://127.0.0.1:8080/api/logisticss`)
+      axios.get(`http://127.0.0.1:8080/api/logistics`)
         .then(response => {
           // JSON responses are automatically parsed.
           this.posts = response.data
