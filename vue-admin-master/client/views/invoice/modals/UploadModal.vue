@@ -67,6 +67,11 @@
 
 <script>
   import { CardModal } from 'vue-bulma-modal'
+  import localforage from 'localforage'
+
+  localforage.config({
+    name: 'budgeterbium'
+  })
 
   export default {
     components: {

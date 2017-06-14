@@ -3,14 +3,17 @@
     <div class="tile is-parent">
       <div class="control is-horizontal">
         <form>
-
+          <!--buat bikin for buat list nya-->
+          <!--<li v-for="reconStatus in productCategories">-->
+            <!--{{reconStatus}}-->
+          <!--</li>-->
           <table>
             <tr>
               <td>
                 <label> {{selected}} : </label>
 
                 <span class="select">
-                <select v-model="selected" v-on:change="changeMonth">
+                <select v-model="selected" v-on:change="changeMonth()">
                   <option value="January">January</option>
                   <option value="February">February</option>
                 </select>
@@ -18,13 +21,13 @@
               </td>
               <td>
 
-                <label>Logistic :</label>
+                <label>{{selectedLogistic}} :</label>
                 <span class="select">
-          <select class="select">
-            <option value="alogistic">A logistic</option>
-            <option value="blogistic">B logistic</option>
-            <option value="clogistic">C logistic</option>
-            <option value="dlogistic">D logistic</option>
+          <select class="select" v-model="selectedLogistic" v-on:change="changeLogistic()">
+            <option value="A Logistic">A Logistic</option>
+            <option value="B Logistic">B Logistic</option>
+            <option value="C Logistic">C Logistic</option>
+            <option value="D Logistic">D Logistic</option>
           </select>
           </span>
 
@@ -36,7 +39,7 @@
                   &nbsp;
                   <div class="control is-grouped">
                     <p class="control is-expanded">
-                      <input class="input" type="text" placeholder="AWB">
+                      <input class="input" type="text" placeholder="AWB" v-model="AwbNumber" v-on:change="changeAwbNumber()">
                     </p>
                   </div>
                 </div>
@@ -52,7 +55,7 @@
                   &nbsp;
                   <div class="control is-grouped">
                     <p class="control is-expanded">
-                      <input class="input" type="text" placeholder="Ref">
+                      <input class="input" type="text" placeholder="Ref" v-model="gdnRef" v-on:change="changeGdnRef()">
                     </p>
                   </div>
                 </div>
@@ -75,17 +78,19 @@
               <label>Year : </label>
 
               <span class="select">
-                <select>
+                <select  v-model="selectedYear" v-on:change="changeYear()">
                   <option>2017</option>
+                  <option>2018</option>
                 </select>
               </span>
             </td>
             <td>
               &nbsp;
-              <label>{{statusawb}} :</label>
+              <label>Status :</label>
               <span class="select">
-          <select class="select" v-model="statusawb" v-on:change="changeStatus">
+          <select class="select" v-model="statusawb" v-on:change="changeStatus()">
             <option value="All">All</option>
+           <!--<option v-for="reconStatus in productCategories" :value="reconStatus">{{reconStatus}}</option>-->
             <option value="OK">OK</option>
             <option value="Problem Exist">Problem Exist</option>
           </select>
@@ -100,7 +105,7 @@
                 &nbsp;
                 <div class="control is-grouped">
                   <p class="control is-expanded">
-                    <input class="input" type="text" placeholder="Code">
+                    <input class="input" type="text" placeholder="Code" v-model="merchantCode" v-on:change="changeMerchantCode()">
                   </p>
                 </div>
               </div>
@@ -109,7 +114,7 @@
             &emsp;
             &emsp;
             <td>
-              <button class="button is-info pull-right">Submit</button>
+              <button class="button is-info pull-right" v-on:click="filterAll()">Search</button>
             </td>
           </tr>
         </table>
@@ -308,6 +313,7 @@
   import Modal from './modals/Modal'
   import AWBdetailModal from './modals/AWBdetailModal'
 
+  import uniq from 'lodash/uniq'
   import axios from 'axios'
   const AWBdetailModalComponent = Vue.extend(AWBdetailModal)
   const openCardModal = (propsData = {
@@ -325,11 +331,18 @@
     data: () => ({
       posts: [],
       errors: [],
+      statuss: [],
+      tempstatus: [],
       showModal: true,
       cardModal: null,
       imageModal: null,
       selected: 'January',
-      statusawb: 'All'
+      statusawb: 'All',
+      selectedYear: '2017',
+      selectedLogistic: 'A Logistic',
+      AwbNumber: '',
+      merchantCode: '',
+      gdnRef: ''
     }
     ),
     methods: {
@@ -344,28 +357,88 @@
       openModalCard () {
         const cardModal = this.AWBdetailModal || (this.AWBdetailModal = openCardModal({title: 'AWB13245 / GDN Ref-#1 (Problem Exist)', url: this.$store.state.pkg.homepage}))
         cardModal.$children[0].active()
-      }
-    },
-    changeStatus () {
-      axios.get('http://127.0.0.1:8080/api/awb/' + this.statusawb)
-        .then(response => {
-          // JSON responses are automatically parsed.
-          this.posts = response.data
-        })
-        .catch(e => {
-          this.errors.push(e)
-        })
-    },
+      },
+      changeStatus () {
+        axios.get('http://127.0.0.1:8080/api/awb/filterstatus/' + this.statusawb)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+      },
 
-    changeMonth () {
-      axios.get('http://127.0.0.1:8080/api/awb/January')
-        .then(response => {
-          // JSON responses are automatically parsed.
-          this.posts = response.data
-        })
-        .catch(e => {
-          this.errors.push(e)
-        })
+      changeMonth () {
+        axios.get('http://127.0.0.1:8080/api/awb/' + this.selected)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+      },
+      changeYear () {
+        axios.get('http://127.0.0.1:8080/api/awb/filteryear/' + this.selectedYear)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+      },
+      changeLogistic () {
+        axios.get('http://127.0.0.1:8080/api/awb/filterlogisticName/' + this.selectedLogistic)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+      },
+      changeAwbNumber () {
+        axios.get('http://127.0.0.1:8080/api/awb/filterAwbNumber/' + this.AwbNumber)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+      },
+      changeMerchantCode () {
+        axios.get('http://127.0.0.1:8080/api/awb/filterMerchantCode/' + this.merchantCode)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+      },
+      changeGdnRef () {
+        axios.get('http://127.0.0.1:8080/api/awb/filterGdnRef/' + this.gdnRef)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+      },
+      filterAll () {
+        axios.get('http://127.0.0.1:8080/api/awb/filter/' + this.selected + '/' + this.selectedYear + '/' + this.selectedLogistic + '/' + this.AwbNumber + '/' + this.statusawb + '/' + this.merchantCode + '/' + this.gdnRef)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+      }
     },
 
     // Fetches posts when the component is created.
@@ -387,6 +460,12 @@
       // } catch (e) {
       //   this.errors.push(e)
       // }
+    },
+    computed: {
+      productCategories () {
+        this.statuss = uniq(this.posts.map(p => p.reconStatus))
+        return this.statuss
+      }
     }
   }
 </script>

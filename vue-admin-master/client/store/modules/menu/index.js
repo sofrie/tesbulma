@@ -36,7 +36,16 @@ const state = {
     },
     uifeatures,
     components,
-    tables
+    tables,
+    {
+      name: 'upload',
+      path: '/upload',
+      meta: {
+        icon: 'fa-cogs',
+        link: 'upload/index.vue'
+      },
+      component: lazyLoading('upload', true)
+    }
   ]
 }
 
