@@ -9,6 +9,8 @@ package com.gdn.scm.bolivia.controller;
  *
  * @author sofrie.zumaytis
  */
+import com.gdn.scm.bolivia.entity.Compare;
+import com.gdn.scm.bolivia.entity.UploadHistory;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -23,6 +25,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,14 +41,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class UploadController {
 
-  
   /**
    * Show the index page containing the form for uploading a file.
    */
-  @RequestMapping("/")
-  public String index() {
-    return "index.html";
-  }
+  @RequestMapping(value = "/compare", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void compare() {
+        Compare c=new Compare();
+        //return logistic;
+    }
   
   /**
    * POST /uploadFile -> receive and locally save a file.
