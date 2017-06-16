@@ -13,7 +13,7 @@
               <td colspan="3" class="tdcenter"><label class="label">Total Shipping</label></td>
               </tr>
               <tr>
-                <td class="tdright"><label>Tolerance Persentage : &nbsp;</label></td>
+                <td class="tdright"><label>Tolerance Percentage : &nbsp;</label></td>
                 <td><input class="input" type="text" placeholder="3"></td>
               </tr>
               <tr>              &nbsp;
@@ -29,7 +29,7 @@
               <td colspan="3" class="tdcenter"><label class="label">Weight</label></td>
               </tr>
                 <tr>
-                  <td class="tdright"><label>Tolerance Persentage : &nbsp;</label></td>
+                  <td class="tdright"><label>Tolerance Percentage : &nbsp;</label></td>
                   <td><input class="input" type="text" placeholder="10"></td>
                 </tr>
                 <tr>              &nbsp;
@@ -45,7 +45,7 @@
               <td colspan="3" class="tdcenter"><label class="label">Insurance Charge</label></td>
               </tr>
                 <tr>
-                  <td class="tdright"><label>Tolerance Persentage : &nbsp;</label></td>
+                  <td class="tdright"><label>Tolerance Percentage : &nbsp;</label></td>
                   <td><input class="input" type="text" placeholder="10"></td>
                 </tr>
                 <tr>              &nbsp;
@@ -63,7 +63,7 @@
               <td colspan="3" class="tdcenter"><label class="label">Price/Kg</label></td>
               </tr>
                 <tr>
-                  <td class="tdright"><label>Tolerance Persentage : &nbsp;</label></td>
+                  <td class="tdright"><label>Tolerance Percentage : &nbsp;</label></td>
                   <td><input class="input" type="text" placeholder="2"></td>
                 </tr>
                 <tr>              &nbsp;
@@ -79,7 +79,7 @@
               <td colspan="3" class="tdcenter"><label class="label">Gift Wrap Charge</label></td>
               </tr>
                 <tr>
-                  <td class="tdright"><label>Tolerance Persentage : &nbsp;</label></td>
+                  <td class="tdright"><label>Tolerance Percentage : &nbsp;</label></td>
                   <td><input class="input" type="text" placeholder="15"></td>
                 </tr>
                 <tr>              &nbsp;
@@ -95,7 +95,7 @@
               <td colspan="3" class="tdcenter"><label class="label">Other Charge</label></td>
               </tr>
               <tr>
-                <td class="tdright"><label>Tolerance Persentage : &nbsp;</label></td>
+                <td class="tdright"><label>Tolerance Percentage : &nbsp;</label></td>
               <td><input class="input" type="text" placeholder="3.5"></td>
               </tr>
               <tr>              &nbsp;

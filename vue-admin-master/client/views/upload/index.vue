@@ -6,7 +6,7 @@
         <h1>Upload images</h1>
         <a>{{uploadFieldName}}</a>
         <div class="dropbox">
-          <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept="image/*" class="input-file">
+          <input type="file" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" class="input-file">
           <p v-if="isInitial">
             Drag your file(s) here to begin<br> or click to browse
           </p>
@@ -45,9 +45,6 @@
 <!-- Javascript -->
 <script>
   import { upload } from './file-upload.service'
-//  import { upload } from './file-upload.fake.service' // fake service
-  import { wait } from './utils'
-//  import axios from 'axios'
 
   const STATUS_INITIAL = 0
   const STATUS_SAVING = 1
@@ -61,7 +58,7 @@
         uploadedFiles: [],
         uploadError: null,
         currentStatus: null,
-        uploadFieldName: 'photos'
+        uploadFieldName: 'invoiceFile'
       }
     },
     computed: {
@@ -90,7 +87,6 @@
         this.currentStatus = STATUS_SAVING
 
         upload(formData)
-          .then(wait(1500)) // DEV ONLY: wait for 1.5s
           .then(x => {
             this.uploadedFiles = [].concat(x)
             this.currentStatus = STATUS_SUCCESS

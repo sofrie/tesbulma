@@ -1,10 +1,7 @@
 import * as types from '../../mutation-types'
 import lazyLoading from './lazyLoading'
-import uifeatures from './uifeatures'
 import awb from './awb'
 import logistic from './logistics'
-import components from './components'
-import tables from './tables'
 import invoices from './invoices'
 
 // show: meta.label -> name
@@ -33,18 +30,6 @@ const state = {
         link: 'setting/index.vue'
       },
       component: lazyLoading('setting', true)
-    },
-    uifeatures,
-    components,
-    tables,
-    {
-      name: 'upload',
-      path: '/upload',
-      meta: {
-        icon: 'fa-cogs',
-        link: 'upload/index.vue'
-      },
-      component: lazyLoading('upload', true)
     }
   ]
 }

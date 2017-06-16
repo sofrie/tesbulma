@@ -2,133 +2,64 @@
   <div>
     <div class="tile is-parent">
       <form>
-      Month :  &nbsp
-        <span class="select">
-      <select>
-        <option value="januari">Januari</option>
-        <option value="februari">Februari</option>
-        <option value="maret">Maret</option>
-        <option value="april">April</option>
-      </select>
+      {{selectedMonth}} :  &nbsp
+        <span class="select" >
+          <select v-on:change="changeMonth()" v-model="selectedMonth">
+            <option value="January">January</option>
+            <option value="February">February</option>
+            <option value="maret">Maret</option>
+            <option value="april">April</option>
+            <option value="June">June</option>
+          </select>
         </span>      &emsp;
       &emsp;
       Year :  &nbsp
         <span class="select">
-      <select>
-        <option value="2016">2016</option>
-        <option value="2017">2017</option>
-      </select>
+          <select v-on:change="changeYear()" v-model="selectedYear">
+            <option value="2016">2016</option>
+            <option value="2017">2017</option>
+          </select>
         </span>
       &emsp;
       &emsp;
       Logistic :  &nbsp
         <span class="select">
-      <select>
-        <option value="alogistic">A logistic</option>
-        <option value="blogistic">B logistic</option>
-        <option value="clogistic">C logistic</option>
-        <option value="dlogistic">D logistic</option>
-      </select>
+          <select v-on:change="changeLogistic()" v-model="selectedLogistic">
+            <option value="A Logistic">A logistic</option>
+            <option value="B Logistic">B logistic</option>
+            <option value="C Logistic">C logistic</option>
+            <option value="D Logistic">D logistic</option>
+          </select>
         </span>
       &emsp;
-      &emsp;<button class="button is-info"> Search</button>
+      &emsp;<button class="button is-info" > Search</button>
       &emsp;
       <a class="button is-info" @click="openModalCard()">
         Upload
       </a>
-      <!--<div id="light2" class="white_content">-->
-        <!--<p class="control has-addons has-addons-right">-->
-          <!--<a-->
-            <!--onclick="document.getElementById('light2').style.display='none';document.getElementById('fade2').style.display='none'">X &nbsp;</a>-->
-        <!--</p>-->
-        <!--<div class="tile is-parent">-->
-          <!--<article class="tile is-child box ">-->
-
-            <!--<h1 class="title">Upload Invoice</h1>-->
-
-            <!--<div class="block ">-->
-              <!--<table class="tablepopup" width="200px" margin="10px">-->
-                <!--<tr>-->
-                  <!--<td>Month</td>-->
-                  <!--<td>-->
-              <!--<span class="select">-->
-                <!--<select>-->
-                  <!--<option>January</option>-->
-                  <!--<option>Februari</option>-->
-                <!--</select>-->
-              <!--</span>-->
-                  <!--</td>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                  <!--<td>Year </td>-->
-                  <!--<td>-->
-              <!--<span class="select">-->
-                <!--<select>-->
-                  <!--<option>2017</option>-->
-                <!--</select>-->
-              <!--</span>-->
-                  <!--</td>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                  <!--<td>Logistic </td>-->
-                  <!--<td>-->
-              <!--<span class="select">-->
-                <!--<select>-->
-                  <!--<option>A Logistic</option>-->
-				  <!--<option>B Logistic</option>-->
-				  <!--<option>C Logistic</option>-->
-                <!--</select>-->
-              <!--</span>-->
-                  <!--</td>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                  <!--<td>File</td>-->
-                  <!--<td>-->
-                    <!--<input type="file" name="datafile" size="40">-->
-                  <!--</td>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                  <!--<td>&nbsp;</td>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                  <!--<td colspan="2">-->
-                    <!--<button class="button is-info ">Submit Upload</button>-->
-                  <!--</td>-->
-                <!--</tr>-->
-              <!--</table>-->
-            <!--</div>-->
-
-          <!--</article>-->
-        <!--</div>-->
-      <!--</div>-->
-      <!--<div id="fade2" class="black_overlay"></div>-->
       </form>
     </div>
     <div class="block">
       <article class="tile is-child box">
-        <h2 class="title">Summary - Invoice A Logistic / Januari / 2017</h2>
+        <h2 class="title">Summary - Invoice A Logistic / January / 2017</h2>
         <div class="tile is-parent is-8">
-        <table >
-          <tr>
-            <td >
-              <b >OK :298527 data</b></td>
-            <td>
-              <b>Problem Exiist : 219 data</b></td>
-            <td>
-              <b>Status:Open</b></td>
-            <td>
-              <b>Jumlah Tagihan:Rp.xx.xxx</b></td>
-          </tr>
-        </table>
+          <table >
+            <tr>
+              <td >
+                <b >OK :298527 data</b></td>
+              <td>
+                <b>Problem Exist : 219 data</b></td>
+              <td>
+                <b>Status:Open</b></td>
+              <td>
+                <b>Jumlah Tagihan:Rp.xx.xxx</b></td>
+            </tr>
+          </table>
         </div>
-
         <button class="button is-info">View Data</button>
         <button class="button is-info">Download</button>
         <button class="button is-info pull-right one">Approve</button>
-        <button class="button is-info pull-right">Submit</button>
-
+        <button class="button is-info pull-right" v-on:click="uploaded()">Submit</button>
       </article>
     </div>
 
@@ -151,135 +82,15 @@
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>
-                  Januari
-                </td>
-                <td>
-                  2017
-                </td>
-                <td>
-                  297227
-                </td>
-                <td>
-                  30000
-                </td>
-                <td>
-                  Rp. x.xxx.xxx
-                </td>
-                <td>
-                  A
-                </td>
-                <td>
-                  Done
-                </td>
-                <td>
-                  03 Februari 2017 09:05:10
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Januari
-                </td>
-                <td>
-                  2017
-                </td>
-                <td>
-                  300
-                </td>
-                <td>
-                  10
-                </td>
-                <td>
-                  Rp. x.xxx.xxx
-                </td>
-                <td>
-                  A
-                </td>
-                <td>
-                  Done
-                </td>
-                <td>
-                   09 Februari 2017 11:05:10
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Januari
-                </td>
-                <td>
-                  2017
-                </td>
-                <td>
-                  1000
-                </td>
-                <td>
-                  141
-                </td>
-                <td>
-                  Rp. x.xxx.xxx
-                </td>
-                <td>
-                  A
-                </td>
-                <td>
-                  Done
-                </td>
-                <td>
-                  27 Februari 2017 10:15:11
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Januari
-                </td>
-                <td>
-                  2017
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  Rp. x.xxx.xxx
-                </td>
-                <td>
-                  A
-                </td>
-                <td>
-                  On Process
-                </td>
-                <td>
-                  28 Februari 2017 15:05:10
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Januari
-                </td>
-                <td>
-                  2017
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  Rp. x.xxx.xxx
-                </td>
-                <td>
-                  A
-                </td>
-                <td>
-                  Uploaded
-                </td>
-                <td>
-                  03 Februari 2017 15:05:10
-                </td>
+              <tr v-for="post of posts">
+                <td>{{post.month}}</td>
+                <td>{{post.year}}</td>
+                <td>{{post.ok}}</td>
+                <td>{{post.problemExist}}</td>
+                <td>{{post.jumlahTagihan}}</td>
+                <td>{{post.logistic}}</td>
+                <td>{{post.status}}</td>
+                <td>{{post.last_modified}}</td>
               </tr>
               </tbody>
             </table>
@@ -295,6 +106,7 @@
   import Vue from 'vue'
   import UploadModal from './modals/UploadModal'
   import Modal from './modals/Modal'
+  import axios from 'axios'
 
   const UploadModalComponent = Vue.extend(UploadModal)
 
@@ -316,9 +128,14 @@
 
     data () {
       return {
+        posts: [],
+        errors: [],
         showModal: true,
         cardModal: null,
-        imageModal: null
+        imageModal: null,
+        selectedMonth: 'January',
+        selectedYear: '2017',
+        selectedLogistic: 'A Logistic'
       }
     },
 
@@ -334,7 +151,54 @@
       openModalCard () {
         const cardModal = this.AWBdetailModal || (this.AWBdetailModal = openCardModal({title: 'Upload Invoice', url: this.$store.state.pkg.homepage}))
         cardModal.$children[0].active()
+      },
+      uploaded () {
+        axios.post(`http://127.0.0.1:8080/api/uploadHistory`, {
+          month: this.selectedMonth,
+          year: '2017',
+          logistic: this.selectedLogistic
+        })
+      },
+      changeMonth () {
+        axios.get('http://127.0.0.1:8080/api/uploadHistory/month/' + this.selectedMonth)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+      },
+      changeYear () {
+        axios.get('http://127.0.0.1:8080/api/uploadHistory/year/' + this.selectedYear)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+      },
+      changeLogistic () {
+        axios.get('http://127.0.0.1:8080/api/uploadHistory/logistic/' + this.selectedLogistic)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
       }
+    },
+    created () {
+      axios.get(`http://127.0.0.1:8080/api/uploadHistory`)
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.posts = response.data
+        })
+        .catch(e => {
+          this.errors.push(e)
+        })
     }
   }
 </script>
