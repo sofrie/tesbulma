@@ -21,7 +21,21 @@ public interface AWBService {
 
     List<AWB> GetbyStatus(String status);
     
+    List<AWB> GetbyYear(String year);
+    
+    List<AWB> GetbyLogisticName (String logisticName);
+    
     List<AWB> GetbyMonth(String month);
+    
+    List<String> selectAllYear();
+    
+    List<AWB> GetByAwbNumber(String awbNumber);
+    
+    List<AWB> GetByMerchantCode(String merchantCode);
+    
+    List<AWB> GetByGdnRef(String gdnRef);
+    
+    List<AWB> filterAll(String month, String year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef);
 
     void updateAWB(AWB a);
 

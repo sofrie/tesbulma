@@ -37,21 +37,21 @@ public class LogisticProviderController {
     public List<LogisticProvider> daftarLogistik = new ArrayList<>();
     public LogisticProvider l = new LogisticProvider();
 
-    @CrossOrigin(origins = "http://localhost:8085")
+    @CrossOrigin
     @RequestMapping(value = "/api/logistics", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<LogisticProvider> listlogistik() {
         return logisticProviderService.GetAll();
     }
 
     //sort logistic by status
-    @CrossOrigin(origins = "http://localhost:8085")
+    @CrossOrigin
     @RequestMapping(value = "/api/logistics/{status}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<LogisticProvider> sortLogistik(@PathVariable("status") String status) {
         return logisticProviderService.GetbyStatus(status);
     }
 
     //add LogisticProvider
-    @CrossOrigin(origins = "http://localhost:8085")
+    @CrossOrigin
     @RequestMapping(value = "/api/logisticsss", method = RequestMethod.POST)
     public void createLogistic(@RequestBody LogisticProviderRequest request) {
         logisticProviderService.addLogisticProvider(request);
