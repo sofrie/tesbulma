@@ -5,10 +5,13 @@
  */
 package com.gdn.scm.bolivia.controller;
 
+<<<<<<< HEAD
 /**
  *
  * @author sofri
  */
+=======
+>>>>>>> 1da5fad02d5cbb8c083b1b203322d08cc45dd633
 import com.gdn.scm.bolivia.entity.UploadModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +32,18 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+<<<<<<< HEAD
 import org.springframework.web.bind.annotation.RequestBody;
 
+=======
+import org.springframework.web.bind.annotation.CrossOrigin;
+
+
+/**
+ *
+ * @author sofrie.zumaytis
+ */
+>>>>>>> 1da5fad02d5cbb8c083b1b203322d08cc45dd633
 @RestController
 public class RestUploadController {
 
@@ -43,6 +56,7 @@ public class RestUploadController {
     @PostMapping("/api/upload")
     // If not @RestController, uncomment this
     //@ResponseBody
+<<<<<<< HEAD
     public void uploadFile(@RequestBody UploadModel uploadfile) {
         logger.debug("Single file upload!");
 //        if (uploadfile.getFiles().length<=0) {
@@ -53,6 +67,28 @@ public class RestUploadController {
 
         }//        return new ResponseEntity("Successfully uploaded - " +
 //                uploadfile.getFiles()[0].getOriginalFilename(), new HttpHeaders(), HttpStatus.OK);
+=======
+      @CrossOrigin
+    public ResponseEntity<?> uploadFile(@RequestParam MultipartFile invoiceFile) {
+
+        logger.debug("Single file upload!");
+
+        if (invoiceFile.isEmpty()) {
+            return new ResponseEntity("please select a file!", HttpStatus.OK);
+        }
+
+        try {
+
+            saveUploadedFiles(Arrays.asList(invoiceFile));
+
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity("Successfully uploaded - " +
+                invoiceFile.getOriginalFilename(), new HttpHeaders(), HttpStatus.OK);
+
+>>>>>>> 1da5fad02d5cbb8c083b1b203322d08cc45dd633
     }
 
     // 3.1.2 Multiple file upload
@@ -118,4 +154,8 @@ public class RestUploadController {
         }
 
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 1da5fad02d5cbb8c083b1b203322d08cc45dd633

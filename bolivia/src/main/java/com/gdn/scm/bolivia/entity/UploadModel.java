@@ -7,15 +7,25 @@ package com.gdn.scm.bolivia.entity;
 
 /**
  *
+<<<<<<< HEAD
  * @author sofri
+=======
+ * @author sofrie.zumaytis
+>>>>>>> 1da5fad02d5cbb8c083b1b203322d08cc45dd633
  */
 import org.springframework.web.multipart.MultipartFile;
 
 public class UploadModel {
 
+<<<<<<< HEAD
     public String extraField;
 
     public MultipartFile[] files;
+=======
+    private String extraField;
+
+    private MultipartFile[] files;
+>>>>>>> 1da5fad02d5cbb8c083b1b203322d08cc45dd633
 
     //getters and setters
 
@@ -35,4 +45,8 @@ public class UploadModel {
         this.files = files;
     }
     
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 1da5fad02d5cbb8c083b1b203322d08cc45dd633

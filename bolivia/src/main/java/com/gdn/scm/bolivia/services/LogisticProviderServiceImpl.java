@@ -31,8 +31,8 @@ public class LogisticProviderServiceImpl implements LogisticProviderService {
     @Override
     public void addLogisticProvider(LogisticProviderRequest request) {
         LogisticProvider logistic = new LogisticProvider(request.getLogisticCode(), request.getLogisticName(), request.getStatus(), request.getDiscount(), request.getVat());
-        Long count = logisticProviderRepository.count();
-        count+=2;
+        Integer count = logisticProviderRepository.findAll().size();
+        count+=1;
         
         String number="";
         if(count<10)
@@ -45,7 +45,7 @@ public class LogisticProviderServiceImpl implements LogisticProviderService {
         }
         
         logistic.setId(count.toString());
-        logistic.setLogisticCode("LogisticCode" + count);
+        logistic.setLogisticCode("LogisticCode" + number);
 //        System.out.print("---------");
 //        System.out.print(logistic.getId());
 //        System.out.print("-----------");
