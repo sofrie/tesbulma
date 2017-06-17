@@ -44,9 +44,10 @@
 
 <!-- Javascript -->
 <script>
-  import { upload } from './file-upload.service'
+  // import { upload } from './file-upload.service'
 //  import { upload } from './file-upload.fake.service' // fake service
   import { wait } from './utils'
+  import axios from 'axios'
 //  import axios from 'axios'
 
   const STATUS_INITIAL = 0
@@ -61,7 +62,8 @@
         uploadedFiles: [],
         uploadError: null,
         currentStatus: null,
-        uploadFieldName: 'photos'
+        uploadFieldName: 'photos',
+        fileCount: 0
       }
     },
     computed: {
@@ -89,7 +91,7 @@
         // upload data to the server
         this.currentStatus = STATUS_SAVING
 
-        upload(formData)
+        this.upload(formData)
           .then(wait(1500)) // DEV ONLY: wait for 1.5s
           .then(x => {
             this.uploadedFiles = [].concat(x)
@@ -110,10 +112,17 @@
         Array
           .from(Array(fileList.length).keys())
           .map(x => {
-            formData.append(fieldName, fileList[x], fileList[x].name)
+            formData.append('avatar', fileList[0])
           })
         // save it
         this.save(formData)
+      },
+      upload (formData)
+      {
+         axios.post(`http://127.0.0.1:8080/api/upload`, {
+          extraField: 'haha',
+          files: formData
+        })
       }
     },
     mounted () {
