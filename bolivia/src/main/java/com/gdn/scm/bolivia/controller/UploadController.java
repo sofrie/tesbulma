@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,7 @@ public class UploadController {
   @RequestMapping(value = "/compare", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public void compare() {
         Compare c=new Compare();
+       
         //return logistic;
     }
   
@@ -69,7 +71,12 @@ public class UploadController {
       // Get the filename and build the local file path
       String filename = uploadfile.getOriginalFilename();
       String directory ="D://temp//";
+      Date date=new Date();
+      filename+=date.toString();
       String filepath = Paths.get(directory, filename).toString();
+      System.out.println("==================");
+      System.out.println(filename);
+      System.out.println("==================");
       
       // Save the file locally
       BufferedOutputStream stream =
