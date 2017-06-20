@@ -98,10 +98,10 @@ public class AWB {
     public static final String COLUMN_YEAR = "YEAR";
     public static final String COLUMN_LOGISTIC_NAME = "LOGISTIC_NAME";
 
-//    
-//    @Column(name = COLUMN_ID, nullable = false)
-//    @Id
-//    private String id;
+    public Integer counter=0;
+    public String uploadHistoryNumber;
+    
+    
     @Id
     @Column(name = COLUMN_AWB_NUMBER, nullable = false)
     private String awbNumber;
@@ -161,13 +161,13 @@ public class AWB {
     private String insuranceChargeComment;
 
     @Column(name = COLUMN_TOTAL_CHARGE_SYSTEM, nullable = true)
-    private String totalChargeSystem;
+    private Double totalChargeSystem;
     @Column(name = COLUMN_TOTAL_CHARGE_LOGISTIC, nullable = true)
-    private String totalChargeLogistic;
+    private Double totalChargeLogistic;
     @Column(name = COLUMN_TOTAL_CHARGE_APPLIED, nullable = true)
     private String totalChargeApplied;
     @Column(name = COLUMN_TOTAL_CHARGE_COMMENT, nullable = true)
-    private String totalChargeComment;
+    private Double totalChargeComment;
 
     @Column(name = COLUMN_FAILURE, nullable = true)
     private String failure;
@@ -251,6 +251,7 @@ public class AWB {
         gdnRef=row.getCell(4).toString();
         kodeDestinasiSystem=row.getCell(5).toString();
         namaPenerimaSystem=row.getCell(6).toString();
+        totalChargeSystem=row.getCell(9).getNumericCellValue();
     }
 
 }

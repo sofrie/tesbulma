@@ -53,7 +53,7 @@ public class LogisticProviderServiceImpl implements LogisticProviderService {
     }
     
     @Override
-    public List<LogisticProvider> GetAll() {
+    public List<LogisticProvider> getAll() {
         return logisticProviderRepository.findAll();
     }
     
@@ -63,7 +63,7 @@ public class LogisticProviderServiceImpl implements LogisticProviderService {
     }
     
     @Override
-    public void DeleteLogisticProvider(Integer id) {
+    public void deleteLogisticProvider(Integer id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -72,7 +72,7 @@ public class LogisticProviderServiceImpl implements LogisticProviderService {
 //        
 //    }
     @Override
-    public List<LogisticProvider> GetbyStatus(String status) {
+    public List<LogisticProvider> getByStatus(String status) {
         if (status.equals("All")) {
             return logisticProviderRepository.findAll();
         } else {

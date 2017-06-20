@@ -40,19 +40,19 @@ public class LogisticProviderController {
     @CrossOrigin
     @RequestMapping(value = "/api/logistics", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<LogisticProvider> listlogistik() {
-        return logisticProviderService.GetAll();
+        return logisticProviderService.getAll();
     }
 
     //sort logistic by status
     @CrossOrigin
     @RequestMapping(value = "/api/logistics/{status}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<LogisticProvider> sortLogistik(@PathVariable("status") String status) {
-        return logisticProviderService.GetbyStatus(status);
+        return logisticProviderService.getByStatus(status);
     }
 
     //add LogisticProvider
     @CrossOrigin
-    @RequestMapping(value = "/api/logisticsss", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/logistics", method = RequestMethod.POST)
     public void createLogistic(@RequestBody LogisticProviderRequest request) {
         logisticProviderService.addLogisticProvider(request);
         //return logistic;

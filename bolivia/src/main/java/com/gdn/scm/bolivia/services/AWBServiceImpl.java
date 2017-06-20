@@ -28,12 +28,12 @@ public class AWBServiceImpl implements AWBService {
     }
 
     @Override
-    public List<AWB> GetAll() {
+    public List<AWB> getAll() {
         return aWBRepository.findAll();
     }
 
     @Override
-    public List<AWB> GetbyStatus(String status) {
+    public List<AWB> getByStatus(String status) {
         if (status.equals("All")) {
             return aWBRepository.findAll();
         } else {
@@ -47,22 +47,22 @@ public class AWBServiceImpl implements AWBService {
     }
 
     @Override
-    public void DeleteAWB(Integer id) {
+    public void deleteAWB(Integer id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<AWB> GetbyMonth(String month) {
+    public List<AWB> getByMonth(String month) {
         return aWBRepository.findByMonth(month);
     }
 
     @Override
-    public List<AWB> GetbyYear(String year) {
+    public List<AWB> getByYear(String year) {
         return aWBRepository.findByYear(year);
     }
 
     @Override
-    public List<AWB> GetbyLogisticName(String logisticName) {
+    public List<AWB> getByLogisticName(String logisticName) {
         return aWBRepository.findByLogisticName(logisticName);
     }
 
@@ -72,17 +72,17 @@ public class AWBServiceImpl implements AWBService {
     }
 
     @Override
-    public List<AWB> GetByAwbNumber(String awbNumber) {
+    public List<AWB> getByAwbNumber(String awbNumber) {
         return aWBRepository.findByAwbNumber(awbNumber);
     }
 
     @Override
-    public List<AWB> GetByMerchantCode(String merchantCode) {
+    public List<AWB> getByMerchantCode(String merchantCode) {
         return aWBRepository.findByMerchantCode(merchantCode);
     }
 
     @Override
-    public List<AWB> GetByGdnRef(String gdnRef) {
+    public List<AWB> getByGdnRef(String gdnRef) {
         return aWBRepository.findByGdnRef(gdnRef);
     }
 

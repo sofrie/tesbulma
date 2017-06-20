@@ -32,7 +32,8 @@ public class UploadHistoryServiceImpl implements UploadHistoryService {
     public void addUploadHistory(UploadHistoryRequest a) {
         UploadHistory upload = new UploadHistory();
         BeanUtils.copyProperties(a, upload);
-        Integer count = uploadHistoryRepository.findAll().size() + 2;
+        Integer count =0;
+        count= uploadHistoryRepository.findAll().size();
         DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yy HH:mm:ss");
         Date date = new Date();
 
@@ -47,27 +48,27 @@ public class UploadHistoryServiceImpl implements UploadHistoryService {
     }
 
     @Override
-    public List<UploadHistory> GetAll() {
+    public List<UploadHistory> getAll() {
         return uploadHistoryRepository.findAll();
     }
 
     @Override
-    public List<UploadHistory> GetbyStatus(String status) {
+    public List<UploadHistory> getByStatus(String status) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<UploadHistory> GetbyYear(String year) {
+    public List<UploadHistory> getByYear(String year) {
         return uploadHistoryRepository.findByYear(year);
     }
 
     @Override
-    public List<UploadHistory> GetbyLogisticName(String logisticName) {
+    public List<UploadHistory> getByLogisticName(String logisticName) {
         return uploadHistoryRepository.findByLogistic(logisticName);
     }
 
     @Override
-    public List<UploadHistory> GetbyMonth(String month) {
+    public List<UploadHistory> getByMonth(String month) {
         return uploadHistoryRepository.findByMonth(month);
     }
 
@@ -82,8 +83,18 @@ public class UploadHistoryServiceImpl implements UploadHistoryService {
     }
 
     @Override
-    public void DeleteUploadHistory(Integer id) {
+    public void deleteUploadHistory(Integer id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public UploadHistory getById(String ID) {
+        return uploadHistoryRepository.findOne(ID);
+    }
+
+    @Override
+    public void addUploadHistory(UploadHistory a) {
+        uploadHistoryRepository.save(a);
     }
 
 }

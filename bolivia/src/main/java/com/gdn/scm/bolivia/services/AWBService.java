@@ -17,27 +17,27 @@ public interface AWBService {
 
     void addAWB(AWBRequest a);
 
-    List<AWB> GetAll();
+    List<AWB> getAll();
 
-    List<AWB> GetbyStatus(String status);
+    List<AWB> getByStatus(String status);
     
-    List<AWB> GetbyYear(String year);
+    List<AWB> getByYear(String year);
     
-    List<AWB> GetbyLogisticName (String logisticName);
+    List<AWB> getByLogisticName (String logisticName);
     
-    List<AWB> GetbyMonth(String month);
+    List<AWB> getByMonth(String month);
     
     List<String> selectAllYear();
     
-    List<AWB> GetByAwbNumber(String awbNumber);
+    List<AWB> getByAwbNumber(String awbNumber);
     
-    List<AWB> GetByMerchantCode(String merchantCode);
+    List<AWB> getByMerchantCode(String merchantCode);
     
-    List<AWB> GetByGdnRef(String gdnRef);
+    List<AWB> getByGdnRef(String gdnRef);
     
     List<AWB> filterAll(String month, String year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef);
 
     void updateAWB(AWB a);
 
-    void DeleteAWB(Integer id);
+    void deleteAWB(Integer id);
 }

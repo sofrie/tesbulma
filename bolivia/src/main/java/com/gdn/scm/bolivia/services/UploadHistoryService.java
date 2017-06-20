@@ -16,20 +16,24 @@ import java.util.List;
  */
 public interface UploadHistoryService {
     void addUploadHistory(UploadHistoryRequest a);
+    
+     void addUploadHistory(UploadHistory a);
+    
+    UploadHistory getById(String ID);
 
-    List<UploadHistory> GetAll();
+    List<UploadHistory> getAll();
 
-    List<UploadHistory> GetbyStatus(String status);
+    List<UploadHistory> getByStatus(String status);
     
-    List<UploadHistory> GetbyYear(String year);
+    List<UploadHistory> getByYear(String year);
     
-    List<UploadHistory> GetbyLogisticName (String logisticName);
+    List<UploadHistory> getByLogisticName (String logisticName);
     
-    List<UploadHistory> GetbyMonth(String month);    
+    List<UploadHistory> getByMonth(String month);    
    
     List<UploadHistory> filterAll(String month, String year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef);
 
     void updateUploadHistory(UploadHistory a);
 
-    void DeleteUploadHistory(Integer id);
+    void deleteUploadHistory(Integer id);
 }

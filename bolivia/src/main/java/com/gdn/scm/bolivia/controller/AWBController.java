@@ -29,56 +29,56 @@ public class AWBController {
      @CrossOrigin
     @RequestMapping(value = "/api/awb", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<AWB> listAWB() {
-        return awbService.GetAll();
+        return awbService.getAll();
     }
     
     //filter by month
     @CrossOrigin
     @RequestMapping(value = "/api/awb/{month}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<AWB> filterAWBbyMonth(@PathVariable("month") String month) {
-        return awbService.GetbyMonth(month);
+        return awbService.getByMonth(month);
     }
     
     //filter by status
     @CrossOrigin
     @RequestMapping(value = "/api/awb/filterstatus/{status}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<AWB> filterAWBbyStatus(@PathVariable("status") String status) {
-        return awbService.GetbyStatus(status);
+        return awbService.getByStatus(status);
     }
     
     //filter by year
     @CrossOrigin
     @RequestMapping(value = "/api/awb/filteryear/{year}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<AWB> filterAWBbyYear(@PathVariable("year") String year) {
-        return awbService.GetbyYear(year);
+        return awbService.getByYear(year);
     }
     
     //filter by logisticName
     @CrossOrigin
     @RequestMapping(value = "/api/awb/filterlogisticName/{logisticName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<AWB> filterAWBbyLogisticName(@PathVariable("logisticName") String logisticName) {
-        return awbService.GetbyLogisticName(logisticName);
+        return awbService.getByLogisticName(logisticName);
     }
     
     //filter by awbNumber
     @CrossOrigin
     @RequestMapping(value = "/api/awb/filterAwbNumber/{AwbNumber}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<AWB> filterAWBbyAwbNumber(@PathVariable("AwbNumber") String AwbNumber) {
-        return awbService.GetByAwbNumber(AwbNumber);
+        return awbService.getByAwbNumber(AwbNumber);
     }
     
     //filter by merchantCode
     @CrossOrigin
     @RequestMapping(value = "/api/awb/filterMerchantCode/{merchantCode}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<AWB> filterMerchantCode(@PathVariable("merchantCode") String merchantCode) {
-        return awbService.GetByMerchantCode(merchantCode);
+        return awbService.getByMerchantCode(merchantCode);
     }
     
     //filter by gdnRef
     @CrossOrigin
     @RequestMapping(value = "/api/awb/filterGdnRef/{gdnRef}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<AWB> filterGdnRef(@PathVariable("gdnRef") String gdnRef) {
-        return awbService.GetByGdnRef(gdnRef);
+        return awbService.getByGdnRef(gdnRef);
     }
     
     //filter all

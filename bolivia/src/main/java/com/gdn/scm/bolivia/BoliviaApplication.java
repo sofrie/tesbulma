@@ -1,6 +1,7 @@
 package com.gdn.scm.bolivia;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gdn.scm.bolivia.entity.AWB;
 import com.gdn.scm.bolivia.receiver.Receiver;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -62,6 +63,13 @@ public class BoliviaApplication {
     @Bean
     MessageListenerAdapter listenerAdapter(Receiver receiver) {
         MessageListenerAdapter adapter = new MessageListenerAdapter(receiver, "receiveMessage");
+        adapter.setMessageConverter(new Jackson2JsonMessageConverter(new ObjectMapper()));
+        return adapter;
+    }
+    
+    @Bean
+    MessageListenerAdapter listenerAdapter(AWB awb) {
+        MessageListenerAdapter adapter = new MessageListenerAdapter(awb, "receiveMessage");
         adapter.setMessageConverter(new Jackson2JsonMessageConverter(new ObjectMapper()));
         return adapter;
     }

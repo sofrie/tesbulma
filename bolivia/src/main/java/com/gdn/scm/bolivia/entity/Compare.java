@@ -8,8 +8,10 @@ package com.gdn.scm.bolivia.entity;
 import com.gdn.scm.bolivia.BoliviaApplication;
 import com.gdn.scm.bolivia.entity.AWB;
 import com.gdn.scm.bolivia.repository.AWBRepository;
+import com.gdn.scm.bolivia.repository.UploadHistoryRepository;
 import com.gdn.scm.bolivia.services.AWBService;
 import com.gdn.scm.bolivia.services.ProcessService;
+import com.gdn.scm.bolivia.services.UploadHistoryService;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Iterator;
@@ -38,6 +40,11 @@ public class Compare {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    UploadHistoryService uploadHistoryService;
+
+    public Integer counter = 0;
 
     public Compare() {
 //        try {
@@ -71,26 +78,33 @@ public class Compare {
 //        }
     }
 
-    public void Send(XSSFSheet sheet1) {
-        int firstRow1 = sheet1.getFirstRowNum();
-        int lastRow1 = sheet1.getLastRowNum();
+    public void Send(XSSFSheet sheet1, Integer id) {
+//        int firstRow1 = sheet1.getFirstRowNum();
+//        int lastRow1 = sheet1.getLastRowNum();
 
         AWB awb = new AWB();
         Iterator<Row> itr = sheet1.iterator();
         while (itr.hasNext()) {
             Row row = itr.next();
-            awb.assignAWB(row);
-             awb.setMonth("December");
-            awb.setYear("2017");
-            awb.setLogisticName("D Logistic");
-            awb.setReconStatus("OK");
-            awb.setMerchantCode("MERCH-CODE-007");
-            Process p=new Process();
-            p.setProccessId(awb.getAwbNumber());
-            p.setRequestId(awb.getAwbNumber());
-            processService.requestProcess(p);
-            //awbRepository.save(awb);
-            //  enter code here for the rest operation
+            if (row.getRowNum() > 1) {
+
+                awb.assignAWB(row);                
+                
+
+                awb.setMonth("December");
+                awb.setYear("2017");
+                awb.setLogisticName("D Logistic");
+                awb.setReconStatus("OK");
+                awb.setMerchantCode("MERCH-CODE-007");
+                Process p = new Process();
+                counter++;
+                awb.setCounter(counter);
+                awb.setUploadHistoryNumber(id.toString());
+//                p.setProccessId(awb.getAwbNumber());
+//                p.setRequestId(id.toString());
+//                p.setCounter(counter);
+                processService.requestProcess(awb);
+            }
         }
 
 //        for (int i = 2; i <= 10; i++) {
@@ -125,10 +139,10 @@ public class Compare {
 //            p.setProccessId(awb.getAwbNumber());
 //            p.setRequestId(awb.getAwbNumber());
 //            processService.requestProcess(p);
-   // }
-}
+        // }
+    }
 
-public AWB requestProcess(AWB awb) {
+    public AWB requestProcess(AWB awb) {
         System.out.println("Reques process" + awb);
         rabbitTemplate.convertAndSend(BoliviaApplication.queueName, awb);
         return awb;

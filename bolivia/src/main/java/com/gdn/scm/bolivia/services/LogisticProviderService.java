@@ -15,9 +15,9 @@ import java.util.List;
  */
 public interface LogisticProviderService {
     void addLogisticProvider(LogisticProviderRequest a);
-    List<LogisticProvider> GetAll();
-    List<LogisticProvider> GetbyStatus(String status);
+    List<LogisticProvider> getAll();
+    List<LogisticProvider> getByStatus(String status);
     void updateLogisticProvider(LogisticProvider a);
-    void DeleteLogisticProvider(Integer id);
+    void deleteLogisticProvider(Integer id);
 //    List<LogisticProvider> GetAllLogisticProvider(Integer merchantid);
 }

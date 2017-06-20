@@ -40,25 +40,25 @@ public class UploadHistoryController {
     @CrossOrigin
     @RequestMapping(value = "/api/uploadHistory", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UploadHistory> getAllUploadHistory() {
-        return uploadHistoryService.GetAll();
+        return uploadHistoryService.getAll();
         //return logistic;
     }
 
     @CrossOrigin
     @RequestMapping(value = "/api/uploadHistory/month/{month}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UploadHistory> filterByMonth(@PathVariable("month") String month) {
-        return uploadHistoryService.GetbyMonth(month);
+        return uploadHistoryService.getByMonth(month);
     }
 
     @CrossOrigin
     @RequestMapping(value = "/api/uploadHistory/year/{year}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UploadHistory> filterByYear(@PathVariable("year") String year) {
-        return uploadHistoryService.GetbyYear(year);
+        return uploadHistoryService.getByYear(year);
     }
 
     @CrossOrigin
     @RequestMapping(value = "/api/uploadHistory/logistic/{logistic}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UploadHistory> filterByLogistic(@PathVariable("logistic") String logistic) {
-        return uploadHistoryService.GetbyLogisticName(logistic);
+        return uploadHistoryService.getByLogisticName(logistic);
     }
 }

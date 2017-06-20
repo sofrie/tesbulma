@@ -16,30 +16,30 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CacheService {
-	@Autowired
-	private RedisTemplate<String,String> redisTemplate;
-	
-	public Boolean setIfAbsent (String key, String value, long timeout, TimeUnit timeUnit)
-	{
-		if(redisTemplate.opsForValue().setIfAbsent(key, value))
-		{
-			redisTemplate.expire(key, timeout, timeUnit);
-			
-			return new Boolean (true);
-		}
-		
-		return new Boolean (false);
-	}
-	
-	public Boolean setIfAbsent(String key, String value)
-	{
-		return redisTemplate.opsForValue().setIfAbsent(key, value);		
-	}
-	
-	
-	public void delete (String key)
-	{
-		redisTemplate.delete(key);		
-	}
 
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
+
+    public Integer counter = 0;
+
+    public Boolean setIfAbsent(String key, String value, long timeout, TimeUnit timeUnit) {
+        if (redisTemplate.opsForValue().setIfAbsent(key, value)) {
+            redisTemplate.expire(key, timeout, timeUnit);
+            return new Boolean(true);
+        }
+        return new Boolean(false);
+    }
+
+    public Boolean setIfAbsent(String key, String value) {
+        return redisTemplate.opsForValue().setIfAbsent(key, value);
+    }
+
+    public Boolean setIfAbsent(String key) {
+        return redisTemplate.opsForValue().setIfAbsent(key, key);
+    }
+
+    public void delete(String key) {
+        redisTemplate.delete(key);
+        counter++;
+    }
 }
