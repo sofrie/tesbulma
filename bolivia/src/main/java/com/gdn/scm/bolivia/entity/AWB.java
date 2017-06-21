@@ -254,4 +254,10 @@ public class AWB {
         totalChargeSystem=row.getCell(9).getNumericCellValue();
     }
 
+//    @Override
+//    public String toString() {
+//        return "AWB{" + "counter=" + counter + ", awbNumber=" + awbNumber + '}';
+//    }
+    
+
 }

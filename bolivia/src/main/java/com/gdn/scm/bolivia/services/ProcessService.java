@@ -36,6 +36,7 @@ public class ProcessService {
         System.out.println("Reques process" + awb);
         rabbitTemplate.convertAndSend(BoliviaApplication.queueName, awb);
         counter++;
+        //System.out.println("counter....................." + counter.toString());
         return awb;
     }
 }

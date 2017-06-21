@@ -1,0 +1,2 @@
+pake netflix feign buat nembak data ke logistic
+buat counter awb ke rabbit nya pake list aja

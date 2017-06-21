@@ -3,20 +3,24 @@ package com.gdn.scm.bolivia;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gdn.scm.bolivia.entity.AWB;
 import com.gdn.scm.bolivia.receiver.Receiver;
+import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 
+@EnableFeignClients
 @SpringBootApplication
 public class BoliviaApplication {
 
@@ -52,6 +56,11 @@ public class BoliviaApplication {
     public ConnectionFactory connectionFactory() {
         return new CachingConnectionFactory("localhost");
     }
+    
+    @Bean
+    public AmqpAdmin admin() {
+        return new RabbitAdmin(connectionFactory());
+    }
 
     @Bean
     public RabbitTemplate rabbitTemplate() {
@@ -66,13 +75,14 @@ public class BoliviaApplication {
         adapter.setMessageConverter(new Jackson2JsonMessageConverter(new ObjectMapper()));
         return adapter;
     }
-    
+
     @Bean
     MessageListenerAdapter listenerAdapter(AWB awb) {
         MessageListenerAdapter adapter = new MessageListenerAdapter(awb, "receiveMessage");
         adapter.setMessageConverter(new Jackson2JsonMessageConverter(new ObjectMapper()));
         return adapter;
     }
+
 
     public static void main(String[] args) {
         SpringApplication.run(BoliviaApplication.class, args);

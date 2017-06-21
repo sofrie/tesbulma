@@ -95,4 +95,9 @@ public class AWBServiceImpl implements AWBService {
         }
     }
 
+    @Override
+    public void addAWB(AWB a) {
+        aWBRepository.save(a);
+    }
+
 }

@@ -47,6 +47,7 @@ public class Compare {
     public Integer counter = 0;
 
     public Compare() {
+        counter = 0;
 //        try {
 //            // get input excel files
 //            FileInputStream excellFile1 = new FileInputStream(new File(

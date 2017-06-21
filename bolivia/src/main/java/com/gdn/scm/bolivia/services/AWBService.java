@@ -16,6 +16,7 @@ import java.util.List;
 public interface AWBService {
 
     void addAWB(AWBRequest a);
+    void addAWB(AWB a);
 
     List<AWB> getAll();
 
