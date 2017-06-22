@@ -16,6 +16,11 @@
       </router-link>
     </li>
     <li class="pageLink" v-on:click="toggleMenu">
+      <router-link to="/awb"><i class="fa fa-cog"></i>
+        <span class="page">AWB</span>
+      </router-link>
+    </li>
+    <li class="pageLink" v-on:click="toggleMenu">
       <router-link to="/tables"><i class="fa fa-table"></i>
         <span class="page">Tables</span>
       </router-link>

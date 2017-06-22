@@ -35,6 +35,12 @@ const routes = [
         name: 'Invoice'
         // meta: {description: 'Overview of environment'}
       }, {
+        path: 'awb',
+        alias: '',
+        component: InvoiceView,
+        name: 'AWB'
+        // meta: {description: 'Overview of environment'}
+      }, {
         path: 'tables',
         component: TablesView,
         name: 'Tables',

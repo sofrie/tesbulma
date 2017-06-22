@@ -144,12 +144,14 @@ public class RestUploadController {
             System.out.println(date);
             String tmp = file.getOriginalFilename().replace(".xlsx", "_") + tanggal.replace(":", "-") + ".xlsx";
             Path path = Paths.get(UPLOADED_FOLDER + tmp);
+            System.out.println(path);
+            System.out.println("==================");
             Files.write(path, bytes);
 
             FileInputStream excellFile1 = new FileInputStream(new File(path.toString()));
             XSSFWorkbook workbook1 = new XSSFWorkbook(excellFile1);
             XSSFSheet sheet1 = workbook1.getSheetAt(0);   
-            int count=uploadistoryRepository.findAll().size();
+            int count=uploadistoryRepository.findAll().size()-1;
             compare.Send(sheet1,count);
 
         }

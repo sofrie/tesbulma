@@ -62,85 +62,6 @@
           </div>
           <!-- /.box-body -->
         </form>
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
-          Launch Default Modal
-        </button>
-        <div class="modal fade" id="modal-default">
-          <form class="form">
-            <div class="modal-dialog">
-              <div class="modal-content satu">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title">Default Modal</h4>
-                </div>
-
-                <div class="modal-body">
-
-                  <!--<h1 class="title">Upload Invoice</h1>-->
-                  <div class="block ">
-                    <form enctype="multipart/form-data">
-                      <table class="tablemodal" >
-                        <tr>
-                          <td>{{selectedMonth}}</td>
-                          <td>
-              <span class="select">
-                <select v-model="selectedMonth">
-                  <option value="January">January</option>
-                  <option value="February">Februari</option>
-                </select>
-              </span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Year </td>
-                          <td>
-              <span class="select">
-                <select>
-                  <option>2017</option>
-                </select>
-              </span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>{{selectedLogistic}} </td>
-                          <td>
-              <span class="select">
-                <select v-model="selectedLogistic">
-                  <option value="A Logistic">A Logistic</option>
-                  <option value="B Logistic">B Logistic</option>
-                  <option value="C Logistic">C Logistic</option>
-                </select>
-              </span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>File</td>
-                          <td>
-                            <input type="file" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" class="input-file">
-                          </td>
-                        </tr>
-                        <tr>
-                        </tr>
-                        <tr>
-                          <td>&nbsp;</td>
-                        </tr>
-                        <tr>
-                          <td colspan="2" class="centerbutton">
-                            <button class="button is-info " v-on:click="uploadHistory()">Submit Upload</button>
-                          </td>
-                        </tr>
-                      </table>
-                    </form>
-                  </div>
-                </div>
-              </div>
-              <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-          </form>
-        </div>
-
 
         <div class="box box-info">
           <div class="box-header with-border">
@@ -279,16 +200,6 @@
       this.$nextTick(() => {
         $('#example1').DataTable()
       })
-    },
-    data () {
-      return {
-        uploadedFiles: [],
-        uploadError: null,
-        currentStatus: null,
-        uploadFieldName: 'invoiceFile',
-        selectedMonth: 'January',
-        selectedLogistic: 'A Logistic'
-      }
     }
   }
 </script>

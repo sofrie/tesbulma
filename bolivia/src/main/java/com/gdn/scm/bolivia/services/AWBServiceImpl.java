@@ -9,6 +9,7 @@ import com.gdn.scm.bolivia.entity.AWB;
 import com.gdn.scm.bolivia.repository.AWBRepository;
 import com.gdn.scm.bolivia.request.AWBRequest;
 import java.util.List;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,9 @@ public class AWBServiceImpl implements AWBService {
 
     @Override
     public void addAWB(AWBRequest a) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        AWB awb=new AWB();
+        BeanUtils.copyProperties(a, awb);
+        aWBRepository.save(awb);
     }
 
     @Override

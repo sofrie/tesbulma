@@ -13,6 +13,9 @@ import com.gdn.scm.bolivia.entity.Process;
 import com.gdn.scm.bolivia.entity.UploadHistory;
 import com.gdn.scm.bolivia.services.AWBService;
 import com.gdn.scm.bolivia.services.UploadHistoryService;
+import java.util.Iterator;
+import java.util.Map;
+import org.redisson.api.RMap;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -66,30 +69,53 @@ public class Receiver {
     }
 
 //    Integer c = 0;
-
     public void receiveMessage(AWB message) throws InterruptedException {
         System.out.println(compare.counter.toString());
         System.out.println("Received <" + message + ">");
         //awb.addAWB(message);
         counter++;
-         System.out.println("=======" + counter.toString());
-        if (cacheSrvice.setIfAbsent(message.getAwbNumber(),message.getGdnRef())) {
-            System.out.println("Processing... " + message.getAwbNumber());
-            Thread.sleep(5000);
-//            c++;
-//            System.out.println("=======" + c.toString());
-            cacheSrvice.delete(message.getAwbNumber());
-        } else {
-            //lagi ada yg di proses
-            System.out.println("Error..." + message + " is still on process");
+        Boolean ada = false;
+        Integer c = 0;
+//        System.out.println("=======" + counter.toString());
+//         System.out.println("============"+"++++++++++++++++"+compare.map.size());
+//        if (cacheSrvice.setIfAbsent(message.getAwbNumber(), message.getGdnRef())) {
+//            System.out.println("Processing... " + message.getAwbNumber());
+//            Thread.sleep(5000);
+////            c++;
+////            System.out.println("=======" + c.toString());
+//            cacheSrvice.delete(message.getAwbNumber());
+//        } else {
+//            //lagi ada yg di proses
+//            System.out.println("Error..." + message + " is still on process");
+//        }
+        cacheSrvice.delete(message.getAwbNumber());
+        compare.map.remove(message.getAwbNumber(), message.getUploadHistoryNumber());
+        if (compare.map.containsValue(message.getUploadHistoryNumber())) {
+            
+            for (Map.Entry<String, String> entry : compare.map.entrySet()) {
+                String key = entry.getKey();
+                if(key.equals(message.getUploadHistoryNumber()))
+                {
+                    c++;
+                }
+                if(c>2)
+                {
+                    break;
+                }
+            }
+            if (c <= 1) {
+                UploadHistory upload = uploadHistoryService.getById(message.getUploadHistoryNumber());
+                if (upload != null) {
+                    upload.setStatus("Done Uploaded");
+                    uploadHistoryService.addUploadHistory(upload);
+                    //System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                    //    admin.deleteQueue(BoliviaApplication.queueName);
+                }
+                //counter = 0;
+            }
         }
         if (counter >= compare.counter) {
-            UploadHistory upload = uploadHistoryService.getById(message.getUploadHistoryNumber());
-            upload.setStatus("Done Uploaded");
-            uploadHistoryService.addUploadHistory(upload);
-        //    admin.deleteQueue(BoliviaApplication.queueName);
 
-            counter = 0;
         }
     }
 }

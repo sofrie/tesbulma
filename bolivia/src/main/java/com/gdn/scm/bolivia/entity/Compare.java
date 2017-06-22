@@ -15,12 +15,18 @@ import com.gdn.scm.bolivia.services.UploadHistoryService;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Iterator;
+import java.util.Map;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import static org.bouncycastle.crypto.tls.ConnectionEnd.client;
+import org.redisson.Redisson;
+import org.redisson.api.RList;
+import org.redisson.api.RMap;
+import org.redisson.api.RedissonClient;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,11 +50,15 @@ public class Compare {
     @Autowired
     UploadHistoryService uploadHistoryService;
 
-    public Integer counter = 0;
+    public Integer counter = -1;
+
+    RedissonClient redisson = Redisson.create();
+    public RMap<String, String> map = redisson.getMap("myMap");
+    //public RList<RList<String>> list = redisson.getList("myList");
 
     public Compare() {
         counter = 0;
-//        try {
+//        try {     
 //            // get input excel files
 //            FileInputStream excellFile1 = new FileInputStream(new File(
 //                    "D:\\EXCEL\\Book1.xlsx"));
@@ -89,8 +99,7 @@ public class Compare {
             Row row = itr.next();
             if (row.getRowNum() > 1) {
 
-                awb.assignAWB(row);                
-                
+                awb.assignAWB(row);
 
                 awb.setMonth("December");
                 awb.setYear("2017");
@@ -101,10 +110,18 @@ public class Compare {
                 counter++;
                 awb.setCounter(counter);
                 awb.setUploadHistoryNumber(id.toString());
+                map.put(awb.getAwbNumber(), awb.getUploadHistoryNumber());
+
+//                map.remove(awb.getAwbNumber(), awb.getUploadHistoryNumber().toString());
+//                map.containsKey(awb.getUploadHistoryNumber().toString());
 //                p.setProccessId(awb.getAwbNumber());
 //                p.setRequestId(id.toString());
 //                p.setCounter(counter);
+//                for (Map.Entry<String, String> entry : map.entrySet()) {
+//                    System.out.println("ooooooooooooooooo"+" "+entry.getKey());
+//                }
                 processService.requestProcess(awb);
+                // System.out.println(map);
             }
         }
 

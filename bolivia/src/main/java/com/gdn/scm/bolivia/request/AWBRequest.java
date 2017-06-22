@@ -5,83 +5,87 @@
  */
 package com.gdn.scm.bolivia.request;
 
-import static com.gdn.scm.bolivia.entity.AWB.COLUMN_AWB_NUMBER;
-import static com.gdn.scm.bolivia.entity.AWB.COLUMN_GDN_REF;
-import static com.gdn.scm.bolivia.entity.AWB.COLUMN_LOGISTIC_NAME;
-import static com.gdn.scm.bolivia.entity.AWB.COLUMN_MERCHANT_CODE;
-import static com.gdn.scm.bolivia.entity.AWB.COLUMN_RECON_STATUS;
-import static com.gdn.scm.bolivia.entity.AWB.COLUMN_YEAR;
-import javax.persistence.Column;
-import javax.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
+
 
 /**
  *
  * @author sofrie.zumaytis
  */
+@Getter
+@Setter
 public class AWBRequest {
+    private String awbNumber;
+    private String reconStatus;
+    private String gdnRef;
+    private String insuredAmount;
+    private String weightSystem;
+    private String weightLogistic;
+    private String weightApplied;
+    private String weightComment;
+
+    private String priceSystem;
+    private String priceLogistic;
+    private String priceApplied;
+    private String priceComment;
+
+    private String otherChargeSystem;
+    private String otherChargeLogistic;
+    private String otherChargeApplied;
+    private String otherChargeComment;
+
+    private String giftWrapChargeSystem;
+    private String giftWrapChargeLogistic;
+    private String giftWrapChargeApplied;
+    private String giftWrapChargeComment;
+
+    private String insuranceChargeSystem;
+    private String insuranceChargeLogistic;
+    private String insuranceChargeApplied;
+    private String insuranceChargeComment;
+
+    private Double totalChargeSystem;
+    private Double totalChargeLogistic;
+    private String totalChargeApplied;
+    private Double totalChargeComment;
+
+    private String failure;
+    private String notes;
+    private String namaPengirim;
+    private String merchantCode;
+    private String merchantName;
+    
+    
+    private String namaPengirimAPI;
+    private String namaPengirimSystem;
+    
+    private String alamatPengirimAPI;
+    private String alamatPengirimSystem;
+    
+    private String kodeOriginAPI;
+    private String kodeOriginSystem;
+    
+    private String namaPenerimaAPI;
+    private String namaPenerimaSystem;
+    
+    private String alamatPenerimaAPI;
+    private String alamatPenerimaSystem;
+    
+    private String kodeDestinasiAPI;
+    private String kodeDestinasiSystem;
+    
+    private String focsAmount;
+    private String focsaAcmount;
+    private String shippingCost;
+    private String shipCost;
+    
+    
+
     private String month;
     private String year;
     private String logisticName;
-    private String awbNumber;
-    private String reconStatus;
-    private String merchantCode;
-    private String gdnRef;
-
-    public String getMonth() {
-        return month;
-    }
-
-    public void setMonth(String month) {
-        this.month = month;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
-    }
-
-    public String getLogisticName() {
-        return logisticName;
-    }
-
-    public void setLogisticName(String logisticName) {
-        this.logisticName = logisticName;
-    }
-
-    public String getAwbNumber() {
-        return awbNumber;
-    }
-
-    public void setAwbNumber(String awbNumber) {
-        this.awbNumber = awbNumber;
-    }
-
-    public String getReconStatus() {
-        return reconStatus;
-    }
-
-    public void setReconStatus(String reconStatus) {
-        this.reconStatus = reconStatus;
-    }
-
-    public String getMerchantCode() {
-        return merchantCode;
-    }
-
-    public void setMerchantCode(String merchantCode) {
-        this.merchantCode = merchantCode;
-    }
-
-    public String getGdnRef() {
-        return gdnRef;
-    }
-
-    public void setGdnRef(String gdnRef) {
-        this.gdnRef = gdnRef;
-    }
     
     
+    private String uploadHistoryNumber;
 }
