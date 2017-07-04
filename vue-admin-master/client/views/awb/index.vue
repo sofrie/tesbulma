@@ -139,8 +139,8 @@
               </thead>
               <tbody>
 
-              <tr v-for="post of posts" @click="openModalCard()">
-                <td @click="openModalCard()">{{post.month}}</td>
+              <tr v-for="post of posts" @click="openModalCard(post.awbNumber)">
+                <td><span id="haha"></span>{{post.month}}</td>
                 <td>{{post.year}}</td>
                 <td>{{post.logisticName}}</td>
                 <td>{{post.awbNumber}}</td>
@@ -170,7 +170,7 @@
                         <td>
                           <ul>
                             <li>
-                              <label>Failure Reason :Data Mismatch</label>
+                              <label>Failure Reason : Mismatch</label>
                             </li>
                             <li>
                               <label>Merchant Code : MERCH-CODE-0001</label>
@@ -354,8 +354,8 @@
         this.showModal = false
       },
 
-      openModalCard () {
-        const cardModal = this.AWBdetailModal || (this.AWBdetailModal = openCardModal({title: 'AWB13245 / GDN Ref-#1 (Problem Exist)', url: this.$store.state.pkg.homepage}))
+      openModalCard (numb) {
+        const cardModal = this.AWBdetailModal || (this.AWBdetailModal = openCardModal({title: 'AWB Name', url: this.$store.state.pkg.homepage, id: numb}))
         cardModal.$children[0].active()
         document.getElementById('kotak').style.width = '90vw'
       },

@@ -1,9 +1,9 @@
 <template>
-  <card-modal :visible="visible" @close="close" :title="title" transition="zoom" class="classmodalleft">
+  <card-modal :visible="visible" @close="close" :title="title" transition="zoom" class="classmodalleft awb-modal-card">
     <div class="tile is-parent classmodal">
       <article class="tile is-child ">
         <div class="block ">
-          <table class="table" >
+          <table class="table awb-detail" >
             <tr>
               <th>Reconciliation Data</th>
               <th>Blibli Data</th>
@@ -13,13 +13,16 @@
               <td>
                 <ul>
                   <li>
-                    <label>Failure Reason :Data Mismatch</label>
+                    <label>Failure Reason :{{id}}</label>
                   </li>
                   <li>
                     <label>Merchant Code : MERCH-CODE-0001</label>
                   </li>
-                  <li>
-                    Merchant Name : Merchant 1
+				  <li>
+                    Merchant Name : {{cek}}
+                  </li>
+                  <li v-for="post of name" >
+                    Merchant Name : {{post.year}}
                   </li>
                   <li>
                     <label>Original Shipping Cost : Rp.xx.xxx.xxx</label>
@@ -83,14 +86,10 @@
               <!--</td>-->
             </tr>
           </table>
-        </div>
-      </article>
-    </div>
-    <div class="tile is-parent classmodal">
-      <article class="tile is-child ">
-        <h1 class="title">Charge Summary</h1>
-        <div class="block ">
-          <table class="table" width="200px" margin="10px">
+		  
+		  <h1 class="title">Charge Summary</h1>
+        
+          <table class="table awb-detail">
             <tr>
               <th></th>
               <th>Weight</th>
@@ -140,6 +139,7 @@
         </div>
       </article>
     </div>
+    
   </card-modal>
 </template>
 
@@ -154,25 +154,35 @@
     props: {
       visible: Boolean,
       title: String,
-      url: String
+      url: String,id: String,cek: String
     },
 
-    data () {
-      return {
-        src: require('assets/logo.svg')
-      }
-    },
-
+    data: ()  => ({
+		name: []
+    }
+    ),
     methods: {
       open (url) {
         window.open(url)
-      },
-
+      }
+	 },
+    created () {
+		this.cek = 'blabla'
+      axios.get('http://127.0.0.1:8080/api/awb/filterAwbNumber/1')
+        .then(response => {
+          this.name = response.data
+		  
+        })
+        .catch(e => {
+          this.errors.push(e)
+        })
+		
+    },
       close () {
         this.$emit('close')
       }
     }
-  }
+  
 </script>
 <style>
   .classmodal{
@@ -180,11 +190,19 @@
   .classmodalleft {
 
   }
-  .modal-card {
+  .awb-modal-card .modal-card {
 /*    width: 80vw;
     height: 90vh;*/
+	width:1200px;
   }
   .modal-card-foot {
     visibility: hidden;
+  }
+  .awb-detail tr td{
+   width:200px;
+   margin:10px;
+  }
+  .awb-detail{
+	width:100%;
   }
 </style>

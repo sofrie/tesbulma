@@ -7,7 +7,7 @@
 
         <div class="block ">
           <form enctype="multipart/form-data">
-          <table class="tablemodal" >
+          <table class="tablemodal" id="uploadmodal" >
             <tr>
               <td>{{selectedMonth}}</td>
               <td>
@@ -179,17 +179,23 @@
 
   }
   .modal-card {
-    width: 35%;
-    height: 70%;
+    
   }
   .modal-card-foot {
-    visibility: hidden;
+    display:none;
   }
-  .tablemodal {
+  #uploadmodal.tablemodal {
     margin-left: 27%;
     width: 80%;
   }
+  #uploadmodal.tablemodal tr td{
+    width:0;
+  }
   .centerbutton {
     padding-left: 10%;
+  }
+  .modal-card-body{
+  border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
   }
 </style>
