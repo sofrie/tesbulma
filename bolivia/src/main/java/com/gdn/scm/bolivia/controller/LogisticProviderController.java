@@ -29,9 +29,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class LogisticProviderController {
 
     @Autowired
-    LogisticProviderRepository logisticProviderRepository;
-
-    @Autowired
     LogisticProviderService logisticProviderService;
 
     public List<LogisticProvider> daftarLogistik = new ArrayList<>();

@@ -18,13 +18,12 @@ import org.springframework.stereotype.Service;
  */
 public class AWBClientServiceImplFeign {
 
-    private static final String URI_AWB = "http://localhost:8080";
+    private static final String URI_AWB = "http://localhost:8090";
     
-    public List<AWB> getAllBooks() throws Exception {
+    public AWB getAWBLogistic(String awbnumber) throws Exception {
         AWBClientService AWBResource = Feign.builder().encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder()).target(AWBClientService.class, URI_AWB);
-        return AWBResource.getAllAWBClients();
-
+        return AWBResource.getAWBLogistic(awbnumber);
     }
 
 }

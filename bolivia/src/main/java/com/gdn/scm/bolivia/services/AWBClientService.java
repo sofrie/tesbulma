@@ -7,6 +7,7 @@ package com.gdn.scm.bolivia.services;
 
 import com.gdn.scm.bolivia.entity.AWB;
 import feign.Headers;
+import feign.Param;
 import feign.RequestLine;
 import java.util.List;
 import org.springframework.cloud.netflix.feign.FeignClient;
@@ -19,6 +20,6 @@ import org.springframework.cloud.netflix.feign.FeignClient;
 @Headers("Accept: application/json")
 public interface AWBClientService {
 
-    @RequestLine("GET /v1/books")
-    List<AWB> getAllAWBClients();
+    @RequestLine("GET /airwayBill/{awbnumber}")
+     AWB getAWBLogistic(@Param("awbnumber") String awbnumber);
 }
