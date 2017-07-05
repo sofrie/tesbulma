@@ -1,267 +1,39 @@
 <template>
   <div>
   <div class="tile is-parent">
-	Month :  &nbsp
-	<select>
-	  <option value="januari">Januari</option>
-	  <option value="februari">Februari</option>
-	  <option value="maret">Maret</option>
-	  <option value="april">April</option>
-	</select>
-	&emsp;
-	&emsp;
-	Year :  &nbsp
-	<select>
-	  <option value="2016">2016</option>
-	  <option value="2017">2017</option>
-	</select>
-	&emsp;
-	&emsp;
-	Logistic :  &nbsp
-	<select>
-	  <option value="alogistic">A logistic</option>
-	  <option value="blogistic">B logistic</option>
-	  <option value="clogistic">C logistic</option>
-	  <option value="dlogistic">D logistic</option>
-	</select>	
-	&emsp;
-	&emsp;
-	<button class="button is-info">Search</button>
-	&emsp;
-	&emsp;
-	<button class="button is-info">
-	
-		  <a href="javascript:void(0)" onclick="document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">Upload</a>
-  </button>
-  <div id="light" class="white_content">
-  <p class="control has-addons has-addons-right">
-  <a href="javascript:void(0)" onclick="document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">X &nbsp;</a>
-  </p>
-	<div class="tile is-parent">
-        <article class="tile is-child box " >
-	
-          <h1 class="title">Upload Invoice</h1>
-          <div class="block ">
-            <p class="control has-addons has-addons-centered">
-			Month : &nbsp;
-              <span class="select">
-                <select>
-                  <option>January</option>
-                  <option>Februari</option>
-                </select>
-              </span>
-            </p>
-            <p class="control has-addons has-addons-centered">
-			Year : &nbsp;
-              <span class="select">
-                <select>
-                  <option>2017</option>
-                </select>
-              </span>
-            </p>
-			<p class="control has-addons has-addons-centered">
-			Logistic : &nbsp;
-              <span class="select">
-                <select>
-                  <option>A Logistic</option>
-				  <option>B Logistic</option>
-				  <option>C Logistic</option>
-                </select>
-              </span>
-            </p>
-			<p class="control has-addons has-addons-right">
-			File : &nbsp;
-              <input type="file" name="datafile" size="40">
-            </p>
-			
-            <p class="control has-addons has-addons-centered">
-              <button class="button is-info">Submit Upload</button>
-            </p>
-          </div>
-		  
-        </article>
-      </div>
-	</div>
-  <div id="fade" class="black_overlay"></div>
-	
-	</div>
+	<div class="login-form">
 	<div class="block">
-        <article class="tile is-child box">
-          <h1 class="title">Summary</h1>
-         
-		  <p class="control">
-            Month : January &emsp; Year 2017 &emsp; Logistic : A logistic &emsp; Status : Open
-			</p>
-			<p class="control">
-			OK : 29527 data &emsp; Problem Exists : 219 data &emsp;&emsp;&emsp; Jumlah Tagihan : Rp.xx.xxx.xxx
-			</p>
-			
-             
-            <p class="control">
-				<button class="button is-info">View Data</button>              	
-				<button class="button is-info">Submit</button>
-				<button class="button is-info">Approve</button>
-				
-            </p>
-         
-        </article>
-      </div>	
+		<div class="tile is-parent">
+			<article class="tile is-child box">
+				<h1 class="title"><a href="/"><img class="login-logo" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+DQo8c3ZnIHdpZHRoPSIyMDBweCIgaGVpZ2h0PSIyMDBweCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+DQogICAgPCEtLSBHZW5lcmF0b3I6IFNrZXRjaCAzLjguMyAoMjk4MDIpIC0gaHR0cDovL3d3dy5ib2hlbWlhbmNvZGluZy5jb20vc2tldGNoIC0tPg0KICAgIDx0aXRsZT52dWUtYWRtaW48L3RpdGxlPg0KICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPg0KICAgIDxkZWZzPg0KICAgICAgICA8cG9seWxpbmUgaWQ9InBhdGgtMSIgcG9pbnRzPSIyLjgzMzk3NjYzZS0xNCA2MS41ODYyNjM1IDE5OS43NjQyNzkgLTUuOTkwODkwNWUtMTUgMTcyLjU5MDM5MSAyMDAgMi44MzM5NzY2M2UtMTQgNjEuNTg2MjYzNSI+PC9wb2x5bGluZT4NCiAgICAgICAgPG1hc2sgaWQ9Im1hc2stMiIgbWFza0NvbnRlbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIG1hc2tVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIHg9IjAiIHk9IjAiIHdpZHRoPSIxOTkuNzY0Mjc5IiBoZWlnaHQ9IjIwMCIgZmlsbD0id2hpdGUiPg0KICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjcGF0aC0xIj48L3VzZT4NCiAgICAgICAgPC9tYXNrPg0KICAgICAgICA8cG9seWxpbmUgaWQ9InBhdGgtMyIgcG9pbnRzPSI4OC43NSAzNC4yMTQ1OTA4IDE5OS43MzAxNTUgMS40NzY4MTIzMWUtMTQgMTg0LjYzMzU1IDExMS4xMTExMTEgODguNzUgMzQuMjE0NTkwOCI+PC9wb2x5bGluZT4NCiAgICAgICAgPG1hc2sgaWQ9Im1hc2stNCIgbWFza0NvbnRlbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIG1hc2tVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIHg9IjAiIHk9IjAiIHdpZHRoPSIxMTAuOTgwMTU1IiBoZWlnaHQ9IjExMS4xMTExMTEiIGZpbGw9IndoaXRlIj4NCiAgICAgICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI3BhdGgtMyI+PC91c2U+DQogICAgICAgIDwvbWFzaz4NCiAgICA8L2RlZnM+DQogICAgPGcgaWQ9IlBhZ2UtMSIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+DQogICAgICAgIDxnIGlkPSJHcm91cCI+DQogICAgICAgICAgICA8cmVjdCBpZD0iUmVjdGFuZ2xlLTEiIHg9IjAiIHk9IjAiIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48L3JlY3Q+DQogICAgICAgICAgICA8dXNlIGlkPSJUcmlhbmdsZS0xIiBzdHJva2U9IiM0MEI4ODMiIG1hc2s9InVybCgjbWFzay0yKSIgc3Ryb2tlLXdpZHRoPSI0MCIgeGxpbms6aHJlZj0iI3BhdGgtMSI+PC91c2U+DQogICAgICAgICAgICA8dXNlIGlkPSJUcmlhbmdsZS0xIiBzdHJva2U9IiMzNDQ5NUQiIG1hc2s9InVybCgjbWFzay00KSIgc3Ryb2tlLXdpZHRoPSI0MCIgeGxpbms6aHJlZj0iI3BhdGgtMyI+PC91c2U+DQogICAgICAgIDwvZz4NCiAgICA8L2c+DQo8L3N2Zz4=" alt="Vue Admin Panel Framework"></a> Login</h1>
+				<h2 class="subtitle">
+					<a href="http://fontawesome.io/">Font Awesome Icons</a>
+				</h2>
+				<div class="block">
+					<p class="control has-icon">
+						<input type="email" placeholder="Email" class="input">
+						<span class="icon is-small">
+							<i class="fa fa-envelope"></i>
+						</span>
+					</p>
+					<p class="control has-icon">
+						<input type="password" placeholder="Password" class="input">
+						<span class="icon is-small">
+							<i class="fa fa-lock"></i>
+						</span>
+					</p>
+					<p class="control">
+						<button class="button is-success">Login</button>
+					</p>
+				</div>
+			</article>
+		</div>
+	</div>
+	<button class="button is-info" v-on:click="login()">Login</button>
+	</div>
 	
-    <div class="tile is-ancestor">
-      <div class="tile is-parent">
-        <article class="tile is-child box">
-          <h4 class="title">Upload History</h4>
-          <div class="table-responsive">
-            <table class="table is-bordered is-striped is-narrow">
-              <thead>
-                <tr>
-                  <th>Month</th>
-                  <th>Year</th>
-                  <th>OK</th>
-                  <th>Problem Exists</th>
-				  <th>Jumlah Tagihan</th>
-				  <th>Logistic</th>
-				  <th>Status</th>
-				  <th>Last Modified</th>
-                </tr>
-              </thead>              
-              <tbody>
-                <tr>
-                  <td>
-                    Januari
-                  </td>
-                  <td>
-                    2017
-                  </td>
-                  <td>
-                    297227
-                  </td>
-                  <td >
-                    30000
-                  </td>
-                  <td >
-                    Rp. x.xxx.xxx
-                  </td>
-                  <td >
-                    A
-                  </td>
-				  <td >
-                    Done
-                  </td>
-				  <td >
-                    3 Februari 2017 09:05:10
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Januari
-                  </td>
-                  <td>
-                    2017
-                  </td>
-                  <td>
-                    300
-                  </td>
-                  <td >
-                    10
-                  </td>
-                  <td >
-                    Rp. x.xxx.xxx
-                  </td>
-                  <td >
-                    A
-                  </td>
-				  <td >
-                    Done
-                  </td>
-				  <td >
-                    9 Februari 2017 11:05:10
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Januari
-                  </td>
-                  <td>
-                    2017
-                  </td>
-                  <td>
-                    1000
-                  </td>
-                  <td >
-                    141
-                  </td>
-                  <td >
-                    Rp. x.xxx.xxx
-                  </td>
-                  <td >
-                    A
-                  </td>
-				  <td >
-                    Done
-                  </td>
-				  <td >
-                    27 Februari 2017 10:05:10
-                  </td>
-                </tr>
-				<tr>
-                  <td>
-                    Januari
-                  </td>
-                  <td>
-                    2017
-                  </td>
-                  <td>
-                    0
-                  </td>
-                  <td >
-                    0
-                  </td>
-                  <td >
-                    Rp. x.xxx.xxx
-                  </td>
-                  <td >
-                    A
-                  </td>
-				  <td >
-                    On Process
-                  </td>
-				  <td >
-                    28 Februari 2017 15:05:10
-                  </td>
-                </tr>
-				<tr>
-                  <td>
-                    Januari
-                  </td>
-                  <td>
-                    2017
-                  </td>
-                  <td>
-                    0
-                  </td>
-                  <td >
-                    0
-                  </td>
-                  <td >
-                    Rp. x.xxx.xxx
-                  </td>
-                  <td >
-                    A
-                  </td>
-				  <td >
-                    Uploaded
-                  </td>
-				  <td >
-                    3 Februari 2017 15:05:10
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </article>
-      </div>
-    </div>
+	</div>
+	
   </div>
 </template>
 <script>
@@ -271,10 +43,28 @@ export default {
   components: {
     Collapse,
     CollapseItem
+  },
+  methods: {
+    login () {
+      var elements = document.getElementsByClassName('app-sidebar')
+      for
+(var i = 0, length = elements.length; i < length; i++) {
+        elements[i].style.display = 'block'
+      }
+    }
   }
 }
 </script>
 <style lang="scss">
+
+.login-logo{
+	width:20px;
+	height:20px;
+}
+.login-form{
+	padding-top:10%;
+	padding-left:30%;
+}
 .table-responsive {
   display: block;
   width: 100%;
@@ -304,5 +94,8 @@ export default {
   background-color: white;
   z-index: 1002;
   overflow: auto;
+}
+.app-sidebar{
+	display:none;
 }
 </style>
