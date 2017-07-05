@@ -90,8 +90,7 @@
         this.$emit('close')
       },
       ok () {
-        axios.post(`http://127.0.0.1:8080/api/logisticsss`, {
-          logisticCode: 'haha',
+        axios.post(`http://127.0.0.1:8080/api/logistics`, {
           logisticName: this.$refs.idname.value,
           status: this.selected,
           discount: this.$refs.iddiscount.value,
@@ -106,15 +105,9 @@
   }
 </script>
 <style>
-  .classmodal{
-  }
-  .classmodalleft {
-
-  }
   .modal-card {
-    /*position: fixed;
     width: 35vw;
-    height: 60vh;*/
+    height: 45vh;
   }
   .tablemodal {
     margin-left: 10%;

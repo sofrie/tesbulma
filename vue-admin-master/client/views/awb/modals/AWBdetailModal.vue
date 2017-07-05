@@ -181,8 +181,8 @@
 
   }
   .modal-card {
-/*    width: 80vw;
-    height: 90vh;*/
+    width: 80vw;
+    height: 90vh;
   }
   .modal-card-foot {
     visibility: hidden;

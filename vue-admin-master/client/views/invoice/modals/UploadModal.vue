@@ -77,6 +77,7 @@
   const STATUS_SUCCESS = 2
   const STATUS_FAILED = 3
 
+  const formData = new window.FormData()
   localforage.config({
     name: 'budgeterbium'
   })
@@ -118,6 +119,7 @@
     },
     methods: {
       uploadHistory () {
+        this.save(formData)
         axios.post(`http://127.0.0.1:8080/api/uploadHistory`, {
           month: this.selectedMonth,
           year: '2017',
@@ -153,7 +155,6 @@
       },
       filesChange (fieldName, fileList) {
         // handle file changes
-        const formData = new window.FormData()
 
         if (!fileList.length) return
 
@@ -163,8 +164,7 @@
           .map(x => {
             formData.append(fieldName, fileList[x], fileList[x].name)
           })
-        // save it
-        this.save(formData)
+        // save it        //this.save(formData)
       },
       mounted () {
         this.reset()
@@ -179,8 +179,8 @@
 
   }
   .modal-card {
-    width: 35%;
-    height: 70%;
+    width: 35vw;
+    height: 70vh;
   }
   .modal-card-foot {
     visibility: hidden;

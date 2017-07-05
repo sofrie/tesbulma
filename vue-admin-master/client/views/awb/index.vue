@@ -140,7 +140,7 @@
               <tbody>
 
               <tr v-for="post of posts" @click="openModalCard()">
-                <td @click="openModalCard()">{{post.month}}</td>
+                <td>{{post.month}}</td>
                 <td>{{post.year}}</td>
                 <td>{{post.logisticName}}</td>
                 <td>{{post.awbNumber}}</td>
@@ -357,7 +357,6 @@
       openModalCard () {
         const cardModal = this.AWBdetailModal || (this.AWBdetailModal = openCardModal({title: 'AWB13245 / GDN Ref-#1 (Problem Exist)', url: this.$store.state.pkg.homepage}))
         cardModal.$children[0].active()
-        document.getElementById('kotak').style.width = '90vw'
       },
       changeStatus () {
         axios.get('http://127.0.0.1:8080/api/awb/filterstatus/' + this.statusawb)
