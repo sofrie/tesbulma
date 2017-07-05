@@ -148,7 +148,7 @@
 
   .white_content {
     display: none;
-    position: fixed;
+    position: absolute;
     left: 25%;
     width: 25%;
     height: 80%;
