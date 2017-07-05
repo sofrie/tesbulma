@@ -1,50 +1,72 @@
 <template>
   <div>
-    <div class="tile is-parent">
+    <div class="is-parent">
 
-      <form>
-        Month :  &nbsp
-        <span class="select">
-	<select>
-	  <option value="januari">Januari</option>
-	  <option value="februari">Februari</option>
-	  <option value="maret">Maret</option>
-	  <option value="april">April</option>
-	</select>
-    </span> &emsp;
-        &emsp;
-        Year :  &nbsp
-        <span class="select">
-	<select>
-	  <option value="2016">2016</option>
-	  <option value="2017">2017</option>
-	</select>
-    </span>
-        &emsp;
-        &emsp;
-        Status :  &nbsp
-        <span class="select">
-	<select>
-	  <option value="open">Open</option>
-	  <option value="submit">Submit</option>
-	  <option value="approved">Approved</option>
-	</select>
-    </span>
-        &emsp;
-        &emsp;
-        Logistic :  &nbsp
-        <span class="select">
-	<select>
-	  <option value="alogistic">A logistic</option>
-	  <option value="blogistic">B logistic</option>
-	  <option value="clogistic">C logistic</option>
-	  <option value="dlogistic">D logistic</option>
-	</select>
-    </span>
-        &emsp;
-        &emsp;
-        <button class="button is-info ">Search</button>
-      </form>
+<div class="block">
+	<div class="control is-horizontal">
+		<div class="control-label">
+			<label class="label">Month : </label>
+		</div>
+		<div class="control">
+			<div class="select is-fullwidth">
+				<select v-on:change="changeMonth()" v-model="selectedMonth">
+					<option value="January">January</option>
+					<option value="February">February</option>
+					<option value="Maret">Maret</option>
+					<option value="April">April</option>
+					<option value="Mei">Mei</option>
+					<option value="Juni">Juni</option>
+					<option value="Juli">Juli</option>
+					<option value="Agustus">Agustus</option>
+					<option value="September">September</option>
+					<option value="Oktober">Oktober</option>
+					<option value="November">November</option>
+					<option value="Desember">Desember</option>
+				</select>
+			</div>
+		</div>
+		<div class="control-label">
+			<label class="label">Year : </label>
+		</div>
+		<div class="control">
+			<div class="select is-fullwidth">
+				<select v-on:change="changeYear()" v-model="selectedYear">
+					<option>2017</option>
+					<option>2018</option>
+				</select>
+			</div>
+		</div>
+		<div class="control-label">
+			<label class="label">Status : </label>
+		</div>
+		<div class="control">
+			<div class="select is-fullwidth">
+				<select class="select" v-model="statusawb" v-on:change="changeStatus()">
+					<option value="OK">OK</option>
+					<option value="Problem Exist">Problem Exist</option>
+				</select>
+			</div>
+		</div>
+		<div class="control-label">
+			<label class="label">Logistic : </label>
+		</div>
+		<div class="control">
+			<div class="select is-fullwidth">
+				<select v-on:change="changeLogistic()" v-model="selectedLogistic">
+					<option value="A Logistic">A Logistic</option>
+					<option value="B Logistic">B Logistic</option>
+					<option value="C Logistic">C Logistic</option>
+					<option value="D Logistic">D Logistic</option>
+				</select>
+			</div>
+		</div>
+		<div class="control-label">
+		</div>
+		<div class="control">
+			<button class="button btn-search is-info ">Search</button>
+		</div>
+	</div>
+	</div>
     </div>
 
 
@@ -197,5 +219,13 @@
     background-color: white;
     z-index: 1002;
     overflow: auto;
+  }
+  .control-label{
+	flex-basis:100px;
+	margin-right:10px
+  }
+  .btn-search{
+	padding-top:0px;
+	text-align:left;
   }
 </style>
