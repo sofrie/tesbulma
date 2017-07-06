@@ -32,6 +32,14 @@ public class AWBController {
         return awbService.getAll();
     }
     
+    //filter By awbNumber
+    @CrossOrigin
+    @RequestMapping(value = "/api/awb/awbnumber/{AwbNumber}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public AWB filterAwbNumber(@PathVariable("AwbNumber") String AwbNumber) {
+        AWB awb=awbService.getByAwbNumber(AwbNumber).get(0);
+        return awb;
+    }
+    
     //filter By month
     @CrossOrigin
     @RequestMapping(value = "/api/awb/{month}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

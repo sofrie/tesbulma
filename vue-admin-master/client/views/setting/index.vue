@@ -191,6 +191,11 @@
       }
     },
     created () {
+      var elements = document.getElementsByClassName('app-sidebar')
+      for
+(var i = 0, length = elements.length; i < length; i++) {
+        elements[i].style.display = 'block'
+      }
       axios.get(`http://127.0.0.1:8080/api/tolerances`)
       .then(response => {
         // JSON responses are automatically parsed.

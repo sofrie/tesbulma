@@ -175,7 +175,11 @@
         .catch(e => {
           this.errors.push(e)
         })
-
+      var elements = document.getElementsByClassName('app-sidebar')
+      for
+(var i = 0, length = elements.length; i < length; i++) {
+        elements[i].style.display = 'block'
+      }
       // async / await version (created() becomes async created())
       //
       // try {

@@ -155,17 +155,10 @@
       url: String,
       id: String
     },
-
     data: () => ({
-      awb: []
-      id: String,
+      awb: [],
       cek: String
-    },
-
-    data: () => ({
-      name: []
-    }
-    ),
+    }),
     methods: {
       open (url) {
         window.open(url)
@@ -175,10 +168,6 @@
       axios.get('http://127.0.0.1:8080/api/awb/filterAwbNumber/' + this.id)
         .then(response => {
           this.awb = response.data
-      this.cek = 'blabla'
-      axios.get('http://127.0.0.1:8080/api/awb/filterAwbNumber/1')
-        .then(response => {
-          this.name = response.data
         })
         .catch(e => {
           this.errors.push(e)
@@ -187,9 +176,7 @@
     close () {
       this.$emit('close')
     }
-    }
-  }
-  
+}
 </script>
 <style>
   .classmodal{

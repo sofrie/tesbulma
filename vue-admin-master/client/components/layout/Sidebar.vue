@@ -1,5 +1,5 @@
 <template>
-  <aside class="menu app-sidebar animated" :class="{ slideInLeft: show, slideOutLeft: !show }">
+  <aside class="menu app-sidebar animated" :class="{ slideInLeft: show, slideOutLeft: !show }" id="baba">
 
     <ul class="menu-list">
       <li v-for="(item, index) in menu">
@@ -133,6 +133,9 @@ export default {
 <style lang="scss">
 @import '~bulma/sass/utilities/variables';
 @import '~bulma/sass/utilities/mixins';
+.active{
+	display:none;
+}
 
 .app-sidebar {
   position: fixed;
@@ -149,7 +152,7 @@ export default {
   box-shadow: 0 2px 3px rgba(17, 17, 17, 0.1), 0 0 0 1px rgba(17, 17, 17, 0.1);
   overflow-y: auto;
   overflow-x: hidden;
-
+  display: none;
 
   @include mobile() {
     transform: translate3d(-180px, 0, 0);

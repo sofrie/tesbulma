@@ -111,7 +111,7 @@
               </thead>
               <tbody>
 
-              <tr v-for="post of posts" @click="openModalCard(post)">
+              <tr v-for="post of posts" v-on:click="openModalCard(post)">
                 <td>{{post.month}}</td>
                 <td>{{post.year}}</td>
                 <td>{{post.logisticName}}</td>
@@ -416,6 +416,11 @@
 
     // Fetches posts when the component is created.
     created () {
+      var elements = document.getElementsByClassName('app-sidebar')
+      for
+(var i = 0, length = elements.length; i < length; i++) {
+        elements[i].style.display = 'block'
+      }
       axios.get(`http://127.0.0.1:8080/api/awb`)
         .then(response => {
           // JSON responses are automatically parsed.
