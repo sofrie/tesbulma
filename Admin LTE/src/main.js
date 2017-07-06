@@ -11,6 +11,9 @@ import { domain, count, prettyDate, pluralize } from './filters'
 
 // Import Views - Top level
 import AppView from './components/App.vue'
+import Modal from './components/Modal.vue'
+
+export default Modal
 
 // Import Install and register helper items
 Vue.filter('count', count)
