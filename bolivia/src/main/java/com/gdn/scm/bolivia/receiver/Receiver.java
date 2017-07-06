@@ -11,8 +11,11 @@ import com.gdn.scm.bolivia.entity.Compare;
 import com.gdn.scm.bolivia.services.CacheService;
 import com.gdn.scm.bolivia.entity.Process;
 import com.gdn.scm.bolivia.entity.UploadHistory;
+import com.gdn.scm.bolivia.repository.AWBRepository;
+import com.gdn.scm.bolivia.services.AWBClientServiceImplFeign;
 import com.gdn.scm.bolivia.services.AWBService;
 import com.gdn.scm.bolivia.services.UploadHistoryService;
+import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.Map;
 import org.redisson.api.RMap;
@@ -44,6 +47,11 @@ public class Receiver {
     @Autowired
     AWBService awb;
 
+    @Autowired
+    AWBRepository awbRepository;
+
+    AWBClientServiceImplFeign awbFeign = new AWBClientServiceImplFeign();
+
     Integer counter = 0;
 
     public void receiveMessage(Process message) throws InterruptedException {
@@ -58,7 +66,7 @@ public class Receiver {
             cacheSrvice.delete(message.getProccessId());
 
             if (message.getCounter() == compare.counter) {
-                UploadHistory upload = uploadHistoryService.getById(message.getRequestId());
+                UploadHistory upload = uploadHistoryService.getById(new Integer(message.getRequestId()));
                 upload.setStatus("Done Uploaded");
                 uploadHistoryService.addUploadHistory(upload);
             }
@@ -69,53 +77,95 @@ public class Receiver {
     }
 
 //    Integer c = 0;
-    public void receiveMessage(AWB message) throws InterruptedException {
-        System.out.println(compare.counter.toString());
+    public void receiveMessage(AWB message) throws InterruptedException, Exception {
         System.out.println("Received <" + message + ">");
         //awb.addAWB(message);
         counter++;
         Boolean ada = false;
         Integer c = 0;
-//        System.out.println("=======" + counter.toString());
-//         System.out.println("============"+"++++++++++++++++"+compare.map.size());
-//        if (cacheSrvice.setIfAbsent(message.getAwbNumber(), message.getGdnRef())) {
-//            System.out.println("Processing... " + message.getAwbNumber());
-//            Thread.sleep(5000);
-////            c++;
-////            System.out.println("=======" + c.toString());
-//            cacheSrvice.delete(message.getAwbNumber());
-//        } else {
-//            //lagi ada yg di proses
-//            System.out.println("Error..." + message + " is still on process");
-//        }
         cacheSrvice.delete(message.getAwbNumber());
         compare.map.remove(message.getAwbNumber(), message.getUploadHistoryNumber());
-        if (compare.map.containsValue(message.getUploadHistoryNumber())) {
-            
-            for (Map.Entry<String, String> entry : compare.map.entrySet()) {
-                String key = entry.getKey();
-                if(key.equals(message.getUploadHistoryNumber()))
-                {
-                    c++;
-                }
-                if(c>2)
-                {
-                    break;
-                }
-            }
-            if (c <= 1) {
-                UploadHistory upload = uploadHistoryService.getById(message.getUploadHistoryNumber());
-                if (upload != null) {
-                    upload.setStatus("Done Uploaded");
-                    uploadHistoryService.addUploadHistory(upload);
-                    //System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-                    //    admin.deleteQueue(BoliviaApplication.queueName);
-                }
-                //counter = 0;
-            }
+        AWB fromLogistic = awbFeign.getAWBLogistic(message.getAwbNumber());
+        message.setPriceLogistic(fromLogistic.getPriceLogistic());
+        message.setWeightLogistic(fromLogistic.getWeightLogistic());
+        message.setInsuranceChargeLogistic(fromLogistic.getInsuranceChargeLogistic());
+        message.setOtherChargeLogistic(fromLogistic.getOtherChargeLogistic());
+        message.setTotalChargeLogistic(fromLogistic.getTotalChargeLogistic());
+        Integer counterBeda = 0;
+        if (!message.getPriceLogistic().equals(message.getPriceSystem())) {
+            message.setPriceComment("Beda");
+            counterBeda++;
+        } else {
+            message.setPriceComment("-");
         }
+
+        if (!message.getWeightLogistic().equals(message.getWeightSystem())) {
+            message.setWeightComment("Beda");
+            counterBeda++;
+        } else {
+            message.setWeightComment("-");
+        }
+
+        if (!message.getInsuranceChargeLogistic().equals(message.getInsuranceChargeSystem())) {
+            message.setInsuranceChargeComment("Beda");
+            counterBeda++;
+        } else {
+            message.setInsuranceChargeComment("-");
+        }
+
+        if (!message.getOtherChargeLogistic().equals(message.getOtherChargeSystem())) {
+            message.setOtherChargeComment("Beda");
+            counterBeda++;
+        } else {
+            message.setOtherChargeComment("-");
+        }
+
+        if (!message.getTotalChargeLogistic().equals(message.getTotalChargeSystem())) {
+            message.setTotalChargeComment("Beda");
+            counterBeda++;
+        } else {
+            message.setTotalChargeComment("-");
+        }
+        if (counterBeda != 0) {
+            message.setReconStatus("Problem Exist");
+        } else {
+            message.setReconStatus("OK");
+        }
+//             
+        awbRepository.save(message);
+//            for (Map.Entry<String, String> entry : compare.map.entrySet()) {
+//                String key = entry.getKey();
+//                if (key.equals(message.getUploadHistoryNumber())) {
+//                    c++;
+//                }
+//                if (c > 2) {
+//                    break;
+//                }
+//            }
+//            if (c <= 1) {
+//                UploadHistory upload = uploadHistoryService.getById(message.getUploadHistoryNumber());
+//                if (upload != null) {
+//                    upload.setStatus("Done Uploaded");
+//                    System.out.println("=======aaaaaaaaaaaaaaaaaaaaaaaa");
+//                    uploadHistoryService.addUploadHistory(upload);
+//                    //    admin.deleteQueue(BoliviaApplication.queueName);
+//                }
+//                //counter = 0;
+//            }
+        //}
         if (counter >= compare.counter) {
+            UploadHistory upload = uploadHistoryService.getById(new Integer(message.getUploadHistoryNumber()));
+            if (upload != null) {
+                upload.setStatus("Done Uploaded");
+                System.out.println("=======aaaaaaaaaaaaaaaaaaaaaaaa");
+                System.out.println("iiiiddddd"+upload.getId().toString());
+                uploadHistoryService.addUploadHistory(upload);
+                //    admin.deleteQueue(BoliviaApplication.queueName);
+                counter = 0;
+                compare.counter = 0;
+            }
 
         }
     }
+
 }

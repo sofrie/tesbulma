@@ -58,7 +58,7 @@ public class LogisticProviderServiceImpl implements LogisticProviderService {
     }
     
     @Override
-    public void updateLogisticProvider(LogisticProvider a) {
+    public void updateLogisticProvider(LogisticProviderRequest a) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

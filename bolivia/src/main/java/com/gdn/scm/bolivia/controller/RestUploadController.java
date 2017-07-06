@@ -43,9 +43,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
  */
 @RestController
 public class RestUploadController {
+
     @Autowired
     Compare compare;
-    
+
     @Autowired
     UploadHistoryRepository uploadistoryRepository;
 
@@ -63,16 +64,12 @@ public class RestUploadController {
 
         logger.debug("Single file upload!");
 
-        if (invoiceFile.isEmpty()) 
-        {
+        if (invoiceFile.isEmpty()) {
             return new ResponseEntity("please select a file!", HttpStatus.OK);
         }
-        try 
-        {
+        try {
             saveUploadedFiles(Arrays.asList(invoiceFile));
-        } 
-        catch (IOException e) 
-        {
+        } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity("Successfully uploaded - "
@@ -137,12 +134,11 @@ public class RestUploadController {
             }
 
             byte[] bytes = file.getBytes();
-            Date date = new Date();
-            String tanggal = date.toString();
-
+            Date today = new Date();
+            SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yy:HH:mm:SS");
+            String date = DATE_FORMAT.format(today);
             System.out.println("==================");
-            System.out.println(date);
-            String tmp = file.getOriginalFilename().replace(".xlsx", "_") + tanggal.replace(":", "-") + ".xlsx";
+            String tmp = file.getOriginalFilename().replace(".xlsx", "_") + date.replace(":", "_") + ".xlsx";
             Path path = Paths.get(UPLOADED_FOLDER + tmp);
             System.out.println(path);
             System.out.println("==================");
@@ -150,9 +146,9 @@ public class RestUploadController {
 
             FileInputStream excellFile1 = new FileInputStream(new File(path.toString()));
             XSSFWorkbook workbook1 = new XSSFWorkbook(excellFile1);
-            XSSFSheet sheet1 = workbook1.getSheetAt(0);   
-            int count=uploadistoryRepository.findAll().size()-1;
-            compare.Send(sheet1,count);
+            XSSFSheet sheet1 = workbook1.getSheetAt(0);
+            int count = uploadistoryRepository.findAll().size() - 1;
+            compare.Send(sheet1);
 
         }
 
