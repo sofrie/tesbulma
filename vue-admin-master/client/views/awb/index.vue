@@ -327,6 +327,7 @@
       },
 
       openModalCard (numb) {
+        this.$emit('close')
         const cardModal = this.AWBdetailModal || (this.AWBdetailModal = openCardModal({title: numb.awbNumber + ' / ' + numb.gdnRef + ' (' + numb.reconStatus + ') ', url: this.$store.state.pkg.homepage, id: numb.awbNumber}))
         cardModal.$children[0].active()
         document.getElementById('kotak').style.width = '90vw'

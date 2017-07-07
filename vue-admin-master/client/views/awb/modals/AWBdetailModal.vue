@@ -6,7 +6,7 @@
           <table class="table awb-detail" >
             <tr>
               <th>Reconciliation Data</th>
-              <th>Blibli Data</th>
+              <th>{{cek}}</th> <!--Blibli Data-->
               <th>3PL Data</th>
             </tr>
             <tr v-for="item of awb" >
@@ -162,9 +162,13 @@
     methods: {
       open (url) {
         window.open(url)
+      },
+	  close () {
+      this.$emit('close')
       }
     },
     created () {
+      this.cek = this.id
       axios.get('http://127.0.0.1:8080/api/awb/filterAwbNumber/' + this.id)
         .then(response => {
           this.awb = response.data
@@ -172,9 +176,6 @@
         .catch(e => {
           this.errors.push(e)
         })
-    },
-    close () {
-      this.$emit('close')
     }
 }
 </script>
