@@ -4,67 +4,55 @@
     <!-- Main row -->
     <div class="row">
       <div class="col-md-12 ">
+	  
         <!-- Horizontal Form -->
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form">
-          <div class="box-body">
-            <div class="form-group">
-              <table>
-                <tr>
-                  <td>
-                    <label for="exampleInputEmail1 " class=" control-label col-md-1">Month</label>
-                  </td>
-                  <td>
-                    <select class="form-control">
-                      <option>Januari</option>
-                      <option>Februari</option>
-                      <option>Maret</option>
-                      <option>April</option>
-                    </select>
-                  </td>
-                  <td>
-                    <label for="exampleInputEmail1 " class=" control-label col-md-1">Year</label>
-                  </td>
-                  <td>
-                    <select class="form-control">
-                      <option>2017</option>
-                    </select>
-                  </td>
-                  <td>
-                    <label for="exampleInputEmail1 " class=" control-label col-md-1">Logistic</label>
-                  </td>
-                  <td>
-                    <select class="form-control">
-                      <option>A Logistic</option>
-                      <option>B Logistic</option>
-                    </select>
-                  </td>
-                  <td>
-                    &emsp;
-                  </td>
-                  <td>
-                    <button type="submit" class="btn btn-info ">Search</button>
-                  </td>
-                  <td>
-                    &emsp;
-                  </td>
-                  <td>
-                    <button type="submit" class="btn btn-info">Upload</button>
-                  </td>
-                  <td>
-
-                  </td>
-                </tr>
-              </table>
-            </div>
-
-          </div>
-          <!-- /.box-body -->
-        </form>
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
+        <div class="form-horizontal">
+<div class="box-body">
+		<label for="exampleInputEmail1 " class=" control-label col-md-1">Month</label>
+		<div class="col-md-2">
+			<select v-on:change="changeMonth()" v-model="selectedMonth" class="form-control">
+				<option value="January">January</option>		
+				<option value="February">February</option>
+				<option value="Maret">Maret</option>
+				<option value="April">April</option>
+				<option value="Mei">Mei</option>
+				<option value="Juni">Juni</option>
+				<option value="Juli">Juli</option>
+				<option value="Agustus">Agustus</option>
+				<option value="September">September</option>
+				<option value="Oktober">Oktober</option>
+				<option value="November">November</option>
+				<option value="Desember">Desember</option>
+			</select>
+		</div>
+		<label for="exampleInputEmail1 " class=" control-label col-md-1">Year</label>
+		<div class="col-md-2">
+			<select v-on:change="changeYear()" v-model="selectedYear" class="form-control">
+				<option>2017</option>
+				<option>2018</option>
+			</select>
+		</div>
+		<label for="exampleInputEmail1 " class=" control-label col-md-1">Logistic</label>
+		<div class="col-md-2">
+			<select v-on:change="changeLogistic()" v-model="selectedLogistic" class="form-control">
+				<option value="A Logistic">A Logistic</option>
+				<option value="B Logistic">B Logistic</option>
+				<option value="C Logistic">C Logistic</option>
+				<option value="D Logistic">D Logistic</option>
+			</select>
+		</div>
+		<div class="col-md-3">
+			<button type="submit" class="btn btn-info ">Search</button>
+			<a class="btn btn-info" data-toggle="modal" data-target="#modal-default">Upload</a>
+		</div>
+</div>
+</div>
+        <!--<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
           Launch Default Modal
-        </button>
+        </button>-->
+		
         <div class="modal fade" id="modal-default">
           <form class="form">
             <div class="modal-dialog">
@@ -146,26 +134,38 @@
           <div class="box-header with-border">
             <h3 class="box-title">Summary - Invoice A Logistic / January / 2017</h3>
           </div>
+		  
           <!-- /.box-header -->
           <!-- form start -->
           <div class="box-body table-responsive ">
-            <table class="table">
-              <tr>
-                <td><label for="inputEmail3">OK  : 298527 data</label></td>
-                <td><label for="inputEmail3">Problem Exist   : 219 data</label></td>
-                <td><label for="inputEmail3">Status  : Open</label></td>
-                <td><label for="inputEmail3">Jumlah Tagihan   : Rp.xx.xxx.xxx</label></td>
-              </tr>
-            </table>
-            <button type="submit" class="btn btn-info">View Data</button>
-            <button type="submit" class="btn btn-info ">Submit</button>
-            <button type="submit" class="btn btn-info pull-right">Approve</button>
+            <div class="col-md-12">
+				<div class="col-md-3">
+					<label>OK  : 298527 data</label>
+				</div>
+				<div class="col-md-3">
+					<label>Problem Exist   : 219 data</label>
+				</div>
+				<div class="col-md-3">
+					<label>Status  : Open</label>
+				</div>
+				<div class="col-md-3">
+					<label>Jumlah Tagihan   : Rp.xx.xxx.xxx</label>
+				</div>
+				<div class="col-md-6 pull-left">
+					<button type="submit" class="btn btn-info">View Data</button>
+					<button type="submit" class="btn btn-info">Download</button>
+				</div>
+				<div class="col-md-6 text-right">
+					<button type="submit" class="btn btn-info">Submit</button>
+					<button type="submit" class="btn btn-info">Approve</button>
+				</div>
+			</div>
           </div>
         </div>
 
         <div class="box">
-          <div class="box-header">
-            <h3 class="box-title">Upload History</h3>
+          <div class="box-header with-border">
+            <h3 class="box-title">Upload History {{error}}</h3>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
@@ -211,6 +211,16 @@
                     </tr>
                     </thead>
                     <tbody>
+					<tr v-for="post of posts" role="row">
+                <td class="sorting_1">{{post.month}}</td>
+                <td>{{post.year}}</td>
+                <td>{{post.ok}}</td>
+                <td>{{post.problemExist}}</td>
+                <td>{{post.jumlahTagihan}}</td>
+                <td>{{post.logistic}}</td>
+                <td>{{post.status}}</td>
+                <td>{{post.last_modified}}</td>
+              </tr>
                     <tr class="even" role="row">
                       <td class="sorting_1">January</td>
                       <td>2017</td>
@@ -272,6 +282,7 @@
   // Require needed datatables modules
   import 'datatables.net'
   import 'datatables.net-bs'
+  import axios from 'axios'
 
   export default {
     name: 'Tables',
@@ -279,6 +290,7 @@
       this.$nextTick(() => {
         $('#example1').DataTable()
       })
+      this.init()
     },
     data () {
       return {
@@ -287,7 +299,59 @@
         currentStatus: null,
         uploadFieldName: 'invoiceFile',
         selectedMonth: 'January',
-        selectedLogistic: 'A Logistic'
+        selectedLogistic: 'A Logistic',
+        posts: [],
+        error: ''
+      }
+    },
+
+    methods: {
+      uploaded () {
+        axios.post(`http://127.0.0.1:8080/api/uploadHistory`, {
+          month: this.selectedMonth,
+          year: '2017',
+          logistic: this.selectedLogistic
+        })
+      },
+      changeMonth () {
+        axios.get('http://127.0.0.1:8080/api/uploadHistory/month/' + this.selectedMonth)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+      },
+      changeYear () {
+        axios.get('http://127.0.0.1:8080/api/uploadHistory/year/' + this.selectedYear)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+      },
+      changeLogistic () {
+        axios.get('http://127.0.0.1:8080/api/uploadHistory/logistic/' + this.selectedLogistic)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+      },
+      init () {
+        axios.get(`http://127.0.0.1:8080/api/uploadHistory`)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data
+          })
+          .catch(e => {
+            this.error = e
+          })
       }
     }
   }

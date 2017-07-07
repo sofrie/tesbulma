@@ -1,8 +1,8 @@
 <template>
   <ul class="sidebar-menu">
    <!--&lt;!&ndash;  <li class="header">TOOLS</li> &ndash;&gt;-->
-    <li class="active pageLink" v-on:click="toggleMenu">
-      <router-link to="/"><i class="fa fa-desktop"></i>
+    <li class="pageLink2" id="indexPage" v-on:click="toggleMenu">
+      <router-link to="/dashboard"><i class="fa fa-desktop"></i>
 	  <br/>
         <span class="page">Dashboard</span>
       </router-link>
@@ -103,6 +103,7 @@
   </ul>
 </template>
 <script>
+import $ from 'jquery'
 export default {
   name: 'SidebarName',
   methods: {
@@ -116,7 +117,17 @@ export default {
       // window.$('li.pageLink.active').removeClass('active')
       // Add it to the item that was clicked
       event.toElement.parentElement.className = 'pageLink active'
+      $('#indexPage > a').attr('class', '')
+    },
+    init () {
+      var q = document.querySelector('a.active')
+      if (q === null) {
+        $('#indexPage').attr('class', 'pageLink active')
+      }
     }
+  },
+  mounted () {
+    this.init()
   }
 }
 </script>

@@ -26,6 +26,11 @@
     padding-left: 8px;
 }
 }
+.skin-blue .sidebar-menu>li:hover>a, .skin-blue .sidebar-menu>li>a.active {
+    color: #1E90FF;
+    background: #ffffff;
+    border-left-color: #3c8dbc;
+}
 /* End Side Bar */
 
 /* Navbar */
@@ -44,3 +49,11 @@
 }
 /* End User Profile */
 /* End Navbar */
+
+/* Pages */
+/* Invoice */
+.box-header.with-border {
+    border-bottom: 1px solid #00c0ef;
+}
+/* End Invoice */
+/* End Pages */
