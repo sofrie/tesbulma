@@ -146,15 +146,15 @@
 												</div>
 												<form role="form">
 													<div class="modal-body">
-													<div class="row m-t-10 col-md-12">
+													<div class="row m-t-10 modal-title-margin col-md-12">
 														<div class="col-md-4">
 															<b>Reconciliation Data</b>
 														</div>
 														<div class="col-md-4">
-															<b>Blibli Data</b>
+															<span class="col-md-12"><b>Blibli Data</b></span>
 														</div>
 														<div class="col-md-4">
-															<b>3PL Data</b>
+															<span class="col-md-12"><b>3PL Data</b></span>
 														</div>
 													</div>
 													<div class="row m-t-10 col-md-12">
@@ -174,69 +174,94 @@
 															<div class="col-md-5">: {{awb.notes}}</div>
 														</div>
 														<div class="col-md-4">
-															
+															<div class="col-md-5">Sender Name</div>
+															<div class="col-md-7">: {{awb.namaPengirimSystem}}</div>
+															<div class="col-md-5">Sender Address</div>
+															<div class="col-md-7">: {{awb.alamatPengirimSystem}}</div>
+															<div class="col-md-5">Origin Code</div>
+															<div class="col-md-7">: {{awb.kodeOriginSystem}}</div>
+															<div class="col-md-5">Receiver Name</div>
+															<div class="col-md-7">: {{awb.namaPenerimaSystem}}</div>
+															<div class="col-md-5">Receiver Address</div>
+															<div class="col-md-7">: {{awb.alamatPenerimaSystem}}</div>
+															<div class="col-md-5">Destination Code</div>
+															<div class="col-md-7">: {{awb.kodeDestinasiSystem}}</div>
 														</div>
 														<div class="col-md-4">
-															
+															<div class="col-md-5">Sender Name</div>
+															<div class="col-md-7">: {{awb.namaPengirimAPI}}</div>
+															<div class="col-md-5">Sender Address</div>
+															<div class="col-md-7">: {{awb.alamatPengirimAPI}}</div>
+															<div class="col-md-5">Origin Code</div>
+															<div class="col-md-7">: {{awb.kodeOriginAPI}}</div>
+															<div class="col-md-5">Receiver Name</div>
+															<div class="col-md-7">: {{awb.namaPenerimaAPI}}</div>
+															<div class="col-md-5">Receiver Address</div>
+															<div class="col-md-7">: {{awb.alamatPenerimaAPI}}</div>
+															<div class="col-md-5">Destination Code</div>
+															<div class="col-md-7">: {{awb.kodeDestinasiAPI}}</div>
 														</div>
 													</div>
-													
-													<div class="row m-t-10 form-group">
-														<label for="input-text" class="col-sm-2 control-label">{{test}}</label>
-														<div class="col-sm-10">
-															<select id="select-gear" v-model="selectedMonth" class="form-control">
-																<option value="" disabled="" selected="" >
-																	Select month
-																</option>
-																<option value="January">January</option>		
-																<option value="February">February</option>
-																<option value="Maret">Maret</option>
-																<option value="April">April</option>
-																<option value="Mei">Mei</option>
-																<option value="Juni">Juni</option>
-																<option value="Juli">Juli</option>
-																<option value="Agustus">Agustus</option>
-																<option value="September">September</option>
-																<option value="Oktober">Oktober</option>
-																<option value="November">November</option>
-																<option value="Desember">Desember</option>
-															</select>
+													<div class="row m-t-10 col-md-12">
+														<span class="col-md-12"><hr/></span>
+														<span class="col-md-12"><h3>Charge Summary</b></h3></span>
+														<span class="col-md-12"><hr/></span>
+														<div class="table-responsive col-md-12">
+														<table class="table" id="table1">
+														<thead>
+															<tr>
+															  <th></th>
+															  <th>Weight</th>
+															  <th>Price/Kg</th>
+															  <th>Other Charge</th>
+															  <th>Gift Wrap Charge</th>
+															  <th>Insurance Charge</th>
+															  <th>Total Charge</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+															  <th>System</th>
+															  <td>{{awb.weightSystem}}</td>
+															  <td>{{awb.priceSystem}}</td>
+															  <td>{{awb.otherChargeSystem}}</td>
+															  <td>{{awb.giftWrapChargeSystem}}</td>
+															  <td>{{awb.insuranceChargeSystem}}</td>
+															  <td>{{awb.totalChargeSystem}}</td>
+															</tr>
+															<tr>
+															  <th>Logistic</th>
+															  <td>{{awb.weightLogistic}}</td>
+															  <td>{{awb.priceLogistic}}</td>
+															  <td>{{awb.otherChargeLogistic}}</td>
+															  <td>{{awb.giftWrapChargeLogistic}}</td>
+															  <td>{{awb.insuranceChargeLogistic}}</td>
+															  <td>{{awb.totalChargeLogistic}}</td>
+															</tr>
+															<tr>
+															  <th>Applied</th>
+															  <td>{{awb.weightApplied}}</td>
+															  <td>{{awb.priceApplied}}</td>
+															  <td>{{awb.otherChargeApplied}}</td>
+															  <td>{{awb.giftWrapChargeApplied}}</td>
+															  <td>{{awb.insuranceChargeApplied}}</td>
+															  <td>{{awb.totalChargeApplied}}</td>
+															</tr>
+															<tr>
+															  <th>Comment</th>
+															  <td>{{awb.weightComment}}</td>
+															  <td>{{awb.priceComment}}</td>
+															  <td>{{awb.otherChargeComment}}</td>
+															  <td>{{awb.giftWrapChargeComment}}</td>
+															  <td>{{awb.insuranceChargeComment}}</td>
+															  <td>{{awb.totalChargeComment}}</td>
+															</tr>
+															</tbody>
+														  </table>
 														</div>
-													</div>
-													<div class="row m-t-10 form-group">
-														<label for="input-text" class="col-sm-2 control-label">Year</label>
-														<div class="col-sm-10">
-															<select id="select-gear" v-model="selectedYear" class="form-control">
-																<option value="" disabled="" selected="">
-																	Select year
-																</option>
-																<option value="2017">2017</option>
-																<option value="2018">2018</option>
-															</select>
-														</div>
-													</div>
-													<div class="row m-t-10 form-group">
-														<label for="input-text" class="col-sm-2 control-label">Logistic</label>
-														<div class="col-sm-10">
-															<select id="select-gear" v-model="selectedLogistic" class="form-control">
-																<option value="" disabled="" selected="">
-																	Select logistic
-																</option>
-																<option value="A Logistic">A Logistic</option>
-																<option value="B Logistic">B Logistic</option>
-															</select>
-														</div>
-													</div>
-													<div class="row m-t-10 form-group">
-														<label for="input-text" class="col-sm-2 control-label">File</label>
-															<div class="col-sm-10">
-																<input id="input-40" type="file" class="file" accept="text/plain" data-preview-file-type="text" data-preview-class="bg-warning">
-															</div>
 													</div>
 													</div>
 													<div class="modal-footer">
-														<button type="submit" class="btn btn-succes" v-on:click="uploadHistory()" data-dismiss="modal">Submit</button>
-														<button type="reset" class="btn btn-default">Reset</button>
 														<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 													</div>
 												</form>
@@ -381,7 +406,7 @@ export default {
       },
 
       changeMonth () {
-        axios.get('http://127.0.0.1:8091/api/awb/' + this.selected)
+        axios.get('http://127.0.0.1:8091/api/awb/' + this.selectedMonth)
           .then(response => {
             // JSON responses are automatically parsed.
             this.posts = response.data
@@ -515,5 +540,8 @@ export default {
 }
 .one {
     margin-left: 5px;
+  }
+  .modal-title-margin{
+	margin-top:30px !important;
   }
 </style>
