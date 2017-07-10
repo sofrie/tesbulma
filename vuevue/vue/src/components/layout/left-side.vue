@@ -55,7 +55,7 @@
 					<router-link tag="li" to="/setting" exact>
                         <a class="logo"><i class="menu-icon ti-settings"></i><br/><span class="mm-text">Setting</span></a>
                     </router-link>
-                    <router-link tag="li" to="/index2" exact>
+                    <!--<router-link tag="li" to="/index2" exact>
                         <a class="logo"><i class="menu-icon ti-layout-list-large-image"></i><br/><span class="mm-text">Dashboard 2</span></a>
                     </router-link>
                     <li class="menu-dropdown">
@@ -505,7 +505,7 @@
                                 </ul>
                             </li>
                         </ul>
-                    </li>
+                    </li>-->
                 </ul>
                 <!-- / .navigation -->
             </div>
