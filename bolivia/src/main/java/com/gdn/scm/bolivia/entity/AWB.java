@@ -5,6 +5,7 @@
  */
 package com.gdn.scm.bolivia.entity;
 
+import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -116,58 +117,58 @@ public class AWB {
     private String insuredAmount;
 
     @Column(name = COLUMN_WEIGHT_SYSTEM, nullable = true)
-    private String weightSystem;
+    private BigDecimal weightSystem;
     @Column(name = COLUMN_WEIGHT_LOGISTIC, nullable = true)
-    private String weightLogistic;
+    private BigDecimal weightLogistic;
     @Column(name = COLUMN_WEIGHT_APPLIED, nullable = true)
-    private String weightApplied;
+    private BigDecimal weightApplied;
     @Column(name = COLUMN_WEIGHT_COMMENT, nullable = true)
     private String weightComment;
 
     @Column(name = COLUMN_PRICE_SYSTEM, nullable = true)
-    private String priceSystem;
+    private BigDecimal priceSystem;
     @Column(name = COLUMN_PRICE_LOGISTIC, nullable = true)
-    private String priceLogistic;
+    private BigDecimal priceLogistic;
     @Column(name = COLUMN_PRICE_APPLIED, nullable = true)
-    private String priceApplied;
+    private BigDecimal priceApplied;
     @Column(name = COLUMN_PRICE_COMMENT, nullable = true)
     private String priceComment;
 
     @Column(name = COLUMN_OTHER_CHARGE_SYSTEM, nullable = true)
-    private String otherChargeSystem;
+    private BigDecimal otherChargeSystem;
     @Column(name = COLUMN_OTHER_CHARGE_LOGISTIC, nullable = true)
-    private String otherChargeLogistic;
+    private BigDecimal otherChargeLogistic;
     @Column(name = COLUMN_OTHER_CHARGE_APPLIED, nullable = true)
-    private String otherChargeApplied;
+    private BigDecimal otherChargeApplied;
     @Column(name = COLUMN_OTHER_CHARGE_COMMENT, nullable = true)
     private String otherChargeComment;
 
     @Column(name = COLUMN_GIFT_WRAP_CHARGE_SYSTEM, nullable = true)
-    private String giftWrapChargeSystem;
+    private BigDecimal giftWrapChargeSystem;
     @Column(name = COLUMN_GIFT_WRAP_CHARGE_LOGISTIC, nullable = true)
-    private String giftWrapChargeLogistic;
+    private BigDecimal giftWrapChargeLogistic;
     @Column(name = COLUMN_GIFT_WRAP_CHARGE_APPLIED, nullable = true)
-    private String giftWrapChargeApplied;
+    private BigDecimal giftWrapChargeApplied;
     @Column(name = COLUMN_GIFT_WRAP_CHARGE_COMMENT, nullable = true)
     private String giftWrapChargeComment;
 
     @Column(name = COLUMN_INSURANCE_CHARGE_SYSTEM, nullable = true)
-    private String insuranceChargeSystem;
+    private BigDecimal insuranceChargeSystem;
     @Column(name = COLUMN_INSURANCE_CHARGE_LOGISTIC, nullable = true)
-    private String insuranceChargeLogistic;
+    private BigDecimal insuranceChargeLogistic;
     @Column(name = COLUMN_INSURANCE_CHARGE_APPLIED, nullable = true)
-    private String insuranceChargeApplied;
+    private BigDecimal insuranceChargeApplied;
     @Column(name = COLUMN_INSURANCE_CHARGE_COMMENT, nullable = true)
     private String insuranceChargeComment;
 
     @Column(name = COLUMN_TOTAL_CHARGE_SYSTEM, nullable = true)
-    private Double totalChargeSystem;
+    private BigDecimal totalChargeSystem;
     @Column(name = COLUMN_TOTAL_CHARGE_LOGISTIC, nullable = true)
-    private Double totalChargeLogistic;
+    private BigDecimal totalChargeLogistic;
     @Column(name = COLUMN_TOTAL_CHARGE_APPLIED, nullable = true)
-    private String totalChargeApplied;
+    private BigDecimal totalChargeApplied;
     @Column(name = COLUMN_TOTAL_CHARGE_COMMENT, nullable = true)
-    private Double totalChargeComment;
+    private String totalChargeComment;
 
     @Column(name = COLUMN_FAILURE, nullable = true)
     private String failure;
@@ -214,7 +215,7 @@ public class AWB {
     @Column(name = COLUMN_FOCS_AMOUNT, nullable = true)
     private String focsAmount;
     @Column(name = COLUMN_FOCSA_AMOUNT, nullable = true)
-    private String focsaAcmount;
+    private String focsaAmount;
     @Column(name = COLUMN_SHIPPING_COST, nullable = true)
     private String shippingCost;
     @Column(name = COLUMN_SHIP_COST, nullable = true)
@@ -251,7 +252,13 @@ public class AWB {
         gdnRef=row.getCell(4).toString();
         kodeDestinasiSystem=row.getCell(5).toString();
         namaPenerimaSystem=row.getCell(6).toString();
-        totalChargeSystem=row.getCell(9).getNumericCellValue();
+        totalChargeSystem=new BigDecimal(row.getCell(9).getNumericCellValue());
     }
+
+//    @Override
+//    public String toString() {
+//        return "AWB{" + "counter=" + counter + ", awbNumber=" + awbNumber + '}';
+//    }
+    
 
 }

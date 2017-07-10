@@ -11,16 +11,28 @@ import com.gdn.scm.bolivia.repository.AWBRepository;
 import com.gdn.scm.bolivia.repository.UploadHistoryRepository;
 import com.gdn.scm.bolivia.services.AWBService;
 import com.gdn.scm.bolivia.services.ProcessService;
+import com.gdn.scm.bolivia.services.ToleranceService;
 import com.gdn.scm.bolivia.services.UploadHistoryService;
 import java.io.File;
 import java.io.FileInputStream;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import static org.bouncycastle.crypto.tls.ConnectionEnd.client;
+import org.redisson.Redisson;
+import org.redisson.api.RList;
+import org.redisson.api.RMap;
+import org.redisson.api.RedissonClient;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,11 +55,21 @@ public class Compare {
 
     @Autowired
     UploadHistoryService uploadHistoryService;
+    
+    @Autowired
+    ToleranceService toleranceService;
 
     public Integer counter = 0;
 
+    public List<AWB> listAWB = new ArrayList();
+
+    RedissonClient redisson = Redisson.create();
+    public RMap<String, String> map = redisson.getMap("myMap");
+    //public RList<RList<String>> list = redisson.getList("myList");
+
     public Compare() {
-//        try {
+        counter = 0;
+//        try {     
 //            // get input excel files
 //            FileInputStream excellFile1 = new FileInputStream(new File(
 //                    "D:\\EXCEL\\Book1.xlsx"));
@@ -78,7 +100,7 @@ public class Compare {
 //        }
     }
 
-    public void Send(XSSFSheet sheet1, Integer id) {
+    public void Send(XSSFSheet sheet1) {
 //        int firstRow1 = sheet1.getFirstRowNum();
 //        int lastRow1 = sheet1.getLastRowNum();
 
@@ -86,26 +108,66 @@ public class Compare {
         Iterator<Row> itr = sheet1.iterator();
         while (itr.hasNext()) {
             Row row = itr.next();
-            if (row.getRowNum() > 1) {
+            if (row.getRowNum() >= 1) {
 
-                awb.assignAWB(row);                
-                
+                Cell awbNumberCell = row.getCell(0);
 
-                awb.setMonth("December");
-                awb.setYear("2017");
-                awb.setLogisticName("D Logistic");
+                awb.setAwbNumber(awbNumberCell.getStringCellValue());
+                Cell awbStatusCell = row.getCell(1);
+                awb.setReconStatus(awbStatusCell.getStringCellValue());
+                Cell awbPricePerKgCell = row.getCell(2);
+                awb.setPriceSystem(new BigDecimal(awbPricePerKgCell.getNumericCellValue()));
+                Cell awbWeightCell = row.getCell(3);
+                awb.setWeightSystem(new BigDecimal(awbWeightCell.getNumericCellValue()));
+                Cell awbInsuranceChargeCell = row.getCell(4);
+                awb.setInsuranceChargeSystem(new BigDecimal(awbInsuranceChargeCell.getNumericCellValue()));
+                Cell awbGiftWrapChargeCell = row.getCell(5);
+                awb.setGiftWrapChargeSystem(new BigDecimal(awbGiftWrapChargeCell.getNumericCellValue()));
+                Cell awbOtherChargeCell = row.getCell(6);
+                awb.setOtherChargeSystem(new BigDecimal(awbOtherChargeCell.getNumericCellValue()));
+                Cell awbTotalChargeCell = row.getCell(7);
+                awb.setTotalChargeSystem(new BigDecimal(awbTotalChargeCell.getNumericCellValue()));
+
+                UploadHistory upload=uploadHistoryService.findTop1ByOrderByIdDesc();
                 awb.setReconStatus("OK");
                 awb.setMerchantCode("MERCH-CODE-007");
-                Process p = new Process();
+                awb.setUploadHistoryNumber(upload.getId().toString());
+                awb.setGdnRef(awb.getUploadHistoryNumber());                
+                awb.setMonth(upload.getMonth());
+                awb.setYear(upload.getYear());
+                awb.setLogisticName(upload.getLogistic());
+                
+                awbRepository.save(awb);
+
+//                awb.assignAWB(row);
+//
+//                awb.setMonth("December");
+//                awb.setYear("2017");
+//                awb.setLogisticName("D Logistic");
+//                awb.setReconStatus("OK");
+//                awb.setMerchantCode("MERCH-CODE-007");
+//                Process p = new Process();
                 counter++;
                 awb.setCounter(counter);
-                awb.setUploadHistoryNumber(id.toString());
-//                p.setProccessId(awb.getAwbNumber());
+//                awb.setUploadHistoryNumber(id.toString());
+                map.put(awb.getAwbNumber(), awb.getUploadHistoryNumber());
+                listAWB.add(awb);
+//                map.remove(awb.getAwbNumber(), awb.getUploadHistoryNumber().toString());
+//                map.containsKey(awb.getUploadHistoryNumber().toString());
+//                p.setProccessId(awb.getAwbNumber());                                                                                                                                              
 //                p.setRequestId(id.toString());
 //                p.setCounter(counter);
+//                for (Map.Entry<String, String> entry : map.entrySet()) {
+//                    System.out.println("ooooooooooooooooo"+" "+entry.getKey());
+//                }
                 processService.requestProcess(awb);
+                System.out.println("counterrrrrrrrrrr---------------" + counter);
             }
         }
+        for (int i = 0; i < listAWB.size(); i++) {
+            processService.requestProcess(listAWB.get(i));
+        }
+        listAWB = new ArrayList();
 
 //        for (int i = 2; i <= 10; i++) {
 //            AWB awb = new AWB();
@@ -146,6 +208,18 @@ public class Compare {
         System.out.println("Reques process" + awb);
         rabbitTemplate.convertAndSend(BoliviaApplication.queueName, awb);
         return awb;
+    }
+
+    public void getDataFromLogistic() {
+        //get data logistic from API
+
+        //throw data into rabbitMQ
+        //compare each data
+//        compareAWB(AWB system, AWB logistic)
+    }
+
+    public void compareAWB(AWB system, AWB logistic) {
+
     }
 
     public static boolean compareTwoSheets(XSSFSheet sheet1, XSSFSheet sheet2) {

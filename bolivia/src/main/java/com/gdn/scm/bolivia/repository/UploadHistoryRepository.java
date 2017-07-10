@@ -5,9 +5,11 @@
  */
 package com.gdn.scm.bolivia.repository;
 
+import com.gdn.scm.bolivia.entity.Tolerance;
 import com.gdn.scm.bolivia.entity.UploadHistory;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -15,11 +17,14 @@ import org.springframework.stereotype.Repository;
  * @author sofrie.zumaytis
  */
 @Repository
-public interface UploadHistoryRepository extends JpaRepository<UploadHistory, String> {
+public interface UploadHistoryRepository extends JpaRepository<UploadHistory, Integer> {
 
     public List<UploadHistory> findByMonth(String month);
 
     public List<UploadHistory> findByYear(String year);
 
     public List<UploadHistory> findByLogistic(String logistic);
+    
+       
+    public UploadHistory findTop1ByOrderByIdDesc();
 }

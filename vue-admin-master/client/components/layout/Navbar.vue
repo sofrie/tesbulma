@@ -11,7 +11,7 @@
 		
 		<div class="loginclass">
               <tooltip label="Profile Logout" placement="bottom" type="info" size="small" :no-animate="false" :always="fase" :rounded="true">
-                <button class="button has-text-centered">
+                <button class="button has-text-centered" v-on:click="logout()">
                   <span>
 					<img src="~assets/userlogo.png" width="30px" :alt="pkginfo.description">
 				  </span>
@@ -48,7 +48,7 @@ export default {
     ]),
     logout () {
       this.$auth.logout({
-        redirect: 'Home',
+        redirect: 'Login',
         makeRequest: false
         // params: {},
         // success: function () {},

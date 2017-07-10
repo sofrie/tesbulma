@@ -1,78 +1,78 @@
 <template>
-  <card-modal :visible="visible" @close="close" :title="title" transition="zoom" class="classmodalleft">
+  <card-modal :visible="visible" @close="close" :title="title" transition="zoom" class="classmodalleft awb-modal-card">
     <div class="tile is-parent classmodal">
       <article class="tile is-child ">
         <div class="block ">
-          <table class="table" >
+          <table class="table awb-detail" >
             <tr>
               <th>Reconciliation Data</th>
-              <th>Blibli Data</th>
+              <th>{{cek}}</th> <!--Blibli Data-->
               <th>3PL Data</th>
             </tr>
-            <tr>
+            <tr v-for="item of awb" >
               <td>
                 <ul>
                   <li>
-                    <label>Failure Reason :Data Mismatch</label>
+                    <label>Failure Reason : {{item.failure}}</label>
                   </li>
                   <li>
-                    <label>Merchant Code : MERCH-CODE-0001</label>
+                    <label>Merchant Code : {{item.merchantCode}}</label>
+                  </li>
+				  <li>
+                    Merchant Name : {{item.merchantName}}
                   </li>
                   <li>
-                    Merchant Name : Merchant 1
+                    <label>Original Shipping Cost : Rp. {{item.focsAmount}}</label>
                   </li>
                   <li>
-                    <label>Original Shipping Cost : Rp.xx.xxx.xxx</label>
+                    <label>Adjusment Shipping Cost : Rp. {{item.focsaAmount}}</label>
                   </li>
                   <li>
-                    <label>Adjusment Shipping Cost : Rp.xx.xxx.xxx</label>
-                  </li>
-                  <li>
-                    <label>Notes : Setelah penyelidikan, ikut 3PL</label>
+                    <label>Notes : {{item.notes}}</label>
                   </li>
                 </ul>
               </td>
               <td>
                 <ul>
                   <li>
-                    <label>Sender Name : Reza Lesmana</label>
+                    <label>Sender Name : {{item.namaPengirimSystem}}</label>
                   </li>
                   <li>
-                    <label>Sender Address : Jl.Jambu No.1</label>
+                    <label>Sender Address : {{item.alamatPengirimSystem}}</label>
                   </li>
                   <li>
-                    <label>Origin Code : CGK001</label>
+                    <label>Origin Code : {{item.kodeOriginSystem}}</label>
                   </li>
                   <li>
-                    <label>Receiver Name : Sofriesilero Zumaytis</label>
+                    <label>Receiver Name : {{item.namaPenerimaSystem}}</label>
                   </li>
                   <li>
-                    <label>Receiver Address : Perum Kelapa</label>
+                    <label>Receiver Address : {{item.alamatPenerimaSystem}}</label>
                   </li>
                   <li>
-                    <label>Destination Code : DPK001</label>
+                    <label>Destination Code : {{item.kodeDestinasiSystem}}</label>
                   </li>
                 </ul>
               </td>
               <td>
                 <ul>
                   <li>
-                    <label>Sender Name : Reza Lesmana</label>
+                    <label>Sender Name : {{item.namaPengirimAPI}}</label>
                   </li>
                   <li>
-                    <label>Sender Address : Jl.Jambu No.1</label>
+                    <label>Sender Address : {{item.alamatPengirimAPI}}</label>
                   </li>
                   <li>
-                    <label>Origin Code : CGK001</label>
+                    <label>Origin Code : {{item.kodeOriginAPI}}</label>
                   </li>
                   <li>
-                    <label>Receiver Name : Sofriesilero Zumaytis</label>
+                    <label>Receiver Name : {{item.namaPenerimaAPI}}</label>
                   </li>
                   <li>
-                    <label>Receiver Address : Komplek Kelapa</label>
+                    <label>Receiver Address : {{item.alamatPenerimaAPI}}</label>
                   </li>
                   <li>
-                    <label>Destination Code : DPK003</label>
+                    <label>Destination Code : {{item.kodeDestinasiAPI}}</label>
                   </li>
                 </ul>
               </td>
@@ -83,14 +83,10 @@
               <!--</td>-->
             </tr>
           </table>
-        </div>
-      </article>
-    </div>
-    <div class="tile is-parent classmodal">
-      <article class="tile is-child ">
-        <h1 class="title">Charge Summary</h1>
-        <div class="block ">
-          <table class="table" width="200px" margin="10px">
+		  
+		  <h1 class="title">Charge Summary</h1>
+        
+          <table class="table awb-detail" v-for="item of awb" >
             <tr>
               <th></th>
               <th>Weight</th>
@@ -102,49 +98,51 @@
             </tr>
             <tr>
               <th>System</th>
-              <td>2</td>
-              <td>8700</td>
-              <td>0</td>
-              <td>0</td>
-              <td>125</td>
-              <td>17400</td>
+              <td>{{item.weightSystem}}</td>
+              <td>{{item.priceSystem}}</td>
+              <td>{{item.otherChargeSystem}}</td>
+              <td>{{item.giftWrapChargeSystem}}</td>
+              <td>{{item.insuranceChargeSystem}}</td>
+              <td>{{item.totalChargeSystem}}</td>
             </tr>
             <tr>
               <th>Logistic</th>
-              <td>3</td>
-              <td>9000</td>
-              <td>10000</td>
-              <td>0</td>
-              <td>150</td>
-              <td>37150</td>
+              <td>{{item.weightLogistic}}</td>
+              <td>{{item.priceLogistic}}</td>
+              <td>{{item.otherChargeLogistic}}</td>
+              <td>{{item.giftWrapChargeLogistic}}</td>
+              <td>{{item.insuranceChargeLogistic}}</td>
+              <td>{{item.totalChargeLogistic}}</td>
             </tr>
             <tr>
               <th>Applied</th>
-              <td>3</td>
-              <td>8700</td>
-              <td>10000</td>
-              <td>0</td>
-              <td>150</td>
-              <td>36250</td>
+              <td>{{item.weightApplied}}</td>
+              <td>{{item.priceApplied}}</td>
+              <td>{{item.otherChargeApplied}}</td>
+              <td>{{item.giftWrapChargeApplied}}</td>
+              <td>{{item.insuranceChargeApplied}}</td>
+              <td>{{item.totalChargeApplied}}</td>
             </tr>
             <tr>
               <th>Comment</th>
-              <td>Ikut 3PL</td>
-              <td>Ikut Blibli</td>
-              <td>Packing Kayu</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
+              <td>{{item.weightComment}}</td>
+              <td>{{item.priceComment}}</td>
+              <td>{{item.otherChargeComment}}</td>
+              <td>{{item.giftWrapChargeComment}}</td>
+              <td>{{item.insuranceChargeComment}}</td>
+              <td>{{item.totalChargeComment}}</td>
             </tr>
           </table>
         </div>
       </article>
     </div>
+    
   </card-modal>
 </template>
 
 <script>
   import { CardModal } from 'vue-bulma-modal'
+  import axios from 'axios'
 
   export default {
     components: {
@@ -154,25 +152,32 @@
     props: {
       visible: Boolean,
       title: String,
-      url: String
+      url: String,
+      id: String
     },
-
-    data () {
-      return {
-        src: require('assets/logo.svg')
-      }
-    },
-
+    data: () => ({
+      awb: [],
+      cek: String
+    }),
     methods: {
       open (url) {
         window.open(url)
       },
-
       close () {
         this.$emit('close')
       }
+    },
+    created () {
+      this.cek = this.id
+      axios.get('http://127.0.0.1:8091/api/awb/filterAwbNumber/' + this.id)
+        .then(response => {
+          this.awb = response.data
+        })
+        .catch(e => {
+          this.errors.push(e)
+        })
     }
-  }
+}
 </script>
 <style>
   .classmodal{
@@ -180,11 +185,23 @@
   .classmodalleft {
 
   }
-  .modal-card {
+  .awb-modal-card .modal-card {
 /*    width: 80vw;
     height: 90vh;*/
+	width:1200px;
   }
   .modal-card-foot {
     visibility: hidden;
+  }
+  .awb-detail tr td{
+   width:200px;
+   margin:10px;
+  }
+  .awb-detail{
+	width:100%;
+  }
+  .modal-card-body{
+	border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
   }
 </style>

@@ -11,6 +11,7 @@ import SettingView from './components/views/Setting.vue'
 import AccessView from './components/views/Access.vue'
 import ServerView from './components/views/Server.vue'
 import ReposView from './components/views/Repos.vue'
+import LogisticView from './components/views/Logistic.vue'
 
 // Routes
 const routes = [
@@ -33,6 +34,19 @@ const routes = [
         alias: '',
         component: InvoiceView,
         name: 'Invoice'
+        // meta: {description: 'Overview of environment'}
+      }, {
+        path: 'awb',
+        alias: '',
+        component: InvoiceView,
+        name: 'AWB'
+        // meta: {description: 'Overview of environment'}
+      },
+      {
+        path: 'logistic',
+        alias: '',
+        component: LogisticView,
+        name: 'Logistic'
         // meta: {description: 'Overview of environment'}
       }, {
         path: 'tables',

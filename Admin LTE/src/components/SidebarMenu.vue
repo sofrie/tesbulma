@@ -1,18 +1,31 @@
 <template>
   <ul class="sidebar-menu">
-<!--<<<<<<< HEAD-->
    <!--&lt;!&ndash;  <li class="header">TOOLS</li> &ndash;&gt;-->
-<!--=======-->
-    <!--&lt;!&ndash;<li class="header">TOOLS</li>&ndash;&gt;-->
-<!--&gt;>>>>>> e92dc4a1518246faa5ea12c7b94eeda4f9930579-->
-    <li class="active pageLink" v-on:click="toggleMenu">
-      <router-link to="/"><i class="fa fa-desktop"></i>
+    <li class="pageLink2" id="indexPage" v-on:click="toggleMenu">
+      <router-link to="/dashboard"><i class="fa fa-desktop"></i>
+	  <br/>
         <span class="page">Dashboard</span>
       </router-link>
     </li>
     <li class="pageLink" v-on:click="toggleMenu">
-      <router-link to="/invoice"><i class="fa fa-cog"></i>
+      <router-link to="/invoice"><i class="fa fa-newspaper-o"></i><br/>
         <span class="page">Invoice</span>
+      </router-link>
+    </li>
+    <li class="pageLink" v-on:click="toggleMenu">
+      <router-link to="/awb"><i class="fa fa-file-text"></i><br/>
+        <span class="page">AWB</span>
+      </router-link>
+    </li>
+	<li class="pageLink" v-on:click="toggleMenu">
+      <router-link to="/logistic"><i class="fa fa-truck"></i><br/>
+        <span class="page">Logistic</span>
+      </router-link>
+    </li>
+	<li class="pageLink" v-on:click="toggleMenu">
+      <router-link to="/setting">
+        <i class="fa fa-cog"></i><br/>
+        <span class="page">Settings</span>
       </router-link>
     </li>
     <li class="pageLink" v-on:click="toggleMenu">
@@ -20,12 +33,6 @@
         <span class="page">Tables</span>
       </router-link>
     </li>
-
-<!--<<<<<<< HEAD-->
-   <!--&lt;!&ndash;  <li class="header">ME</li> &ndash;&gt;-->
-<!--=======-->
-    <!--&lt;!&ndash;<li class="header">ME</li>&ndash;&gt;-->
-<!--&gt;>>>>>> e92dc4a1518246faa5ea12c7b94eeda4f9930579-->
     <li class="pageLink" v-on:click="toggleMenu">
       <router-link to="/tasks">
         <i class="fa fa-tasks"></i>
@@ -65,11 +72,6 @@
       </ul>
     </li>
 
-<!--<<<<<<< HEAD-->
-   <!--&lt;!&ndash;  <li class="header">LOGS</li> &ndash;&gt;-->
-<!--=======-->
-    <!--&lt;!&ndash;<li class="header">LOGS</li>&ndash;&gt;-->
-<!--&gt;>>>>>> e92dc4a1518246faa5ea12c7b94eeda4f9930579-->
     <li class="pageLink" v-on:click="toggleMenu">
       <router-link to="/access"><i class="fa fa-book"></i>
         <span class="page">Access</span>
@@ -87,11 +89,6 @@
       </router-link>
     </li>
 
-<!--<<<<<<< HEAD-->
-   <!--&lt;!&ndash;  <li class="header">PAGES</li> &ndash;&gt;-->
-<!--=======-->
-    <!--&lt;!&ndash;<li class="header">PAGES</li>&ndash;&gt;-->
-<!--&gt;>>>>>> e92dc4a1518246faa5ea12c7b94eeda4f9930579-->
     <li class="pageLink" v-on:click="toggleMenu">
       <router-link to="/login">
         <i class="fa fa-circle-o text-yellow"></i>
@@ -106,6 +103,7 @@
   </ul>
 </template>
 <script>
+import $ from 'jquery'
 export default {
   name: 'SidebarName',
   methods: {
@@ -119,7 +117,17 @@ export default {
       // window.$('li.pageLink.active').removeClass('active')
       // Add it to the item that was clicked
       event.toElement.parentElement.className = 'pageLink active'
+      $('#indexPage > a').attr('class', '')
+    },
+    init () {
+      var q = document.querySelector('a.active')
+      if (q === null) {
+        $('#indexPage').attr('class', 'pageLink active')
+      }
     }
+  },
+  mounted () {
+    this.init()
   }
 }
 </script>

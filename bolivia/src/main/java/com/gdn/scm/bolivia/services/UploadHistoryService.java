@@ -19,7 +19,7 @@ public interface UploadHistoryService {
     
      void addUploadHistory(UploadHistory a);
     
-    UploadHistory getById(String ID);
+    UploadHistory getById(Integer ID);
 
     List<UploadHistory> getAll();
 
@@ -36,4 +36,8 @@ public interface UploadHistoryService {
     void updateUploadHistory(UploadHistory a);
 
     void deleteUploadHistory(Integer id);
+    
+    UploadHistory selectLastUploadHistory();
+    
+    UploadHistory findTop1ByOrderByIdDesc();
 }

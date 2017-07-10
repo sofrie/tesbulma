@@ -11,6 +11,9 @@ import { domain, count, prettyDate, pluralize } from './filters'
 
 // Import Views - Top level
 import AppView from './components/App.vue'
+import Modal from './components/Modal.vue'
+
+export default Modal
 
 // Import Install and register helper items
 Vue.filter('count', count)
@@ -24,11 +27,11 @@ Vue.use(VueRouter)
 var router = new VueRouter({
   routes: routes,
   mode: 'history',
+  linkActiveClass: 'active',
   scrollBehavior: function (to, from, savedPosition) {
     return savedPosition || { x: 0, y: 0 }
   }
 })
-
 // Some middleware to help us ensure the user is authenticated.
 router.beforeEach((to, from, next) => {
   // window.console.log('Transition', transition)

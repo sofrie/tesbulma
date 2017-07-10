@@ -19,111 +19,115 @@
           <ul class="nav navbar-nav">
             <!-- Messages-->
 
-            <li class="dropdown messages-menu">
+            <!--<li class="dropdown messages-menu">
               <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-envelope-o"></i>
                 <span class="label label-success">{{ userInfo.messages | count }}</span>
               </a>
               <ul class="dropdown-menu">
                 <li class="header">You have {{ userInfo.messages | count }} message(s)</li>
-                <li v-if="userInfo.messages.length > 0">
+                <li v-if="userInfo.messages.length > 0">-->
                   <!-- inner menu: contains the messages -->
-                  <ul class="menu">
-                    <li>
+                  <!--<ul class="menu">
+                    <li>-->
                       <!-- start message -->
-                      <a href="javascript:;">
+                      <!--<a href="javascript:;">-->
                         <!-- Message title and timestamp -->
-                        <h4>
+                        <!--<h4>
                           Support Team
                           <small>
                             <i class="fa fa-clock-o"></i> 5 mins</small>
-                        </h4>
+                        </h4>-->
                         <!-- The message -->
-                        <p>Why not consider this a test message?</p>
+                        <!--<p>Why not consider this a test message?</p>
                       </a>
-                    </li>
+                    </li>-->
                     <!-- end message -->
-                  </ul>
+                  <!--</ul>-->
                   <!-- /.menu -->
-                </li>
+                <!--</li>
                 <li class="footer" v-if="userInfo.messages.length > 0">
                   <a href="javascript:;">See All Messages</a>
                 </li>
               </ul>
-            </li>
+            </li>-->
             <!-- /.messages-menu -->
 
             <!-- Notifications Menu -->
-            <li class="dropdown notifications-menu">
+            <!--<li class="dropdown notifications-menu">
               <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-bell-o"></i>
                 <span class="label label-warning">{{ userInfo.notifications | count }}</span>
               </a>
               <ul class="dropdown-menu">
                 <li class="header">You have {{ userInfo.notifications | count }} notification(s)</li>
-                <li v-if="userInfo.notifications.length > 0">
+                <li v-if="userInfo.notifications.length > 0">-->
                   <!-- Inner Menu: contains the notifications -->
-                  <ul class="menu">
-                    <li>
+                  <!--<ul class="menu">
+                    <li>-->
                       <!-- start notification -->
-                      <a href="javascript:;">
+                      <!--<a href="javascript:;">
                         <i class="fa fa-users text-aqua"></i> 5 new members joined today
                       </a>
-                    </li>
+                    </li>-->
                     <!-- end notification -->
-                  </ul>
+                  <!--</ul>
                 </li>
                 <li class="footer" v-if="userInfo.notifications.length > 0">
                   <a href="javascript:;">View all</a>
                 </li>
               </ul>
-            </li>
+            </li>-->
 
             <!-- Tasks Menu -->
-            <li class="dropdown tasks-menu">
+            <!--<li class="dropdown tasks-menu">
               <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-flag-o"></i>
                 <span class="label label-danger">{{ userInfo.tasks | count }} </span>
               </a>
               <ul class="dropdown-menu">
                 <li class="header">You have {{ userInfo.tasks | count }} task(s)</li>
-                <li v-if="userInfo.tasks.length > 0">
+                <li v-if="userInfo.tasks.length > 0">-->
                   <!-- Inner menu: contains the tasks -->
-                  <ul class="menu">
-                    <li>
+                  <!--<ul class="menu">
+                    <li>-->
                       <!-- Task item -->
-                      <a href="javascript:;">
+                      <!--<a href="javascript:;">-->
                         <!-- Task title and progress text -->
-                        <h3>
+                        <!--<h3>
                           Design some buttons
                           <small class="pull-right">20%</small>
-                        </h3>
+                        </h3>-->
                         <!-- The progress bar -->
-                        <div class="progress xs">
+                        <!--<div class="progress xs">-->
                           <!-- Change the css width attribute to simulate progress -->
-                          <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                          <!--<div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
                             <span class="sr-only">20% Complete</span>
                           </div>
                         </div>
                       </a>
-                    </li>
+                    </li>-->
                     <!-- end task item -->
-                  </ul>
+                  <!--</ul>
                 </li>
                 <li class="footer" v-if="userInfo.tasks.length > 0">
                   <a href="javascript:;">View all tasks</a>
                 </li>
               </ul>
-            </li>
+            </li>-->
 
             <!-- User Account Menu -->
             <li class="dropdown user user-menu">
-              <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-                <!-- The user image in the navbar-->
-                <img v-bind:src="demo.avatar" class="user-image" alt="User Image">
-                <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                <span class="hidden-xs">{{ demo.displayName }}</span>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <span class="hidden-xs">Alexander Pierce</span>
               </a>
+              <ul class="dropdown-menu">
+                <li class="user-footer">
+					<router-link to="/login">
+						<span>Logout</span>
+					</router-link>
+                </li>
+              </ul>
             </li>
 
           </ul>

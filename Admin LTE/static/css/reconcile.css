@@ -1,0 +1,59 @@
+/* Side Bar */
+.sidebar-menu>li>a>.fa, .sidebar-menu>li>a>.glyphicon, .sidebar-menu>li>a>.ion {
+    width: auto;
+    font-size: 30px;
+}
+.skin-blue .sidebar-menu>li:hover>a, .skin-blue .sidebar-menu>li.active>a {
+    text-align: center;
+}
+.skin-blue .sidebar-menu>li>a, .skin-blue .sidebar-menu>li>a {
+    text-align: center;
+}
+.main-sidebar, .left-side {
+    width: 110px;
+}
+.content-wrapper, .right-side, .main-footer {
+    margin-left: 110px;
+}
+.main-header>.navbar {
+    margin-left: 110px;
+}
+.main-header .logo {
+    width: 110px;
+}
+@media (min-width: 768px){
+.sidebar-mini.sidebar-collapse .sidebar-menu>li>a {
+    padding-left: 8px;
+}
+}
+.skin-blue .sidebar-menu>li:hover>a, .skin-blue .sidebar-menu>li>a.active {
+    color: #1E90FF;
+    background: #ffffff;
+    border-left-color: #3c8dbc;
+}
+/* End Side Bar */
+
+/* Navbar */
+/* User Profile */
+.navbar-nav>.user-menu>.dropdown-menu {
+    width: auto;
+	min-width: 130px;
+}
+.navbar-custom-menu>.navbar-nav>li>.dropdown-menu {
+    right: auto;
+    left: auto;
+}
+.navbar-nav>.user-menu>.dropdown-menu>.user-footer {
+    padding: 0;
+    text-align: center;
+}
+/* End User Profile */
+/* End Navbar */
+
+/* Pages */
+/* Invoice */
+.box-header.with-border {
+    border-bottom: 1px solid #00c0ef;
+}
+/* End Invoice */
+/* End Pages */

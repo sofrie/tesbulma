@@ -10,7 +10,6 @@ import com.gdn.scm.bolivia.repository.UploadHistoryRepository;
 import com.gdn.scm.bolivia.request.UploadHistoryRequest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Date;
 import org.springframework.beans.BeanUtils;
@@ -32,17 +31,19 @@ public class UploadHistoryServiceImpl implements UploadHistoryService {
     public void addUploadHistory(UploadHistoryRequest a) {
         UploadHistory upload = new UploadHistory();
         BeanUtils.copyProperties(a, upload);
-        Integer count =0;
-        count= uploadHistoryRepository.findAll().size();
-        DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yy HH:mm:ss");
-        Date date = new Date();
+        Integer count = 0;
+        count = uploadHistoryRepository.findAll().size();
+        Date today = new Date();
+        SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+        String date = DATE_FORMAT.format(today);
+        System.out.println("Today in dd-MM-yyyy format : " + date);
 
-        upload.setId(count.toString());
+        //upload.setId(count.toString());
         upload.setOk("-");
         upload.setProblemExist("-");
         upload.setJumlahTagihan("-");
         upload.setStatus("Uploaded");
-        upload.setLast_modified(date.toString());
+        upload.setLast_modified(date);
         //UploadHistory tmp=new UploadHistory("3", "June", "2017", "300", "3", "Rp.xxxx.xxx", "A Logistic", "Uploaded", date.toString());
         uploadHistoryRepository.save(upload);
     }
@@ -88,13 +89,23 @@ public class UploadHistoryServiceImpl implements UploadHistoryService {
     }
 
     @Override
-    public UploadHistory getById(String ID) {
+    public UploadHistory getById(Integer ID) {
         return uploadHistoryRepository.findOne(ID);
     }
 
     @Override
     public void addUploadHistory(UploadHistory a) {
         uploadHistoryRepository.save(a);
+    }
+    
+    @Override
+    public UploadHistory findTop1ByOrderByIdDesc() {
+        return uploadHistoryRepository.findTop1ByOrderByIdDesc();
+    }
+
+    @Override
+    public UploadHistory selectLastUploadHistory() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

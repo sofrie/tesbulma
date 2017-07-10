@@ -7,7 +7,7 @@
 
         <div class="block ">
           <form enctype="multipart/form-data">
-          <table class="tablemodal" >
+          <table class="tablemodal" id="uploadmodal" >
             <tr>
               <td>{{selectedMonth}}</td>
               <td>
@@ -76,6 +76,7 @@
   const STATUS_SAVING = 1
   const STATUS_SUCCESS = 2
   const STATUS_FAILED = 3
+  const formData = new window.FormData()
 
   localforage.config({
     name: 'budgeterbium'
@@ -118,16 +119,16 @@
     },
     methods: {
       uploadHistory () {
-        axios.post(`http://127.0.0.1:8080/api/uploadHistory`, {
+        axios.post(`http://127.0.0.1:8091/api/uploadHistory`, {
           month: this.selectedMonth,
           year: '2017',
           logistic: this.selectedLogistic
         })
+        this.save(formData)
       },
       open (url) {
         window.open(url)
       },
-
       close () {
         this.$emit('close')
       },
@@ -153,8 +154,6 @@
       },
       filesChange (fieldName, fileList) {
         // handle file changes
-        const formData = new window.FormData()
-
         if (!fileList.length) return
 
         // append the files to FormData
@@ -164,10 +163,19 @@
             formData.append(fieldName, fileList[x], fileList[x].name)
           })
         // save it
-        this.save(formData)
       },
       mounted () {
         this.reset()
+      },
+      created () {
+        axios.get(`http://127.0.0.1:8091/api/uploadHistory`)
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.posts = response.data
+        })
+        .catch(e => {
+          this.errors.push(e)
+        })
       }
     }
   }
@@ -179,17 +187,23 @@
 
   }
   .modal-card {
-    width: 35%;
-    height: 70%;
+    
   }
   .modal-card-foot {
-    visibility: hidden;
+    display:none;
   }
-  .tablemodal {
+  #uploadmodal.tablemodal {
     margin-left: 27%;
     width: 80%;
   }
+  #uploadmodal.tablemodal tr td{
+    width:0;
+  }
   .centerbutton {
     padding-left: 10%;
+  }
+  .modal-card-body{
+  border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
   }
 </style>
