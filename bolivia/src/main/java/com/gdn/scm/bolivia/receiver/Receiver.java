@@ -5,23 +5,21 @@
  */
 package com.gdn.scm.bolivia.receiver;
 
-import com.gdn.scm.bolivia.BoliviaApplication;
 import com.gdn.scm.bolivia.entity.AWB;
 import com.gdn.scm.bolivia.entity.Compare;
 import com.gdn.scm.bolivia.services.CacheService;
 import com.gdn.scm.bolivia.entity.Process;
+import com.gdn.scm.bolivia.entity.Tolerance;
 import com.gdn.scm.bolivia.entity.UploadHistory;
 import com.gdn.scm.bolivia.repository.AWBRepository;
 import com.gdn.scm.bolivia.services.AWBClientServiceImplFeign;
 import com.gdn.scm.bolivia.services.AWBService;
+import com.gdn.scm.bolivia.services.ToleranceService;
 import com.gdn.scm.bolivia.services.UploadHistoryService;
+//import com.jayway.jsonpath.internal.function.numeric.Max;
 import java.math.BigDecimal;
-import java.util.Iterator;
-import java.util.Map;
-import org.redisson.api.RMap;
+import java.math.BigInteger;
 import org.springframework.amqp.core.AmqpAdmin;
-import org.springframework.amqp.rabbit.core.RabbitAdmin;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -49,6 +47,9 @@ public class Receiver {
 
     @Autowired
     AWBRepository awbRepository;
+
+    @Autowired
+    ToleranceService toleranceService;
 
     AWBClientServiceImplFeign awbFeign = new AWBClientServiceImplFeign();
 
@@ -78,61 +79,94 @@ public class Receiver {
 
 //    Integer c = 0;
     public void receiveMessage(AWB message) throws InterruptedException, Exception {
-        System.out.println("Received <" + message + ">");
-        //awb.addAWB(message);
-        counter++;
-        Boolean ada = false;
-        Integer c = 0;
-        cacheSrvice.delete(message.getAwbNumber());
-        compare.map.remove(message.getAwbNumber(), message.getUploadHistoryNumber());
-        AWB fromLogistic = awbFeign.getAWBLogistic(message.getAwbNumber());
-        message.setPriceLogistic(fromLogistic.getPriceLogistic());
-        message.setWeightLogistic(fromLogistic.getWeightLogistic());
-        message.setInsuranceChargeLogistic(fromLogistic.getInsuranceChargeLogistic());
-        message.setOtherChargeLogistic(fromLogistic.getOtherChargeLogistic());
-        message.setTotalChargeLogistic(fromLogistic.getTotalChargeLogistic());
-        Integer counterBeda = 0;
-        if (!message.getPriceLogistic().equals(message.getPriceSystem())) {
-            message.setPriceComment("Beda");
-            counterBeda++;
-        } else {
-            message.setPriceComment("-");
-        }
 
-        if (!message.getWeightLogistic().equals(message.getWeightSystem())) {
-            message.setWeightComment("Beda");
-            counterBeda++;
-        } else {
-            message.setWeightComment("-");
-        }
+        try {
 
-        if (!message.getInsuranceChargeLogistic().equals(message.getInsuranceChargeSystem())) {
-            message.setInsuranceChargeComment("Beda");
-            counterBeda++;
-        } else {
-            message.setInsuranceChargeComment("-");
-        }
+            System.out.println("Received <" + message + ">");
+            //awb.addAWB(message);
+            counter++;
+            Boolean ada = false;
+            Integer c = 0;
+            cacheSrvice.delete(message.getAwbNumber());
+            compare.map.remove(message.getAwbNumber(), message.getUploadHistoryNumber());
 
-        if (!message.getOtherChargeLogistic().equals(message.getOtherChargeSystem())) {
-            message.setOtherChargeComment("Beda");
-            counterBeda++;
-        } else {
-            message.setOtherChargeComment("-");
-        }
+            Tolerance tolerance = toleranceService.getTolerance();
+            //get awb from logistic
+            AWB fromLogistic = awbFeign.getAWBLogistic(message.getAwbNumber());
+            if (fromLogistic != null) {
+                System.out.println("AWB------------------" + message.getAwbNumber());
+                message.setPriceLogistic(fromLogistic.getPriceLogistic());
+                message.setWeightLogistic(fromLogistic.getWeightLogistic());
+                message.setInsuranceChargeLogistic(fromLogistic.getInsuranceChargeLogistic());
+                message.setOtherChargeLogistic(fromLogistic.getOtherChargeLogistic());
+                message.setTotalChargeLogistic(fromLogistic.getTotalChargeLogistic());
+                Integer counterBeda = 0;
 
-        if (!message.getTotalChargeLogistic().equals(message.getTotalChargeSystem())) {
-            message.setTotalChargeComment("Beda");
-            counterBeda++;
-        } else {
-            message.setTotalChargeComment("-");
+                //untuk perhitungan toleransi
+                BigDecimal tolerancePercent = message.getPriceSystem().add(tolerance.getPricePercentage().multiply(message.getPriceSystem()));
+                BigDecimal toleranceAmount = message.getPriceSystem().add(tolerance.getPriceAmount());
+                BigDecimal max = tolerancePercent.max(toleranceAmount);
+                
+                if (message.getPriceLogistic()!=null
+                        && message.getPriceLogistic().compareTo(max) > 0) {
+                    message.setPriceComment("Beda");
+                    counterBeda++;
+                } else {
+                    message.setPriceComment("-");
+                }
+
+                tolerancePercent = message.getWeightSystem().add(tolerance.getWeightPercentage().multiply(message.getWeightSystem()));
+                toleranceAmount = message.getWeightSystem().add(tolerance.getWeightAmount());
+                max = tolerancePercent.max(toleranceAmount);
+                if (message.getWeightLogistic()!=null&& message.getWeightLogistic().compareTo(max) > 0) {
+                    message.setWeightComment("Beda");
+                    counterBeda++;
+                } else {
+                    message.setWeightComment("-");
+                }
+
+                tolerancePercent = message.getInsuranceChargeSystem().add(tolerance.getInsuranceChargePercentage().multiply(message.getInsuranceChargeSystem()));
+                toleranceAmount = message.getInsuranceChargeSystem().add(tolerance.getInsuranceChargeAmount());
+                max = tolerancePercent.max(toleranceAmount);
+                if (message.getInsuranceChargeLogistic()!=null&& message.getInsuranceChargeLogistic().compareTo(max) > 0) {
+                    message.setInsuranceChargeComment("Beda");
+                    counterBeda++;
+                } else {
+                    message.setInsuranceChargeComment("-");
+                }
+
+                tolerancePercent = message.getOtherChargeSystem().add(tolerance.getOtherChargePercentage().multiply(message.getOtherChargeSystem()));
+                toleranceAmount = message.getOtherChargeSystem().add(tolerance.getOtherChargeAmount());
+                max = tolerancePercent.max(toleranceAmount);
+                if (message.getOtherChargeLogistic()!=null&& message.getOtherChargeLogistic().compareTo(max) > 0) {
+                    message.setOtherChargeComment("Beda");
+                    counterBeda++;
+                } else {
+                    message.setOtherChargeComment("-");
+                }
+
+                tolerancePercent = message.getTotalChargeSystem().add(tolerance.getTotalShippingPercentage().multiply(message.getTotalChargeSystem()));
+                toleranceAmount = message.getTotalChargeSystem().add(tolerance.getTotalShippingAmount());
+                max = tolerancePercent.max(toleranceAmount);
+                if (message.getTotalChargeLogistic()!=null&& message.getTotalChargeLogistic().compareTo(max) > 0) {
+                    message.setTotalChargeComment("Beda");
+                    counterBeda++;
+                } else {
+                    message.setTotalChargeComment("-");
+                }
+
+                //klo ada data yg beda status si awb nya jadi problem exist, klo ngga berarti OK
+                if (counterBeda != 0) {
+                    message.setReconStatus("Problem Exist");
+                } else {
+                    message.setReconStatus("OK");
+                }
+            }
+            //klo uda dibandingin di save
+            awbRepository.save(message);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        if (counterBeda != 0) {
-            message.setReconStatus("Problem Exist");
-        } else {
-            message.setReconStatus("OK");
-        }
-//             
-        awbRepository.save(message);
 //            for (Map.Entry<String, String> entry : compare.map.entrySet()) {
 //                String key = entry.getKey();
 //                if (key.equals(message.getUploadHistoryNumber())) {
@@ -158,7 +192,7 @@ public class Receiver {
             if (upload != null) {
                 upload.setStatus("Done Uploaded");
                 System.out.println("=======aaaaaaaaaaaaaaaaaaaaaaaa");
-                System.out.println("iiiiddddd"+upload.getId().toString());
+                System.out.println("iiiiddddd" + upload.getId().toString());
                 uploadHistoryService.addUploadHistory(upload);
                 //    admin.deleteQueue(BoliviaApplication.queueName);
                 counter = 0;

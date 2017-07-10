@@ -34,7 +34,6 @@ public class ToleranceController {
     public Tolerance listTolerance() {
         return toleranceService.getTolerance();
     }
-
     @CrossOrigin
     @RequestMapping(value = "/api/tolerances", method = RequestMethod.POST)
     public void updateTolerance(@RequestBody ToleranceRequest request) {

@@ -155,11 +155,11 @@
                                 <tr>
                                     <th>Month</th>
                                     <th>Year</th>
-                                    <th>OK</th>
-                                    <th>Problem Exists</th>
-                                    <th>Jumlah Tagihan</th>
                                     <th>Logistic</th>
-                                    <th>Status</th>
+                                    <th>AWB</th>
+                                    <th>Recon Status</th>
+                                    <th>Merchant Code</th>
+                                    <th>GDN Ref #</th>
                                 </tr>
                             </thead>
                             <tbody>

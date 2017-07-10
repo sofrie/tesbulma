@@ -148,7 +148,7 @@ public class RestUploadController {
             XSSFWorkbook workbook1 = new XSSFWorkbook(excellFile1);
             XSSFSheet sheet1 = workbook1.getSheetAt(0);
             int count = uploadistoryRepository.findAll().size() - 1;
-            //compare.Send(sheet1);
+            compare.Send(sheet1);
 
         }
 

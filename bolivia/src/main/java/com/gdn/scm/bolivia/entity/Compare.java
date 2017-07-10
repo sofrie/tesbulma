@@ -16,6 +16,7 @@ import com.gdn.scm.bolivia.services.UploadHistoryService;
 import java.io.File;
 import java.io.FileInputStream;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -55,7 +56,7 @@ public class Compare {
 
     @Autowired
     UploadHistoryService uploadHistoryService;
-    
+
     @Autowired
     ToleranceService toleranceService;
 
@@ -103,41 +104,42 @@ public class Compare {
     public void Send(XSSFSheet sheet1) {
 //        int firstRow1 = sheet1.getFirstRowNum();
 //        int lastRow1 = sheet1.getLastRowNum();
-
         AWB awb = new AWB();
         Iterator<Row> itr = sheet1.iterator();
-        while (itr.hasNext()) {
+        Boolean ada=false;
+        while (itr.hasNext() && !ada) {
             Row row = itr.next();
             if (row.getRowNum() >= 1) {
 
-                Cell awbNumberCell = row.getCell(0);
+                Cell awbNumberCell = row.getCell(2);
+                if (awbNumberCell != null) {
+                    awb.setAwbNumber(awbNumberCell.getStringCellValue());
+//                Cell awbStatusCell = row.getCell(1);
+//                awb.setReconStatus(awbStatusCell.getStringCellValue());
+                    awb.setReconStatus("OK");
+                    Cell awbPricePerKgCell = row.getCell(9);
+                    awb.setPriceSystem(new BigDecimal(awbPricePerKgCell.getNumericCellValue()));
+                    Cell awbWeightCell = row.getCell(8);
+                    awb.setWeightSystem(new BigDecimal(awbWeightCell.getNumericCellValue()));
+                    Cell awbInsuranceChargeCell = row.getCell(10);
+                    awb.setInsuranceChargeSystem(new BigDecimal(awbInsuranceChargeCell.getNumericCellValue()));
+//                Cell awbGiftWrapChargeCell = row.getCell(5);
+                    awb.setGiftWrapChargeSystem(new BigDecimal(0));
+                    Cell awbOtherChargeCell = row.getCell(11);
+                    awb.setOtherChargeSystem(new BigDecimal(awbOtherChargeCell.getNumericCellValue()));
+                    Cell awbTotalChargeCell = row.getCell(12);
+                    awb.setTotalChargeSystem(new BigDecimal(awbTotalChargeCell.getNumericCellValue()));
 
-                awb.setAwbNumber(awbNumberCell.getStringCellValue());
-                Cell awbStatusCell = row.getCell(1);
-                awb.setReconStatus(awbStatusCell.getStringCellValue());
-                Cell awbPricePerKgCell = row.getCell(2);
-                awb.setPriceSystem(new BigDecimal(awbPricePerKgCell.getNumericCellValue()));
-                Cell awbWeightCell = row.getCell(3);
-                awb.setWeightSystem(new BigDecimal(awbWeightCell.getNumericCellValue()));
-                Cell awbInsuranceChargeCell = row.getCell(4);
-                awb.setInsuranceChargeSystem(new BigDecimal(awbInsuranceChargeCell.getNumericCellValue()));
-                Cell awbGiftWrapChargeCell = row.getCell(5);
-                awb.setGiftWrapChargeSystem(new BigDecimal(awbGiftWrapChargeCell.getNumericCellValue()));
-                Cell awbOtherChargeCell = row.getCell(6);
-                awb.setOtherChargeSystem(new BigDecimal(awbOtherChargeCell.getNumericCellValue()));
-                Cell awbTotalChargeCell = row.getCell(7);
-                awb.setTotalChargeSystem(new BigDecimal(awbTotalChargeCell.getNumericCellValue()));
+                    UploadHistory upload = uploadHistoryService.findTop1ByOrderByIdDesc();
+                    awb.setReconStatus("OK");
+                    awb.setMerchantCode("MERCH-CODE-007");
+                    awb.setUploadHistoryNumber(upload.getId().toString());
+                    awb.setGdnRef(awb.getUploadHistoryNumber());
+                    awb.setMonth(upload.getMonth());
+                    awb.setYear(upload.getYear());
+                    awb.setLogisticName(upload.getLogistic());
 
-                UploadHistory upload=uploadHistoryService.findTop1ByOrderByIdDesc();
-                awb.setReconStatus("OK");
-                awb.setMerchantCode("MERCH-CODE-007");
-                awb.setUploadHistoryNumber(upload.getId().toString());
-                awb.setGdnRef(awb.getUploadHistoryNumber());                
-                awb.setMonth(upload.getMonth());
-                awb.setYear(upload.getYear());
-                awb.setLogisticName(upload.getLogistic());
-                
-                awbRepository.save(awb);
+                    awbRepository.save(awb);
 
 //                awb.assignAWB(row);
 //
@@ -147,11 +149,11 @@ public class Compare {
 //                awb.setReconStatus("OK");
 //                awb.setMerchantCode("MERCH-CODE-007");
 //                Process p = new Process();
-                counter++;
-                awb.setCounter(counter);
+                    counter++;
+                    awb.setCounter(counter);
 //                awb.setUploadHistoryNumber(id.toString());
-                map.put(awb.getAwbNumber(), awb.getUploadHistoryNumber());
-                listAWB.add(awb);
+                    map.put(awb.getAwbNumber(), awb.getUploadHistoryNumber());
+                    listAWB.add(awb);
 //                map.remove(awb.getAwbNumber(), awb.getUploadHistoryNumber().toString());
 //                map.containsKey(awb.getUploadHistoryNumber().toString());
 //                p.setProccessId(awb.getAwbNumber());                                                                                                                                              
@@ -160,8 +162,11 @@ public class Compare {
 //                for (Map.Entry<String, String> entry : map.entrySet()) {
 //                    System.out.println("ooooooooooooooooo"+" "+entry.getKey());
 //                }
-                processService.requestProcess(awb);
-                System.out.println("counterrrrrrrrrrr---------------" + counter);
+                    processService.requestProcess(awb);
+                    System.out.println("counterrrrrrrrrrr---------------" + counter);
+                } else {
+                    ada=true;
+                }
             }
         }
         for (int i = 0; i < listAWB.size(); i++) {

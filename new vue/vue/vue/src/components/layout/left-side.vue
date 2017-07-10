@@ -49,6 +49,9 @@
                     <router-link tag="li" to="/awb" exact>
                         <a class="logo"><i class="menu-icon ti-layout-list-large-image"></i><br/><span class="mm-text">AWB</span></a>
                     </router-link>
+                    <router-link tag="li" to="/logistic" exact>
+                        <a class="logo"><i class="menu-icon ti-layout-list-large-image"></i><br/><span class="mm-text">Logistic</span></a>
+                    </router-link>
                     <router-link tag="li" to="/index2" exact>
                         <a class="logo"><i class="menu-icon ti-layout-list-large-image"></i><br/><span class="mm-text">Dashboard 2</span></a>
                     </router-link>
