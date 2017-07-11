@@ -351,7 +351,7 @@ export default {
           logistic: this.selectedLogistic
       })
     this.save(formData)
-    setTimeout(this.fetchUsers, 400);
+    setTimeout(this.fetchUsers, 50);
     },
     fetchUsers() {
         axios.get(`http://127.0.0.1:8091/api/uploadHistory`)
@@ -458,7 +458,7 @@ export default {
                 // Toggle the visibility
                 column.visible(!column.visible());
             });
-        },400);
+        },50);
         });
         this.fetchUsers()
       }
