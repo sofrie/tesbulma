@@ -74,7 +74,7 @@
 													<div class="row m-t-10 form-group">
 														<label for="input-text" class="col-sm-2 control-label">Month</label>
 														<div class="col-sm-10">
-															<select id="select-gear" v-model="selectedMonth" class="form-control">
+															<select v-model="selectedMonth" class="form-control">
 																<option value="" disabled="" selected="" >
 																	Select month
 																</option>
@@ -96,7 +96,7 @@
 													<div class="row m-t-10 form-group">
 														<label for="input-text" class="col-sm-2 control-label">Year</label>
 														<div class="col-sm-10">
-															<select id="select-gear" v-model="selectedYear" class="form-control">
+															<select v-model="selectedYear" class="form-control">
 																<option value="" disabled="" selected="">
 																	Select year
 																</option>
@@ -108,7 +108,7 @@
 													<div class="row m-t-10 form-group">
 														<label for="input-text" class="col-sm-2 control-label">Logistic</label>
 														<div class="col-sm-10">
-															<select id="select-gear" v-model="selectedLogistic" class="form-control">
+															<select v-model="selectedLogistic" class="form-control">
 																<option value="" disabled="" selected="">
 																	Select logistic
 																</option>
@@ -120,7 +120,8 @@
 													<div class="row m-t-10 form-group">
 														<label for="input-text" class="col-sm-2 control-label">File</label>
 															<div class="col-sm-10">
-																<input id="input-40" type="file" class="file" accept="text/plain" data-preview-file-type="text" data-preview-class="bg-warning">
+                                                                <input type="file" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" class="input-file">
+																<!--<input id="input-40" type="file" class="file" accept="text/plain" data-preview-file-type="text" data-preview-class="bg-warning">-->
 															</div>
 													</div>
 													</div>
@@ -350,7 +351,7 @@ export default {
           logistic: this.selectedLogistic
       })
     this.save(formData)
-    setTimeout(this.fetchUsers, 5000);
+    setTimeout(this.fetchUsers, 400);
     },
     fetchUsers() {
         axios.get(`http://127.0.0.1:8091/api/uploadHistory`)
@@ -383,6 +384,7 @@ export default {
         this.fetchUsers()
     },
     filesChange (fieldName, fileList) {
+        this.formData = new window.FormData()
         // handle file changes
         if (!fileList.length) return
         // append the files to FormData
