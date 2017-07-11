@@ -139,7 +139,7 @@
                     </div>
                 </div>                
             </div>
-            <div class="panel">
+            <div class="panel" v-if="invoice">
                 <div class="panel-heading">
                     <h1 class="panel-title">
                         <i class="fa fa-fw ti-move"></i> Summary - Invoice {{invoice.logistic}} / {{invoice.month}} / {{invoice.year}}
@@ -173,7 +173,7 @@
 						</div>
 					</div>
 					<div class="col-sm-12 m-t-10">
-						<router-link :to="{path:'/awb/'+invoice.month+'/'+invoice.year}">
+						<router-link :to="{path:'/awb/'+invoice.month+'/'+invoice.year+'/'+invoice.logistic+'/'+invoice.status}">
 							<button class="btn btn-primary button_normal">View Data</button>
 						</router-link>
 						
@@ -261,7 +261,7 @@ export default {
 	  selectedSearchMonth: 'January',
       selectedSearchLogistic: 'A Logistic',
       selectedSearchYear: '2017',
-	  invoice: []
+	  invoice: null
     }
     ),
     mounted: function() {

@@ -304,6 +304,14 @@ export default {
 		year: {
       type: String,
       default: 'Vue!'
+		},
+		logistic: {
+      type: String,
+      default: 'Vue!'
+		},
+		status: {
+      type: String,
+      default: 'Vue!'
 		}
     },
     data: () => ({
@@ -481,7 +489,7 @@ export default {
           })
       },
       filterAll () {
-        axios.get('http://127.0.0.1:8091/api/awb/filter/' + this.selected + '/' + this.selectedYear + '/' + this.selectedLogistic + '/' + this.AwbNumber + '/' + this.statusawb + '/' + this.merchantCode + '/' + this.gdnRef)
+        axios.get('http://127.0.0.1:8091/api/awb/filter/' + this.selectedMonth + '/' + this.selectedYear + '/' + this.selectedLogistic + '/' + this.AwbNumber + '/' + this.statusawb + '/' + this.merchantCode + '/' + this.gdnRef)
           .then(response => {
             // JSON responses are automatically parsed.
             this.posts = response.data
@@ -540,8 +548,16 @@ export default {
             });
         },400);
         });
-        this.fetchUsers()
-		this.cek=this.month
+		if(this.month==='Vue!' || this.year==='Vue!' || this.logistic==='Vue!' || this.status==='Vue!'){
+			this.fetchUsers()
+		}
+        else{
+			this.selectedLogistic=this.logistic
+			this.selectedMonth=this.month
+			this.selectedStatus=this.status
+			this.selectedYear=this.year
+			filterByInvoice()
+		}
       }
 }
 </script>

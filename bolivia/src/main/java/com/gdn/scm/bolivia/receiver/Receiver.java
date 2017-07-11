@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package com.gdn.scm.bolivia.receiver;
-
 import com.gdn.scm.bolivia.entity.AWB;
 import com.gdn.scm.bolivia.entity.Compare;
 import com.gdn.scm.bolivia.services.CacheService;
@@ -22,52 +21,37 @@ import java.math.BigInteger;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 /**
  *
  * @author sofrie.zumaytis
  */
 @Component
 public class Receiver {
-
     @Autowired
     CacheService cacheSrvice;
-
     @Autowired
     UploadHistoryService uploadHistoryService;
-
     @Autowired
     Compare compare;
-
     @Autowired
     AmqpAdmin admin;
-
     @Autowired
     AWBService awb;
-
     @Autowired
     AWBRepository awbRepository;
-
     @Autowired
     ToleranceService toleranceService;
-
     AWBClientServiceImplFeign awbFeign = new AWBClientServiceImplFeign();
-
     Integer counter = 0;
-
     public void receiveMessage(Process message) throws InterruptedException {
-
         System.out.println("Received <" + message + ">");
         if (cacheSrvice.setIfAbsent(message.getProccessId(), message.getRequestId())) {
             //berarti belum pernah ada yg nge set
             System.out.println("Processing... " + message);
-
             Thread.sleep(5000);
-
             cacheSrvice.delete(message.getProccessId());
-
             if (message.getCounter() == compare.counter) {
-                UploadHistory upload = uploadHistoryService.getById(new Integer(message.getRequestId()));
+                UploadHistory upload = uploadHistoryService.getById(message.getRequestId());
                 upload.setStatus("Done Uploaded");
                 uploadHistoryService.addUploadHistory(upload);
             }
@@ -76,7 +60,6 @@ public class Receiver {
             System.out.println("Error..." + message + " is still on process");
         }
     }
-
 //    Integer c = 0;
     public void receiveMessage(AWB message) throws InterruptedException, Exception {
         try {
@@ -87,7 +70,6 @@ public class Receiver {
         Integer c = 0;
         cacheSrvice.delete(message.getAwbNumber());
         compare.map.remove(message.getAwbNumber(), message.getUploadHistoryNumber());
-
         Tolerance tolerance = toleranceService.getTolerance();
         //get awb from logistic
         AWB fromLogistic = awbFeign.getAWBLogistic(message.getAwbNumber());
@@ -99,7 +81,6 @@ public class Receiver {
             message.setOtherChargeLogistic(fromLogistic.getOtherChargeLogistic());
             message.setTotalChargeLogistic(fromLogistic.getTotalChargeLogistic());
             Integer counterBeda = 0;
-
             //untuk perhitungan toleransi
             BigDecimal tolerancePercent = message.getPriceSystem().add(tolerance.getPricePercentage().multiply(message.getPriceSystem()));
             BigDecimal toleranceAmount = message.getPriceSystem().add(tolerance.getPriceAmount());
@@ -110,7 +91,6 @@ public class Receiver {
             } else {
                 message.setPriceComment("-");
             }
-
             tolerancePercent = message.getWeightSystem().add(tolerance.getWeightPercentage().multiply(message.getWeightSystem()));
             toleranceAmount = message.getWeightSystem().add(tolerance.getWeightAmount());
             max = tolerancePercent.max(toleranceAmount);
@@ -120,7 +100,6 @@ public class Receiver {
             } else {
                 message.setWeightComment("-");
             }
-
             tolerancePercent = message.getInsuranceChargeSystem().add(tolerance.getInsuranceChargePercentage().multiply(message.getInsuranceChargeSystem()));
             toleranceAmount = message.getInsuranceChargeSystem().add(tolerance.getInsuranceChargeAmount());
             max = tolerancePercent.max(toleranceAmount);
@@ -130,7 +109,6 @@ public class Receiver {
             } else {
                 message.setInsuranceChargeComment("-");
             }
-
             tolerancePercent = message.getOtherChargeSystem().add(tolerance.getOtherChargePercentage().multiply(message.getOtherChargeSystem()));
             toleranceAmount = message.getOtherChargeSystem().add(tolerance.getOtherChargeAmount());
             max = tolerancePercent.max(toleranceAmount);
@@ -140,7 +118,6 @@ public class Receiver {
             } else {
                 message.setOtherChargeComment("-");
             }
-
             tolerancePercent = message.getTotalChargeSystem().add(tolerance.getTotalShippingPercentage().multiply(message.getTotalChargeSystem()));
             toleranceAmount = message.getTotalChargeSystem().add(tolerance.getTotalShippingAmount());
             max = tolerancePercent.max(toleranceAmount);
@@ -150,7 +127,6 @@ public class Receiver {
             } else {
                 message.setTotalChargeComment("-");
             }
-
             //klo ada data yg beda status si awb nya jadi problem exist, klo ngga berarti OK
             if (counterBeda != 0) {
                 message.setReconStatus("Problem Exist");
@@ -181,7 +157,7 @@ public class Receiver {
 //            }
         //}
         if (counter >= compare.counter) {
-            UploadHistory upload = uploadHistoryService.getById(new Integer(message.getUploadHistoryNumber()));
+            UploadHistory upload = uploadHistoryService.getById(message.getUploadHistoryNumber());
             if (upload != null) {
                 upload.setStatus("Done Uploaded");
                 System.out.println("=======aaaaaaaaaaaaaaaaaaaaaaaa");
@@ -197,6 +173,5 @@ public class Receiver {
                 {
                 e.printStackTrace();
                 }
-
         }
     }
