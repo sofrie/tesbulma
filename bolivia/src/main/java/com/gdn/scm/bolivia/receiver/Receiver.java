@@ -67,7 +67,7 @@ public class Receiver {
             cacheSrvice.delete(message.getProccessId());
 
             if (message.getCounter() == compare.counter) {
-                UploadHistory upload = uploadHistoryService.getById(message.getRequestId());
+                UploadHistory upload =  uploadHistoryService.getById(Integer.parseInt(message.getRequestId()));
                 upload.setStatus("Done Uploaded");
                 uploadHistoryService.addUploadHistory(upload);
             }
@@ -181,7 +181,7 @@ public class Receiver {
 //            }
             //}
             if (counter >= compare.counter) {
-                UploadHistory upload = uploadHistoryService.getById(message.getUploadHistoryNumber());
+                UploadHistory upload = uploadHistoryService.getById(Integer.parseInt(message.getUploadHistoryNumber()));
                 if (upload != null) {
                     upload.setStatus("Done Uploaded");
                     System.out.println("=======aaaaaaaaaaaaaaaaaaaaaaaa");

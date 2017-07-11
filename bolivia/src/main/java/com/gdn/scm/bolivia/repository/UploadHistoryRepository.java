@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  * @author sofrie.zumaytis
  */
 @Repository
-public interface UploadHistoryRepository extends JpaRepository<UploadHistory, String> {
+public interface UploadHistoryRepository extends JpaRepository<UploadHistory, Integer> {
 
     public List<UploadHistory> findByMonth(String month);
 

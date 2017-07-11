@@ -34,7 +34,7 @@ public class UploadHistoryServiceImpl implements UploadHistoryService {
         BeanUtils.copyProperties(a, upload);
         Integer count = 0;
         try{
-            count=Integer.parseInt(uploadHistoryRepository.findTop1ByOrderByIdDesc().getId());
+            count=uploadHistoryRepository.findTop1ByOrderByIdDesc().getId();
             count+=1;
         }
         catch (Exception e)
@@ -48,7 +48,7 @@ public class UploadHistoryServiceImpl implements UploadHistoryService {
         System.out.println("Today in dd-MM-yyyy format : " + date);
 
         //upload.setId(count.toString());
-        upload.setId(count.toString());
+        upload.setId(count);
         upload.setOk("-");
         upload.setProblemExist("-");
         upload.setJumlahTagihan("-");
@@ -100,7 +100,7 @@ public class UploadHistoryServiceImpl implements UploadHistoryService {
     }
 
     @Override
-    public UploadHistory getById(String ID) {
+    public UploadHistory getById(Integer ID) {
         return uploadHistoryRepository.findOne(ID);
     }
 
