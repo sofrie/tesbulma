@@ -33,7 +33,7 @@
                                         Year :
                                     </label>
                                     <div class="col-sm-2">
-                                        <select id="skill" name="skill" class="form-control" v-on:change="changeYear()" v-model="selectedSearchYear">
+                                        <select name="skill" class="form-control" v-on:change="changeYear()" v-model="selectedSearchYear">
                                             <option value="" disabled="" selected="">
                                                 Select year
                                             </option>
@@ -45,7 +45,7 @@
                                         Logistic :
                                     </label>
                                     <div class="col-sm-2">
-                                        <select id="skill" name="skill" class="form-control" v-on:change="changeLogistic()" v-model="selectedSearchLogistic">
+                                        <select name="skill" class="form-control" v-on:change="changeLogistic()" v-model="selectedSearchLogistic">
                                             <option value="" disabled="" selected="">
                                                 Select logistic
                                             </option>

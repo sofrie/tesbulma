@@ -127,6 +127,8 @@ public class RestUploadController {
     //save file
     private void saveUploadedFiles(List<MultipartFile> files) throws IOException {
 
+        try
+        {
         for (MultipartFile file : files) {
 
             if (file.isEmpty()) {
@@ -150,6 +152,11 @@ public class RestUploadController {
             int count = uploadistoryRepository.findAll().size() - 1;
             compare.Send(sheet1);
 
+        }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
 
     }

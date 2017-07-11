@@ -79,5 +79,10 @@ public class LogisticProviderServiceImpl implements LogisticProviderService {
             return logisticProviderRepository.findByStatus(status);
         }
     }
+
+    @Override
+    public LogisticProvider findLastId() {
+        return logisticProviderRepository.findTop1ByOrderByIdDesc();
+    }
     
 }
