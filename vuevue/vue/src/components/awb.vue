@@ -8,12 +8,12 @@
                             <div class="form-horizontal">
                                 <div class="form-group">
                                     <label class="col-sm-1 control-label" for="skill">
-                                        Month :
+                                        Month {{cek}} {{year}}:
                                     </label>
                                     <div class="col-sm-2">
                                         <select id="skill" name="skill" class="form-control" v-on:change="changeMonth()" v-model="selectedMonth">
                                             <option value="" disabled="" selected="">
-                                                Select month
+                                                Select Month
                                             </option>
                                             <option value="January">January</option>
                                             <option value="February">February</option>
@@ -296,6 +296,16 @@ const STATUS_FAILED = 3
 const formData = new window.FormData()
 export default {
     name: "datatables",
+	props: {
+      month: {
+      type: String,
+      default: 'Vue!'
+		},
+		year: {
+      type: String,
+      default: 'Vue!'
+		}
+    },
     data: () => ({
       posts: [],
       uploadedFiles: [],
@@ -311,7 +321,8 @@ export default {
         GDNRef: '',
 		test: '',
 		title: '',
-		awb: []
+		awb: [],
+		cek: ''
     }
     ),
     mounted: function() {
@@ -530,6 +541,7 @@ export default {
         },400);
         });
         this.fetchUsers()
+		this.cek=this.month
       }
 }
 </script>

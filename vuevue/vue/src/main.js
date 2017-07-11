@@ -21,14 +21,21 @@ var routes = [{
             title: "Invoice",
             breadcrumb: `<li><a href="#/index2"><i class="ti-files"></i> Invoice</a></li>`
         }
-    }, {
+    },{
         path: 'awb',
+        component: resolve => require(['./components/InvoicePage.vue'], resolve),
+        meta: {
+            title: "AWB",
+            breadcrumb: `<li><a href="#/index2"><i class="ti-file"></i> Invoice</a></li>`
+        }
+    }, {
+        path: 'awb/:month/:year',
         component: resolve => require(['./components/awb.vue'], resolve),
         meta: {
             title: "AWB",
-            breadcrumb: `<li><a href="#/index2"><i class="ti-file"></i> AWB</a></li>`,
-			props: true
-        }
+            breadcrumb: `<li><a href="#/index2"><i class="ti-file"></i> AWB</a></li>`
+        },
+		props: true
     },{path: 'logistic',
         component: resolve => require(['./components/logistic.vue'], resolve),
         meta: {
