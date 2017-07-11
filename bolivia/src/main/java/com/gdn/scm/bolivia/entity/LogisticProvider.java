@@ -36,8 +36,9 @@ public class LogisticProvider {
 
     
     @Column(name = COLUMN_ID, nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    private String id;
+    private Integer id;
     
     @Column(name = COLUMN_LOGISTIC_CODE, nullable = false)
     private String logisticCode;

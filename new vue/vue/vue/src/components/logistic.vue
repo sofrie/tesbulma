@@ -62,10 +62,8 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-1  pull-right">
-                                        <select v-model="selectedStatus" class="form-control pull-right">
-                                            <option value="" disabled="" selected="">
-                                                Select status
-                                            </option>
+                                        <select v-model="filteredStatus" class="form-control pull-right" v-on:change="changeStatus()">
+                                            <option value="All">All</option>
                                             <option value="Active">Active</option>
                                             <option value="Inactive">Inactive</option>
                                         </select>
@@ -132,7 +130,8 @@
             selectedStatus: 'Active',
             AwbNumber: '',
             Discount: '',
-            VAT: ''
+            VAT: '',
+            filteredStatus: 'All'
         }
         ),
         mounted: function() {
@@ -242,6 +241,16 @@
                 this.currentStatus = STATUS_INITIAL
                 this.uploadedFiles = []
                 this.uploadError = null
+            },
+            changeStatus () {
+                axios.get('http://127.0.0.1:8091/api/logistics/' + this.filteredStatus)
+                    .then(response => {
+                        // JSON responses are automatically parsed.
+                        this.posts = response.data
+                    })
+                    .catch(e => {
+                        this.errors.push(e)
+                    })
             }
         },
         computed: {

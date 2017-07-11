@@ -19,7 +19,7 @@ public interface UploadHistoryService {
     
      void addUploadHistory(UploadHistory a);
     
-    UploadHistory getById(String ID);
+    UploadHistory getById(Integer ID);
 
     List<UploadHistory> getAll();
 

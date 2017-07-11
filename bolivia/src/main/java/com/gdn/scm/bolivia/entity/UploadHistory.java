@@ -40,7 +40,8 @@ public class UploadHistory {
 
     @Id
     @Column(name = COLUMN_ID)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
     @Column(name = COLUMN_MONTH, nullable = false)
     private String month;
@@ -66,7 +67,7 @@ public class UploadHistory {
     @Column(name = COLUMN_LAST_MODIFIED, nullable = true)
     private String last_modified;
 
-    public UploadHistory(String id, String month, String year, String ok, String problemExist, String jumlahTagihan, String logistic, String status, String last_modified) {
+    public UploadHistory(Integer id, String month, String year, String ok, String problemExist, String jumlahTagihan, String logistic, String status, String last_modified) {
         this.id = id;
         this.month = month;
         this.year = year;

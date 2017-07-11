@@ -34,7 +34,7 @@ public class LogisticProviderServiceImpl implements LogisticProviderService {
         Integer count;
         count = -1;
         try {
-            count = Integer.parseInt(this.findLastId().getId());
+            count = this.findLastId().getId();
             System.out.println("countt" + count.toString());
             System.out.println("countttttttttttt" + count.toString());
             if (count != -1 && count != null) {
@@ -53,7 +53,7 @@ public class LogisticProviderServiceImpl implements LogisticProviderService {
             number = "0" + count;
         }
 
-        logistic.setId(count.toString());
+        //logistic.setId(count);
         logistic.setLogisticCode("LogisticCode" + number);
 //        System.out.print("---------");
 //        System.out.print(logistic.getId());
