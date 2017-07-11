@@ -173,7 +173,10 @@
 						</div>
 					</div>
 					<div class="col-sm-12 m-t-10">
-						<button class="btn btn-primary button_normal">View Data</button>
+						<router-link to="/awb" exact>
+							<button class="btn btn-primary button_normal">View Data</button>
+						</router-link>
+						
 						<button class="btn btn-primary button_normal">Download</button>
 						<button class="btn btn-primary button_normal pull-right">Approve</button>
 						<button class="btn btn-primary button_normal pull-right" v-on:click="uploaded()">Submit</button>

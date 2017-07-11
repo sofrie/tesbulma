@@ -410,7 +410,7 @@ export default {
       },
 
       changeMonth () {
-        axios.get('http://127.0.0.1:8091/api/awb/' + this.selectedMonth)
+        axios.get('http://127.0.0.1:8091/api/awb/filtermonth/' + this.selectedMonth)
           .then(response => {
             // JSON responses are automatically parsed.
             this.posts = response.data
