@@ -54,4 +54,9 @@ public class LogisticProviderController {
         logisticProviderService.addLogisticProvider(request);
         //return logistic;
     }
+    @CrossOrigin
+    @RequestMapping(value = "/api/logistic/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<String> getAllLogistic() {
+        return logisticProviderService.getAllLogistic();
+    }
 }

@@ -15,18 +15,7 @@
                                             <option value="" disabled="" selected="">
                                                 Select month
                                             </option>
-                                            <option value="January">January</option>
-                                            <option value="February">February</option>
-                                            <option value="March">March</option>
-                                            <option value="April">April</option>
-                                            <option value="May">May</option>
-                                            <option value="June">June</option>
-                                            <option value="July">July</option>
-                                            <option value="August">August</option>
-                                            <option value="September">September</option>
-                                            <option value="October">October</option>
-                                            <option value="November">November</option>
-                                            <option value="December">December</option>
+                                            <option v-for="item of listMonth" v-bind:value="item">{{item}}</option>
                                         </select>
                                     </div>
                                     <label class="col-sm-1 control-label" for="skill">
@@ -37,8 +26,7 @@
                                             <option value="" disabled="" selected="">
                                                 Select year
                                             </option>
-                                            <option value="2017">2017</option>
-                                            <option value="2018">2018</option>
+                                            <option v-for="item of listYear" v-bind:value="item">{{item}}</option>
                                         </select>
                                     </div>
                                     <label class="col-sm-1 control-label" for="skill">
@@ -49,10 +37,7 @@
                                             <option value="" disabled="" selected="">
                                                 Select logistic
                                             </option>
-                                            <option value="A Logistic">A Logistic</option>
-                                            <option value="B Logistic">B Logistic</option>
-                                            <option value="C Logistic">C Logistic</option>
-                                            <option value="D Logistic">D Logistic</option>
+                                            <option v-for="item of listLogistic" v-bind:value="item">{{item}}</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-1">
@@ -112,10 +97,7 @@
 																<option value="" disabled="" selected="">
 																	Select logistic
 																</option>
-																<option value="A Logistic">A Logistic</option>
-																<option value="B Logistic">B Logistic</option>
-																<option value="C Logistic">C Logistic</option>
-																<option value="D Logistic">D Logistic</option>
+																<option v-for="item of listLogistic" v-bind:value="item">{{item}}</option>
 															</select>
 														</div>
 													</div>
@@ -175,7 +157,7 @@
 						</div>
 					</div>
 					<div class="col-sm-12 m-t-10">
-						<router-link :to="{path:'/awb/'+invoice.month+'/'+invoice.year+'/'+invoice.logistic+'/'+invoice.status}">
+						<router-link :to="{path:'/awb/'+invoice.month+'/'+invoice.year+'/'+invoice.logistic}">
 							<button class="btn btn-primary button_normal">View Data</button>
 						</router-link>
 						
@@ -263,7 +245,10 @@ export default {
 	  selectedSearchMonth: 'January',
       selectedSearchLogistic: 'A Logistic',
       selectedSearchYear: '2017',
-	  invoice: null
+	  invoice: null,
+	  listMonth: [],
+      listLogistic: [],
+      listYear: []
     }
     ),
     mounted: function() {
@@ -364,6 +349,9 @@ export default {
           // JSON responses are automatically parsed.
           this.posts = response.data
 		  this.invoice=this.posts[0]
+		  this.getMonthSelectList()
+		  this.getYearSelectList()
+		  this.getLogisticSelectList()
         })
         .catch(e => {
           this.errors.push(e)
@@ -430,7 +418,37 @@ export default {
           })
       },
 	  setSummary(obj){
-	  this.invoice=obj
+		this.invoice=obj
+	  },
+	  getMonthSelectList(){
+		axios.get('http://127.0.0.1:8091/api/uploadHistory/list/month')
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.listMonth = response.data
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+	  },
+	  getYearSelectList(){
+		axios.get('http://127.0.0.1:8091/api/uploadHistory/list/year')
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.listYear = response.data
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+	  },
+	  getLogisticSelectList(){
+		axios.get('http://127.0.0.1:8091/api/logistic/list')
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.listLogistic = response.data
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
 	  }
     },
     ready() {

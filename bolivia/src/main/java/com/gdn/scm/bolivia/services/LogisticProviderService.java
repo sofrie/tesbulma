@@ -20,5 +20,6 @@ public interface LogisticProviderService {
     void updateLogisticProvider(LogisticProviderRequest a);
     void deleteLogisticProvider(Integer id);
     LogisticProvider findLastId();
+    List<String> getAllLogistic();
 //    List<LogisticProvider> GetAllLogisticProvider(Integer merchantid);
 }

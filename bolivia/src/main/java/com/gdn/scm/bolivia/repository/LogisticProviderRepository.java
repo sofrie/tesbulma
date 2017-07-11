@@ -8,6 +8,7 @@ package com.gdn.scm.bolivia.repository;
 import com.gdn.scm.bolivia.entity.LogisticProvider;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -18,4 +19,6 @@ import org.springframework.stereotype.Repository;
 public interface LogisticProviderRepository extends JpaRepository<LogisticProvider, Integer> {
     public List<LogisticProvider> findByStatus(String status);
     public LogisticProvider findTop1ByOrderByIdDesc();
+    @Query("select distinct a.logisticName from LogisticProvider a")
+    public List<String> getAllLogistic();
 }

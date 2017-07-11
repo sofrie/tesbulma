@@ -23,7 +23,7 @@
                                                             <div class="row m-t-10 form-group">
                                                                 <label for="input-text" class="col-sm-3 control-label">Logistic Name : </label>
                                                                 <div class="col-sm-9">
-                                                                    <input type="text" placeholder="AWB Number" class="form-control" v-model="AwbNumber" >
+                                                                    <input type="text" placeholder="Logistic Name" class="form-control" v-model="AwbNumber" >
                                                                 </div>
                                                             </div>
                                                             <div class="row m-t-10 form-group">
@@ -83,7 +83,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="post of posts">
+                                    <tr v-for="post of posts" data-toggle="modal" data-target="#basic_modal" v-on:click="openModal(post)">
                                         <td v-on:click="sayConsole(post.id)">{{post.logisticName}}</td>
                                         <td>{{post.status}}</td>
                                         <td>{{post.discount}}%</td>
@@ -96,6 +96,23 @@
                 </div>
             </div>
         </div>
+		<div id="basic_modal" class="modal fade animated" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Logistic</h4>
+					</div>
+					<div class="modal-body">
+						<p>This is the text in modal</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-danger">Delete</button>
+					</div>
+				</div>
+			</div>
+		</div>
         <!--main content ends-->
     </div>
 </template>
@@ -216,7 +233,7 @@
                   discount: this.Discount,
                   vat: this.VAT
               })
-                setTimeout(this.fetchLogistics, 5000);
+                setTimeout(this.fetchLogistics, 7000);
             },
             fetchLogistics() {
                 axios.get(`http://127.0.0.1:8091/api/logistics`)

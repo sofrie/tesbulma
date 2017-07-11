@@ -20,20 +20,20 @@
                                         <label for="password" class="sr-only">Password</label>
                                         <input type="password" class="form-control form-control-lg" id="password" name="password" placeholder="Password">
                                     </div>
-                                    <div class="form-group checkbox">
+                                    <!--<div class="form-group checkbox">
                                         <label for="remember">
                                             <input type="checkbox" name="remember" id="remember">&nbsp; Remember Me
                                         </label>
-                                    </div>
+                                    </div>-->
                                     <div class="form-group">
                                         <input type="submit" value="Sign In" class="btn btn-primary btn-block" />
                                     </div>
-                                    <a href="#/reset_password" id="forgot" class="forgot"> Forgot Password ? </a>
-                                    <span class="pull-right sign-up">New ? <a href="#/register">Sign Up</a></span>
+                                    <!--<a href="#/reset_password" id="forgot" class="forgot"> Forgot Password ? </a>
+                                    <span class="pull-right sign-up">New ? <a href="#/register">Sign Up</a></span>-->
                                 </form>
                             </div>
                         </div>
-                        <div class="row text-center social">
+                        <!--<div class="row text-center social">
                             <div class="col-xs-12">
                                 <p class="alter">Sign in with</p>
                             </div>
@@ -56,7 +56,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>

@@ -26,10 +26,10 @@ var routes = [{
         component: resolve => require(['./components/awb.vue'], resolve),
         meta: {
             title: "AWB",
-            breadcrumb: `<li><a href="#/index2"><i class="ti-file"></i> Invoice</a></li>`
+            breadcrumb: `<li><a href="#/index2"><i class="ti-file"></i> AWB</a></li>`
         }
     }, {
-        path: 'awb/:month/:year/:logistic/:status',
+        path: 'awb/:month/:year/:logistic',
         component: resolve => require(['./components/awb.vue'], resolve),
         meta: {
             title: "AWB",
