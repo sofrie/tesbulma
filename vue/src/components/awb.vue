@@ -297,8 +297,7 @@ export default {
     },
     destroyed: function() {
     },
-  methods: {    
-        ,
+  methods: {
       changeStatus () {
         axios.get('http://127.0.0.1:8091/api/awb/filterstatus/' + this.statusawb)
           .then(response => {
