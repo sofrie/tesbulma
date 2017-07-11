@@ -215,7 +215,7 @@ public class AWB {
     @Column(name = COLUMN_FOCS_AMOUNT, nullable = true)
     private String focsAmount;
     @Column(name = COLUMN_FOCSA_AMOUNT, nullable = true)
-    private String focsaAmount;
+    private String focsaAcmount;
     @Column(name = COLUMN_SHIPPING_COST, nullable = true)
     private String shippingCost;
     @Column(name = COLUMN_SHIP_COST, nullable = true)

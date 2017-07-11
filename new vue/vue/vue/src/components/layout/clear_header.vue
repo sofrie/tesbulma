@@ -10,7 +10,7 @@
             </div>
             <div class="navbar-right">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown messages-menu">
+                    <!--<li class="dropdown messages-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-fw ti-email black"></i>
                             <span class="label label-success">2</span>
                         </a>
@@ -73,7 +73,7 @@
                             </li>
                             <li class="dropdown-footer"><a href="#">View All messages</a></li>
                         </ul>
-                    </li>
+                    </li>-->
                     <!--rightside toggle-->
                     <li>
                         <a href="javascript:void(0)" class="toggle-right" @click="toggle_right">
@@ -96,25 +96,30 @@
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
-                            <li class="user-header">
+                            <!--<li class="user-header">
                                 <img :src="this.$store.state.user.picture" class="img-circle" alt="User Image">
                                 <p class="user_name_max" v-text="this.$store.state.user.name"></p>
-                            </li>
+                            </li>-->
                             <!-- Menu Body -->
                             <li class="p-t-3">
                                 <router-link to="/user_profile" exact>
                                     <i class="fa fa-fw ti-user"></i> My Profile
                                 </router-link>
                             </li>
-                            <li role="presentation"></li>
+                            <!--<li role="presentation"></li>
                             <li>
                                 <router-link to="/edit_user" exact>
                                     <i class="fa fa-fw ti-settings"></i> Account Settings
                                 </router-link>
+                            </li>-->
+							<li>
+                                <router-link to="/login" exact>
+                                    <i class="fa fa-fw ti-shift-right"></i> Logout
+                                </router-link>
                             </li>
-                            <li role="presentation" class="divider"></li>
+                            <!--<li role="presentation" class="divider"></li>-->
                             <!-- Menu Footer-->
-                            <li class="user-footer">
+                            <!--<li class="user-footer">
                                 <div class="pull-left">
                                     <router-link to="/lockscreen" exact>
                                         <i class="fa fa-fw ti-lock"></i> Lock
@@ -125,7 +130,7 @@
                                         <i class="fa fa-fw ti-shift-right"></i> Logout
                                     </router-link>
                                 </div>
-                            </li>
+                            </li>-->
                         </ul>
                     </li>
                 </ul>

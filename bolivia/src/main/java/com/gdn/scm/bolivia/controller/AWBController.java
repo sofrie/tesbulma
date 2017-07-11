@@ -27,17 +27,15 @@ public class AWBController {
      AWBService awbService;
      
      @CrossOrigin
+    @RequestMapping(value = "/api/awb/{awb}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<AWB> listAWBOne(@PathVariable("awb") String awb) {
+        return awbService.getByAwbNumber(awb);
+    }
+     
+     @CrossOrigin
     @RequestMapping(value = "/api/awb", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<AWB> listAWB() {
         return awbService.getAll();
-    }
-    
-    //filter By awbNumber
-    @CrossOrigin
-    @RequestMapping(value = "/api/awb/awbnumber/{AwbNumber}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public AWB filterAwbNumber(@PathVariable("AwbNumber") String AwbNumber) {
-        AWB awb=awbService.getByAwbNumber(AwbNumber).get(0);
-        return awb;
     }
     
     //filter By month
@@ -95,8 +93,6 @@ public class AWBController {
     public List<AWB> filterAll(@PathVariable("month") String month, @PathVariable("year") String year, @PathVariable("logisticName") String logisticName, @PathVariable("awbNumber") String awbNumber, @PathVariable("reconStatus") String reconStatus, @PathVariable("merchantCode") String merchantCode, @PathVariable("gdnRef") String gdnRef) {
         return awbService.filterAll(month, year, logisticName, awbNumber, reconStatus, merchantCode, gdnRef);
     }
-    
-    
     
     //get all year
     @CrossOrigin

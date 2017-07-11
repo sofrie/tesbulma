@@ -155,7 +155,6 @@
       filesChange (fieldName, fileList) {
         // handle file changes
         if (!fileList.length) return
-
         // append the files to FormData
         Array
           .from(Array(fileList.length).keys())

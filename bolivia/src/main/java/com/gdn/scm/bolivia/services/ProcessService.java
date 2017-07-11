@@ -6,7 +6,7 @@
 package com.gdn.scm.bolivia.services;
 
 import com.gdn.scm.bolivia.BoliviaApplication;
-//import javafx.application.Application;
+import javafx.application.Application;
 import com.gdn.scm.bolivia.entity.Process;
 import com.gdn.scm.bolivia.entity.AWB;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

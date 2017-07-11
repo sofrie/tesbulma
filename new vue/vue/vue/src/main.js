@@ -28,6 +28,13 @@ var routes = [{
             title: "AWB",
             breadcrumb: `<li><a href="#/index2"><i class="ti-home"></i> AWB</a></li>`
         }
+    }, {
+    path: 'logistic',
+        component: resolve => require(['./components/logistic.vue'], resolve),
+        meta: {
+            title: "Logistic",
+            breadcrumb: `<li><a href="#/index2"><i class="ti-home"></i> Logistic</a></li>`
+        }
     },{
         path: 'index2',
         component: resolve => require(['./components/index2.vue'], resolve),

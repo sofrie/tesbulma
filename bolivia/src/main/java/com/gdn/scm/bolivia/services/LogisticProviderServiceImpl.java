@@ -12,7 +12,7 @@ import com.gdn.scm.bolivia.request.LogisticProviderRequest;
 import java.io.Console;
 import static java.lang.System.console;
 import static java.lang.System.out;
-//import static java.time.Clock.system;
+import static java.time.Clock.system;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

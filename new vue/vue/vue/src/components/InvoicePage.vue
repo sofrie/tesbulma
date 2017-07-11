@@ -8,10 +8,13 @@
                             <div class="form-horizontal">
                                 <div class="form-group">
                                     <label class="col-sm-1 control-label" for="skill">
-                                        {{selectedMonth}} :
+                                        {{selectedSearchMonth}} :
                                     </label>
                                     <div class="col-sm-2">
-                                        <select class="form-control" v-model="selectedMonth">
+                                        <select id="skill" name="skill" class="form-control" v-on:change="changeMonth()" v-model="selectedSearchMonth">
+                                            <option value="" disabled="" selected="">
+                                                Select month
+                                            </option>
                                             <option value="January">January</option>
                                             <option value="February">February</option>
                                             <option value="March">March</option>
@@ -30,7 +33,7 @@
                                         Year :
                                     </label>
                                     <div class="col-sm-2">
-                                        <select id="skill" name="skill" class="form-control" v-on:change="changeYear()" v-model="selectedYear">
+                                        <select id="skill" name="skill" class="form-control" v-on:change="changeYear()" v-model="selectedSearchYear">
                                             <option value="" disabled="" selected="">
                                                 Select year
                                             </option>
@@ -42,7 +45,7 @@
                                         Logistic :
                                     </label>
                                     <div class="col-sm-2">
-                                        <select id="skill" name="skill" class="form-control" v-on:change="changeLogistic()" v-model="selectedLogistic">
+                                        <select id="skill" name="skill" class="form-control" v-on:change="changeLogistic()" v-model="selectedSearchLogistic">
                                             <option value="" disabled="" selected="">
                                                 Select logistic
                                             </option>
@@ -60,106 +63,77 @@
                                             Upload
                                         </button>
                                         <div id="form_modal" class="modal fade animated" role="dialog">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                        <h4 class="modal-title">Upload Invoice</h4>
-                                                    </div>
-                                                        <div class="modal-body">
-                                                            <table class="tablemodal">
-                                                                <tr>
-                                                                    <td>
-                                                                        <label >
-                                                                            Month
-                                                                        </label>
-                                                                    </td>
-                                                                    <td class="">
-                                                                        <select class="form-control toleft" v-model="selectedMonth">
-                                                                            <option value="" disabled="" selected="" >
-                                                                                Select month
-                                                                            </option>
-                                                                            <option value="January">January</option>
-                                                                            <option value="February">February</option>
-                                                                            <option value="March">March</option>
-                                                                            <option value="April">April</option>
-                                                                            <option value="May">May</option>
-                                                                            <option value="June">June</option>
-                                                                            <option value="July">July</option>
-                                                                            <option value="August">August</option>
-                                                                            <option value="September">September</option>
-                                                                            <option value="October">October</option>
-                                                                            <option value="November">November</option>
-                                                                            <option value="December">December</option>
-                                                                        </select>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        &nbsp;
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        <label >
-                                                                            Year
-                                                                        </label>
-                                                                    </td>
-                                                                    <td class="">
-                                                                        <select class="form-control toleft" v-model="selectedYear">
-                                                                            <option value="" disabled="" selected="">
-                                                                                Select year
-                                                                            </option>
-                                                                            <option value="2017">2017</option>
-                                                                            <option value="2018">2018</option>
-                                                                        </select>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        &nbsp;
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        <label >
-                                                                            Logistic
-                                                                        </label>
-                                                                    </td>
-                                                                    <td class="">
-                                                                        <select class="form-control toleft" v-model="selectedLogistic">
-                                                                            <option value="" disabled="" selected="">
-                                                                                Select logistic
-                                                                            </option>
-                                                                            <option value="A Logistic">A Logistic</option>
-                                                                            <option value="B Logistic">B Logistic</option>
-                                                                        </select>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        &nbsp;
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                  <td><label >File </label></td>
-                                                                  <td>
-                                                                    <input type="file" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" class="input-file toleft">
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-succes" v-on:click="uploadHistory()" data-dismiss="modal">Submit</button>
-                                                        <button type="reset" class="btn btn-default">Reset</button>
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">
-                                                            Close
-                                                        </button>
-                                                    </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+													<h4 class="modal-title">Upload Invoice</h4>
+												</div>
+												<form role="form">
+													<div class="modal-body">
+													<div class="row m-t-10 form-group">
+														<label for="input-text" class="col-sm-2 control-label">Month</label>
+														<div class="col-sm-10">
+															<select id="select-gear" v-model="selectedMonth" class="form-control">
+																<option value="" disabled="" selected="" >
+																	Select month
+																</option>
+																<option value="January">January</option>		
+																<option value="February">February</option>
+																<option value="Maret">Maret</option>
+																<option value="April">April</option>
+																<option value="Mei">Mei</option>
+																<option value="Juni">Juni</option>
+																<option value="Juli">Juli</option>
+																<option value="Agustus">Agustus</option>
+																<option value="September">September</option>
+																<option value="Oktober">Oktober</option>
+																<option value="November">November</option>
+																<option value="Desember">Desember</option>
+															</select>
+														</div>
+													</div>
+													<div class="row m-t-10 form-group">
+														<label for="input-text" class="col-sm-2 control-label">Year</label>
+														<div class="col-sm-10">
+															<select id="select-gear" v-model="selectedYear" class="form-control">
+																<option value="" disabled="" selected="">
+																	Select year
+																</option>
+																<option value="2017">2017</option>
+																<option value="2018">2018</option>
+															</select>
+														</div>
+													</div>
+													<div class="row m-t-10 form-group">
+														<label for="input-text" class="col-sm-2 control-label">Logistic</label>
+														<div class="col-sm-10">
+															<select id="select-gear" v-model="selectedLogistic" class="form-control">
+																<option value="" disabled="" selected="">
+																	Select logistic
+																</option>
+																<option value="A Logistic">A Logistic</option>
+																<option value="B Logistic">B Logistic</option>
+															</select>
+														</div>
+													</div>
+													<div class="row m-t-10 form-group">
+														<label for="input-text" class="col-sm-2 control-label">File</label>
+															<div class="col-sm-10">
+																<input id="input-40" type="file" class="file" accept="text/plain" data-preview-file-type="text" data-preview-class="bg-warning">
+															</div>
+													</div>
+													</div>
+													<div class="modal-footer">
+														<button type="submit" class="btn btn-succes" v-on:click="uploadHistory()" data-dismiss="modal">Submit</button>
+														<button type="reset" class="btn btn-default">Reset</button>
+														<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
                             </div>
                         </div>
                     </div>
@@ -172,34 +146,38 @@
                     </h1>
                     <span class="pull-right">
                         <i class="fa fa-fw ti-angle-up clickable"></i>
-                        <i class="fa fa-fw ti-close removepanel clickable"></i>
+                        <!--<i class="fa fa-fw ti-close removepanel clickable"></i>-->
                     </span>
                 </div>
                 <div class="panel-body">
-                    <div class="col-sm-3">
-                        <label>
-                            OK : 298527 data
-                        </label>
-                    </div>
-                    <div class="col-sm-3">
-                        <label>
-                            Problem Exist : 219 data
-                        </label>
-                    </div>
-                    <div class="col-sm-3">
-                        <label>
-                            Status:Open
-                        </label>
-                    </div>
-                    <div class="col-sm-3">
-                        <label>
-                            Jumlah Tagihan:Rp.xx.xxx
-                        </label>
-                    </div>
-                    <button class="btn btn-primary button_normal">View Data</button>
-        <button class="btn btn-primary button_normal">Download</button>
-        <button class="btn btn-primary button_normal pull-right one">Approve</button>
-        <button class="btn btn-primary button_normal pull-right" v-on:click="uploaded()">Submit</button>
+					<div class="col-sm-12 m-t-10">
+						<div class="col-sm-3">
+							<label>
+								OK : 298527 data
+							</label>
+						</div>
+						<div class="col-sm-3">
+							<label>
+								Problem Exist : 219 data
+							</label>
+						</div>
+						<div class="col-sm-3">
+							<label>
+								Status:Open
+							</label>
+						</div>
+						<div class="col-sm-3">
+							<label>
+								Jumlah Tagihan:Rp.xx.xxx
+							</label>
+						</div>
+					</div>
+					<div class="col-sm-12 m-t-10">
+						<button class="btn btn-primary button_normal">View Data</button>
+						<button class="btn btn-primary button_normal">Download</button>
+						<button class="btn btn-primary button_normal pull-right">Approve</button>
+						<button class="btn btn-primary button_normal pull-right" v-on:click="uploaded()">Submit</button>
+					</div>
                 </div>
             </div>
         </div>
@@ -213,7 +191,7 @@
                         </h3>
                         <span class="pull-right">
                             <i class="fa fa-fw ti-angle-up clickable"></i>
-                            <i class="fa fa-fw ti-close removepanel clickable"></i>
+                            <!--<i class="fa fa-fw ti-close removepanel clickable"></i>-->
                         </span>
                     </div>
                     <div class="panel-body">
@@ -276,7 +254,10 @@ export default {
       uploadFieldName: 'invoiceFile',
       selectedMonth: 'January',
       selectedLogistic: 'A Logistic',
-      selectedYear: '2017'
+      selectedYear: '2017',
+	  selectedSearchMonth: 'January',
+      selectedSearchLogistic: 'A Logistic',
+      selectedSearchYear: '2017'
     }
     ),
     mounted: function() {
@@ -412,7 +393,7 @@ export default {
         })
         },
         changeMonth () {
-        axios.get('http://127.0.0.1:8091/api/uploadHistory/month/' + this.selectedMonth)
+        axios.get('http://127.0.0.1:8091/api/uploadHistory/month/' + this.selectedSearchMonth)
           .then(response => {
             // JSON responses are automatically parsed.
             this.posts = response.data
@@ -422,7 +403,7 @@ export default {
           })
       },
       changeYear () {
-        axios.get('http://127.0.0.1:8091/api/uploadHistory/year/' + this.selectedYear)
+        axios.get('http://127.0.0.1:8091/api/uploadHistory/year/' + this.selectedSearchYear)
           .then(response => {
             // JSON responses are automatically parsed.
             this.posts = response.data
@@ -432,7 +413,7 @@ export default {
           })
       },
       changeLogistic () {
-        axios.get('http://127.0.0.1:8091/api/uploadHistory/logistic/' + this.selectedLogistic)
+        axios.get('http://127.0.0.1:8091/api/uploadHistory/logistic/' + this.selectedSearchLogistic)
           .then(response => {
             // JSON responses are automatically parsed.
             this.posts = response.data
@@ -441,6 +422,9 @@ export default {
             this.errors.push(e)
           })
       }
+    },
+    ready() {
+        this.fetchUsers();
     },
     computed: {
       isInitial () {
@@ -480,14 +464,3 @@ export default {
 </script>
 <style src="../vendors/bootstrap-fileinput/css/fileinput.min.css"></style>
 <style src="../assets/css/formelements.css"></style>
-<style>
-   .tablemodal {
-    margin-left: 27%;
-}
-.toleft {
-    margin-left: 15%;
-}
-.one {
-    margin-left: 5px;
-  }
-</style>
