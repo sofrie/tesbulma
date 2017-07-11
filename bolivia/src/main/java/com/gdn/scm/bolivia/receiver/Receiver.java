@@ -54,6 +54,8 @@ public class Receiver {
     AWBClientServiceImplFeign awbFeign = new AWBClientServiceImplFeign();
 
     Integer counter = 0;
+    Integer problem = 0;
+    public Boolean cekupload = false;
 
     public void receiveMessage(Process message) throws InterruptedException {
 
@@ -67,7 +69,7 @@ public class Receiver {
             cacheSrvice.delete(message.getProccessId());
 
             if (message.getCounter() == compare.counter) {
-                UploadHistory upload =  uploadHistoryService.getById(Integer.parseInt(message.getRequestId()));
+                UploadHistory upload = uploadHistoryService.getById(Integer.parseInt(message.getRequestId()));
                 upload.setStatus("Done Uploaded");
                 uploadHistoryService.addUploadHistory(upload);
             }
@@ -79,10 +81,11 @@ public class Receiver {
 
 //    Integer c = 0;
     public void receiveMessage(AWB message) throws InterruptedException, Exception {
+        Integer counterBeda = 0;
         try {
             System.out.println("Received <" + message + ">");
             //awb.addAWB(message);
-            counter++;
+            counter += 1;
             Boolean ada = false;
             Integer c = 0;
             cacheSrvice.delete(message.getAwbNumber());
@@ -98,7 +101,6 @@ public class Receiver {
                 message.setInsuranceChargeLogistic(fromLogistic.getInsuranceChargeLogistic());
                 message.setOtherChargeLogistic(fromLogistic.getOtherChargeLogistic());
                 message.setTotalChargeLogistic(fromLogistic.getTotalChargeLogistic());
-                Integer counterBeda = 0;
 
                 //untuk perhitungan toleransi
                 BigDecimal tolerancePercent = message.getPriceSystem().add(tolerance.getPricePercentage().multiply(message.getPriceSystem()));
@@ -106,7 +108,7 @@ public class Receiver {
                 BigDecimal max = tolerancePercent.max(toleranceAmount);
                 if (message.getPriceLogistic() != null && message.getPriceLogistic().compareTo(max) > 0) {
                     message.setPriceComment("Beda");
-                    counterBeda++;
+                    counterBeda += 1;
                 } else {
                     message.setPriceComment("-");
                 }
@@ -116,7 +118,7 @@ public class Receiver {
                 max = tolerancePercent.max(toleranceAmount);
                 if (message.getWeightLogistic() != null && message.getWeightLogistic().compareTo(max) > 0) {
                     message.setWeightComment("Beda");
-                    counterBeda++;
+                    counterBeda += 1;
                 } else {
                     message.setWeightComment("-");
                 }
@@ -126,7 +128,7 @@ public class Receiver {
                 max = tolerancePercent.max(toleranceAmount);
                 if (message.getInsuranceChargeLogistic() != null && message.getInsuranceChargeLogistic().compareTo(max) > 0) {
                     message.setInsuranceChargeComment("Beda");
-                    counterBeda++;
+                    counterBeda += 1;
                 } else {
                     message.setInsuranceChargeComment("-");
                 }
@@ -136,7 +138,7 @@ public class Receiver {
                 max = tolerancePercent.max(toleranceAmount);
                 if (message.getOtherChargeLogistic() != null && message.getOtherChargeLogistic().compareTo(max) > 0) {
                     message.setOtherChargeComment("Beda");
-                    counterBeda++;
+                    counterBeda += 1;
                 } else {
                     message.setOtherChargeComment("-");
                 }
@@ -146,7 +148,7 @@ public class Receiver {
                 max = tolerancePercent.max(toleranceAmount);
                 if (message.getTotalChargeLogistic() != null && message.getTotalChargeLogistic().compareTo(max) > 0) {
                     message.setTotalChargeComment("Beda");
-                    counterBeda++;
+                    counterBeda += 1;
                 } else {
                     message.setTotalChargeComment("-");
                 }
@@ -154,6 +156,7 @@ public class Receiver {
                 //klo ada data yg beda status si awb nya jadi problem exist, klo ngga berarti OK
                 if (counterBeda != 0) {
                     message.setReconStatus("Problem Exist");
+                    problem += 1;
                 } else {
                     message.setReconStatus("OK");
                 }
@@ -163,7 +166,7 @@ public class Receiver {
 //            for (Map.Entry<String, String> entry : compare.map.entrySet()) {
 //                String key = entry.getKey();
 //                if (key.equals(message.getUploadHistoryNumber())) {
-//                    c++;
+//                    c+=1;
 //                }
 //                if (c > 2) {
 //                    break;
@@ -180,16 +183,24 @@ public class Receiver {
 //                //counter = 0;
 //            }
             //}
-            if (counter >= compare.counter) {
+            if (counter >= message.counter && !cekupload) {
                 UploadHistory upload = uploadHistoryService.getById(Integer.parseInt(message.getUploadHistoryNumber()));
                 if (upload != null) {
-                    upload.setStatus("Done Uploaded");
-                    System.out.println("=======aaaaaaaaaaaaaaaaaaaaaaaa");
-                    System.out.println("iiiiddddd" + upload.getId().toString());
-                    uploadHistoryService.addUploadHistory(upload);
-                    //    admin.deleteQueue(BoliviaApplication.queueName);
-                    counter = 0;
-                    compare.counter = 0;
+                    if (upload.getStatus().equals("Uploaded")) {
+                        upload.setStatus("Done Uploaded");
+                        upload.setProblemExist(problem.toString());
+                        Integer ok = compare.counter - problem;
+                        upload.setOk(ok.toString());
+                        System.out.println("=======aaaaaaaaaaaaaaaaaaaaaaaa" + problem + " " + compare.counter);
+                        System.out.println("iiiiddddd" + upload.getId().toString());
+                        uploadHistoryService.addUploadHistory(upload);
+                        Thread.sleep(500);
+                        //    admin.deleteQueue(BoliviaApplication.queueName);
+                        counter = 0;
+                        compare.counter = 0;
+                        problem = 0;
+                        cekupload = true;
+                    }
                 }
             }
         } catch (Exception e) {

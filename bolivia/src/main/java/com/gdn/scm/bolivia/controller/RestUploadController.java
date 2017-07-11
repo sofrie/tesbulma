@@ -150,6 +150,13 @@ public class RestUploadController {
             XSSFWorkbook workbook1 = new XSSFWorkbook(excellFile1);
             XSSFSheet sheet1 = workbook1.getSheetAt(0);
             int count = uploadistoryRepository.findAll().size() - 1;
+            Integer compareCounter=compare.counter;
+            while(compareCounter>0)
+            {
+                System.out.println(compare.counter);
+                Thread.sleep(5000);
+                compareCounter=compare.counter;
+            }
             compare.Send(sheet1);
 
         }
