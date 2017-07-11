@@ -498,6 +498,16 @@ export default {
             this.errors.push(e)
           })
       },
+	  filterByInvoice () {
+        axios.get('http://127.0.0.1:8091/api/awb/filter/' + this.selectedMonth + '/' + this.selectedYear + '/' + this.selectedLogistic)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+      },
 	  fetchUsers () {
 		axios.get(`http://127.0.0.1:8091/api/awb`)
         .then(response => {

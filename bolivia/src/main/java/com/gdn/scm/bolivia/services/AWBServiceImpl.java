@@ -97,6 +97,11 @@ public class AWBServiceImpl implements AWBService {
             return aWBRepository.filterAll(month, year, logisticName, AwbNumber, reconStatus, merchantCode, gdnRef);
         }
     }
+    
+    @Override
+    public List<AWB> filterByInvoice(String month, String year, String logisticName, String reconStatus) {
+            return aWBRepository.filterByInvoice(month, year, logisticName,reconStatus);
+    }
 
     @Override
     public void addAWB(AWB a) {

@@ -23,7 +23,7 @@ var routes = [{
         }
     },{
         path: 'awb',
-        component: resolve => require(['./components/InvoicePage.vue'], resolve),
+        component: resolve => require(['./components/awb.vue'], resolve),
         meta: {
             title: "AWB",
             breadcrumb: `<li><a href="#/index2"><i class="ti-file"></i> Invoice</a></li>`

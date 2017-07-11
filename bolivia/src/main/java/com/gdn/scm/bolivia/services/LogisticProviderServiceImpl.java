@@ -24,26 +24,35 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class LogisticProviderServiceImpl implements LogisticProviderService {
-    
+
     @Autowired
     LogisticProviderRepository logisticProviderRepository;
-    
+
     @Override
     public void addLogisticProvider(LogisticProviderRequest request) {
         LogisticProvider logistic = new LogisticProvider(request.getLogisticCode(), request.getLogisticName(), request.getStatus(), request.getDiscount(), request.getVat());
-        Integer count = logisticProviderRepository.findAll().size();
-        count+=1;
-        
-        String number="";
-        if(count<10)
-        {
-            number="00"+count;
+        Integer count;
+        count = -1;
+        try {
+            count = Integer.parseInt(this.findLastId().getId());
+            System.out.println("countt" + count.toString());
+            System.out.println("countttttttttttt" + count.toString());
+            if (count != -1 && count != null) {
+                count = count + 1;
+                System.out.println("countttttttttttt" + count.toString());
+            } else {
+                count = 1;
+            }
+        } catch (Exception e) {
+            count = 1;
         }
-        else if(count<100)
-        {
-            number="0"+count;
+        String number = "";
+        if (count < 10) {
+            number = "00" + count;
+        } else if (count < 100) {
+            number = "0" + count;
         }
-        
+
         logistic.setId(count.toString());
         logistic.setLogisticCode("LogisticCode" + number);
 //        System.out.print("---------");
@@ -51,17 +60,17 @@ public class LogisticProviderServiceImpl implements LogisticProviderService {
 //        System.out.print("-----------");
         logisticProviderRepository.save(logistic);
     }
-    
+
     @Override
     public List<LogisticProvider> getAll() {
         return logisticProviderRepository.findAll();
     }
-    
+
     @Override
     public void updateLogisticProvider(LogisticProviderRequest a) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public void deleteLogisticProvider(Integer id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -84,5 +93,5 @@ public class LogisticProviderServiceImpl implements LogisticProviderService {
     public LogisticProvider findLastId() {
         return logisticProviderRepository.findTop1ByOrderByIdDesc();
     }
-    
+
 }

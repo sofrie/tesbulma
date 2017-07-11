@@ -114,6 +114,8 @@
 																</option>
 																<option value="A Logistic">A Logistic</option>
 																<option value="B Logistic">B Logistic</option>
+																<option value="C Logistic">C Logistic</option>
+																<option value="D Logistic">D Logistic</option>
 															</select>
 														</div>
 													</div>

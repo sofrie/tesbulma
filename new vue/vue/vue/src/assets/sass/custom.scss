@@ -585,7 +585,7 @@ input[type="range"] {
 }
 
 .left-side {
-    background: #FFF;
+    background: #1e90ff;
     -webkit-box-shadow: 0 0 15px #EEE;
     box-shadow: 0 0 15px #EEE;
 }
@@ -1169,7 +1169,9 @@ a {
 	font-size: 20px;
 	color: white;
 }
-
+#menu .navigation .sub-menu a{
+	color: #6699cc;
+}
 #menu .fa.arrow:before {
     content: "\f105";
 }
@@ -1220,6 +1222,12 @@ body > #app .header .navbar .sidebar-toggle i {
 
 .modal-dialog {
     margin: 60px 10px;
+}
+
+@media (min-width:992px){
+.modal-lg{
+	width:1200px;
+}
 }
 
 .progress_task {
@@ -1409,6 +1417,10 @@ div.uploader {
 
 .btn_selection {
     margin: 3px 0;
+}
+
+.pull-right{
+	margin-left:4px;
 }
 
 body.fixed-layout >#app .header,
