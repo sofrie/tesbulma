@@ -33,7 +33,8 @@ public class UploadHistoryServiceImpl implements UploadHistoryService {
         UploadHistory upload = new UploadHistory();
         BeanUtils.copyProperties(a, upload);
         Integer count = 0;
-        count = uploadHistoryRepository.findAll().size();
+        count=uploadHistoryRepository.findTop1ByOrderByIdDesc().getId();
+        System.out.println("IDDDDDDDDD"+count.toString());
         Date today = new Date();
         SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
         String date = DATE_FORMAT.format(today);
@@ -47,6 +48,7 @@ public class UploadHistoryServiceImpl implements UploadHistoryService {
         upload.setLast_modified(date);
         //UploadHistory tmp=new UploadHistory("3", "June", "2017", "300", "3", "Rp.xxxx.xxx", "A Logistic", "Uploaded", date.toString());
         uploadHistoryRepository.save(upload);
+        
     }
 
     @Override

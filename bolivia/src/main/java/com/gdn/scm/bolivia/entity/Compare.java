@@ -104,18 +104,17 @@ public class Compare {
     public void Send(XSSFSheet sheet1) {
 //        int firstRow1 = sheet1.getFirstRowNum();
 //        int lastRow1 = sheet1.getLastRowNum();
+try
+{
         AWB awb = new AWB();
         Iterator<Row> itr = sheet1.iterator();
         Boolean ada=false;
         while (itr.hasNext() && !ada) {
             Row row = itr.next();
             if (row.getRowNum() >= 1) {
-
                 Cell awbNumberCell = row.getCell(2);
                 if (awbNumberCell != null) {
                     awb.setAwbNumber(awbNumberCell.getStringCellValue());
-//                Cell awbStatusCell = row.getCell(1);
-//                awb.setReconStatus(awbStatusCell.getStringCellValue());
                     awb.setReconStatus("OK");
                     Cell awbPricePerKgCell = row.getCell(9);
                     awb.setPriceSystem(new BigDecimal(awbPricePerKgCell.getNumericCellValue()));
@@ -173,6 +172,11 @@ public class Compare {
             processService.requestProcess(listAWB.get(i));
         }
         listAWB = new ArrayList();
+}
+catch (Exception e)
+{
+    e.printStackTrace();
+}
 
 //        for (int i = 2; i <= 10; i++) {
 //            AWB awb = new AWB();

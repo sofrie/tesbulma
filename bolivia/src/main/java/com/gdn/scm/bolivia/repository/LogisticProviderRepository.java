@@ -17,4 +17,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LogisticProviderRepository extends JpaRepository<LogisticProvider, String> {
     public List<LogisticProvider> findByStatus(String status);
+    public LogisticProvider findTop1ByOrderByIdDesc();
 }
