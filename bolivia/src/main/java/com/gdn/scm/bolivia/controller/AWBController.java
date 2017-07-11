@@ -40,7 +40,7 @@ public class AWBController {
     
     //filter By month
     @CrossOrigin
-    @RequestMapping(value = "/api/awb/{month}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/api/awb/filtermonth/{month}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<AWB> filterAWBByMonth(@PathVariable("month") String month) {
         return awbService.getByMonth(month);
     }
