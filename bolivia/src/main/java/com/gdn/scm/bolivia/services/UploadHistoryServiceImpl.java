@@ -33,7 +33,14 @@ public class UploadHistoryServiceImpl implements UploadHistoryService {
         UploadHistory upload = new UploadHistory();
         BeanUtils.copyProperties(a, upload);
         Integer count = 0;
-        count=uploadHistoryRepository.findTop1ByOrderByIdDesc().getId();
+        try{
+            count=Integer.parseInt(uploadHistoryRepository.findTop1ByOrderByIdDesc().getId());
+            count+=1;
+        }
+        catch (Exception e)
+        {
+            count=1;
+        }
         System.out.println("IDDDDDDDDD"+count.toString());
         Date today = new Date();
         SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
@@ -41,6 +48,7 @@ public class UploadHistoryServiceImpl implements UploadHistoryService {
         System.out.println("Today in dd-MM-yyyy format : " + date);
 
         //upload.setId(count.toString());
+        upload.setId(count.toString());
         upload.setOk("-");
         upload.setProblemExist("-");
         upload.setJumlahTagihan("-");
@@ -92,7 +100,7 @@ public class UploadHistoryServiceImpl implements UploadHistoryService {
     }
 
     @Override
-    public UploadHistory getById(Integer ID) {
+    public UploadHistory getById(String ID) {
         return uploadHistoryRepository.findOne(ID);
     }
 

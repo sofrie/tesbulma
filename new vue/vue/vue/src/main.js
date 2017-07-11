@@ -28,12 +28,17 @@ var routes = [{
             title: "AWB",
             breadcrumb: `<li><a href="#/index2"><i class="ti-home"></i> AWB</a></li>`
         }
-    }, {
-    path: 'logistic',
+    },{path: 'logistic',
         component: resolve => require(['./components/logistic.vue'], resolve),
         meta: {
             title: "Logistic",
             breadcrumb: `<li><a href="#/index2"><i class="ti-home"></i> Logistic</a></li>`
+        }
+    },{path: 'setting',
+        component: resolve => require(['./components/setting.vue'], resolve),
+        meta: {
+            title: "Setting",
+            breadcrumb: `<li><a href="#/index2"><i class="ti-home"></i> Setting</a></li>`
         }
     },{
         path: 'index2',

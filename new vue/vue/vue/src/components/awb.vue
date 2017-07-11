@@ -145,8 +145,8 @@
 													<h4 class="modal-title">{{title}}</h4>
 												</div>
 												<form role="form">
-													<div class="modal-body">
-													<div class="row m-t-10 modal-title-margin col-md-12">
+												<div class="modal-body">
+                                            <div class="row m-t-10 col-md-12">
 														<div class="col-md-4">
 															<b>Reconciliation Data</b>
 														</div>
@@ -156,9 +156,10 @@
 														<div class="col-md-4">
 															<span class="col-md-12"><b>3PL Data</b></span>
 														</div>
+														<hr/>
 													</div>
 													<div class="row m-t-10 col-md-12">
-													<hr/>
+													
 														<div class="col-md-4">
 															<div class="col-md-7">Failure Reason</div>
 															<div class="col-md-5">: {{awb.failure}}</div>
@@ -260,7 +261,10 @@
 														  </table>
 														</div>
 													</div>
-													</div>
+                                            <div class="row m-t-10">
+                                                
+                                            </div>
+                                        </div>
 													<div class="modal-footer">
 														<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 													</div>

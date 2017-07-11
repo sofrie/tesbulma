@@ -61,6 +61,15 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-sm-1  pull-right">
+                                        <select v-model="selectedStatus" class="form-control pull-right">
+                                            <option value="" disabled="" selected="">
+                                                Select status
+                                            </option>
+                                            <option value="Active">Active</option>
+                                            <option value="Inactive">Inactive</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -216,7 +225,7 @@
                   discount: this.Discount,
                   vat: this.VAT
               })
-                setTimeout(this.fetchLogistics, 5000);
+                setTimeout(this.fetchLogistics, 500);
             },
             fetchLogistics() {
                 axios.get(`http://127.0.0.1:8091/api/logistics`)
@@ -265,7 +274,7 @@
                         // Toggle the visibility
                         column.visible(!column.visible());
                     });
-                },400);
+                },500);
             });
             this.fetchLogistics()
         }
