@@ -7,9 +7,13 @@ package com.gdn.scm.bolivia.controller;
 
 import com.gdn.scm.bolivia.entity.AWB;
 import com.gdn.scm.bolivia.entity.LogisticProvider;
+import com.gdn.scm.bolivia.entity.PageClass;
+import com.gdn.scm.bolivia.services.AWBPagingService;
 import com.gdn.scm.bolivia.services.AWBService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +29,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AWBController {
      @Autowired
      AWBService awbService;
+     
+     @Autowired
+     AWBPagingService awbPagingService;
+     
+     public Page<AWB> awbs;
+     PageClass pageClass;
      
      @CrossOrigin
     @RequestMapping(value = "/api/awb/{awb}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -101,10 +111,32 @@ public class AWBController {
         return awbService.selectAllYear();
     }
     
+<<<<<<< HEAD
+    @CrossOrigin
+    @RequestMapping(value="/api/awb/awbs",method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    Page<AWB> listAWBPage( Pageable pageable){
+            awbs = awbPagingService.listAllByPage(pageable);
+            pageClass=new PageClass();
+            pageClass.setTotal_page(awbs.getTotalPages());
+            pageClass.setItem_page(awbs.getSize());
+            pageClass.setPage(awbs.getNumber());
+            return awbs;
+    } 
+    
+    @CrossOrigin
+    @RequestMapping(value="/api/awb/awbnumbers",method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    PageClass listAWBPageByAWBNumber(){            
+            System.out.println("Total page "+pageClass.getTotal_page());
+            System.out.println("page "+pageClass.getPage());
+            System.out.println("Item page "+pageClass.getItem_page());
+            return pageClass;
+    } 
+=======
     //filter by invoice
     @CrossOrigin
     @RequestMapping(value = "/api/awb/filter/{month}/{year}/{logisticName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<AWB> filterByInvoice(@PathVariable("month") String month, @PathVariable("year") String year, @PathVariable("logisticName") String logisticName) {
         return awbService.filterByInvoice(month, year, logisticName);
     }
+>>>>>>> 5bd00b24f95055413f4db02a61953d95937e5190
 }

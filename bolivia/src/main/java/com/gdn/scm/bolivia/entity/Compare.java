@@ -25,6 +25,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.util.NumberToTextConverter;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -121,33 +122,34 @@ public class Compare {
                         awb.setReconStatus("OK");
 
                         Cell kodeOriginCell = row.getCell(3);
-                        awb.setKodeOriginSystem(kodeOriginCell.getStringCellValue());
+                        awb.setKodeOriginAPI(kodeOriginCell.getStringCellValue());
 
                         Cell GDNRef = row.getCell(4);
-                        awb.setGdnRef(Double.toString(GDNRef.getNumericCellValue()));
+                        awb.setGdnRef(NumberToTextConverter.toText(GDNRef.getNumericCellValue()));
+                        System.out.println("GDN REF : "+awb.getGdnRef().toString());
 
                         Cell kodeDestinasiCell = row.getCell(5);
-                        awb.setKodeDestinasiSystem(kodeDestinasiCell.getStringCellValue());
+                        awb.setKodeDestinasiAPI(kodeDestinasiCell.getStringCellValue());
 
                         Cell penerimaCell = row.getCell(6);
-                        awb.setNamaPenerimaSystem(penerimaCell.getStringCellValue());
+                        awb.setNamaPenerimaAPI(penerimaCell.getStringCellValue());
 
                         Cell weightCell = row.getCell(8);
-                        awb.setWeightSystem(new BigDecimal(weightCell.getNumericCellValue()));
+                        awb.setWeightLogistic(new BigDecimal(weightCell.getNumericCellValue()));
 
                         Cell awbPricePerKgCell = row.getCell(9);
-                        awb.setPriceSystem(new BigDecimal(awbPricePerKgCell.getNumericCellValue()));
+                        awb.setPriceLogistic(new BigDecimal(awbPricePerKgCell.getNumericCellValue()));
 
                         Cell awbInsuranceChargeCell = row.getCell(10);
-                        awb.setInsuranceChargeSystem(new BigDecimal(awbInsuranceChargeCell.getNumericCellValue()));
+                        awb.setInsuranceChargeLogistic(new BigDecimal(awbInsuranceChargeCell.getNumericCellValue()));
 //                Cell awbGiftWrapChargeCell = row.getCell(5);
-                        awb.setGiftWrapChargeSystem(new BigDecimal(0));
+                        awb.setGiftWrapChargeLogistic(new BigDecimal(0));
 
                         Cell awbOtherChargeCell = row.getCell(11);
-                        awb.setOtherChargeSystem(new BigDecimal(awbOtherChargeCell.getNumericCellValue()));
+                        awb.setOtherChargeLogistic(new BigDecimal(awbOtherChargeCell.getNumericCellValue()));
 
                         Cell awbTotalChargeCell = row.getCell(12);
-                        awb.setTotalChargeSystem(new BigDecimal(awbTotalChargeCell.getNumericCellValue()));
+                        awb.setTotalChargeLogistic(new BigDecimal(awbTotalChargeCell.getNumericCellValue()));
 
                         UploadHistory upload = uploadHistoryService.findTop1ByOrderByIdDesc();
                         awb.setReconStatus("OK");
