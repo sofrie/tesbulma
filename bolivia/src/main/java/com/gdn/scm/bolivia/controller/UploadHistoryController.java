@@ -61,4 +61,17 @@ public class UploadHistoryController {
     public List<UploadHistory> filterByLogistic(@PathVariable("logistic") String logistic) {
         return uploadHistoryService.getByLogisticName(logistic);
     }
+    
+    //select list in invoice
+    @CrossOrigin
+    @RequestMapping(value = "/api/uploadHistory/list/month", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<String> getAllMonth() {
+        return uploadHistoryService.getAllMonth();
+    }
+    @CrossOrigin
+    @RequestMapping(value = "/api/uploadHistory/list/year", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<String> getAllYear() {
+        return uploadHistoryService.getAllYear();
+    }
+    
 }

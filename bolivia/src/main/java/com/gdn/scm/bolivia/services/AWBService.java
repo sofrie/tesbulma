@@ -37,6 +37,8 @@ public interface AWBService {
     List<AWB> getByGdnRef(String gdnRef);
     
     List<AWB> filterAll(String month, String year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef);
+    
+    List<AWB> filterByInvoice(String month, String year, String logisticName);
 
     void updateAWB(AWB a);
 

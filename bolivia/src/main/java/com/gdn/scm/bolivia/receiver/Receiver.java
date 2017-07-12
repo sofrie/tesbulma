@@ -16,7 +16,6 @@ import com.gdn.scm.bolivia.services.AWBClientServiceImplFeign;
 import com.gdn.scm.bolivia.services.AWBService;
 import com.gdn.scm.bolivia.services.ToleranceService;
 import com.gdn.scm.bolivia.services.UploadHistoryService;
-import com.jayway.jsonpath.internal.function.numeric.Max;
 import java.math.BigDecimal;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -13,9 +13,10 @@
                                     <div class="col-sm-2">
                                         <select id="skill" name="skill" class="form-control" v-on:change="changeMonth()" v-model="selectedMonth">
                                             <option value="" disabled="" selected="">
-                                                Select month
+                                                Select Month
                                             </option>
-                                            <option value="January">January</option>
+											<option v-for="item of listMonth" v-bind:value="item">{{item}}</option>
+                                            <!--<option value="January">January</option>
                                             <option value="February">February</option>
                                             <option value="March">March</option>
                                             <option value="April">April</option>
@@ -26,7 +27,7 @@
                                             <option value="September">September</option>
                                             <option value="October">October</option>
                                             <option value="November">November</option>
-                                            <option value="December">December</option>
+                                            <option value="December">December</option>-->
                                         </select>
                                     </div>
                                     <label class="col-sm-1 control-label" for="skill">
@@ -37,10 +38,7 @@
                                             <option value="" disabled="" selected="">
                                                 Select logistic
                                             </option>
-                                            <option value="A Logistic">A Logistic</option>
-                                            <option value="B Logistic">B Logistic</option>
-                                            <option value="C Logistic">C Logistic</option>
-                                            <option value="D Logistic">D Logistic</option>
+											<option v-for="item of listLogistic" v-bind:value="item">{{item}}</option>
                                         </select>
                                     </div>
                                     <label class="col-sm-2 control-label" for="skill">
@@ -66,8 +64,7 @@
                                             <option value="" disabled="" selected="">
                                                 Select year
                                             </option>
-                                            <option value="2017">2017</option>
-                                            <option value="2018">2018</option>
+                                            <option v-for="item of listYear" v-bind:value="item">{{item}}</option>
                                         </select>
                                     </div>  
                                     <label class="col-sm-1 control-label" for="skill">
@@ -296,13 +293,27 @@ const STATUS_FAILED = 3
 const formData = new window.FormData()
 export default {
     name: "datatables",
+	props: {
+      month: {
+      type: String,
+      default: 'Vue!'
+		},
+		year: {
+      type: String,
+      default: 'Vue!'
+		},
+		logistic: {
+      type: String,
+      default: 'Vue!'
+		}
+    },
     data: () => ({
       posts: [],
       uploadedFiles: [],
       uploadError: null,
       currentStatus: null,
       uploadFieldName: 'invoiceFile',
-      selectedMonth: 'January',
+      selectedMonth: 'Select Month',
       selectedLogistic: 'A Logistic',
       selectedYear: '2017',
         selectedStatus: 'All',
@@ -311,7 +322,11 @@ export default {
         GDNRef: '',
 		test: '',
 		title: '',
-		awb: []
+		awb: [],
+		cek: '',
+		listLogistic: [],
+		listYear: [],
+		listMonth: []
     }
     ),
     mounted: function() {
@@ -403,6 +418,7 @@ export default {
           .then(response => {
             // JSON responses are automatically parsed.
             this.posts = response.data
+			this.getLogisticSelectList()
           })
           .catch(e => {
             this.errors.push(e)
@@ -410,7 +426,7 @@ export default {
       },
 
       changeMonth () {
-        axios.get('http://127.0.0.1:8091/api/awb/' + this.selectedMonth)
+        axios.get('http://127.0.0.1:8091/api/awb/filtermonth/' + this.selectedMonth)
           .then(response => {
             // JSON responses are automatically parsed.
             this.posts = response.data
@@ -470,7 +486,17 @@ export default {
           })
       },
       filterAll () {
-        axios.get('http://127.0.0.1:8091/api/awb/filter/' + this.selected + '/' + this.selectedYear + '/' + this.selectedLogistic + '/' + this.AwbNumber + '/' + this.statusawb + '/' + this.merchantCode + '/' + this.gdnRef)
+        axios.get('http://127.0.0.1:8091/api/awb/filter/' + this.selectedMonth + '/' + this.selectedYear + '/' + this.selectedLogistic + '/' + this.AwbNumber + '/' + this.statusawb + '/' + this.merchantCode + '/' + this.gdnRef)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+      },
+	  filterByInvoice () {
+        axios.get('http://127.0.0.1:8091/api/awb/filter/' + this.selectedMonth + '/' + this.selectedYear + '/' + this.selectedLogistic)
           .then(response => {
             // JSON responses are automatically parsed.
             this.posts = response.data
@@ -492,7 +518,37 @@ export default {
 	  openModal(obj){
 	  this.awb=obj
 	  this.title=this.awb.awbNumber + ' / ' + this.awb.gdnRef + ' (' + this.awb.reconStatus + ') '
-	  }
+	  },
+	  getLogisticSelectList(){
+		axios.get('http://127.0.0.1:8091/api/logistic/list')
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.listLogistic = response.data
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+	  },
+	  getYearSelectList(){
+		axios.get('http://127.0.0.1:8091/api/uploadHistory/list/year')
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.listYear = response.data
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+	  },
+	  getMonthSelectList(){
+		axios.get('http://127.0.0.1:8091/api/uploadHistory/list/month')
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.listMonth = response.data
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+	  },
     },
     ready() {
         this.uploadHistory();
@@ -529,7 +585,18 @@ export default {
             });
         },400);
         });
-        this.fetchUsers()
+		if(this.month==='Vue!' || this.year==='Vue!' || this.logistic==='Vue!'){
+			this.fetchUsers()
+		}
+        else{
+			this.selectedLogistic=this.logistic
+			this.selectedMonth=this.month
+			this.selectedYear=this.year
+			this.filterByInvoice()
+		}
+		this.getLogisticSelectList()
+		this.getYearSelectList()
+		this.getMonthSelectList()
       }
 }
 </script>

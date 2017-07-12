@@ -111,6 +111,7 @@ public class AWBController {
         return awbService.selectAllYear();
     }
     
+<<<<<<< HEAD
     @CrossOrigin
     @RequestMapping(value="/api/awb/awbs",method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     Page<AWB> listAWBPage( Pageable pageable){
@@ -130,4 +131,12 @@ public class AWBController {
             System.out.println("Item page "+pageClass.getItem_page());
             return pageClass;
     } 
+=======
+    //filter by invoice
+    @CrossOrigin
+    @RequestMapping(value = "/api/awb/filter/{month}/{year}/{logisticName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<AWB> filterByInvoice(@PathVariable("month") String month, @PathVariable("year") String year, @PathVariable("logisticName") String logisticName) {
+        return awbService.filterByInvoice(month, year, logisticName);
+    }
+>>>>>>> 5bd00b24f95055413f4db02a61953d95937e5190
 }
