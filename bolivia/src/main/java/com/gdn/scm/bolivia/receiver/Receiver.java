@@ -18,7 +18,6 @@ import com.gdn.scm.bolivia.services.ToleranceService;
 import com.gdn.scm.bolivia.services.UploadHistoryService;
 import com.jayway.jsonpath.internal.function.numeric.Max;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -93,27 +92,42 @@ public class Receiver {
 
             Tolerance tolerance = toleranceService.getTolerance();
             //get awb from logistic
-            AWB fromLogistic = awbFeign.getAWBLogistic(message.getAwbNumber());
-            if (fromLogistic != null) {
+            AWB fromSystem = awbFeign.getAWBSystem(message.getAwbNumber());
+            if (fromSystem != null && fromSystem.getPriceSystem() != null) {
                 System.out.println("AWB------------------" + message.getAwbNumber());
-                message.setPriceLogistic(fromLogistic.getPriceLogistic());
-                message.setWeightLogistic(fromLogistic.getWeightLogistic());
-                message.setInsuranceChargeLogistic(fromLogistic.getInsuranceChargeLogistic());
-                message.setOtherChargeLogistic(fromLogistic.getOtherChargeLogistic());
-                message.setTotalChargeLogistic(fromLogistic.getTotalChargeLogistic());
+                System.out.println("from system " + fromSystem);
+                System.out.println("getPrice ----------- " + fromSystem.getPriceSystem());
+                message.setPriceSystem(fromSystem.getPriceSystem());
+                message.setWeightSystem(fromSystem.getWeightSystem());
+                message.setInsuranceChargeSystem(fromSystem.getInsuranceChargeSystem());
+                message.setOtherChargeSystem(fromSystem.getOtherChargeSystem());
+                message.setTotalChargeSystem(fromSystem.getTotalChargeSystem());
+
+                awbRepository.save(message);
+                Thread.sleep(500);
+                System.out.println("lalalalalaalalalalla");
+                System.out.println("price " + message.getPriceSystem());
+                System.out.println("weight " + message.getWeightSystem());
+                System.out.println("insurance " + message.getInsuranceChargeSystem());
+                System.out.println("other " + message.getOtherChargeSystem());
+                System.out.println("total " + message.getTotalChargeSystem());
 
                 //untuk perhitungan toleransi
-                BigDecimal tolerancePercent = message.getPriceSystem().add(tolerance.getPricePercentage().multiply(message.getPriceSystem()));
-                BigDecimal toleranceAmount = message.getPriceSystem().add(tolerance.getPriceAmount());
-                BigDecimal max = tolerancePercent.max(toleranceAmount);
+                BigDecimal tolerancePercent;
+                BigDecimal toleranceAmount;
+                BigDecimal max;
+                tolerancePercent = (tolerance.getPricePercentage().divide(new BigDecimal(100)).multiply(message.getPriceSystem())).add(message.getPriceSystem());
+                toleranceAmount = message.getPriceSystem().add(tolerance.getPriceAmount());
+                max = tolerancePercent.max(toleranceAmount);
                 if (message.getPriceLogistic() != null && message.getPriceLogistic().compareTo(max) > 0) {
                     message.setPriceComment("Beda");
                     counterBeda += 1;
                 } else {
                     message.setPriceComment("-");
                 }
+                System.out.println("maxxxxxxxxxx : "+max);
 
-                tolerancePercent = message.getWeightSystem().add(tolerance.getWeightPercentage().multiply(message.getWeightSystem()));
+                tolerancePercent = (tolerance.getWeightPercentage().divide(new BigDecimal(100)).multiply(message.getWeightSystem())).add(message.getWeightSystem());
                 toleranceAmount = message.getWeightSystem().add(tolerance.getWeightAmount());
                 max = tolerancePercent.max(toleranceAmount);
                 if (message.getWeightLogistic() != null && message.getWeightLogistic().compareTo(max) > 0) {
@@ -123,7 +137,7 @@ public class Receiver {
                     message.setWeightComment("-");
                 }
 
-                tolerancePercent = message.getInsuranceChargeSystem().add(tolerance.getInsuranceChargePercentage().multiply(message.getInsuranceChargeSystem()));
+                tolerancePercent = (tolerance.getInsuranceChargePercentage().divide(new BigDecimal(100)).multiply(message.getInsuranceChargeSystem())).add(message.getInsuranceChargeSystem());
                 toleranceAmount = message.getInsuranceChargeSystem().add(tolerance.getInsuranceChargeAmount());
                 max = tolerancePercent.max(toleranceAmount);
                 if (message.getInsuranceChargeLogistic() != null && message.getInsuranceChargeLogistic().compareTo(max) > 0) {
@@ -133,7 +147,7 @@ public class Receiver {
                     message.setInsuranceChargeComment("-");
                 }
 
-                tolerancePercent = message.getOtherChargeSystem().add(tolerance.getOtherChargePercentage().multiply(message.getOtherChargeSystem()));
+                tolerancePercent = (tolerance.getOtherChargePercentage().divide(new BigDecimal(100)).multiply(message.getOtherChargeSystem())).add(message.getOtherChargeSystem());
                 toleranceAmount = message.getOtherChargeSystem().add(tolerance.getOtherChargeAmount());
                 max = tolerancePercent.max(toleranceAmount);
                 if (message.getOtherChargeLogistic() != null && message.getOtherChargeLogistic().compareTo(max) > 0) {
@@ -143,7 +157,7 @@ public class Receiver {
                     message.setOtherChargeComment("-");
                 }
 
-                tolerancePercent = message.getTotalChargeSystem().add(tolerance.getTotalShippingPercentage().multiply(message.getTotalChargeSystem()));
+                tolerancePercent = (tolerance.getTotalShippingPercentage().divide(new BigDecimal(100)).multiply(message.getTotalChargeSystem())).add(message.getTotalChargeSystem());
                 toleranceAmount = message.getTotalChargeSystem().add(tolerance.getTotalShippingAmount());
                 max = tolerancePercent.max(toleranceAmount);
                 if (message.getTotalChargeLogistic() != null && message.getTotalChargeLogistic().compareTo(max) > 0) {
@@ -160,6 +174,10 @@ public class Receiver {
                 } else {
                     message.setReconStatus("OK");
                 }
+            }
+            else
+            {
+                message.setReconStatus("Not Exist");
             }
             //klo uda dibandingin di save
             awbRepository.save(message);
