@@ -59,4 +59,13 @@ public class LogisticProviderController {
     public List<String> getAllLogistic() {
         return logisticProviderService.getAllLogistic();
     }
+    //change status to inactive
+    @RequestMapping(value = "/api/logistics/inactive/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void inactivateLogistic(@PathVariable("id") Integer id) {
+        logisticProviderService.setStatusInactive(id);
+    }
+    @RequestMapping(value = "/api/logistics/active/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void activateLogistic(@PathVariable("id") Integer id) {
+        logisticProviderService.setStatusActive(id);
+    }
 }

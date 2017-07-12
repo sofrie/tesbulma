@@ -15,11 +15,11 @@
                         <div class="rightsidebar-right-content">
                             <div class="panel-tabs">
                                 <ul class="nav nav-tabs nav-float" role="tablist">
-                                    <li class="active text-center">
+                                    <!--<li class="active text-center">
                                         <a href="#r_tab1" role="tab" data-toggle="tab"><i
                                                 class="fa fa-fw ti-comments"></i></a>
-                                    </li>
-                                    <li class="text-center">
+                                    </li>-->
+                                    <li class="active text-center">
                                         <a href="#r_tab2" role="tab" data-toggle="tab"><i class="fa fa-fw ti-bell"></i></a>
                                     </li>
                                     <li class="text-center">
