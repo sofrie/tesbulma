@@ -60,7 +60,22 @@ public class LogisticProviderServiceImpl implements LogisticProviderService {
 //        System.out.print("-----------");
         logisticProviderRepository.save(logistic);
     }
-
+    @Override
+    public void setStatusInactive(Integer id){
+        LogisticProvider l=logisticProviderRepository.findById(id);
+        if(l!=null){
+            l.setStatus("Inactive");
+            logisticProviderRepository.save(l);
+        }
+    }
+    @Override
+    public void setStatusActive(Integer id){
+        LogisticProvider l=logisticProviderRepository.findById(id);
+        if(l!=null){
+            l.setStatus("Active");
+            logisticProviderRepository.save(l);
+        }
+    }
     @Override
     public List<LogisticProvider> getAll() {
         return logisticProviderRepository.findAll();

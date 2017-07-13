@@ -21,4 +21,5 @@ public interface LogisticProviderRepository extends JpaRepository<LogisticProvid
     public LogisticProvider findTop1ByOrderByIdDesc();
     @Query("select distinct a.logisticName from LogisticProvider a")
     public List<String> getAllLogistic();
+    public LogisticProvider findById(Integer id);
 }

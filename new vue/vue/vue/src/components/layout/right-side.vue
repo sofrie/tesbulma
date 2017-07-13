@@ -15,21 +15,18 @@
                         <div class="rightsidebar-right-content">
                             <div class="panel-tabs">
                                 <ul class="nav nav-tabs nav-float" role="tablist">
+                                    
                                     <li class="active text-center">
-                                        <a href="#r_tab1" role="tab" data-toggle="tab"><i
-                                                class="fa fa-fw ti-comments"></i></a>
-                                    </li>
-                                    <li class="text-center">
                                         <a href="#r_tab2" role="tab" data-toggle="tab"><i class="fa fa-fw ti-bell"></i></a>
                                     </li>
-                                    <li class="text-center">
+                                    <!--<li class="text-center">
                                         <a href="#r_tab3" role="tab" data-toggle="tab"><i
                                                 class="fa fa-fw ti-settings"></i></a>
-                                    </li>
+                                    </li>-->
                                 </ul>
                             </div>
                             <div class="tab-content">
-                                <div class="tab-pane fade in active" id="r_tab1">
+                                <!--<div class="tab-pane fade in active" id="r_tab1">
                                     <div id="slim_t1">
                                         <h5 class="rightsidebar-right-heading text-uppercase text-xs">
                                             <i class="menu-icon  fa fa-fw ti-user"></i>
@@ -128,12 +125,12 @@
                                             </ul>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="tab-pane fade" id="r_tab2">
                                     <div id="slim_t2">
                                         <h5 class="rightsidebar-right-heading text-uppercase text-xs">
                                             <i class="fa fa-fw ti-bell"></i>
-                                            Notifications
+                                            Pending Confirmation
                                         </h5>
                                         <ul class="list-unstyled m-t-15 notifications">
                                             <li>
@@ -257,7 +254,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="r_tab3">
+                                <!--<div class="tab-pane fade" id="r_tab3">
                                     <div id="slim_t3">
                                         <h5 class="rightsidebar-right-heading text-uppercase text-xs">
                                             <i class="fa fa-fw ti-layers"></i>
@@ -369,7 +366,7 @@
                                                 <input type="range" id="vol" min="0" max="100" value="15">
                                             </li>
                                         </ul>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                         </div>
