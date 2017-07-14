@@ -118,13 +118,5 @@ public class UploadHistoryServiceImpl implements UploadHistoryService {
     public UploadHistory selectLastUploadHistory() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    @Override
-    public List<String> getAllMonth() {
-        return uploadHistoryRepository.getAllMonth();
-    }
-    @Override
-    public List<String> getAllYear() {
-        return uploadHistoryRepository.getAllYear();
-    }
-    
+
 }

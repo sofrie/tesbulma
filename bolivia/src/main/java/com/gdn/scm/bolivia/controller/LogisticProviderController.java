@@ -54,18 +54,4 @@ public class LogisticProviderController {
         logisticProviderService.addLogisticProvider(request);
         //return logistic;
     }
-    @CrossOrigin
-    @RequestMapping(value = "/api/logistic/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<String> getAllLogistic() {
-        return logisticProviderService.getAllLogistic();
-    }
-    //change status to inactive
-    @RequestMapping(value = "/api/logistics/inactive/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public void inactivateLogistic(@PathVariable("id") Integer id) {
-        logisticProviderService.setStatusInactive(id);
-    }
-    @RequestMapping(value = "/api/logistics/active/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public void activateLogistic(@PathVariable("id") Integer id) {
-        logisticProviderService.setStatusActive(id);
-    }
 }
