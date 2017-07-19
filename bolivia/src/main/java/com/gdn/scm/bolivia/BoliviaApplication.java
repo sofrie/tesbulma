@@ -3,6 +3,9 @@ package com.gdn.scm.bolivia;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gdn.scm.bolivia.entity.AWB;
 import com.gdn.scm.bolivia.receiver.Receiver;
+import com.gdn.scm.bolivia.services.SimpleOrderManager;
+import com.gdn.x.message.mq.model.MessageEmailRequest;
+import com.gdn.x.message.service.client.MessageTemplateDeliveryClient;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -82,9 +85,17 @@ public class BoliviaApplication {
         adapter.setMessageConverter(new Jackson2JsonMessageConverter(new ObjectMapper()));
         return adapter;
     }
-
+    
+    @Bean
+    MessageTemplateDeliveryClient template()
+    {
+        MessageTemplateDeliveryClient tmp=new MessageTemplateDeliveryClient("no-reply@blibli.com","password","172.17.138.17",5432,"clientId","channelId","storeId",queueName,"haha");
+        return tmp;
+    }
+    
 
     public static void main(String[] args) {
         SpringApplication.run(BoliviaApplication.class, args);
+        
     }
 }

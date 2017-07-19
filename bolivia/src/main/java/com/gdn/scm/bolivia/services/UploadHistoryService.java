@@ -40,4 +40,7 @@ public interface UploadHistoryService {
     UploadHistory selectLastUploadHistory();
     
     UploadHistory findTop1ByOrderByIdDesc();
+    
+    List<String> getAllMonth();
+    List<String> getAllYear();
 }

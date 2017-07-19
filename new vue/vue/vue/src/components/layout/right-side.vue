@@ -13,18 +13,21 @@
                 <div id="right-slim">
                     <div class="rightsidebar-right">
                         <div class="rightsidebar-right-content">
-                            <div class="panel-tabs">
-                                <ul class="nav nav-tabs nav-float" role="tablist">
-                                    
+                            <!--<div class="panel-tabs">
+                                <!--<ul class="nav nav-tabs nav-float" role="tablist">
+                                    <li class="active text-center">
+                                        <a href="#r_tab1" role="tab" data-toggle="tab"><i
+                                                class="fa fa-fw ti-comments"></i></a>
+                                    </li>
                                     <li class="active text-center">
                                         <a href="#r_tab2" role="tab" data-toggle="tab"><i class="fa fa-fw ti-bell"></i></a>
                                     </li>
-                                    <!--<li class="text-center">
+                                    <li class="text-center">
                                         <a href="#r_tab3" role="tab" data-toggle="tab"><i
                                                 class="fa fa-fw ti-settings"></i></a>
-                                    </li>-->
+                                    </li>
                                 </ul>
-                            </div>
+                            </div>-->
                             <div class="tab-content">
                                 <!--<div class="tab-pane fade in active" id="r_tab1">
                                     <div id="slim_t1">
@@ -126,7 +129,7 @@
                                         </div>
                                     </div>
                                 </div>-->
-                                <div class="tab-pane fade" id="r_tab2">
+                                <div class="tab-pane fade in active" id="r_tab2">
                                     <div id="slim_t2">
                                         <h5 class="rightsidebar-right-heading text-uppercase text-xs">
                                             <i class="fa fa-fw ti-bell"></i>
@@ -135,122 +138,27 @@
                                         <ul class="list-unstyled m-t-15 notifications">
                                             <li>
                                                 <a href="" class="message icon-not striped-col">
-                                                    <img class="message-image img-circle" src="../../assets/img/authors/avatar3.jpg" alt="avatar-image">
+                                                    <!--<img class="message-image img-circle" src="../../assets/img/authors/avatar3.jpg" alt="avatar-image">-->
                                                     <div class="message-body">
-                                                        <strong>John Doe</strong>
-                                                        <br> 5 members joined today
+                                                        <strong>Invoice Name</strong>
                                                         <br>
-                                                        <small class="noti-date">Just now</small>
+                                                        <br>
+                                                        <small class="noti-date">Date</small>
                                                     </div>
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="" class="message icon-not">
-                                                    <img class="message-image img-circle" src="../../assets/img/authors/avatar.jpg" alt="avatar-image">
                                                     <div class="message-body">
-                                                        <strong>Tony</strong>
-                                                        <br> likes a photo of you
+                                                        <strong>Invoice Name</strong>
                                                         <br>
-                                                        <small class="noti-date">5 min</small>
+                                                        <br>
+                                                        <small class="noti-date">Date</small>
                                                     </div>
                                                 </a>
                                             </li>
-                                            <li>
-                                                <a href="" class="message icon-not striped-col">
-                                                    <img class="message-image img-circle" src="../../assets/img/authors/avatar6.jpg" alt="avatar-image">
-                                                    <div class="message-body">
-                                                        <strong>John</strong>
-                                                        <br> Dont forgot to call...
-                                                        <br>
-                                                        <small class="noti-date">11 min</small>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="" class="message icon-not">
-                                                    <img class="message-image img-circle" src="../../assets/img/authors/avatar1.jpg" alt="avatar-image">
-                                                    <div class="message-body">
-                                                        <strong>Jenny Kerry</strong>
-                                                        <br> Done with it...
-                                                        <br>
-                                                        <small class="noti-date">1 Hour</small>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="" class="message icon-not striped-col">
-                                                    <img class="message-image img-circle" src="../../assets/img/authors/avatar7.jpg" alt="avatar-image">
-                                                    <div class="message-body">
-                                                        <strong>Ernest Kerry</strong>
-                                                        <br> 2 members joined today
-                                                        <br>
-                                                        <small class="noti-date">3 Days</small>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li class="text-right noti-footer"><a href="javascript:void(0)">View All Notifications <i
+                                            <li class="text-right noti-footer"><a href="javascript:void(0)">View All Invoice <i
                                                     class="ti-arrow-right"></i></a></li>
-                                        </ul>
-                                        <h5 class="rightsidebar-right-heading text-uppercase text-xs">
-                                            <i class="fa fa-fw ti-check-box"></i>
-                                            Tasks
-                                        </h5>
-                                        <ul class="list-unstyled m-t-15">
-                                            <li>
-                                                <div>
-                                                    <p>
-                                                        <span>Button Design</span>
-                                                        <small class="pull-right text-muted">40%</small>
-                                                    </p>
-                                                    <div class="progress progress-xs progress-striped active">
-                                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                                            <span class="sr-only">40% Complete (success)</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div>
-                                                    <p>
-                                                        <span>Theme Creation</span>
-                                                        <small class="pull-right text-muted">20%</small>
-                                                    </p>
-                                                    <div class="progress progress-xs progress-striped active">
-                                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                                                            <span class="sr-only">20% Complete</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div>
-                                                    <p>
-                                                        <span>XYZ Task To Do</span>
-                                                        <small class="pull-right text-muted">60%</small>
-                                                    </p>
-                                                    <div class="progress progress-xs progress-striped active">
-                                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                                            <span class="sr-only">60% Complete (warning)</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div>
-                                                    <p>
-                                                        <span>Transitions Creation</span>
-                                                        <small class="pull-right text-muted">80%</small>
-                                                    </p>
-                                                    <div class="progress progress-xs progress-striped active">
-                                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                                                            <span class="sr-only">80% Complete (danger)</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="text-right"><a href="javascript:void(0)">View All Tasks <i
-                                                    class="ti-arrow-right"></i></a>
-                                            </li>
                                         </ul>
                                     </div>
                                 </div>

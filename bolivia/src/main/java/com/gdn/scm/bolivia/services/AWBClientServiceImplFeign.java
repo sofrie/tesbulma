@@ -20,10 +20,10 @@ public class AWBClientServiceImplFeign {
 
     private static final String URI_AWB = "http://localhost:8090";
     
-    public AWB getAWBLogistic(String awbnumber) throws Exception {
+    public AWB getAWBSystem(String awbnumber) throws Exception {
         AWBClientService AWBResource = Feign.builder().encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder()).target(AWBClientService.class, URI_AWB);
-        return AWBResource.getAWBLogistic(awbnumber);
+        return AWBResource.getAWBSystem(awbnumber);
     }
 
 }

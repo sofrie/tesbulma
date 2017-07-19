@@ -5,10 +5,15 @@
  */
 package com.gdn.scm.bolivia.entity;
 
+import static com.gdn.scm.bolivia.entity.UploadHistory.COLUMN_ID;
 import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,8 +25,6 @@ import org.apache.poi.ss.usermodel.Row;
  */
 @Entity
 @Table(name = AWB.TABLE_NAME)
-@Getter
-@Setter
 public class AWB {
 
     public static final String TABLE_NAME = "BLV_AWB";
@@ -103,7 +106,9 @@ public class AWB {
     public String uploadHistoryNumber;
     
     
-    @Id
+    @Column(name = COLUMN_ID)
+    private Integer id;  
+  
     @Column(name = COLUMN_AWB_NUMBER, nullable = false)
     private String awbNumber;
 
@@ -229,6 +234,467 @@ public class AWB {
     private String year;
     @Column(name = COLUMN_LOGISTIC_NAME, nullable = false)
     private String logisticName;
+    
+    
+    private Invoice invoice;
+
+    public Integer getCounter() {
+        return counter;
+    }
+
+    public void setCounter(Integer counter) {
+        this.counter = counter;
+    }
+
+    public String getUploadHistoryNumber() {
+        return uploadHistoryNumber;
+    }
+
+    public void setUploadHistoryNumber(String uploadHistoryNumber) {
+        this.uploadHistoryNumber = uploadHistoryNumber;
+    }
+
+    public String getAwbNumber() {
+        return awbNumber;
+    }
+
+    public void setAwbNumber(String awbNumber) {
+        this.awbNumber = awbNumber;
+    }
+
+    public String getReconStatus() {
+        return reconStatus;
+    }
+
+    public void setReconStatus(String reconStatus) {
+        this.reconStatus = reconStatus;
+    }
+
+    public String getGdnRef() {
+        return gdnRef;
+    }
+
+    public void setGdnRef(String gdnRef) {
+        this.gdnRef = gdnRef;
+    }
+
+    public String getInsuredAmount() {
+        return insuredAmount;
+    }
+
+    public void setInsuredAmount(String insuredAmount) {
+        this.insuredAmount = insuredAmount;
+    }
+
+    public BigDecimal getWeightSystem() {
+        return weightSystem;
+    }
+
+    public void setWeightSystem(BigDecimal weightSystem) {
+        this.weightSystem = weightSystem;
+    }
+
+    public BigDecimal getWeightLogistic() {
+        return weightLogistic;
+    }
+
+    public void setWeightLogistic(BigDecimal weightLogistic) {
+        this.weightLogistic = weightLogistic;
+    }
+
+    public BigDecimal getWeightApplied() {
+        return weightApplied;
+    }
+
+    public void setWeightApplied(BigDecimal weightApplied) {
+        this.weightApplied = weightApplied;
+    }
+
+    public String getWeightComment() {
+        return weightComment;
+    }
+
+    public void setWeightComment(String weightComment) {
+        this.weightComment = weightComment;
+    }
+
+    public BigDecimal getPriceSystem() {
+        return priceSystem;
+    }
+
+    public void setPriceSystem(BigDecimal priceSystem) {
+        this.priceSystem = priceSystem;
+    }
+
+    public BigDecimal getPriceLogistic() {
+        return priceLogistic;
+    }
+
+    public void setPriceLogistic(BigDecimal priceLogistic) {
+        this.priceLogistic = priceLogistic;
+    }
+
+    public BigDecimal getPriceApplied() {
+        return priceApplied;
+    }
+
+    public void setPriceApplied(BigDecimal priceApplied) {
+        this.priceApplied = priceApplied;
+    }
+
+    public String getPriceComment() {
+        return priceComment;
+    }
+
+    public void setPriceComment(String priceComment) {
+        this.priceComment = priceComment;
+    }
+
+    public BigDecimal getOtherChargeSystem() {
+        return otherChargeSystem;
+    }
+
+    public void setOtherChargeSystem(BigDecimal otherChargeSystem) {
+        this.otherChargeSystem = otherChargeSystem;
+    }
+
+    public BigDecimal getOtherChargeLogistic() {
+        return otherChargeLogistic;
+    }
+
+    public void setOtherChargeLogistic(BigDecimal otherChargeLogistic) {
+        this.otherChargeLogistic = otherChargeLogistic;
+    }
+
+    public BigDecimal getOtherChargeApplied() {
+        return otherChargeApplied;
+    }
+
+    public void setOtherChargeApplied(BigDecimal otherChargeApplied) {
+        this.otherChargeApplied = otherChargeApplied;
+    }
+
+    public String getOtherChargeComment() {
+        return otherChargeComment;
+    }
+
+    public void setOtherChargeComment(String otherChargeComment) {
+        this.otherChargeComment = otherChargeComment;
+    }
+
+    public BigDecimal getGiftWrapChargeSystem() {
+        return giftWrapChargeSystem;
+    }
+
+    public void setGiftWrapChargeSystem(BigDecimal giftWrapChargeSystem) {
+        this.giftWrapChargeSystem = giftWrapChargeSystem;
+    }
+
+    public BigDecimal getGiftWrapChargeLogistic() {
+        return giftWrapChargeLogistic;
+    }
+
+    public void setGiftWrapChargeLogistic(BigDecimal giftWrapChargeLogistic) {
+        this.giftWrapChargeLogistic = giftWrapChargeLogistic;
+    }
+
+    public BigDecimal getGiftWrapChargeApplied() {
+        return giftWrapChargeApplied;
+    }
+
+    public void setGiftWrapChargeApplied(BigDecimal giftWrapChargeApplied) {
+        this.giftWrapChargeApplied = giftWrapChargeApplied;
+    }
+
+    public String getGiftWrapChargeComment() {
+        return giftWrapChargeComment;
+    }
+
+    public void setGiftWrapChargeComment(String giftWrapChargeComment) {
+        this.giftWrapChargeComment = giftWrapChargeComment;
+    }
+
+    public BigDecimal getInsuranceChargeSystem() {
+        return insuranceChargeSystem;
+    }
+
+    public void setInsuranceChargeSystem(BigDecimal insuranceChargeSystem) {
+        this.insuranceChargeSystem = insuranceChargeSystem;
+    }
+
+    public BigDecimal getInsuranceChargeLogistic() {
+        return insuranceChargeLogistic;
+    }
+
+    public void setInsuranceChargeLogistic(BigDecimal insuranceChargeLogistic) {
+        this.insuranceChargeLogistic = insuranceChargeLogistic;
+    }
+
+    public BigDecimal getInsuranceChargeApplied() {
+        return insuranceChargeApplied;
+    }
+
+    public void setInsuranceChargeApplied(BigDecimal insuranceChargeApplied) {
+        this.insuranceChargeApplied = insuranceChargeApplied;
+    }
+
+    public String getInsuranceChargeComment() {
+        return insuranceChargeComment;
+    }
+
+    public void setInsuranceChargeComment(String insuranceChargeComment) {
+        this.insuranceChargeComment = insuranceChargeComment;
+    }
+
+    public BigDecimal getTotalChargeSystem() {
+        return totalChargeSystem;
+    }
+
+    public void setTotalChargeSystem(BigDecimal totalChargeSystem) {
+        this.totalChargeSystem = totalChargeSystem;
+    }
+
+    public BigDecimal getTotalChargeLogistic() {
+        return totalChargeLogistic;
+    }
+
+    public void setTotalChargeLogistic(BigDecimal totalChargeLogistic) {
+        this.totalChargeLogistic = totalChargeLogistic;
+    }
+
+    public BigDecimal getTotalChargeApplied() {
+        return totalChargeApplied;
+    }
+
+    public void setTotalChargeApplied(BigDecimal totalChargeApplied) {
+        this.totalChargeApplied = totalChargeApplied;
+    }
+
+    public String getTotalChargeComment() {
+        return totalChargeComment;
+    }
+
+    public void setTotalChargeComment(String totalChargeComment) {
+        this.totalChargeComment = totalChargeComment;
+    }
+
+    public String getFailure() {
+        return failure;
+    }
+
+    public void setFailure(String failure) {
+        this.failure = failure;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getNamaPengirim() {
+        return namaPengirim;
+    }
+
+    public void setNamaPengirim(String namaPengirim) {
+        this.namaPengirim = namaPengirim;
+    }
+
+    public String getMerchantCode() {
+        return merchantCode;
+    }
+
+    public void setMerchantCode(String merchantCode) {
+        this.merchantCode = merchantCode;
+    }
+
+    public String getMerchantName() {
+        return merchantName;
+    }
+
+    public void setMerchantName(String merchantName) {
+        this.merchantName = merchantName;
+    }
+
+    public String getNamaPengirimAPI() {
+        return namaPengirimAPI;
+    }
+
+    public void setNamaPengirimAPI(String namaPengirimAPI) {
+        this.namaPengirimAPI = namaPengirimAPI;
+    }
+
+    public String getNamaPengirimSystem() {
+        return namaPengirimSystem;
+    }
+
+    public void setNamaPengirimSystem(String namaPengirimSystem) {
+        this.namaPengirimSystem = namaPengirimSystem;
+    }
+
+    public String getAlamatPengirimAPI() {
+        return alamatPengirimAPI;
+    }
+
+    public void setAlamatPengirimAPI(String alamatPengirimAPI) {
+        this.alamatPengirimAPI = alamatPengirimAPI;
+    }
+
+    public String getAlamatPengirimSystem() {
+        return alamatPengirimSystem;
+    }
+
+    public void setAlamatPengirimSystem(String alamatPengirimSystem) {
+        this.alamatPengirimSystem = alamatPengirimSystem;
+    }
+
+    public String getKodeOriginAPI() {
+        return kodeOriginAPI;
+    }
+
+    public void setKodeOriginAPI(String kodeOriginAPI) {
+        this.kodeOriginAPI = kodeOriginAPI;
+    }
+
+    public String getKodeOriginSystem() {
+        return kodeOriginSystem;
+    }
+
+    public void setKodeOriginSystem(String kodeOriginSystem) {
+        this.kodeOriginSystem = kodeOriginSystem;
+    }
+
+    public String getNamaPenerimaAPI() {
+        return namaPenerimaAPI;
+    }
+
+    public void setNamaPenerimaAPI(String namaPenerimaAPI) {
+        this.namaPenerimaAPI = namaPenerimaAPI;
+    }
+
+    public String getNamaPenerimaSystem() {
+        return namaPenerimaSystem;
+    }
+
+    public void setNamaPenerimaSystem(String namaPenerimaSystem) {
+        this.namaPenerimaSystem = namaPenerimaSystem;
+    }
+
+    public String getAlamatPenerimaAPI() {
+        return alamatPenerimaAPI;
+    }
+
+    public void setAlamatPenerimaAPI(String alamatPenerimaAPI) {
+        this.alamatPenerimaAPI = alamatPenerimaAPI;
+    }
+
+    public String getAlamatPenerimaSystem() {
+        return alamatPenerimaSystem;
+    }
+
+    public void setAlamatPenerimaSystem(String alamatPenerimaSystem) {
+        this.alamatPenerimaSystem = alamatPenerimaSystem;
+    }
+
+    public String getKodeDestinasiAPI() {
+        return kodeDestinasiAPI;
+    }
+
+    public void setKodeDestinasiAPI(String kodeDestinasiAPI) {
+        this.kodeDestinasiAPI = kodeDestinasiAPI;
+    }
+
+    public String getKodeDestinasiSystem() {
+        return kodeDestinasiSystem;
+    }
+
+    public void setKodeDestinasiSystem(String kodeDestinasiSystem) {
+        this.kodeDestinasiSystem = kodeDestinasiSystem;
+    }
+
+    public String getFocsAmount() {
+        return focsAmount;
+    }
+
+    public void setFocsAmount(String focsAmount) {
+        this.focsAmount = focsAmount;
+    }
+
+    public String getFocsaAcmount() {
+        return focsaAcmount;
+    }
+
+    public void setFocsaAcmount(String focsaAcmount) {
+        this.focsaAcmount = focsaAcmount;
+    }
+
+    public String getShippingCost() {
+        return shippingCost;
+    }
+
+    public void setShippingCost(String shippingCost) {
+        this.shippingCost = shippingCost;
+    }
+
+    public String getShipCost() {
+        return shipCost;
+    }
+
+    public void setShipCost(String shipCost) {
+        this.shipCost = shipCost;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public String getLogisticName() {
+        return logisticName;
+    }
+
+    public void setLogisticName(String logisticName) {
+        this.logisticName = logisticName;
+    }
+
+    
+     @ManyToOne
+    @JoinColumn(name = "blv_invoice_id")
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    
+    
+    
+    
+    
 
 
     public AWB(String month, String year, String logisticName, String awbNumber, String reconStatus, String merchantCode, String gdnRef) {

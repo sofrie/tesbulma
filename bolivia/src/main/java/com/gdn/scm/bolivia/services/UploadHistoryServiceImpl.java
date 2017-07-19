@@ -8,6 +8,7 @@ package com.gdn.scm.bolivia.services;
 import com.gdn.scm.bolivia.entity.UploadHistory;
 import com.gdn.scm.bolivia.repository.UploadHistoryRepository;
 import com.gdn.scm.bolivia.request.UploadHistoryRequest;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -51,7 +52,7 @@ public class UploadHistoryServiceImpl implements UploadHistoryService {
         upload.setId(count);
         upload.setOk("-");
         upload.setProblemExist("-");
-        upload.setJumlahTagihan("-");
+        upload.setJumlahTagihan(new BigDecimal(0));
         upload.setStatus("Uploaded");
         upload.setLast_modified(date);
         //UploadHistory tmp=new UploadHistory("3", "June", "2017", "300", "3", "Rp.xxxx.xxx", "A Logistic", "Uploaded", date.toString());
@@ -117,6 +118,15 @@ public class UploadHistoryServiceImpl implements UploadHistoryService {
     @Override
     public UploadHistory selectLastUploadHistory() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<String> getAllMonth() {
+        return uploadHistoryRepository.getAllMonth();
+    }
+    @Override
+    public List<String> getAllYear() {
+        return uploadHistoryRepository.getAllYear();
     }
 
 }
