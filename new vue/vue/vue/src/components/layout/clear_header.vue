@@ -10,7 +10,7 @@
             </div>
             <div class="navbar-right">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown messages-menu">
+                    <!--<li class="dropdown messages-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-fw ti-email black"></i>
                             <span class="label label-success">2</span>
                         </a>
@@ -73,7 +73,7 @@
                             </li>
                             <li class="dropdown-footer"><a href="#">View All messages</a></li>
                         </ul>
-                    </li>
+                    </li>-->
                     <!--rightside toggle-->
                     <li>
                         <a href="javascript:void(0)" class="toggle-right" @click="toggle_right">

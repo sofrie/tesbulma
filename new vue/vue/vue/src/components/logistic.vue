@@ -23,7 +23,7 @@
                                                             <div class="row m-t-10 form-group">
                                                                 <label for="input-text" class="col-sm-3 control-label">Logistic Name : </label>
                                                                 <div class="col-sm-9">
-                                                                    <input type="text" placeholder="AWB Number" class="form-control" v-model="AwbNumber" >
+                                                                    <input type="text" placeholder="Logistic Name" class="form-control" v-model="AwbNumber" >
                                                                 </div>
                                                             </div>
                                                             <div class="row m-t-10 form-group">
@@ -61,11 +61,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-1  pull-right">
+									 <div class="col-sm-2  pull-right">
                                         <select v-model="filteredStatus" class="form-control pull-right" v-on:change="changeStatus()">
                                             <option value="All">All</option>
                                             <option value="Active">Active</option>
                                             <option value="Inactive">Inactive</option>
+											
                                         </select>
                                     </div>
                                 </div>
@@ -90,7 +91,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="post of posts">
+                                    <tr v-for="post of posts" data-toggle="modal" data-target="#basic_modal" v-on:click="openModal(post)">
                                         <td v-on:click="sayConsole(post.id)">{{post.logisticName}}</td>
                                         <td>{{post.status}}</td>
                                         <td>{{post.discount}}%</td>
@@ -103,6 +104,56 @@
                 </div>
             </div>
         </div>
+		<div id="basic_modal" class="modal fade animated" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">{{logistic.logisticName}}</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row m-t-10 col-md-12">
+                            <label class="col-md-4 text-right">
+								Logistic Name
+							</label>
+							<div class="col-md-8">
+								: {{logistic.logisticName}}
+							</div>
+                        </div>
+						<div class="row m-t-10 col-md-12">
+                            <label class="col-md-4 text-right">
+								Status
+							</label>
+							<div class="col-md-8">
+								: {{logistic.status}}
+							</div>
+                        </div>
+						<div class="row m-t-10 col-md-12">
+                            <label class="col-md-4 text-right">
+								Discount
+							</label>
+							<div class="col-md-8">
+								: {{logistic.discount}}
+							</div>
+                        </div>
+						<div class="row m-t-10 col-md-12">
+                            <label class="col-md-4 text-right">
+								VAT
+							</label>
+							<div class="col-md-8">
+								: {{logistic.vat}}
+							</div>
+                        </div>
+						<div class="row m-t-10"></div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" v-if="logistic.status==='Active'" v-on:click="Inactivate(logistic)" class="btn btn-danger">Inactive</button>
+						<button type="button" v-if="logistic.status==='Inactive'" v-on:click="Activate(logistic)" class="btn btn-success">Activate</button>
+					</div>
+				</div>
+			</div>
+		</div>
         <!--main content ends-->
     </div>
 </template>
@@ -131,7 +182,8 @@
             AwbNumber: '',
             Discount: '',
             VAT: '',
-            filteredStatus: 'All'
+			logistic: [],
+			filteredStatus: ''
         }
         ),
         mounted: function() {
@@ -224,7 +276,7 @@
                   discount: this.Discount,
                   vat: this.VAT
               })
-                setTimeout(this.fetchLogistics, 500);
+                setTimeout(this.fetchLogistics, 7000);
             },
             fetchLogistics() {
                 axios.get(`http://127.0.0.1:8091/api/logistics`)
@@ -241,6 +293,31 @@
                 this.currentStatus = STATUS_INITIAL
                 this.uploadedFiles = []
                 this.uploadError = null
+            },
+			openModal(obj){
+				this.logistic=obj
+			},
+            Inactivate(log) {
+                axios.get(`http://127.0.0.1:8091/api/logistics/inactive/`+log.id)
+                .then(response => {
+                  // JSON responses are automatically parsed.
+              })
+                .catch(e => {
+                  this.errors.push(e)
+              })
+			  setTimeout(this.fetchLogistics, 400);
+			  $('#basic_modal').modal('hide');
+            },
+            Activate(log) {
+                axios.get(`http://127.0.0.1:8091/api/logistics/active/`+log.id)
+                .then(response => {
+                  // JSON responses are automatically parsed.
+              })
+                .catch(e => {
+                  this.errors.push(e)
+              })
+			  setTimeout(this.fetchLogistics, 400);
+			  $('#basic_modal').modal('hide');
             },
             changeStatus () {
                 axios.get('http://127.0.0.1:8091/api/logistics/' + this.filteredStatus)
@@ -283,7 +360,7 @@
                         // Toggle the visibility
                         column.visible(!column.visible());
                     });
-                },500);
+                },400);
             });
             this.fetchLogistics()
         }

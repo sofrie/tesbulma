@@ -21,5 +21,5 @@ import org.springframework.cloud.netflix.feign.FeignClient;
 public interface AWBClientService {
 
     @RequestLine("GET /airwayBill/{awbnumber}")
-     AWB getAWBLogistic(@Param("awbnumber") String awbnumber);
+     AWB getAWBSystem(@Param("awbnumber") String awbnumber);
 }

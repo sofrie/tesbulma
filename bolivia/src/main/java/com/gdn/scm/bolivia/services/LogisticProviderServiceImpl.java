@@ -93,5 +93,27 @@ public class LogisticProviderServiceImpl implements LogisticProviderService {
     public LogisticProvider findLastId() {
         return logisticProviderRepository.findTop1ByOrderByIdDesc();
     }
+    
+    @Override
+    public void setStatusInactive(Integer id){
+        LogisticProvider l=logisticProviderRepository.getOne(id);
+        if(l!=null){
+            l.setStatus("Inactive");
+            logisticProviderRepository.save(l);
+        }
+    }
+    @Override
+    public void setStatusActive(Integer id){
+        LogisticProvider l=logisticProviderRepository.getOne(id);
+        if(l!=null){
+            l.setStatus("Active");
+            logisticProviderRepository.save(l);
+        }
+    }
+    
+    @Override
+    public List<String> getAllLogistic() {
+        return logisticProviderRepository.getAllLogistic();
+    }
 
 }

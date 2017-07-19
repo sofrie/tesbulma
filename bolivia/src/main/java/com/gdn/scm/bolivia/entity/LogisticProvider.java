@@ -5,11 +5,16 @@
  */
 package com.gdn.scm.bolivia.entity;
 
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,8 +25,6 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = LogisticProvider.TABLE_NAME)
-@Getter
-@Setter
 public class LogisticProvider {
 
     public static final String TABLE_NAME = "BLV_LOGISTIC_PROVIDER";
@@ -54,6 +57,71 @@ public class LogisticProvider {
 
     @Column(name = COLUMN_VAT, nullable = true)
     private Long vat;
+    
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getLogisticCode() {
+        return logisticCode;
+    }
+
+    public void setLogisticCode(String logisticCode) {
+        this.logisticCode = logisticCode;
+    }
+
+    public String getLogisticName() {
+        return logisticName;
+    }
+
+    public void setLogisticName(String logisticName) {
+        this.logisticName = logisticName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Long getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Long discount) {
+        this.discount = discount;
+    }
+
+    public Long getVat() {
+        return vat;
+    }
+
+    public void setVat(Long vat) {
+        this.vat = vat;
+    }
+
+      
+    
+    
+    
+//    public Set<Invoice> getInvoices() {
+//        return invoice;
+//    }
+//    
+//     public void setInvoices(Set<Invoice> invoice) {
+//        this.invoice = invoice;
+//    }
+    
+    
 
     public LogisticProvider(String logisticCode, String logisticName, String status, Long discount, Long vat) {
         this.logisticCode = logisticCode;

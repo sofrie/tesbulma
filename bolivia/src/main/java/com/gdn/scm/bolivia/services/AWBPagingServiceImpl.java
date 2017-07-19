@@ -41,6 +41,5 @@ public class AWBPagingServiceImpl implements AWBPagingService
          PageClass pageClass=new PageClass();
          pageClass.setTotal_page(awbPage.getTotalPages());
          return awbPage;
-    }
-    
+    }    
 }
