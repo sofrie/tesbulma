@@ -328,7 +328,8 @@ export default {
     nextpage: 0,
     prevpage: 0,
     totalPage: 10,
-    Pages: []
+    Pages: [],
+	filter: 'none'
     }
     ),
     mounted: function() {
