@@ -78,5 +78,4 @@ public class UploadHistoryController {
     public List<String> getAllYear() {
         return uploadHistoryService.getAllYear();
     }
-    
 }

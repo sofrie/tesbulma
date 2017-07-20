@@ -26,6 +26,7 @@ public interface UploadHistoryRepository extends JpaRepository<UploadHistory, In
     public List<UploadHistory> findByLogistic(String logistic);
     public List<UploadHistory> findByStatus(String status);
     
+       
     @Query("select distinct a.month from UploadHistory a")
     public List<String> getAllMonth();
     

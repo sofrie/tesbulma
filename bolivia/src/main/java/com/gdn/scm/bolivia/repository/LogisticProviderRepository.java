@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
 public interface LogisticProviderRepository extends JpaRepository<LogisticProvider, Integer> {
     public List<LogisticProvider> findByStatus(String status);
     public LogisticProvider findTop1ByOrderByIdDesc();
+    
     @Query("select distinct a.logisticName from LogisticProvider a")
     public List<String> getAllLogistic();
-    public LogisticProvider findById(Integer id);
 }

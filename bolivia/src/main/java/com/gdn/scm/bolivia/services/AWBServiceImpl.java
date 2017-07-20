@@ -8,9 +8,12 @@ package com.gdn.scm.bolivia.services;
 import com.gdn.scm.bolivia.entity.AWB;
 import com.gdn.scm.bolivia.repository.AWBRepository;
 import com.gdn.scm.bolivia.request.AWBRequest;
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -97,13 +100,44 @@ public class AWBServiceImpl implements AWBService {
             return aWBRepository.filterAll(month, year, logisticName, AwbNumber, reconStatus, merchantCode, gdnRef);
         }
     }
-    @Override
-    public List<AWB> filterByInvoice(String month, String year, String logisticName) {
-            return aWBRepository.filterByInvoice(month, year, logisticName);
-    }
+
     @Override
     public void addAWB(AWB a) {
         aWBRepository.save(a);
+    }
+
+    @Override
+    public Page<AWB> findAll(Pageable pageable) {
+        return aWBRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<AWB> findByStatus(String status, Pageable pageable) {
+        if (status.equals("All")) {
+            return aWBRepository.findAll(pageable);
+        } else {
+            return aWBRepository.findByReconStatus(status, pageable);
+        }
+    }
+
+    @Override
+    public Page<AWB> findByMonth(String month, Pageable pageable) {
+        return aWBRepository.findByMonth(month, pageable);
+    }
+
+    @Override
+    public Page<AWB> findByYear(String year, Pageable pageable) {
+        return aWBRepository.findByYear(year, pageable);
+    }
+
+    @Override
+    public Page<AWB> findByLogisticName(String logisticName, Pageable pageable) {
+        return aWBRepository.findByLogisticName(logisticName, pageable);
+    }
+
+    @Override
+    public BigDecimal countTotalTagihan() {
+        return aWBRepository.countTotalTagihan();
     }
 
 }

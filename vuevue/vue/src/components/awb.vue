@@ -11,12 +11,12 @@
                                         Month :
                                     </label>
                                     <div class="col-sm-2">
-                                        <select id="skill" name="skill" class="form-control" v-on:change="changeMonth()" v-model="selectedMonth">
+                                        <select class="form-control" v-on:change="changeMonth()" v-model="selectedMonth">
                                             <option value="" disabled="" selected="">
                                                 Select Month
                                             </option>
 											<option v-for="item of listMonth" v-bind:value="item">{{item}}</option>
-                                            <!--<option value="January">January</option>
+                                            <option value="January">January</option>
                                             <option value="February">February</option>
                                             <option value="March">March</option>
                                             <option value="April">April</option>
@@ -27,14 +27,14 @@
                                             <option value="September">September</option>
                                             <option value="October">October</option>
                                             <option value="November">November</option>
-                                            <option value="December">December</option>-->
+                                            <option value="December">December</option>
                                         </select>
                                     </div>
                                     <label class="col-sm-1 control-label" for="skill">
                                         Logistic :
                                     </label>
                                     <div class="col-sm-2">
-                                        <select id="skill" name="skill" class="form-control" v-on:change="changeLogistic()" v-model="selectedLogistic">
+                                        <select class="form-control" v-on:change="changeLogistic()" v-model="selectedLogistic">
                                             <option value="" disabled="" selected="">
                                                 Select logistic
                                             </option>
@@ -60,7 +60,7 @@
                                         Year :
                                     </label>
                                     <div class="col-sm-2">
-                                        <select id="skill" name="skill" class="form-control" v-on:change="changeYear()" v-model="selectedYear">
+                                        <select class="form-control" v-on:change="changeYear()" v-model="selectedYear">
                                             <option value="" disabled="" selected="">
                                                 Select year
                                             </option>
@@ -71,13 +71,14 @@
                                         Status :
                                     </label>
                                     <div class="col-sm-2">
-                                        <select id="skill" name="skill" class="form-control" v-on:change="changeStatus()" v-model="selectedStatus">
+                                        <select class="form-control" v-on:change="changeStatus()" v-model="statusawb">
                                             <option value="" disabled="" selected="">
                                                 Select status
                                             </option>
                                             <option value="All">All</option>
-                                            <option value="Uploaded">Uploaded</option>
-                                            <option value="Done">Done</option>
+                                            <option value="Problem Exist">Problem Exist</option>
+											<option value="Not Exist">Not Exist</option>
+                                            <option value="OK">OK</option>
                                         </select>
                                     </div>      
                                     <label class="col-sm-2 control-label" for="skill">
@@ -110,7 +111,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="panel-body table-responsive">
-                            <table class="table table-striped table-bordered table_width" id="example">
+                            <table class="table table-striped table-bordered table_width">
                             <thead>
                                 <tr>
                                     <th>Month</th>
@@ -131,145 +132,156 @@
                                 <td>{{post.reconStatus}}</td>
                                 <td>{{post.merchantCode}}</td>
                                 <td>{{post.gdnRef}}</td>
-                              </tr>               
+                              </tr>
                             </tbody>
                         </table>
-						<div id="form_modal" class="modal fade animated" role="dialog">
-										<div class="modal-dialog modal-lg">
-											<div class="modal-content">
-												<div class="modal-header">
-													<button type="button" class="close" data-dismiss="modal">&times;</button>
-													<h4 class="modal-title">{{title}}</h4>
-												</div>
-												<form role="form">
-												<div class="modal-body">
+                            <div class="col-xs- pull-right">
+                                <button type="submit" class="btn btn-effect-ripple btn-primary" v-on:click="fetchUsers()">next {{nextpage}}</button>
+                            </div>
+                            <div class="col-xs-1 pull-right">
+                                <label class="col-sm-1 control-label" >
+                                    {{page}}
+                                </label>
+                            </div>
+                            <div class="col-xs-1 pull-right">
+                                <button type="submit" class="btn btn-effect-ripple btn-primary" v-on:click="fetchPrev()">prev {{prevpage}}</button>
+                            </div>
+                        <div id="form_modal" class="modal fade animated" role="dialog">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">{{title}}</h4>
+                                                </div>
+                                                <form role="form">
+                                                <div class="modal-body">
                                             <div class="row m-t-10 col-md-12">
-														<div class="col-md-4">
-															<b>Reconciliation Data</b>
-														</div>
-														<div class="col-md-4">
-															<span class="col-md-12"><b>Blibli Data</b></span>
-														</div>
-														<div class="col-md-4">
-															<span class="col-md-12"><b>3PL Data</b></span>
-														</div>
-														<hr/>
-													</div>
-													<div class="row m-t-10 col-md-12">
-													
-														<div class="col-md-4">
-															<div class="col-md-7">Failure Reason</div>
-															<div class="col-md-5">: {{awb.failure}}</div>
-															<div class="col-md-7">Merchant Code</div>
-															<div class="col-md-5">: {{awb.merchantCode}}</div>
-															<div class="col-md-7">Merchant Name</div>
-															<div class="col-md-5">: {{awb.merchantName}}</div>
-															<div class="col-md-7">Original Shipping Cost</div>
-															<div class="col-md-5">: {{awb.focsAmount}}</div>
-															<div class="col-md-7">Adjusment Shipping Cost</div>
-															<div class="col-md-5">: {{awb.focsaAmount}}</div>
-															<div class="col-md-7">Notes</div>
-															<div class="col-md-5">: {{awb.notes}}</div>
-														</div>
-														<div class="col-md-4">
-															<div class="col-md-5">Sender Name</div>
-															<div class="col-md-7">: {{awb.namaPengirimSystem}}</div>
-															<div class="col-md-5">Sender Address</div>
-															<div class="col-md-7">: {{awb.alamatPengirimSystem}}</div>
-															<div class="col-md-5">Origin Code</div>
-															<div class="col-md-7">: {{awb.kodeOriginSystem}}</div>
-															<div class="col-md-5">Receiver Name</div>
-															<div class="col-md-7">: {{awb.namaPenerimaSystem}}</div>
-															<div class="col-md-5">Receiver Address</div>
-															<div class="col-md-7">: {{awb.alamatPenerimaSystem}}</div>
-															<div class="col-md-5">Destination Code</div>
-															<div class="col-md-7">: {{awb.kodeDestinasiSystem}}</div>
-														</div>
-														<div class="col-md-4">
-															<div class="col-md-5">Sender Name</div>
-															<div class="col-md-7">: {{awb.namaPengirimAPI}}</div>
-															<div class="col-md-5">Sender Address</div>
-															<div class="col-md-7">: {{awb.alamatPengirimAPI}}</div>
-															<div class="col-md-5">Origin Code</div>
-															<div class="col-md-7">: {{awb.kodeOriginAPI}}</div>
-															<div class="col-md-5">Receiver Name</div>
-															<div class="col-md-7">: {{awb.namaPenerimaAPI}}</div>
-															<div class="col-md-5">Receiver Address</div>
-															<div class="col-md-7">: {{awb.alamatPenerimaAPI}}</div>
-															<div class="col-md-5">Destination Code</div>
-															<div class="col-md-7">: {{awb.kodeDestinasiAPI}}</div>
-														</div>
-													</div>
-													<div class="row m-t-10 col-md-12">
-														<span class="col-md-12"><hr/></span>
-														<span class="col-md-12"><h3>Charge Summary</b></h3></span>
-														<span class="col-md-12"><hr/></span>
-														<div class="table-responsive col-md-12">
-														<table class="table" id="table1">
-														<thead>
-															<tr>
-															  <th></th>
-															  <th>Weight</th>
-															  <th>Price/Kg</th>
-															  <th>Other Charge</th>
-															  <th>Gift Wrap Charge</th>
-															  <th>Insurance Charge</th>
-															  <th>Total Charge</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr>
-															  <th>System</th>
-															  <td>{{awb.weightSystem}}</td>
-															  <td>{{awb.priceSystem}}</td>
-															  <td>{{awb.otherChargeSystem}}</td>
-															  <td>{{awb.giftWrapChargeSystem}}</td>
-															  <td>{{awb.insuranceChargeSystem}}</td>
-															  <td>{{awb.totalChargeSystem}}</td>
-															</tr>
-															<tr>
-															  <th>Logistic</th>
-															  <td>{{awb.weightLogistic}}</td>
-															  <td>{{awb.priceLogistic}}</td>
-															  <td>{{awb.otherChargeLogistic}}</td>
-															  <td>{{awb.giftWrapChargeLogistic}}</td>
-															  <td>{{awb.insuranceChargeLogistic}}</td>
-															  <td>{{awb.totalChargeLogistic}}</td>
-															</tr>
-															<tr>
-															  <th>Applied</th>
-															  <td>{{awb.weightApplied}}</td>
-															  <td>{{awb.priceApplied}}</td>
-															  <td>{{awb.otherChargeApplied}}</td>
-															  <td>{{awb.giftWrapChargeApplied}}</td>
-															  <td>{{awb.insuranceChargeApplied}}</td>
-															  <td>{{awb.totalChargeApplied}}</td>
-															</tr>
-															<tr>
-															  <th>Comment</th>
-															  <td>{{awb.weightComment}}</td>
-															  <td>{{awb.priceComment}}</td>
-															  <td>{{awb.otherChargeComment}}</td>
-															  <td>{{awb.giftWrapChargeComment}}</td>
-															  <td>{{awb.insuranceChargeComment}}</td>
-															  <td>{{awb.totalChargeComment}}</td>
-															</tr>
-															</tbody>
-														  </table>
-														</div>
-													</div>
+                                                        <div class="col-md-4">
+                                                            <b>Reconciliation Data</b>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="col-md-12"><b>Blibli Data</b></span>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="col-md-12"><b>3PL Data</b></span>
+                                                        </div>
+                                                        <hr/>
+                                                    </div>
+                                                    <div class="row m-t-10 col-md-12">
+
+                                                        <div class="col-md-4">
+                                                            <div class="col-md-7">Failure Reason</div>
+                                                            <div class="col-md-5">: {{awb.failure}}</div>
+                                                            <div class="col-md-7">Merchant Code</div>
+                                                            <div class="col-md-5">: {{awb.merchantCode}}</div>
+                                                            <div class="col-md-7">Merchant Name</div>
+                                                            <div class="col-md-5">: {{awb.merchantName}}</div>
+                                                            <div class="col-md-7">Original Shipping Cost</div>
+                                                            <div class="col-md-5">: {{awb.focsAmount}}</div>
+                                                            <div class="col-md-7">Adjusment Shipping Cost</div>
+                                                            <div class="col-md-5">: {{awb.focsaAmount}}</div>
+                                                            <div class="col-md-7">Notes</div>
+                                                            <div class="col-md-5">: {{awb.notes}}</div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="col-md-5">Sender Name</div>
+                                                            <div class="col-md-7">: {{awb.namaPengirimSystem}}</div>
+                                                            <div class="col-md-5">Sender Address</div>
+                                                            <div class="col-md-7">: {{awb.alamatPengirimSystem}}</div>
+                                                            <div class="col-md-5">Origin Code</div>
+                                                            <div class="col-md-7">: {{awb.kodeOriginSystem}}</div>
+                                                            <div class="col-md-5">Receiver Name</div>
+                                                            <div class="col-md-7">: {{awb.namaPenerimaSystem}}</div>
+                                                            <div class="col-md-5">Receiver Address</div>
+                                                            <div class="col-md-7">: {{awb.alamatPenerimaSystem}}</div>
+                                                            <div class="col-md-5">Destination Code</div>
+                                                            <div class="col-md-7">: {{awb.kodeDestinasiSystem}}</div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="col-md-5">Sender Name</div>
+                                                            <div class="col-md-7">: {{awb.namaPengirimAPI}}</div>
+                                                            <div class="col-md-5">Sender Address</div>
+                                                            <div class="col-md-7">: {{awb.alamatPengirimAPI}}</div>
+                                                            <div class="col-md-5">Origin Code</div>
+                                                            <div class="col-md-7">: {{awb.kodeOriginAPI}}</div>
+                                                            <div class="col-md-5">Receiver Name</div>
+                                                            <div class="col-md-7">: {{awb.namaPenerimaAPI}}</div>
+                                                            <div class="col-md-5">Receiver Address</div>
+                                                            <div class="col-md-7">: {{awb.alamatPenerimaAPI}}</div>
+                                                            <div class="col-md-5">Destination Code</div>
+                                                            <div class="col-md-7">: {{awb.kodeDestinasiAPI}}</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row m-t-10 col-md-12">
+                                                        <span class="col-md-12"><hr/></span>
+                                                        <span class="col-md-12"><h3>Charge Summary</b></h3></span>
+                                                        <span class="col-md-12"><hr/></span>
+                                                        <div class="table-responsive col-md-12">
+                                                        <table class="table" id="table1">
+                                                        <thead>
+                                                            <tr>
+                                                              <th></th>
+                                                              <th>Weight</th>
+                                                              <th>Price/Kg</th>
+                                                              <th>Other Charge</th>
+                                                              <th>Gift Wrap Charge</th>
+                                                              <th>Insurance Charge</th>
+                                                              <th>Total Charge</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                              <th>System</th>
+                                                              <td>{{awb.weightSystem}}</td>
+                                                              <td>{{awb.priceSystem}}</td>
+                                                              <td>{{awb.otherChargeSystem}}</td>
+                                                              <td>{{awb.giftWrapChargeSystem}}</td>
+                                                              <td>{{awb.insuranceChargeSystem}}</td>
+                                                              <td>{{awb.totalChargeSystem}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <th>Logistic</th>
+                                                              <td>{{awb.weightLogistic}}</td>
+                                                              <td>{{awb.priceLogistic}}</td>
+                                                              <td>{{awb.otherChargeLogistic}}</td>
+                                                              <td>{{awb.giftWrapChargeLogistic}}</td>
+                                                              <td>{{awb.insuranceChargeLogistic}}</td>
+                                                              <td>{{awb.totalChargeLogistic}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <th>Applied</th>
+                                                              <td>{{awb.weightApplied}}</td>
+                                                              <td>{{awb.priceApplied}}</td>
+                                                              <td>{{awb.otherChargeApplied}}</td>
+                                                              <td>{{awb.giftWrapChargeApplied}}</td>
+                                                              <td>{{awb.insuranceChargeApplied}}</td>
+                                                              <td>{{awb.totalChargeApplied}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <th>Comment</th>
+                                                              <td>{{awb.weightComment}}</td>
+                                                              <td>{{awb.priceComment}}</td>
+                                                              <td>{{awb.otherChargeComment}}</td>
+                                                              <td>{{awb.giftWrapChargeComment}}</td>
+                                                              <td>{{awb.insuranceChargeComment}}</td>
+                                                              <td>{{awb.totalChargeComment}}</td>
+                                                            </tr>
+                                                            </tbody>
+                                                          </table>
+                                                        </div>
+                                                    </div>
                                             <div class="row m-t-10">
-                                                
+
                                             </div>
                                         </div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-													</div>
-												</form>
-											</div>
-										</div>
-									</div>
-                        </div> 
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -316,17 +328,24 @@ export default {
       selectedMonth: 'Select Month',
       selectedLogistic: 'A Logistic',
       selectedYear: '2017',
-        selectedStatus: 'All',
-        MerchantCode: '',
-        AwbNumber: '',
-        GDNRef: '',
-		test: '',
-		title: '',
-		awb: [],
-		cek: '',
-		listLogistic: [],
-		listYear: [],
-		listMonth: []
+      statusawb: 'All',
+      MerchantCode: '',
+      AwbNumber: '',
+      GDNRef: '',
+      test: '',
+      title: '',
+      awb: [],
+      cek: '',
+      listLogistic: [],
+      listYear: [],
+      listMonth: [],
+      page: 0,
+      size: 10,
+      nextpage: 0,
+      prevpage: 0,
+      totalPage: 10,
+      Pages: [],
+      filtered: ''
     }
     ),
     mounted: function() {
@@ -414,11 +433,14 @@ export default {
     },
   methods: { 
       changeStatus () {
-        axios.get('http://127.0.0.1:8091/api/awb/filterstatus/' + this.statusawb)
+          this.nextpage=0
+        axios.get('http://127.0.0.1:8091/api/awb/filterstatus/' + this.statusawb+'/?page='+ this.nextpage+'&size='+this.size)
           .then(response => {
             // JSON responses are automatically parsed.
-            this.posts = response.data
+            this.posts = response.data.content
 			this.getLogisticSelectList()
+              this.getYearSelectList()
+              this.getMonthSelectList()
           })
           .catch(e => {
             this.errors.push(e)
@@ -505,20 +527,56 @@ export default {
             this.errors.push(e)
           })
       },
-	  fetchUsers () {
-		axios.get(`http://127.0.0.1:8091/api/awb`)
+      fetchPrev () {
+          axios.get('http://127.0.0.1:8091/api/awb/awbs?page='+ this.prevpage+'&size='+this.size)
+              .then(response => {
+                  // JSON responses are automatically parsed.
+                  this.posts = response.data.content
+                  this.fetchPages()
+              })
+              .catch(e => {
+                  this.errors.push(e)
+              })
+
+      },
+      fetchUsers () {
+        axios.get('http://127.0.0.1:8091/api/awb/awbs?page='+ this.nextpage+'&size='+this.size)
         .then(response => {
           // JSON responses are automatically parsed.
-          this.posts = response.data
+          this.posts = response.data.content
+//            if(this.nextpage+1<this.totalPage) {
+//                this.nextpage = this.nextpage + 1
+//            }
+            this.fetchPages()
         })
         .catch(e => {
           this.errors.push(e)
         })
-	  },
-	  openModal(obj){
-	  this.awb=obj
-	  this.title=this.awb.awbNumber + ' / ' + this.awb.gdnRef + ' (' + this.awb.reconStatus + ') '
-	  },
+
+      },
+      fetchPages () {
+          axios.get(`http://127.0.0.1:8091/api/awb/awbnumbers`)
+              .then(response => {
+                  // JSON responses are automatically parsed.
+                  this.page = response.data.page
+                  this.totalPage = response.data.total_page
+                  this.nextpage=this.page
+                  this.prevpage=this.page
+                  if(this.nextpage+1<this.totalPage) {
+                      this.nextpage = this.nextpage + 1
+                  }
+                  if(this.prevpage-1>=0) {
+                      this.prevpage = this.prevpage - 1
+                  }
+              })
+              .catch(e => {
+                  this.errors.push(e)
+              })
+      },
+      openModal(obj){
+          this.awb=obj
+          this.title=this.awb.awbNumber + ' / ' + this.awb.gdnRef + ' (' + this.awb.reconStatus + ') '
+      },
 	  getLogisticSelectList(){
 		axios.get('http://127.0.0.1:8091/api/logistic/list')
           .then(response => {

@@ -35,6 +35,7 @@ public class AWBPagingServiceImpl implements AWBPagingService
         return aWBPagingRepository.findAll(pageable);
     }
 
+<<<<<<< HEAD
 //    @Override
 //    public Page<AWB> listAllByPageOrderByawbNumberDesc(Pageable pageable) {         
 //         Page<AWB> awbPage= aWBPagingRepository.findAll(pageable);
@@ -43,4 +44,13 @@ public class AWBPagingServiceImpl implements AWBPagingService
 //         return awbPage;
 //    }
     
+=======
+    @Override
+    public Page<AWB> listAllByPageOrderByawbNumberDesc(Pageable pageable) {         
+         Page<AWB> awbPage= aWBPagingRepository.findAll(pageable);
+         PageClass pageClass=new PageClass();
+         pageClass.setTotal_page(awbPage.getTotalPages());
+         return awbPage;
+    }    
+>>>>>>> d882f03192d9c0746cb882c40ab22ab1e248e8de
 }

@@ -2,7 +2,11 @@ package com.gdn.scm.bolivia;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gdn.scm.bolivia.entity.AWB;
+import com.gdn.scm.bolivia.entity.MailMail;
 import com.gdn.scm.bolivia.receiver.Receiver;
+import com.gdn.scm.bolivia.services.SimpleOrderManager;
+import com.gdn.x.message.mq.model.MessageEmailRequest;
+import com.gdn.x.message.service.client.MessageTemplateDeliveryClient;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -18,7 +22,9 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @EnableFeignClients
 @SpringBootApplication
@@ -82,9 +88,24 @@ public class BoliviaApplication {
         adapter.setMessageConverter(new Jackson2JsonMessageConverter(new ObjectMapper()));
         return adapter;
     }
-
+    
+    @Bean
+    MessageTemplateDeliveryClient template()
+    {
+        MessageTemplateDeliveryClient tmp=new MessageTemplateDeliveryClient("no-reply@blibli.com","password","172.17.138.17",5432,"clientId","channelId","storeId",queueName,"haha");
+        return tmp;
+    }
+    
 
     public static void main(String[] args) {
         SpringApplication.run(BoliviaApplication.class, args);
+<<<<<<< HEAD
+        ApplicationContext context =
+            new ClassPathXmlApplicationContext("Spring-Mail.xml");
+        MailMail mm = (MailMail) context.getBean("mailMail");
+        mm.sendMail("Yong Mook Kim", "This is text content");
+=======
+        
+>>>>>>> 20fca3bd4ae1b593808c60809ddada82c5246694
     }
 }

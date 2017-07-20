@@ -17,15 +17,17 @@ import com.gdn.scm.bolivia.services.AWBService;
 import com.gdn.scm.bolivia.services.ToleranceService;
 import com.gdn.scm.bolivia.services.UploadHistoryService;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author sofrie.zumaytis
  */
-@Component
+@Service
 public class Receiver {
 
     @Autowired
@@ -51,8 +53,10 @@ public class Receiver {
 
     AWBClientServiceImplFeign awbFeign = new AWBClientServiceImplFeign();
 
-    Integer counter = 0;
-    Integer problem = 0;
+    public Integer counter = 0;
+    public Integer problem = 0;
+    public Integer counterFromCompare=0;
+    public BigDecimal tagihan=new BigDecimal(0);
     public Boolean cekupload = false;
 
     public void receiveMessage(Process message) throws InterruptedException {
@@ -79,11 +83,16 @@ public class Receiver {
 
 //    Integer c = 0;
     public void receiveMessage(AWB message) throws InterruptedException, Exception {
+        if(counter==0)
+        {
+            counterFromCompare=compare.counter;
+        }
         Integer counterBeda = 0;
         try {
             System.out.println("Received <" + message + ">");
             //awb.addAWB(message);
             counter += 1;
+            counterFromCompare=counterFromCompare-1;
             Boolean ada = false;
             Integer c = 0;
             cacheSrvice.delete(message.getAwbNumber());
@@ -103,7 +112,7 @@ public class Receiver {
                 message.setTotalChargeSystem(fromSystem.getTotalChargeSystem());
 
                 awbRepository.save(message);
-                Thread.sleep(500);
+                //Thread.sleep(500);
                 System.out.println("lalalalalaalalalalla");
                 System.out.println("price " + message.getPriceSystem());
                 System.out.println("weight " + message.getWeightSystem());
@@ -172,12 +181,23 @@ public class Receiver {
                     problem += 1;
                 } else {
                     message.setReconStatus("OK");
-                }
+                }               
+                
             }
             else
             {
                 message.setReconStatus("Not Exist");
             }
+            
+            //tambahin ke tagihan   
+            
+                String tambah=message.getTotalChargeLogistic().toString();
+                System.out.println("TAGIHANNNNNN "+new BigDecimal(tambah,new MathContext(2)));
+                tagihan=tagihan.add(new BigDecimal(tambah,new MathContext(2)));
+                
+                System.out.println("tambah ------------- "+tambah);
+                System.out.println("JUMLAH ------------- "+tagihan);
+                
             //klo uda dibandingin di save
             awbRepository.save(message);
 //            for (Map.Entry<String, String> entry : compare.map.entrySet()) {
@@ -200,26 +220,38 @@ public class Receiver {
 //                //counter = 0;
 //            }
             //}
-            if (counter >= message.counter && !cekupload) {
-                UploadHistory upload = uploadHistoryService.getById(Integer.parseInt(message.getUploadHistoryNumber()));
-                if (upload != null) {
-                    if (upload.getStatus().equals("Uploaded")) {
-                        upload.setStatus("Done Uploaded");
-                        upload.setProblemExist(problem.toString());
-                        Integer ok = compare.counter - problem;
-                        upload.setOk(ok.toString());
-                        System.out.println("=======aaaaaaaaaaaaaaaaaaaaaaaa" + problem + " " + compare.counter);
-                        System.out.println("iiiiddddd" + upload.getId().toString());
-                        uploadHistoryService.addUploadHistory(upload);
-                        Thread.sleep(500);
-                        //    admin.deleteQueue(BoliviaApplication.queueName);
-                        counter = 0;
-                        compare.counter = 0;
-                        problem = 0;
-                        cekupload = true;
-                    }
-                }
-            }
+//            if (counterFromCompare==0) {
+//                UploadHistory upload = uploadHistoryService.getById(Integer.parseInt(message.getUploadHistoryNumber()));
+//                if (upload != null) {
+//                    if (upload.getStatus().equals("Uploaded")) {
+//                        if(problem >0)
+//                        {
+//                            upload.setStatus("Problem Exist");
+//                        }
+//                        else
+//                        {
+//                            upload.setStatus("OK");
+//                        }
+//                        
+//                        upload.setProblemExist(problem.toString());
+//                        Integer ok = compare.counter - problem;
+//                        upload.setOk(ok.toString());
+//                        upload.setJumlahTagihan(tagihan);
+//                        System.out.println("=======aaaaaaaaaaaaaaaaaaaaaaaa" + problem + " " + compare.counter);
+//                        System.out.println("iiiiddddd" + upload.getId().toString());
+////                        Thread.sleep(500);
+//                        uploadHistoryService.addUploadHistory(upload);
+////                        Thread.sleep(500);
+//                        //    admin.deleteQueue(BoliviaApplication.queueName);
+//                        counter = 0;
+//                        compare.counter = 0;
+//                        problem = 0;
+//                        cekupload = true;
+//                        System.out.println("Tagihan ----------------- : "+tagihan);
+//                        tagihan=new BigDecimal(0);
+//                    }
+//                }
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         }

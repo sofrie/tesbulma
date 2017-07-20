@@ -108,6 +108,7 @@ public class Compare {
     public void Send(XSSFSheet sheet1) {
 //        int firstRow1 = sheet1.getFirstRowNum();
 //        int lastRow1 = sheet1.getLastRowNum();
+String numberAWB="";
         try {
             AWB awb = new AWB();
             Iterator<Row> itr = sheet1.iterator();
@@ -126,7 +127,7 @@ public class Compare {
 
                         Cell GDNRef = row.getCell(4);
                         awb.setGdnRef(NumberToTextConverter.toText(GDNRef.getNumericCellValue()));
-                        System.out.println("GDN REF : "+awb.getGdnRef().toString());
+                        System.out.println("GDN REF : "+awb.getGdnRef());
 
                         Cell kodeDestinasiCell = row.getCell(5);
                         awb.setKodeDestinasiAPI(kodeDestinasiCell.getStringCellValue());
@@ -138,7 +139,7 @@ public class Compare {
                         awb.setWeightLogistic(new BigDecimal(weightCell.getNumericCellValue()));
 
                         Cell awbPricePerKgCell = row.getCell(9);
-                        awb.setPriceLogistic(new BigDecimal(awbPricePerKgCell.getNumericCellValue()));
+                        awb.setPriceLogistic(new BigDecimal(awbPricePerKgCell.getNumericCellValue()).divide(new BigDecimal(weightCell.getNumericCellValue())));
 
                         Cell awbInsuranceChargeCell = row.getCell(10);
                         awb.setInsuranceChargeLogistic(new BigDecimal(awbInsuranceChargeCell.getNumericCellValue()));
@@ -196,8 +197,54 @@ public class Compare {
                 processService.requestProcess(listAWB.get(i));
                 System.out.println("iiii"+i);
                 System.out.println(listAWB.get(i).getAwbNumber());
+                if(i==0)
+                {
+                    numberAWB=listAWB.get(i).getUploadHistoryNumber();
+                }
             }
             listAWB = new ArrayList();
+            Integer tmp=receiver.counterFromCompare;
+            while(tmp>0)
+            {
+                Thread.sleep(500);
+                tmp=receiver.counterFromCompare;
+            }
+            Thread.sleep(500);
+            UploadHistory upload = uploadHistoryService.getById(Integer.parseInt(numberAWB));
+            if (upload != null) {
+                    if (upload.getStatus().equals("Uploaded")) {
+                        if(receiver.problem >0)
+                        {
+                            upload.setStatus("Problem Exist");
+                        }
+                        else
+                        {
+                            upload.setStatus("OK");
+                        }
+                        
+                        upload.setProblemExist(receiver.problem.toString());
+                        Integer ok = counter - receiver.problem;
+                        upload.setOk(ok.toString());
+                        BigDecimal tagih=awbRepository.countTotalTagihan();
+                        upload.setJumlahTagihan(tagih);
+                        System.out.println("=======aaaaaaaaaaaaaaaaaaaaaaaa" + receiver.problem + " " + counter);
+                        System.out.println("iiiiddddd" + upload.getId().toString());
+//                        Thread.sleep(500);
+                        uploadHistoryService.addUploadHistory(upload);
+//                        Thread.sleep(500);
+                        //    admin.deleteQueue(BoliviaApplication.queueName);
+                        counter = 0;
+                        receiver.counter = 0;
+                        receiver.problem = 0;
+                        receiver.cekupload = true;
+                        System.out.println("Tagihan ----------------- : "+receiver.tagihan);
+                        receiver.tagihan=new BigDecimal(0);
+                    }
+                }
+            else
+            {
+                System.out.println("lllllllllllllllllll");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
