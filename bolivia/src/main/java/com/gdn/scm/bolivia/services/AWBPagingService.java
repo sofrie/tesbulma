@@ -15,5 +15,5 @@ import org.springframework.data.domain.Pageable;
  */
 public interface AWBPagingService {
     Page<AWB> listAllByPage(Pageable pageable);
-    Page<AWB> listAllByPageOrderByawbNumberDesc(Pageable pageable);
+    //Page<AWB> listAllByPageOrderByawbNumberDesc(Pageable pageable);
 }

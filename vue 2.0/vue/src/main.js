@@ -9,7 +9,7 @@ var routes = [{
     component: resolve => require(['./layout.vue'], resolve),
     children: [{
         path: '',
-        component: resolve => require(['./components/index.vue'], resolve),
+        component: resolve => require(['./components/dashboard.vue'], resolve),
         meta: {
             title: "Dashboard",
             breadcrumb: `<li><a href="/"><i class="ti-desktop"></i> Dashboard</a></li>`

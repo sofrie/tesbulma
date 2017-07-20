@@ -40,11 +40,9 @@ public interface AWBRepository extends JpaRepository<AWB, String> {
     @Query("select a from AWB a where a.month like ? AND a.year like ? AND a.logisticName like ? AND a.awbNumber like ? AND a.merchantCode like ? AND a.gdnRef like ?")
     public List<AWB> filterAllExceptStatus(String month, String year, String logisticName, String AwbNumber, String merchantCode, String gdnRef);
     
-<<<<<<< HEAD
     @Query("select a from AWB a order by a.awbNumber")
     public List<AWB> findAllOrderByawbNumber();
-=======
+    
     @Query("select a from AWB a where a.month like ? AND a.year like ? AND a.logisticName like ?")
     public List<AWB> filterByInvoice(String month, String year, String logisticName);
->>>>>>> 5bd00b24f95055413f4db02a61953d95937e5190
 }

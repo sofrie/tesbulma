@@ -1393,6 +1393,23 @@ div.uploader {
 .table-responsive {
     overflow-y: hidden;
 }
+.pagination > li {
+    display: inline;
+    margin-left: 10px;
+	cursor : hand;
+}
+
+table thead .sorting_asc:after {
+    content: "\e155";
+}
+
+table thead .sorting_desc:after {
+    content: "\e156";
+}
+table thead .sorting:after {
+    opacity: 0.2;
+    content: "\e150";
+}
 
 //dimple chart
 .chartWindow {

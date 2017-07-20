@@ -30,7 +30,7 @@
                                                                 <label for="input-text" class="col-sm-3 control-label">Status : </label>
                                                                 <div class="col-sm-9">
                                                                     <select id="select-gear" v-model="selectedStatus" class="form-control">
-                                                                        <option value="" disabled="" selected="">
+                                                                        <option value="Select Status" disabled="" selected="">
                                                                             Select status
                                                                         </option>
                                                                         <option value="Active">Active</option>
@@ -63,6 +63,9 @@
                                     </div>
 									 <div class="col-sm-2  pull-right">
                                         <select v-model="filteredStatus" class="form-control pull-right" v-on:change="changeStatus()">
+											<option value="Select Status" disabled="" selected="">
+                                                Select Status
+                                            </option>
                                             <option value="All">All</option>
                                             <option value="Active">Active</option>
                                             <option value="Inactive">Inactive</option>
@@ -79,6 +82,15 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel ">                    
+					<div class="panel-heading">
+                        <h3 class="panel-title">
+                            <i class="fa fa-fw ti-menu-alt"></i> List Logistic
+                        </h3>
+                        <span class="pull-right">
+                            <i class="fa fa-fw ti-angle-up clickable"></i>
+                            <!--<i class="fa fa-fw ti-close removepanel clickable"></i>-->
+                        </span>
+                    </div>
                     <div class="panel-body">
                         <div class="panel-body table-responsive">
                             <table class="table table-striped table-bordered table_width" id="example">
@@ -178,12 +190,12 @@
             uploadError: null,
             currentStatus: null,
             uploadFieldName: 'invoiceFile',
-            selectedStatus: 'Active',
+            selectedStatus: 'Select Status',
             AwbNumber: '',
             Discount: '',
             VAT: '',
 			logistic: [],
-			filteredStatus: ''
+			filteredStatus: 'Select Status'
         }
         ),
         mounted: function() {
@@ -363,6 +375,8 @@
                 },400);
             });
             this.fetchLogistics()
+			selectedStatus: 'Select Status'
+			filteredStatus: 'Select Status'
         }
     }
 </script>

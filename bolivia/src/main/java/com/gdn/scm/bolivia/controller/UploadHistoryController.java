@@ -61,6 +61,11 @@ public class UploadHistoryController {
     public List<UploadHistory> filterByLogistic(@PathVariable("logistic") String logistic) {
         return uploadHistoryService.getByLogisticName(logistic);
     }
+    @CrossOrigin
+    @RequestMapping(value = "/api/uploadHistory/status/{status}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<UploadHistory> filterByStatus(@PathVariable("status") String status) {
+        return uploadHistoryService.getByStatus(status);
+    }
     
     //select list in invoice
     @CrossOrigin

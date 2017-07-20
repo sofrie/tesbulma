@@ -12,11 +12,11 @@
                                     </label>
                                     <div class="col-sm-2">
                                         <select id="skill" name="skill" class="form-control" v-on:change="changeMonth()" v-model="selectedMonth">
-                                            <option value="" disabled="" selected="">
+                                            <option value="Select Month" disabled="" selected="">
                                                 Select Month
                                             </option>
-											<option v-for="item of listMonth" v-bind:value="item">{{item}}</option>
-                                            <!--<option value="January">January</option>
+											<!--<option v-for="item of listMonth" v-bind:value="item">{{item}}</option>-->
+                                            <option value="January">January</option>
                                             <option value="February">February</option>
                                             <option value="March">March</option>
                                             <option value="April">April</option>
@@ -27,17 +27,15 @@
                                             <option value="September">September</option>
                                             <option value="October">October</option>
                                             <option value="November">November</option>
-                                            <option value="December">December</option>-->
+                                            <option value="December">December</option>
                                         </select>
                                     </div>
-                                    <label class="col-sm-1 control-label" for="skill">
+                                    <label class="col-sm-1 control-label">
                                         Logistic :
                                     </label>
                                     <div class="col-sm-2">
-                                        <select id="skill" name="skill" class="form-control" v-on:change="changeLogistic()" v-model="selectedLogistic">
-                                            <option value="" disabled="" selected="">
-                                                Select logistic
-                                            </option>
+                                        <select class="form-control" v-on:change="changeLogistic()" v-model="selectedLogistic">
+                                            <option disabled selected value="Select Logistic">Select Logistic</option>
 											<option v-for="item of listLogistic" v-bind:value="item">{{item}}</option>
                                         </select>
                                     </div>
@@ -61,7 +59,7 @@
                                     </label>
                                     <div class="col-sm-2">
                                         <select id="skill" name="skill" class="form-control" v-on:change="changeYear()" v-model="selectedYear">
-                                            <option value="" disabled="" selected="">
+                                            <option value="Select Year" disabled="" selected="">
                                                 Select year
                                             </option>
                                             <option v-for="item of listYear" v-bind:value="item">{{item}}</option>
@@ -71,8 +69,8 @@
                                         Status :
                                     </label>
                                     <div class="col-sm-2">
-                                        <select id="skill" name="skill" class="form-control" v-on:change="changeStatus()" v-model="selectedStatus">
-                                            <option value="" disabled="" selected="">
+                                        <select class="form-control" v-on:change="changeStatus()" v-model="selectedStatus">
+                                            <option disabled selected value="Select Status">
                                                 Select status
                                             </option>
                                             <option value="All">All</option>
@@ -101,7 +99,7 @@
                 <div class="panel ">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            <i class="fa fa-fw ti-download"></i> Upload History
+                            <i class="fa fa-fw ti-menu-alt"></i> List AWB  {{totalPage}}
                         </h3>
                         <span class="pull-right">
                             <i class="fa fa-fw ti-angle-up clickable"></i>
@@ -110,20 +108,20 @@
                     </div>
                     <div class="panel-body">
                         <div class="panel-body table-responsive">
-                            <table class="table table-striped table-bordered table_width" id="example">
+                            <table class="table table-striped table-bordered table_width">
                             <thead>
                                 <tr>
                                     <th>Month</th>
                                     <th>Year</th>
                                     <th>Logistic</th>
-                                    <th>AWB</th>
-                                    <th>Recon Status</th>
+                                    <th>AWB <i class="ti ti-exchange-vertical pull-right"></i></th>
+                                    <th>Recon Status <i class="ti ti-exchange-vertical pull-right"></i></th>
                                     <th>Merchant Code</th>
-                                    <th>GDN Ref</th>
+                                    <th>GDN Ref <i class="ti ti-exchange-vertical pull-right"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
-                             <tr v-for="post of posts" data-toggle="modal" data-target="#form_modal" v-on:click="openModal(post)">
+                             <tr v-for="post of posts" data-toggle="modal" data-target="#form_modal" id="example" v-on:click="openModal(post)">
                                 <td>{{post.month}}</td>
                                 <td>{{post.year}}</td>
                                 <td>{{post.logisticName}}</td>
@@ -134,6 +132,29 @@
                               </tr>               
                             </tbody>
                         </table>
+						<div class="pull-right" v-if="totalPage>0">
+							<ul class="pagination">
+								<li v-on:click="toPageOne()" v-if="prevpage+1!=1"><a>1</a></li>
+								<li class="disabled" v-if="checkedPrevPage()"><a>...</a></li>
+								<li><a v-on:click="fetchPrev()" v-if="prevpage<page">{{prevpage+1}}</a></li>
+								<li class="active"><a>{{page+1}}</a></li>
+								<li><a v-on:click="fetchNext()" v-if="nextpage+1!=totalPage">{{nextpage+1}}</a></li>
+								<li class="disabled" v-if="checkedNextPage()"><a>...</a></li>
+								<li><a v-on:click="toLastPage()" v-if="page<nextpage">{{totalPage}}</a></li>
+							</ul>
+							<!--<div class="col-xs-1 col-xs-offset-1" v-if="page<nextpage">
+                                
+                            </div>
+                            <div class="col-xs-1 col-xs-offset-1">
+								
+                                <label class="col-sm-1 control-label" >
+                                    {{page}}
+                                </label>
+                            </div>
+                            <div class="col-xs-1" v-if="prevpage<page">
+                                <button type="submit" class="btn btn-effect-ripple btn-primary" v-on:click="fetchPrev()">prev {{prevpage}}</button>
+                            </div>-->
+						</div>
 						<div id="form_modal" class="modal fade animated" role="dialog">
 										<div class="modal-dialog modal-lg">
 											<div class="modal-content">
@@ -314,9 +335,9 @@ export default {
       currentStatus: null,
       uploadFieldName: 'invoiceFile',
       selectedMonth: 'Select Month',
-      selectedLogistic: 'A Logistic',
-      selectedYear: '2017',
-        selectedStatus: 'All',
+      selectedLogistic: 'Select Logistic',
+      selectedYear: 'Select Year',
+        selectedStatus: 'Select Status',
         MerchantCode: '',
         AwbNumber: '',
         GDNRef: '',
@@ -326,7 +347,14 @@ export default {
 		cek: '',
 		listLogistic: [],
 		listYear: [],
-		listMonth: []
+		listMonth: [],
+    page: 0,
+    size: 10,
+    nextpage: 0,
+    prevpage: 0,
+    totalPage: 0,
+    Pages: [],
+	filter: 'none'
     }
     ),
     mounted: function() {
@@ -408,17 +436,48 @@ export default {
                 maxFileCount: 10,
                 mainClass: "input-group-lg"
             });
-			this.fetchUsers()
+			this.fetchNext()
     },
     destroyed: function() {
     },
   methods: { 
+	  setFilter(){
+		if(this.filter==='none'){
+		
+		}
+		else if(this.filter==='month'){
+		
+		}
+		else if(this.filter==='year'){
+		
+		}
+		else if(this.filter==='logistic'){
+		
+		}
+		else if(this.filter==='status'){
+		
+		}
+		else if(this.filter==='awb'){
+		
+		}
+		else if(this.filter==='merchantcode'){
+		
+		}
+		else if(this.filter==='gdnref'){
+		
+		}
+		else if(this.filter==='full'){
+		
+		}
+		else if(this.filter==='invoice'){
+		
+		}
+	  },
       changeStatus () {
-        axios.get('http://127.0.0.1:8091/api/awb/filterstatus/' + this.statusawb)
+        axios.get('http://127.0.0.1:8091/api/awb/filterstatus/' + this.selectedStatus)
           .then(response => {
             // JSON responses are automatically parsed.
             this.posts = response.data
-			this.getLogisticSelectList()
           })
           .catch(e => {
             this.errors.push(e)
@@ -485,8 +544,26 @@ export default {
             this.errors.push(e)
           })
       },
+	  toPageOne(){
+		this.nextpage=0
+		this.prevpage=0
+		this.page=0
+		this.fetchNext()
+	  },
+      fetchPrev () {
+          axios.get('http://127.0.0.1:8091/api/awb/awbs?page='+ this.prevpage+'&size='+this.size)
+              .then(response => {
+                  // JSON responses are automatically parsed.
+                  this.posts = response.data.content
+                  this.fetchPages()
+              })
+              .catch(e => {
+                  this.errors.push(e)
+              })
+
+      },
       filterAll () {
-        axios.get('http://127.0.0.1:8091/api/awb/filter/' + this.selectedMonth + '/' + this.selectedYear + '/' + this.selectedLogistic + '/' + this.AwbNumber + '/' + this.statusawb + '/' + this.merchantCode + '/' + this.gdnRef)
+        axios.get('http://127.0.0.1:8091/api/awb/filter/' + this.selectedMonth + '/' + this.selectedYear + '/' + this.selectedLogistic + '/' + this.AwbNumber + '/' + this.selectedStatus + '/' + this.merchantCode + '/' + this.gdnRef)
           .then(response => {
             // JSON responses are automatically parsed.
             this.posts = response.data
@@ -496,48 +573,84 @@ export default {
           })
       },
 	  filterByInvoice () {
-        axios.get('http://127.0.0.1:8091/api/awb/filter/' + this.selectedMonth + '/' + this.selectedYear + '/' + this.selectedLogistic)
+        axios.get('http://127.0.0.1:8091/api/awb/filterinvoice/' + this.selectedMonth + '/' + this.selectedYear + '/' + this.logistic)
           .then(response => {
             // JSON responses are automatically parsed.
-            this.posts = response.data
+            
+			this.posts = response.data
           })
           .catch(e => {
             this.errors.push(e)
           })
       },
-	  fetchUsers () {
-		axios.get(`http://127.0.0.1:8091/api/awb`)
+	  toLastPage(){
+		this.nextpage=this.totalPage-1
+		this.fetchNext()
+	  },
+	  fetchNext () {
+		axios.get('http://127.0.0.1:8091/api/awb/awbs?page='+ this.nextpage+'&size='+this.size)
         .then(response => {
           // JSON responses are automatically parsed.
-          this.posts = response.data
+          this.posts = response.data.content
+//            if(this.nextpage+1<this.totalPage) {
+//                this.nextpage = this.nextpage + 1
+//            }
+            this.fetchPages()
         })
         .catch(e => {
           this.errors.push(e)
         })
 	  },
+      fetchPages () {
+          axios.get(`http://127.0.0.1:8091/api/awb/awbnumbers`)
+              .then(response => {
+                  // JSON responses are automatically parsed.
+                  this.page = response.data.page
+                  this.totalPage = response.data.total_page
+                  this.nextpage=this.page
+                  this.prevpage=this.page
+                  if(this.nextpage+1<this.totalPage) {
+                      this.nextpage = this.nextpage + 1
+                  }
+                  if(this.prevpage-1>=0) {
+                      this.prevpage = this.prevpage - 1
+                  }
+              })
+              .catch(e => {
+                  this.errors.push(e)
+              })
+      },
 	  openModal(obj){
-	  this.awb=obj
-	  this.title=this.awb.awbNumber + ' / ' + this.awb.gdnRef + ' (' + this.awb.reconStatus + ') '
+		  this.awb=obj
+		  this.title=this.awb.awbNumber + ' / ' + this.awb.gdnRef + ' (' + this.awb.reconStatus + ') '
 	  },
 	  getLogisticSelectList(){
 		axios.get('http://127.0.0.1:8091/api/logistic/list')
           .then(response => {
             // JSON responses are automatically parsed.
             this.listLogistic = response.data
+			if(this.logistic==='Vue!'){
+			
+			}
+			else{
+				this.selectedLogistic=this.logistic
+			}
           })
           .catch(e => {
             this.errors.push(e)
           })
 	  },
 	  getYearSelectList(){
-		axios.get('http://127.0.0.1:8091/api/uploadHistory/list/year')
-          .then(response => {
-            // JSON responses are automatically parsed.
-            this.listYear = response.data
-          })
-          .catch(e => {
-            this.errors.push(e)
-          })
+		  var year=new Date().getFullYear();
+		  var yearinit=year-4;
+		  var x=0;
+		  var i=yearinit;
+		  var years=[];
+		  for(i=yearinit; i<=year; i+=1){
+			years[x]=i;
+			x++;
+		  }
+		  this.listYear=years;
 	  },
 	  getMonthSelectList(){
 		axios.get('http://127.0.0.1:8091/api/uploadHistory/list/month')
@@ -549,6 +662,12 @@ export default {
             this.errors.push(e)
           })
 	  },
+	  checkedNextPage(){
+		return this.nextpage+2!=this.totalPage && this.nextpage+1!=this.totalPage
+	  },
+	  checkedPrevPage(){
+		return this.prevpage!=0 && this.prevpage-1!=0
+	  }
     },
     ready() {
         this.uploadHistory();
@@ -573,9 +692,9 @@ export default {
             $('#sample_1').dataTable({
                 "responsive": true
             });
-            var table = $('#example').DataTable({
+            /*var table = $('#example').DataTable({
                 "responsive": true
-            });
+            });*/
             $('button.toggle-vis').on('click', function(e) {
                 e.preventDefault();
                 // Get the column API object
@@ -583,20 +702,21 @@ export default {
                 // Toggle the visibility
                 column.visible(!column.visible());
             });
-        },400);
+        },500);
         });
+		
 		if(this.month==='Vue!' || this.year==='Vue!' || this.logistic==='Vue!'){
-			this.fetchUsers()
+			this.fetchNext()
 		}
         else{
-			this.selectedLogistic=this.logistic
 			this.selectedMonth=this.month
 			this.selectedYear=this.year
 			this.filterByInvoice()
 		}
 		this.getLogisticSelectList()
 		this.getYearSelectList()
-		this.getMonthSelectList()
+		document.getElementById('awb').classList.add('active');
+		
       }
 }
 </script>

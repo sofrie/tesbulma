@@ -66,7 +66,7 @@ public class UploadHistoryServiceImpl implements UploadHistoryService {
 
     @Override
     public List<UploadHistory> getByStatus(String status) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return uploadHistoryRepository.findByStatus(status);
     }
 
     @Override
