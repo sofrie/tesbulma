@@ -35,11 +35,12 @@ public interface AWBService {
     
     List<AWB> getByAwbNumber(String awbNumber);
     
-    List<AWB> getByMerchantCode(String merchantCode);
+    Page<AWB> getByMerchantCode(String merchantCode,Pageable pageable);
     
-    List<AWB> getByGdnRef(String gdnRef);
+    Page<AWB> getByGdnRef(String gdnRef,Pageable pageable);
     
-    List<AWB> filterAll(String month, String year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef);
+    Page<AWB> filterAll(String month, String year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef,Pageable pageable);
+    Page<AWB> filterByInvoice(String month, String year, String logisticName,Pageable pageable);
 
     void updateAWB(AWB a);
 
@@ -56,4 +57,5 @@ public interface AWBService {
     Page<AWB> findByLogisticName(String logisticName, Pageable pageable);
     
     BigDecimal countTotalTagihan();
+    
 }

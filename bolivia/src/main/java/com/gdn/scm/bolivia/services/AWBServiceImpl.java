@@ -83,21 +83,21 @@ public class AWBServiceImpl implements AWBService {
     }
 
     @Override
-    public List<AWB> getByMerchantCode(String merchantCode) {
-        return aWBRepository.findByMerchantCode(merchantCode);
+    public Page<AWB> getByMerchantCode(String merchantCode, Pageable pageable) {
+        return aWBRepository.findByMerchantCode(merchantCode, pageable);
     }
 
     @Override
-    public List<AWB> getByGdnRef(String gdnRef) {
-        return aWBRepository.findByGdnRef(gdnRef);
+    public Page<AWB> getByGdnRef(String gdnRef,Pageable pageable) {
+        return aWBRepository.findByGdnRef(gdnRef,pageable);
     }
 
     @Override
-    public List<AWB> filterAll(String month, String year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef) {
+    public Page<AWB> filterAll(String month, String year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef,Pageable pageable) {
         if (reconStatus.equals("All")) {
-            return aWBRepository.filterAllExceptStatus(month, year, logisticName, AwbNumber, merchantCode, gdnRef);
+            return aWBRepository.filterAllExceptStatus(month, year, logisticName, AwbNumber, merchantCode, gdnRef,pageable);
         } else {
-            return aWBRepository.filterAll(month, year, logisticName, AwbNumber, reconStatus, merchantCode, gdnRef);
+            return aWBRepository.filterAll(month, year, logisticName, AwbNumber, reconStatus, merchantCode, gdnRef,pageable);
         }
     }
 
@@ -138,6 +138,11 @@ public class AWBServiceImpl implements AWBService {
     @Override
     public BigDecimal countTotalTagihan() {
         return aWBRepository.countTotalTagihan();
+    }
+
+    @Override
+    public Page<AWB> filterByInvoice(String month, String year, String logisticName,Pageable pageable) {
+        return aWBRepository.filterByInvoice(month,year,logisticName,pageable);
     }
 
 }

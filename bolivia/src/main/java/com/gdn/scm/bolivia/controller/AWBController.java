@@ -7,12 +7,12 @@ package com.gdn.scm.bolivia.controller;
 
 import com.gdn.scm.bolivia.entity.AWB;
 import com.gdn.scm.bolivia.entity.LogisticProvider;
-import com.gdn.scm.bolivia.entity.MailSender;
+//import com.gdn.scm.bolivia.entity.MailSender;
 import com.gdn.scm.bolivia.entity.PageClass;
 import com.gdn.scm.bolivia.services.AWBPagingService;
 import com.gdn.scm.bolivia.services.AWBService;
-import com.gdn.scm.bolivia.services.SimpleOrderManager;
-import com.gdn.scm.bolivia.services.XMessageService;
+//import com.gdn.scm.bolivia.services.SimpleOrderManager;
+//import com.gdn.scm.bolivia.services.XMessageService;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -40,14 +40,14 @@ public class AWBController {
     @Autowired
     AWBPagingService awbPagingService;
 
-    @Autowired
-    SimpleOrderManager simpleOrderManager;
-
-    @Autowired
-    XMessageService xMessageService;
-
-    @Autowired
-    MailSender mail;
+//    @Autowired
+//    SimpleOrderManager simpleOrderManager;
+//
+//    @Autowired
+//    XMessageService xMessageService;
+//
+//    @Autowired
+//    MailSender mail;
 
     public Page<AWB> awbs;
     PageClass pageClass;
@@ -67,18 +67,15 @@ public class AWBController {
     //filter By month
     @CrossOrigin
     @RequestMapping(value = "/api/awb/filtermonth/{month}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-<<<<<<< HEAD
-    public List<AWB> filterAWBByMonth(@PathVariable("month") String month) {
-        return awbService.getByMonth(month);
-=======
+    
     public Page<AWB> filterAWBByMonth(@PathVariable("month") String month, Pageable pageable) {
         awbs = awbService.findByMonth(month, pageable);
+        System.out.println("file : "+awbs.getTotalElements());
         pageClass = new PageClass();
         pageClass.setTotal_page(awbs.getTotalPages());
         pageClass.setItem_page(awbs.getSize());
         pageClass.setPage(awbs.getNumber());
         return awbs;
->>>>>>> d882f03192d9c0746cb882c40ab22ab1e248e8de
     }
 
     //filter By status
@@ -127,22 +124,37 @@ public class AWBController {
     //filter By merchantCode
     @CrossOrigin
     @RequestMapping(value = "/api/awb/filterMerchantCode/{merchantCode}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<AWB> filterMerchantCode(@PathVariable("merchantCode") String merchantCode) {
-        return awbService.getByMerchantCode(merchantCode);
+    public Page<AWB> filterMerchantCode(@PathVariable("merchantCode") String merchantCode, Pageable pageable) {
+        awbs = awbService.getByMerchantCode(merchantCode,pageable);
+        pageClass = new PageClass();
+        pageClass.setTotal_page(awbs.getTotalPages());
+        pageClass.setItem_page(awbs.getSize());
+        pageClass.setPage(awbs.getNumber());
+        return awbs;
     }
 
     //filter By gdnRef
     @CrossOrigin
     @RequestMapping(value = "/api/awb/filterGdnRef/{gdnRef}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<AWB> filterGdnRef(@PathVariable("gdnRef") String gdnRef) {
-        return awbService.getByGdnRef(gdnRef);
+    public Page<AWB> filterGdnRef(@PathVariable("gdnRef") String gdnRef, Pageable pageable) {
+        awbs = awbService.getByGdnRef(gdnRef,pageable);
+        pageClass = new PageClass();
+        pageClass.setTotal_page(awbs.getTotalPages());
+        pageClass.setItem_page(awbs.getSize());
+        pageClass.setPage(awbs.getNumber());
+        return awbs;
     }
 
     //filter all
     @CrossOrigin
     @RequestMapping(value = "/api/awb/filter/{month}/{year}/{logisticName}/{awbNumber}/{reconStatus}/{merchantCode}/{gdnRef}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<AWB> filterAll(@PathVariable("month") String month, @PathVariable("year") String year, @PathVariable("logisticName") String logisticName, @PathVariable("awbNumber") String awbNumber, @PathVariable("reconStatus") String reconStatus, @PathVariable("merchantCode") String merchantCode, @PathVariable("gdnRef") String gdnRef) {
-        return awbService.filterAll(month, year, logisticName, awbNumber, reconStatus, merchantCode, gdnRef);
+    public Page<AWB> filterAll(@PathVariable("month") String month, @PathVariable("year") String year, @PathVariable("logisticName") String logisticName, @PathVariable("awbNumber") String awbNumber, @PathVariable("reconStatus") String reconStatus, @PathVariable("merchantCode") String merchantCode, @PathVariable("gdnRef") String gdnRef, Pageable pageable) {
+        awbs = awbService.filterAll(month, year, logisticName, awbNumber, reconStatus, merchantCode, gdnRef,pageable);
+        pageClass = new PageClass();
+        pageClass.setTotal_page(awbs.getTotalPages());
+        pageClass.setItem_page(awbs.getSize());
+        pageClass.setPage(awbs.getNumber());
+        return awbs;
     }
 
     //get all year
@@ -151,10 +163,6 @@ public class AWBController {
     public List<String> getAllYear() {
         return awbService.selectAllYear();
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> d882f03192d9c0746cb882c40ab22ab1e248e8de
     @CrossOrigin
     @RequestMapping(value = "/api/awb/awbs", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     Page<AWB> listAWBPage(Pageable pageable) {
@@ -167,7 +175,6 @@ public class AWBController {
     }
 
     @CrossOrigin
-<<<<<<< HEAD
     @RequestMapping(value="/api/awb/awbnumbers",method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     PageClass listAWBPageByAWBNumber(){            
             System.out.println("Total page "+pageClass.getTotal_page());
@@ -178,26 +185,25 @@ public class AWBController {
     //filter by invoice
     @CrossOrigin
     @RequestMapping(value = "/api/awb/filterinvoice/{month}/{year}/{logisticName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<AWB> filterByInvoice(@PathVariable("month") String month, @PathVariable("year") String year, @PathVariable("logisticName") String logisticName) {
-        return awbService.filterByInvoice(month, year, logisticName);
-=======
-    @RequestMapping(value = "/api/awb/awbnumbers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    PageClass listAWBPageByAWBNumber() {
-        System.out.println("Total page " + pageClass.getTotal_page());
-        System.out.println("page " + pageClass.getPage());
-        System.out.println("Item page " + pageClass.getItem_page());
-        return pageClass;
+    public Page<AWB> filterByInvoice(@PathVariable("month") String month, @PathVariable("year") String year, @PathVariable("logisticName") String logisticName,Pageable pageable) {
+        awbs = awbService.filterByInvoice(month, year, logisticName,pageable);
+        pageClass = new PageClass();
+        pageClass.setTotal_page(awbs.getTotalPages());
+        pageClass.setItem_page(awbs.getSize());
+        pageClass.setPage(awbs.getNumber());
+        return awbs;
     }
+    
 
-    @CrossOrigin
-    @RequestMapping(value = "/email", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    void sendMail() {
-
-        try {
-            mail.sendMail("sofrie.zumaytis@gdn-commerce.com", "sofriesilero.zumaytis@gmail.com", "tes", "coba kirim email");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//    @CrossOrigin
+//    @RequestMapping(value = "/email", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//    void sendMail() {
+//
+//        try {
+//            mail.sendMail("sofrie.zumaytis@gdn-commerce.com", "sofriesilero.zumaytis@gmail.com", "tes", "coba kirim email");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
 //        try {
 //            Date today = new Date();
@@ -207,6 +213,5 @@ public class AWBController {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
->>>>>>> d882f03192d9c0746cb882c40ab22ab1e248e8de
-    }
+    //}
 }

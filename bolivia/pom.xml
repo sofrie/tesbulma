@@ -177,15 +177,37 @@
         </dependency>
         
         <dependency>
-	    <groupId>javax.mail</groupId>
-	    <artifactId>mail</artifactId>
-	    <version>1.4.3</version>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-commons-core</artifactId>
+            <version>1.4.0.RELEASE</version>
         </dependency>
-            <dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-mail</artifactId>
-    <version>1.4.3.RELEASE</version>
-</dependency>
+        
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>it.ozimov</groupId>
+            <artifactId>spring-boot-email-core</artifactId>
+            <version>0.6.2</version>
+        </dependency>
+
+
+<!--        <dependency>
+            <groupId>com.gdn.x.message</groupId>
+            <artifactId>message-template-delivery-client-java-mq-sdk</artifactId>
+            <version>1.7.0</version>
+        </dependency>-->
     
     </dependencies>
     <build>

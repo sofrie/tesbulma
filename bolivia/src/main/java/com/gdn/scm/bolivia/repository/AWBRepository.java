@@ -42,31 +42,27 @@ public interface AWBRepository extends JpaRepository<AWB, Integer> {
 
     public List<AWB> findByAwbNumber(String awbNumber);
 
-    public List<AWB> findByMerchantCode(String merchantCode);
+    @Query("SELECT distinct a from AWB a where a.merchantCode like ?")
+    public Page<AWB> findByMerchantCode(String merchantCode, Pageable pageable);
 
-    public List<AWB> findByGdnRef(String gdnRef);
+     @Query("SELECT distinct a from AWB a where a.gdnRef like ?")
+    public Page<AWB> findByGdnRef(String gdnRef,Pageable pageable);
 
     @Query("SELECT distinct reconStatus from AWB")
     public List<String> selectAllYear();
 
     @Query("select a from AWB a where a.month like ? AND a.year like ? AND a.logisticName like ? AND a.awbNumber like ? AND a.reconStatus like ? AND a.merchantCode like ? AND a.gdnRef like ?")
-    public List<AWB> filterAll(String month, String year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef);
+    public Page<AWB> filterAll(String month, String year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef,Pageable pageable);
 
     @Query("select a from AWB a where a.month like ? AND a.year like ? AND a.logisticName like ? AND a.awbNumber like ? AND a.merchantCode like ? AND a.gdnRef like ?")
-    public List<AWB> filterAllExceptStatus(String month, String year, String logisticName, String AwbNumber, String merchantCode, String gdnRef);
-<<<<<<< HEAD
+    public Page<AWB> filterAllExceptStatus(String month, String year, String logisticName, String AwbNumber, String merchantCode, String gdnRef,Pageable pageable);
     
     @Query("select a from AWB a order by a.awbNumber")
     public List<AWB> findAllOrderByawbNumber();
     
     @Query("select a from AWB a where a.month like ? AND a.year like ? AND a.logisticName like ?")
-    public List<AWB> filterByInvoice(String month, String year, String logisticName);
-=======
-
-    @Query("select a from AWB a order by a.awbNumber")
-    public List<AWB> findAllOrderByawbNumber();
+    public Page<AWB> filterByInvoice(String month, String year, String logisticName,Pageable pageable);
     
     @Query("select sum (a.totalChargeLogistic) from AWB a")
     public BigDecimal countTotalTagihan();
->>>>>>> d882f03192d9c0746cb882c40ab22ab1e248e8de
 }

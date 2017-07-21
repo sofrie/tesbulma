@@ -100,7 +100,7 @@
                 <div class="panel ">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            <i class="fa fa-fw ti-menu-alt"></i> List AWB  {{filter}} {{prevpage}}
+                            <i class="fa fa-fw ti-menu-alt"></i> List AWB  {{filter}} {{prevpage}} {{page}} {{nextpage}} {{setPage}}
                         </h3>
                         <span class="pull-right">
                             <i class="fa fa-fw ti-angle-up clickable"></i>
@@ -135,12 +135,12 @@
                         </table>
 						<div class="pull-right" v-if="totalPage>0">
 							<ul class="pagination">
-								<li v-on:click="toPageOne()" v-if="prevpage>0"><a class="noselect">1</a></li>
-								<li class="disabled" v-if="checkedPrevPage()"><a>...</a></li>
+								<li v-on:click="toPageOne()" v-if="prevpage>1"><a class="noselect">1</a></li>
+								<li class="disabled" v-if="checkedPrevPageEllipsis()"><a>...</a></li>
 								<li><a v-on:click="toPrevPage()" v-if="prevpage<page">{{prevpage+1}}</a></li>
 								<li class="active"><a>{{page+1}}</a></li>
-								<li><a v-on:click="toNextPage()" v-if="nextpage+1!=totalPage">{{nextpage+1}}</a></li>
-								<li class="disabled" v-if="checkedNextPage()"><a>...</a></li>
+								<li><a v-on:click="toNextPage()" v-if="checkedNextPage()">{{nextpage+1}}</a></li>
+								<li class="disabled" v-if="checkedNextPageEllipsis()"><a>...</a></li>
 								<li><a v-on:click="toLastPage()" v-if="page<nextpage">{{totalPage}}</a></li>
 							</ul>
 						</div>
@@ -339,7 +339,7 @@ export default {
 		listMonth: [],
     page: 0,
     size: 10,
-    nextpage: 0,
+    nextpage: 1,
     prevpage: 0,
     totalPage: 0,
     Pages: [],
@@ -435,7 +435,7 @@ export default {
 			this.fetchAll()
 		}
 		else if(this.filter==='month'){
-		
+			this.changeMonth()
 		}
 		else if(this.filter==='year'){
 		
@@ -463,14 +463,12 @@ export default {
 		}
 	  },
 	  toPageOne(){
-		this.nextpage=0
-		this.prevpage=0
-		this.page=0
-		this.fetchNext()
+		this.setPage=0
+		this.paginationFilter()
 	  },
 	  toLastPage(){
-		this.nextpage=this.totalPage-1
-		this.fetchNext()
+		this.setPage=this.totalPage-1
+		this.paginationFilter()
 	  },
 	  toPrevPage(){
 		this.setPage=this.prevpage;
@@ -480,10 +478,13 @@ export default {
 		this.setPage=this.nextpage;
 		this.paginationFilter()
 	  },
-	  checkedNextPage(){
+	  checkedNextPageEllipsis(){
 		return this.nextpage+2!=this.totalPage && this.nextpage+1!=this.totalPage
 	  },
-	  checkedPrevPage(){
+	  checkedNextPage(){
+		return this.nextpage+1!=this.totalPage && this.nextpage>this.page
+	  },
+	  checkedPrevPageEllipsis(){
 		return this.prevpage!=0 && this.prevpage-1!=0
 	  },
 	  setInit(){
@@ -589,10 +590,12 @@ export default {
           })
       },
       filterAll () {
+		this.setInit()
         axios.get('http://127.0.0.1:8091/api/awb/filter/' + this.selectedMonth + '/' + this.selectedYear + '/' + this.selectedLogistic + '/' + this.AwbNumber + '/' + this.selectedStatus + '/' + this.MerchantCode + '/' + this.gdnRef)
           .then(response => {
             // JSON responses are automatically parsed.
-            this.posts = response.data
+            this.posts = response.data.content
+			this.fetchPages()
 			this.filter='full'
           })
           .catch(e => {
