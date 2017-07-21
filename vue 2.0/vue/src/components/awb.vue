@@ -11,7 +11,7 @@
                                         Month :
                                     </label>
                                     <div class="col-sm-2">
-                                        <select id="skill" name="skill" class="form-control" v-on:change="changeMonth()" v-model="selectedMonth">
+                                        <select class="form-control" v-on:change="changeMonth()" v-model="selectedMonth">
                                             <option value="Select Month" disabled="" selected="">
                                                 Select Month
                                             </option>
@@ -48,7 +48,7 @@
                                     <label class="col-sm-1 control-label" for="skill">
                                         GDN Ref :</label>
                                     <div class="col-sm-1">
-                                        <input type="text" placeholder="GDN Ref" class="form-control" v-model="GDNRef" v-on:change="changeAwbNumber()">
+                                        <input type="text" placeholder="GDN Ref" class="form-control" v-model="gdnRef" v-on:change="changeGdnRef()">
                                     </div>
                                 </div>
                             </div>
@@ -84,8 +84,9 @@
                                     <div class="col-sm-2">
                                         <input type="text" placeholder="Merchant Code" class="form-control" v-model="MerchantCode" v-on:change="changeMerchantCode()">
                                     </div>                             
-                                    <div class="col-sm-1">
-                                        <button type="submit" class="btn btn-effect-ripple btn-primary">Search</button>
+                                    <div class="col-sm-2">
+                                        <a class="btn btn-effect-ripple btn-primary" v-on:click="filterAll()">Search</a>
+										<a class="btn btn-effect-ripple btn-primary" v-on:click="clearFilter()">Clear</a>
                                     </div>
                             </div>
                         </div>
@@ -99,7 +100,7 @@
                 <div class="panel ">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            <i class="fa fa-fw ti-menu-alt"></i> List AWB  {{totalPage}}
+                            <i class="fa fa-fw ti-menu-alt"></i> List AWB  {{filter}} {{prevpage}}
                         </h3>
                         <span class="pull-right">
                             <i class="fa fa-fw ti-angle-up clickable"></i>
@@ -121,7 +122,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                             <tr v-for="post of posts" data-toggle="modal" data-target="#form_modal" id="example" v-on:click="openModal(post)">
+                             <tr v-for="post of posts" data-toggle="modal" data-target="#form_modal" v-on:click="openModal(post)">
                                 <td>{{post.month}}</td>
                                 <td>{{post.year}}</td>
                                 <td>{{post.logisticName}}</td>
@@ -134,26 +135,14 @@
                         </table>
 						<div class="pull-right" v-if="totalPage>0">
 							<ul class="pagination">
-								<li v-on:click="toPageOne()" v-if="prevpage+1!=1"><a>1</a></li>
+								<li v-on:click="toPageOne()" v-if="prevpage>0"><a class="noselect">1</a></li>
 								<li class="disabled" v-if="checkedPrevPage()"><a>...</a></li>
-								<li><a v-on:click="fetchPrev()" v-if="prevpage<page">{{prevpage+1}}</a></li>
+								<li><a v-on:click="toPrevPage()" v-if="prevpage<page">{{prevpage+1}}</a></li>
 								<li class="active"><a>{{page+1}}</a></li>
-								<li><a v-on:click="fetchNext()" v-if="nextpage+1!=totalPage">{{nextpage+1}}</a></li>
+								<li><a v-on:click="toNextPage()" v-if="nextpage+1!=totalPage">{{nextpage+1}}</a></li>
 								<li class="disabled" v-if="checkedNextPage()"><a>...</a></li>
 								<li><a v-on:click="toLastPage()" v-if="page<nextpage">{{totalPage}}</a></li>
 							</ul>
-							<!--<div class="col-xs-1 col-xs-offset-1" v-if="page<nextpage">
-                                
-                            </div>
-                            <div class="col-xs-1 col-xs-offset-1">
-								
-                                <label class="col-sm-1 control-label" >
-                                    {{page}}
-                                </label>
-                            </div>
-                            <div class="col-xs-1" v-if="prevpage<page">
-                                <button type="submit" class="btn btn-effect-ripple btn-primary" v-on:click="fetchPrev()">prev {{prevpage}}</button>
-                            </div>-->
 						</div>
 						<div id="form_modal" class="modal fade animated" role="dialog">
 										<div class="modal-dialog modal-lg">
@@ -338,9 +327,9 @@ export default {
       selectedLogistic: 'Select Logistic',
       selectedYear: 'Select Year',
         selectedStatus: 'Select Status',
-        MerchantCode: '',
+        MerchantCode: 'a',
         AwbNumber: '',
-        GDNRef: '',
+        gdnRef: '',
 		test: '',
 		title: '',
 		awb: [],
@@ -354,9 +343,9 @@ export default {
     prevpage: 0,
     totalPage: 0,
     Pages: [],
-	filter: 'none'
-    }
-    ),
+	filter: 'none',
+	setPage:0
+    }),
     mounted: function() {
         "use strict";        
         $(".content .row").find('input').iCheck({
@@ -436,14 +425,14 @@ export default {
                 maxFileCount: 10,
                 mainClass: "input-group-lg"
             });
-			this.fetchNext()
+			this.fetchAll()
     },
     destroyed: function() {
     },
   methods: { 
-	  setFilter(){
+	  paginationFilter(){
 		if(this.filter==='none'){
-		
+			this.fetchAll()
 		}
 		else if(this.filter==='month'){
 		
@@ -473,42 +462,80 @@ export default {
 		
 		}
 	  },
+	  toPageOne(){
+		this.nextpage=0
+		this.prevpage=0
+		this.page=0
+		this.fetchNext()
+	  },
+	  toLastPage(){
+		this.nextpage=this.totalPage-1
+		this.fetchNext()
+	  },
+	  toPrevPage(){
+		this.setPage=this.prevpage;
+		this.paginationFilter()
+	  },
+	  toNextPage(){
+		this.setPage=this.nextpage;
+		this.paginationFilter()
+	  },
+	  checkedNextPage(){
+		return this.nextpage+2!=this.totalPage && this.nextpage+1!=this.totalPage
+	  },
+	  checkedPrevPage(){
+		return this.prevpage!=0 && this.prevpage-1!=0
+	  },
+	  setInit(){
+		this.nextpage=0
+	  },
       changeStatus () {
-        axios.get('http://127.0.0.1:8091/api/awb/filterstatus/' + this.selectedStatus)
+		this.setInit()
+        axios.get('http://127.0.0.1:8091/api/awb/filterstatus/' + this.selectedStatus+'?page='+ this.nextpage+'&size='+this.size)
           .then(response => {
             // JSON responses are automatically parsed.
-            this.posts = response.data
+            this.posts = response.data.content
+			this.fetchPages()
+			this.filter='status'
           })
           .catch(e => {
             this.errors.push(e)
           })
       },
-
       changeMonth () {
-        axios.get('http://127.0.0.1:8091/api/awb/filtermonth/' + this.selectedMonth)
+		this.setInit()
+        axios.get('http://127.0.0.1:8091/api/awb/filtermonth/' + this.selectedMonth+'?page='+ this.nextpage+'&size='+this.size)
           .then(response => {
             // JSON responses are automatically parsed.
-            this.posts = response.data
+            this.posts = response.data.content
+			this.fetchPages()
+			this.filter='month'
           })
           .catch(e => {
             this.errors.push(e)
           })
       },
       changeYear () {
-        axios.get('http://127.0.0.1:8091/api/awb/filteryear/' + this.selectedYear)
+		this.setInit()
+        axios.get('http://127.0.0.1:8091/api/awb/filteryear/' + this.selectedYear+'?page='+ this.nextpage+'&size='+this.size)
           .then(response => {
             // JSON responses are automatically parsed.
-            this.posts = response.data
+            this.posts = response.data.content
+			this.fetchPages()
+			this.filter='year'
           })
           .catch(e => {
             this.errors.push(e)
           })
       },
       changeLogistic () {
-        axios.get('http://127.0.0.1:8091/api/awb/filterlogisticName/' + this.selectedLogistic)
+		this.setInit()
+        axios.get('http://127.0.0.1:8091/api/awb/filterlogisticName/' + this.selectedLogistic+'?page='+ this.nextpage+'&size='+this.size)
           .then(response => {
             // JSON responses are automatically parsed.
-            this.posts = response.data
+            this.posts = response.data.content
+			this.fetchPages()
+			this.filter='logistic'
           })
           .catch(e => {
             this.errors.push(e)
@@ -519,88 +546,97 @@ export default {
           .then(response => {
             // JSON responses are automatically parsed.
             this.posts = response.data
+			this.nextpage=0
+			this.prevpage=0
+			this.page=0
+			this.totalPage=1
+			this.filter='awb'
           })
           .catch(e => {
             this.errors.push(e)
           })
       },
       changeMerchantCode () {
-        axios.get('http://127.0.0.1:8091/api/awb/filterMerchantCode/' + this.merchantCode)
-          .then(response => {
-            // JSON responses are automatically parsed.
-            this.posts = response.data
-          })
-          .catch(e => {
-            this.errors.push(e)
-          })
+		this.setInit()
+		if(this.MerchantCode===''){
+			this.fetchAll()
+		}
+		else{
+			axios.get('http://127.0.0.1:8091/api/awb/filterMerchantCode/' + this.MerchantCode+'?page='+ this.nextpage+'&size='+this.size)
+			  .then(response => {
+				// JSON responses are automatically parsed.
+				this.posts = response.data.content
+				this.fetchPages()
+				this.filter='merchantcode'
+			  })
+			  .catch(e => {
+				this.errors.push(e)
+			  })
+		}
+        
       },
       changeGdnRef () {
-        axios.get('http://127.0.0.1:8091/api/awb/filterGdnRef/' + this.gdnRef)
+		this.setInit()
+        axios.get('http://127.0.0.1:8091/api/awb/filterGdnRef/' + this.gdnRef+'?page='+ this.nextpage+'&size='+this.size)
           .then(response => {
             // JSON responses are automatically parsed.
-            this.posts = response.data
+            this.posts = response.data.content
+			this.fetchPages()
+			this.filter='gdnref'
           })
           .catch(e => {
             this.errors.push(e)
           })
       },
-	  toPageOne(){
+      filterAll () {
+        axios.get('http://127.0.0.1:8091/api/awb/filter/' + this.selectedMonth + '/' + this.selectedYear + '/' + this.selectedLogistic + '/' + this.AwbNumber + '/' + this.selectedStatus + '/' + this.MerchantCode + '/' + this.gdnRef)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data
+			this.filter='full'
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+      },
+	  clearFilter(){
 		this.nextpage=0
-		this.prevpage=0
-		this.page=0
-		this.fetchNext()
+		this.selectedLogistic='Select Logistic'
+		this.selectedMonth='Select Month'
+		this.selectedStatus='Select Status'
+		this.selectedYear='Select Year'
+		this.AwbNumber=''
+		this.MerchantCode=''
+		this.gdnRef=''
+		this.fetchAll()
 	  },
-      fetchPrev () {
-          axios.get('http://127.0.0.1:8091/api/awb/awbs?page='+ this.prevpage+'&size='+this.size)
+	  filterByInvoice () {
+		this.setInit()
+        axios.get('http://127.0.0.1:8091/api/awb/filterinvoice/' + this.selectedMonth + '/' + this.selectedYear + '/' + this.logistic+'?page='+ this.nextpage+'&size='+this.size)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            
+			this.posts = response.data.content
+			this.fetchPages()
+			this.filter='invoice'
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+      },
+	  fetchAll () {
+          axios.get('http://127.0.0.1:8091/api/awb/awbs?page='+ this.setPage+'&size='+this.size)
               .then(response => {
                   // JSON responses are automatically parsed.
                   this.posts = response.data.content
                   this.fetchPages()
+				  this.filter='none'
               })
               .catch(e => {
                   this.errors.push(e)
               })
 
       },
-      filterAll () {
-        axios.get('http://127.0.0.1:8091/api/awb/filter/' + this.selectedMonth + '/' + this.selectedYear + '/' + this.selectedLogistic + '/' + this.AwbNumber + '/' + this.selectedStatus + '/' + this.merchantCode + '/' + this.gdnRef)
-          .then(response => {
-            // JSON responses are automatically parsed.
-            this.posts = response.data
-          })
-          .catch(e => {
-            this.errors.push(e)
-          })
-      },
-	  filterByInvoice () {
-        axios.get('http://127.0.0.1:8091/api/awb/filterinvoice/' + this.selectedMonth + '/' + this.selectedYear + '/' + this.logistic)
-          .then(response => {
-            // JSON responses are automatically parsed.
-            
-			this.posts = response.data
-          })
-          .catch(e => {
-            this.errors.push(e)
-          })
-      },
-	  toLastPage(){
-		this.nextpage=this.totalPage-1
-		this.fetchNext()
-	  },
-	  fetchNext () {
-		axios.get('http://127.0.0.1:8091/api/awb/awbs?page='+ this.nextpage+'&size='+this.size)
-        .then(response => {
-          // JSON responses are automatically parsed.
-          this.posts = response.data.content
-//            if(this.nextpage+1<this.totalPage) {
-//                this.nextpage = this.nextpage + 1
-//            }
-            this.fetchPages()
-        })
-        .catch(e => {
-          this.errors.push(e)
-        })
-	  },
       fetchPages () {
           axios.get(`http://127.0.0.1:8091/api/awb/awbnumbers`)
               .then(response => {
@@ -661,12 +697,6 @@ export default {
           .catch(e => {
             this.errors.push(e)
           })
-	  },
-	  checkedNextPage(){
-		return this.nextpage+2!=this.totalPage && this.nextpage+1!=this.totalPage
-	  },
-	  checkedPrevPage(){
-		return this.prevpage!=0 && this.prevpage-1!=0
 	  }
     },
     ready() {
@@ -706,12 +736,13 @@ export default {
         });
 		
 		if(this.month==='Vue!' || this.year==='Vue!' || this.logistic==='Vue!'){
-			this.fetchNext()
+			this.fetchAll()
 		}
         else{
 			this.selectedMonth=this.month
 			this.selectedYear=this.year
 			this.filterByInvoice()
+			
 		}
 		this.getLogisticSelectList()
 		this.getYearSelectList()
@@ -735,4 +766,14 @@ export default {
   .modal-title-margin{
 	margin-top:30px !important;
   }
+  .noselect {
+  -webkit-touch-callout: none!important;  /* iOS Safari */
+    -webkit-user-select: none!important; /* Safari */
+     -khtml-user-select: none!important; /* Konqueror HTML */
+       -moz-user-select: none!important; /* Firefox */
+        -ms-user-select: none!important; /* Internet Explorer/Edge */
+            user-select: none!important; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+	cursor:pointer;
+}
 </style>

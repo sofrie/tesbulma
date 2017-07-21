@@ -164,7 +164,7 @@
 						</div>
 						<div class="col-sm-3">
 							<label>
-								Jumlah Tagihan:Rp. {{invoice.jumlahTagihan}}
+								Jumlah Tagihan:{{invoice.jumlahTagihan | currency}}
 							</label>
 						</div>
 					</div>
@@ -214,7 +214,7 @@
                                 <td>{{post.year}}</td>
                                 <td>{{post.ok}}</td>
                                 <td>{{post.problemExist}}</td>
-                                <td>{{post.jumlahTagihan}}</td>
+                                <td>{{post.jumlahTagihan | currency}}</td>
                                 <td>{{post.logistic}}</td>
                                 <td>{{post.status}}</td>
                                 <td>{{post.last_modified}}</td>
@@ -347,6 +347,11 @@ export default {
     },
     destroyed: function() {
     },
+	filters: {
+		currency: function(value) {
+		  return 'Rp. '+value.toString().replace(/,/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+		}
+	  },
   methods: {
     uploadHistory () {
         axios.post(`http://127.0.0.1:8091/api/uploadHistory`, {

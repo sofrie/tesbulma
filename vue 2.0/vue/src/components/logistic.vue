@@ -372,7 +372,7 @@
                         // Toggle the visibility
                         column.visible(!column.visible());
                     });
-                },400);
+                },500);
             });
             this.fetchLogistics()
 			selectedStatus: 'Select Status'
