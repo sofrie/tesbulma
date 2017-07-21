@@ -29,14 +29,13 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class InvoiceController {
+
     @Autowired
     InvoiceService invoiceService;
 
     @CrossOrigin
     @RequestMapping(value = "/api/invoice", method = RequestMethod.POST)
     public void createInvoice(@RequestBody InvoiceRequest request) {
-        
-        request.setId(UUID.randomUUID().toString());
         invoiceService.addInvoice(request);
     }
 
@@ -59,5 +58,4 @@ public class InvoiceController {
 //    }
 //
 //    sortByAWBNumberAsc
-   
 }

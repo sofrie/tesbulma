@@ -46,7 +46,7 @@
                     <router-link tag="li" to="/invoicepage" exact>
                         <a class="logo"><i class="menu-icon ti-files"></i><br/><span class="mm-text">Invoice</span></a>
                     </router-link>
-                    <router-link tag="li" to="/awb" exact>
+                    <router-link tag="li" to="/awb" id="awb" exact>
                         <a class="logo"><i class="menu-icon ti-file"></i><br/><span class="mm-text">AWB</span></a>
                     </router-link>
 					<router-link tag="li" to="/logistic" exact>

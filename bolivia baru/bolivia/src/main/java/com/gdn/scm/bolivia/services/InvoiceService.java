@@ -15,9 +15,11 @@ import java.util.List;
  */
 public interface InvoiceService {
     void addInvoice(InvoiceRequest request);
+    void updateInvoice(Invoice update);
     List<Invoice> getAll();
-    List<Invoice> findByMonth(String month);
-    List<Invoice> findByYear(String year);
+    List<Invoice> findByMonth(Integer month);
+    List<Invoice> findByYear(Integer year);
     Invoice findTop1ByOrderByLastModifiedDesc();
+    Invoice findByMonthAndYearAndLogisticName (Integer month, Integer year, String logisticName);
 //    List<String> getLogisticName(String logisticName);
 }

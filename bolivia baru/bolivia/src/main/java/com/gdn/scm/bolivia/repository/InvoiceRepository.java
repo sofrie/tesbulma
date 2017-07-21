@@ -19,9 +19,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface InvoiceRepository extends JpaRepository<Invoice, String> {
 
-    public List<Invoice> findByMonth(String month);
+    public Invoice findByMonthAndYearAndLogisticName(Integer month, Integer year, String logisticName);
 
-    public List<Invoice> findByYear(String year);
+    public List<Invoice> findByMonth(Integer month);
+    
+    public List<Invoice> findByYear(Integer year);
     
     public Invoice findTop1ByOrderByLastModifiedDesc();
 

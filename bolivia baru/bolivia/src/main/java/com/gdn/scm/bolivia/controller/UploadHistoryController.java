@@ -46,13 +46,13 @@ public class UploadHistoryController {
 
     @CrossOrigin
     @RequestMapping(value = "/api/uploadHistory/month/{month}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<UploadHistory> filterByMonth(@PathVariable("month") String month) {
+    public List<UploadHistory> filterByMonth(@PathVariable("month") Integer month) {
         return uploadHistoryService.getByMonth(month);
     }
 
     @CrossOrigin
     @RequestMapping(value = "/api/uploadHistory/year/{year}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<UploadHistory> filterByYear(@PathVariable("year") String year) {
+    public List<UploadHistory> filterByYear(@PathVariable("year") Integer year) {
         return uploadHistoryService.getByYear(year);
     }
 

@@ -85,8 +85,8 @@ public class AWBRequest {
     
     
 
-    private String month;
-    private String year;
+    private Integer month;
+    private Integer year;
     private String logisticName;
     
     

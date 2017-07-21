@@ -6,17 +6,13 @@
 package com.gdn.scm.bolivia.controller;
 
 import com.gdn.scm.bolivia.entity.AWB;
-import com.gdn.scm.bolivia.entity.LogisticProvider;
 import com.gdn.scm.bolivia.entity.MailSender;
 import com.gdn.scm.bolivia.entity.PageClass;
 import com.gdn.scm.bolivia.services.AWBPagingService;
 import com.gdn.scm.bolivia.services.AWBService;
 import com.gdn.scm.bolivia.services.SimpleOrderManager;
 import com.gdn.scm.bolivia.services.XMessageService;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -67,7 +63,7 @@ public class AWBController {
     //filter By month
     @CrossOrigin
     @RequestMapping(value = "/api/awb/filtermonth/{month}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<AWB> filterAWBByMonth(@PathVariable("month") String month, Pageable pageable) {
+    public Page<AWB> filterAWBByMonth(@PathVariable("month") Integer month, Pageable pageable) {
         awbs = awbService.findByMonth(month, pageable);
         pageClass = new PageClass();
         pageClass.setTotal_page(awbs.getTotalPages());
@@ -91,7 +87,7 @@ public class AWBController {
     //filter By year
     @CrossOrigin
     @RequestMapping(value = "/api/awb/filteryear/{year}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<AWB> filterAWBByYear(@PathVariable("year") String year, Pageable pageable) {
+    public Page<AWB> filterAWBByYear(@PathVariable("year") Integer year, Pageable pageable) {
         awbs = awbService.findByYear(year, pageable);
         pageClass = new PageClass();
         pageClass.setTotal_page(awbs.getTotalPages());
@@ -122,22 +118,22 @@ public class AWBController {
     //filter By merchantCode
     @CrossOrigin
     @RequestMapping(value = "/api/awb/filterMerchantCode/{merchantCode}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<AWB> filterMerchantCode(@PathVariable("merchantCode") String merchantCode) {
-        return awbService.getByMerchantCode(merchantCode);
+    public Page<AWB> filterMerchantCode(@PathVariable("merchantCode") String merchantCode, Pageable pageable) {
+        return awbService.getByMerchantCode(merchantCode, pageable);
     }
 
     //filter By gdnRef
     @CrossOrigin
     @RequestMapping(value = "/api/awb/filterGdnRef/{gdnRef}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<AWB> filterGdnRef(@PathVariable("gdnRef") String gdnRef) {
-        return awbService.getByGdnRef(gdnRef);
+    public Page<AWB> filterGdnRef(@PathVariable("gdnRef") String gdnRef, Pageable pageable) {
+        return awbService.getByGdnRef(gdnRef,pageable);
     }
 
     //filter all
     @CrossOrigin
     @RequestMapping(value = "/api/awb/filter/{month}/{year}/{logisticName}/{awbNumber}/{reconStatus}/{merchantCode}/{gdnRef}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<AWB> filterAll(@PathVariable("month") String month, @PathVariable("year") String year, @PathVariable("logisticName") String logisticName, @PathVariable("awbNumber") String awbNumber, @PathVariable("reconStatus") String reconStatus, @PathVariable("merchantCode") String merchantCode, @PathVariable("gdnRef") String gdnRef) {
-        return awbService.filterAll(month, year, logisticName, awbNumber, reconStatus, merchantCode, gdnRef);
+    public Page<AWB> filterAll(@PathVariable("month") Integer month, @PathVariable("year") Integer year, @PathVariable("logisticName") String logisticName, @PathVariable("awbNumber") String awbNumber, @PathVariable("reconStatus") String reconStatus, @PathVariable("merchantCode") String merchantCode, @PathVariable("gdnRef") String gdnRef, Pageable pageable) {
+        return awbService.filterAll(month, year, logisticName, awbNumber, reconStatus, merchantCode, gdnRef,pageable);
     }
 
     //get all year
@@ -176,15 +172,6 @@ public class AWBController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-//        try {
-//            Date today = new Date();
-//            SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
-//            String date = DATE_FORMAT.format(today);
-//            simpleOrderManager.sendMailPickuptoXMessage("A1 ", "D:/Data/AWB.xlsx", "haha", date);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
     }
     
     @CrossOrigin

@@ -19,9 +19,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UploadHistoryRepository extends JpaRepository<UploadHistory, Integer> {
 
-    public List<UploadHistory> findByMonth(String month);
+    public List<UploadHistory> findByMonth(Integer month);
 
-    public List<UploadHistory> findByYear(String year);
+    public List<UploadHistory> findByYear(Integer year);
 
     public List<UploadHistory> findByLogistic(String logistic);
     

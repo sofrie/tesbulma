@@ -6,6 +6,7 @@
 package com.gdn.scm.bolivia.services;
 
 import com.gdn.scm.bolivia.entity.AWB;
+import com.gdn.scm.bolivia.entity.Invoice;
 import com.gdn.scm.bolivia.repository.AWBRepository;
 import com.gdn.scm.bolivia.request.AWBRequest;
 import java.math.BigDecimal;
@@ -65,12 +66,12 @@ public class AWBServiceImpl implements AWBService {
     }
 
     @Override
-    public List<AWB> getByMonth(String month) {
+    public List<AWB> getByMonth(Integer month) {
         return aWBRepository.findByMonth(month);
     }
 
     @Override
-    public List<AWB> getByYear(String year) {
+    public List<AWB> getByYear(Integer year) {
         return aWBRepository.findByYear(year);
     }
 
@@ -89,30 +90,30 @@ public class AWBServiceImpl implements AWBService {
         return aWBRepository.findByAwbNumber(awbNumber);
     }
 
-    @Override
-    public List<AWB> getByMerchantCode(String merchantCode) {
-        return aWBRepository.findByMerchantCode(merchantCode);
-    }
+//    @Override
+//    public List<AWB> getByMerchantCode(String merchantCode) {
+//        return aWBRepository.findByMerchantCode(merchantCode);
+//    }
+//
+//    @Override
+//    public List<AWB> getByGdnRef(String gdnRef) {
+//        return aWBRepository.findByGdnRef(gdnRef);
+//    }
+//
+//    @Override
+//    public List<AWB> filterAll(Integer month, Integer year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef) {
+//        if (reconStatus.equals("All")) {
+//            return aWBRepository.filterAllExceptStatus(month, year, logisticName, AwbNumber, merchantCode, gdnRef);
+//        } else {
+//            return aWBRepository.filterAll(month, year, logisticName, AwbNumber, reconStatus, merchantCode, gdnRef);
+//        }
+//    }
 
     @Override
-    public List<AWB> getByGdnRef(String gdnRef) {
-        return aWBRepository.findByGdnRef(gdnRef);
-    }
-
-    @Override
-    public List<AWB> filterAll(String month, String year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef) {
-        if (reconStatus.equals("All")) {
-            return aWBRepository.filterAllExceptStatus(month, year, logisticName, AwbNumber, merchantCode, gdnRef);
-        } else {
-            return aWBRepository.filterAll(month, year, logisticName, AwbNumber, reconStatus, merchantCode, gdnRef);
-        }
-    }
-
-    @Override
-    public void addAWB(AWB a) {
+    public void addAWB(AWB a, Boolean isUpdate) {
         AWB awb = new AWB();
         BeanUtils.copyProperties(a, awb);
-        
+
         try {
             aWBRepository.save(awb);
         } catch (Exception e) {
@@ -136,12 +137,12 @@ public class AWBServiceImpl implements AWBService {
     }
 
     @Override
-    public Page<AWB> findByMonth(String month, Pageable pageable) {
+    public Page<AWB> findByMonth(Integer month, Pageable pageable) {
         return aWBRepository.findByMonth(month, pageable);
     }
 
     @Override
-    public Page<AWB> findByYear(String year, Pageable pageable) {
+    public Page<AWB> findByYear(Integer year, Pageable pageable) {
         return aWBRepository.findByYear(year, pageable);
     }
 
@@ -158,6 +159,40 @@ public class AWBServiceImpl implements AWBService {
     @Override
     public Page<AWB> sortByAWBNumberAsc(Pageable pageable) {
         return aWBRepository.sortByAWBNumberAsc(pageable);
+    }
+
+    @Override
+    public AWB findByAwbNumberAndInvoice(String awbNumber, Invoice invoice) {
+        return aWBRepository.findByAwbNumberAndInvoice(awbNumber, invoice);
+    }
+
+    @Override
+    public BigDecimal countTagihan(Invoice invoice) {
+        return aWBRepository.countTagihan(invoice);
+    }
+
+    @Override
+    public Page<AWB> getByMerchantCode(String merchantCode, Pageable pageable) {
+        return aWBRepository.findByMerchantCode(merchantCode, pageable);
+    }
+
+    @Override
+    public Page<AWB> getByGdnRef(String gdnRef, Pageable pageable) {
+        return aWBRepository.findByGdnRef(gdnRef,pageable);
+    }
+
+    @Override
+    public Page<AWB> filterAll(Integer month, Integer year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef, Pageable pageable) {
+        if (reconStatus.equals("All")) {
+            return aWBRepository.filterAllExceptStatus(month, year, logisticName, AwbNumber, merchantCode, gdnRef, pageable);
+        } else {
+            return aWBRepository.filterAll(month, year, logisticName, AwbNumber, reconStatus, merchantCode, gdnRef, pageable);
+        }
+    }
+
+    @Override
+    public Page<AWB> filterByInvoice(Integer month, Integer year, String logisticName, Pageable pageable) {
+        return aWBRepository.filterByInvoice(month,year,logisticName,pageable);
     }
 
 }

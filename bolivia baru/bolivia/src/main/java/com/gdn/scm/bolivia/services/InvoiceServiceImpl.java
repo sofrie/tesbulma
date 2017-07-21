@@ -14,6 +14,8 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,45 +29,58 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Autowired
     InvoiceRepository invoiceRepository;
-    
+
     @Autowired
     LogisticProviderRepository logisticProviderRepository;
 
     @Override
-    public List<Invoice> findByMonth(String month) {
+    public List<Invoice> findByMonth(Integer month) {
         return invoiceRepository.findByMonth(month);
     }
 
     @Override
-    public List<Invoice> findByYear(String year) {
+    public List<Invoice> findByYear(Integer year) {
         return invoiceRepository.findByYear(year);
     }
 
+    public Boolean isAda;
 //    @Override
 //    public List<String> getLogisticName(String logisticName) {
 //        return invoiceRepository.getLogisticName(logisticName);
 //    }
+
+    public InvoiceServiceImpl() {
+        isAda=false;
+    }
+    
     @Override
     public void addInvoice(InvoiceRequest request) {
-        Invoice invoice = new Invoice();
-        BeanUtils.copyProperties(request, invoice);
-        invoice.setId(UUID.randomUUID().toString());
-        invoice.setStatusInvoice("Open");
-        
-        Date today = new Date();
-         Timestamp timestamp=new Timestamp(today.getTime());
-        String date = timestamp.toString();
-        System.out.println("Today " + date);
-        invoice.setLastModified(timestamp);
-        
-        invoice.setLogisticProvider(logisticProviderRepository.findByLogisticName(invoice.getLogisticName()));
-        // invoice.setFirstUploadDate(firstUploadDate);
-        System.out.println("Id Invoice ----- " + invoice.getId());
-        try {
-            invoiceRepository.save(invoice);
-        } catch (Exception e) {
-            System.out.println("gagal invoice");
-            e.printStackTrace();;
+        Invoice ada = this.findByMonthAndYearAndLogisticName(request.getMonth(), request.getYear(), request.getLogisticName());
+        if (ada != null) {
+            isAda=true;
+
+        } else {
+            isAda=false;
+            Invoice invoice = new Invoice();
+            BeanUtils.copyProperties(request, invoice);
+            invoice.setId(UUID.randomUUID().toString());
+            invoice.setStatusInvoice("Open");
+
+            Date today = new Date();
+            Timestamp timestamp = new Timestamp(today.getTime());
+            String date = timestamp.toString();
+            System.out.println("Today " + date);
+            invoice.setLastModified(timestamp);
+
+            invoice.setLogisticProvider(logisticProviderRepository.findByLogisticName(invoice.getLogisticName()));
+            // invoice.setFirstUploadDate(firstUploadDate);
+            System.out.println("Id Invoice ----- " + invoice.getId());
+            try {
+                invoiceRepository.save(invoice);
+            } catch (Exception e) {
+                System.out.println("gagal invoice");
+                e.printStackTrace();;
+            }
         }
     }
 
@@ -76,7 +91,26 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public Invoice findTop1ByOrderByLastModifiedDesc() {
-        return invoiceRepository.findTop1ByOrderByLastModifiedDesc();
+        Invoice last = new Invoice();
+        try {
+            Thread.sleep(500);
+            last = invoiceRepository.findTop1ByOrderByLastModifiedDesc();
+            System.out.println("LAST ------ " + last.getId());
+        } catch (InterruptedException ex) {
+            Logger.getLogger(InvoiceServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return last;
+    }
+
+    @Override
+    public Invoice findByMonthAndYearAndLogisticName(Integer month, Integer year, String logisticName) {
+        return invoiceRepository.findByMonthAndYearAndLogisticName(month, year, logisticName);
+    }
+
+    @Override
+    public void updateInvoice(Invoice update) {
+        invoiceRepository.save(update);
     }
 
 }
