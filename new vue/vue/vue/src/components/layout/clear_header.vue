@@ -75,12 +75,12 @@
                         </ul>
                     </li>-->
                     <!--rightside toggle-->
-                    <li>
+                    <!--<li>
                         <a href="javascript:void(0)" class="toggle-right" @click="toggle_right">
                             <i class="fa fa-fw ti-view-list black"></i>
                             <span class="label label-danger">9</span>
                         </a>
-                    </li>
+                    </li>-->
                     <!-- User Account: style can be found in dropdown-->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle padding-user" data-toggle="dropdown">

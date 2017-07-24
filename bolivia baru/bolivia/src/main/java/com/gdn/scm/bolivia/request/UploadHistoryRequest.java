@@ -23,9 +23,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UploadHistoryRequest {
-    private String month;
+    private Integer month;
 
-    private String year;    
+    private Integer year;    
 
     private String logistic;
 }

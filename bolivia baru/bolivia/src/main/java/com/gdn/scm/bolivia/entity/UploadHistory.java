@@ -38,16 +38,17 @@ public class UploadHistory {
     public static final String COLUMN_LOGISTIC = "MERCHANT_LOGISTIC";
     public static final String COLUMN_STATUS = "STATUS";
     public static final String COLUMN_LAST_MODIFIED = "LAST_MODIFIED";
+    public static final String COLUMN_NAMA_FILE = "NAMA_FILE";
 
     
     @Column(name = COLUMN_ID)
     private Integer id;
 
     @Column(name = COLUMN_MONTH, nullable = false)
-    private String month;
+    private Integer month;
 
     @Column(name = COLUMN_YEAR, nullable = false)
-    private String year;
+    private Integer year;
 
     @Column(name = COLUMN_OK, nullable = false)
     private String ok;
@@ -67,6 +68,9 @@ public class UploadHistory {
     @Column(name = COLUMN_LAST_MODIFIED, nullable = true)
     private String last_modified;
     
+    @Column(name = COLUMN_NAMA_FILE, nullable = true)
+    private String namaFile;
+    
     
     private Invoice invoice;
 
@@ -81,19 +85,19 @@ public class UploadHistory {
         this.id = id;
     }
 
-    public String getMonth() {
+    public Integer getMonth() {
         return month;
     }
 
-    public void setMonth(String month) {
+    public void setMonth(Integer month) {
         this.month = month;
     }
 
-    public String getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 
@@ -145,6 +149,16 @@ public class UploadHistory {
         this.last_modified = last_modified;
     }
 
+    public String getNamaFile() {
+        return namaFile;
+    }
+
+    public void setNamaFile(String namaFile) {
+        this.namaFile = namaFile;
+    }
+    
+    
+
     
     @ManyToOne
     @JoinColumn(name = "blv_invoice_id")
@@ -158,7 +172,7 @@ public class UploadHistory {
     
     
 
-    public UploadHistory(Integer id, String month, String year, String ok, String problemExist, BigDecimal jumlahTagihan, String logistic, String status, String last_modified) {
+    public UploadHistory(Integer id, Integer month, Integer year, String ok, String problemExist, BigDecimal jumlahTagihan, String logistic, String status, String last_modified) {
         this.id = id;
         this.month = month;
         this.year = year;

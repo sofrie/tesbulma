@@ -7,7 +7,9 @@ package com.gdn.scm.bolivia.controller;
 
 import com.gdn.scm.bolivia.entity.UploadModel;
 import com.gdn.scm.bolivia.entity.Compare;
+import com.gdn.scm.bolivia.entity.UploadHistory;
 import com.gdn.scm.bolivia.repository.UploadHistoryRepository;
+import com.gdn.scm.bolivia.services.UploadHistoryService;
 import java.io.File;
 import java.io.FileInputStream;
 import org.slf4j.Logger;
@@ -48,7 +50,7 @@ public class RestUploadController {
     Compare compare;
 
     @Autowired
-    UploadHistoryRepository uploadistoryRepository;
+    UploadHistoryService uploadHistoryService;
 
     private final Logger logger = LoggerFactory.getLogger(RestUploadController.class);
 
@@ -133,7 +135,18 @@ public class RestUploadController {
                 if (file.isEmpty()) {
                     continue; //next pls
                 }
-
+                
+                UploadHistory upload;
+                Thread.sleep(5000);
+                upload=uploadHistoryService.findTop1ByOrderByIdDesc();
+                while(upload==null)
+                {
+                    Thread.sleep(5000);
+                    upload=uploadHistoryService.findTop1ByOrderByIdDesc();
+                }
+                System.out.println("upload history "+upload.getId());
+                System.out.println("upload history ");
+                
                 byte[] bytes = file.getBytes();
                 Date today = new Date();
                 SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yy:HH:mm:SS");
@@ -145,6 +158,10 @@ public class RestUploadController {
                 System.out.println("==================");
                 Files.write(path, bytes);
 
+                upload.setNamaFile(path.toString());
+                
+                uploadHistoryService.addUploadHistory(upload);
+                
                 FileInputStream excellFile1 = new FileInputStream(new File(path.toString()));
                 XSSFWorkbook workbook1 = new XSSFWorkbook(excellFile1);
                 XSSFSheet sheet1 = workbook1.getSheetAt(0);
@@ -155,7 +172,7 @@ public class RestUploadController {
                     Thread.sleep(5000);
                     compareCounter = compare.counter;
                 }
-                //compare.Send(sheet1);
+                compare.Send(sheet1);
 
             }
         } catch (Exception e) {

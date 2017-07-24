@@ -12,6 +12,7 @@ import com.gdn.scm.bolivia.services.ToleranceService;
 import com.gdn.scm.bolivia.services.UploadHistoryService;
 import com.gdn.scm.bolivia.receiver.Receiver;
 import com.gdn.scm.bolivia.services.AWBService;
+import com.gdn.scm.bolivia.services.InvoiceService;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
@@ -41,6 +42,9 @@ public class Compare {
 
     @Autowired
     AWBService aWBService;
+
+    @Autowired
+    InvoiceService invoiceService;
 
     @Autowired
     ProcessService processService;
@@ -105,7 +109,11 @@ public class Compare {
         try {
             AWB awb = new AWB();
             UploadHistory upload = uploadHistoryService.findTop1ByOrderByIdDesc();
-            
+            Invoice currentInvoice;
+            currentInvoice=invoiceService.findByMonthAndYearAndLogisticName(upload.getMonth(), upload.getYear(), upload.getLogistic());
+            currentInvoice.setStatusInvoice("On Process");
+            invoiceService.updateInvoice(currentInvoice);
+
             Iterator<Row> itr = sheet1.iterator();
             Boolean ada = false;
             while (itr.hasNext() && !ada) {
@@ -114,6 +122,14 @@ public class Compare {
                     awb = new AWB();
                     Cell awbNumberCell = row.getCell(2);
                     if (awbNumberCell != null) {
+                        try {
+                            awb = aWBService.findByAwbNumberAndInvoice(awbNumberCell.getStringCellValue(), currentInvoice);
+                            System.out.println("awb 1 "+awb.getId());
+                        } catch (Exception e) {
+                            awb = new AWB();
+                            awb.setId(UUID.randomUUID().toString());
+                            System.out.println("awb 2 "+awb.getId());
+                        }
                         awb.setAwbNumber(awbNumberCell.getStringCellValue());
                         awb.setReconStatus("OK");
 
@@ -145,18 +161,23 @@ public class Compare {
                         awb.setOtherChargeLogistic(new BigDecimal(awbOtherChargeCell.getNumericCellValue()));
 
                         Cell awbTotalChargeCell = row.getCell(12);
-                        awb.setTotalChargeLogistic(new BigDecimal(awbTotalChargeCell.getNumericCellValue(),new MathContext(0)));
+                        awb.setTotalChargeLogistic(new BigDecimal(awbTotalChargeCell.getNumericCellValue(), new MathContext(0)));
 
-                        
                         awb.setReconStatus("OK");
                         awb.setMerchantCode("MERCH-CODE-007");
                         awb.setUploadHistoryNumber(upload.getId().toString());
                         awb.setMonth(upload.getMonth());
                         awb.setYear(upload.getYear());
                         awb.setLogisticName(upload.getLogistic());
-                        
-                        awb.setId(UUID.randomUUID().toString());
-                        aWBService.addAWB(awb);
+
+                        try {
+                            awb.setInvoice(currentInvoice);
+                        } catch (Exception e) {
+                            System.out.println("gagal tambah invoice di AWB");
+                            e.printStackTrace();
+                        }
+                        //awb.setId(UUID.randomUUID().toString());
+                        aWBService.addAWB(awb, false);
 
 //                awb.assignAWB(row);
 //
@@ -192,7 +213,7 @@ public class Compare {
                 listAWB.get(i).counter = counter;
                 processService.requestProcess(listAWB.get(i));
                 System.out.println("iiii" + i);
-                System.out.println("id : "+listAWB.get(i).getId());
+                System.out.println("id : " + listAWB.get(i).getId());
 //                System.out.println(listAWB.get(i).getAwbNumber());
                 if (i == 0) {
                     numberAWB = listAWB.get(i).getUploadHistoryNumber();
@@ -200,28 +221,37 @@ public class Compare {
             }
             listAWB = new ArrayList();
             Integer tmp = receiver.counterFromCompare;
-            while (tmp > 0) {
+            while (tmp > 1) {
                 Thread.sleep(500);
                 tmp = receiver.counterFromCompare;
-                System.out.println("tmp "+tmp);
+                System.out.println("tmp " + tmp);
             }
             Thread.sleep(500);
-            System.out.println("number awb "+numberAWB);
-            
+            System.out.println("number awb " + numberAWB);
+
             //UploadHistory upload = uploadHistoryService.getById(Integer.parseInt(numberAWB));
             if (upload != null) {
                 if (upload.getStatus().equals("Uploaded")) {
                     if (receiver.problem > 0) {
+                        currentInvoice.setStatusInvoice("Problem Exist");
                         upload.setStatus("Problem Exist");
                     } else {
                         upload.setStatus("OK");
+                        currentInvoice.setStatusInvoice("OK");
                     }
 
                     upload.setProblemExist(receiver.problem.toString());
                     Integer ok = counter - receiver.problem;
                     upload.setOk(ok.toString());
                     BigDecimal tagih = awbRepository.countTotalTagihan();
-                    upload.setJumlahTagihan(tagih);
+                    try
+                    {
+                        upload.setJumlahTagihan(aWBService.countTagihan(currentInvoice));
+                    }
+                    catch (Exception e)
+                    {
+                        System.out.println("gagal tagihan");
+                    }
                     System.out.println("=======aaaaaaaaaaaaaaaaaaaaaaaa" + receiver.problem + " " + counter);
                     System.out.println("iiiiddddd" + upload.getId().toString());
 //                        Thread.sleep(500);

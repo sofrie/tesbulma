@@ -129,7 +129,7 @@
                                         </div>
                                     </div>
                                 </div>-->
-                                <div class="tab-pane fade in active" id="r_tab2">
+                                <!--<div class="tab-pane fade in active" id="r_tab2">
                                     <div id="slim_t2">
                                         <h5 class="rightsidebar-right-heading text-uppercase text-xs">
                                             <i class="fa fa-fw ti-bell"></i>
@@ -161,7 +161,7 @@
                                                     class="ti-arrow-right"></i></a></li>
                                         </ul>
                                     </div>
-                                </div>
+                                </div>-->
                                 <!--<div class="tab-pane fade" id="r_tab3">
                                     <div id="slim_t3">
                                         <h5 class="rightsidebar-right-heading text-uppercase text-xs">

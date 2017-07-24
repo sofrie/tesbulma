@@ -202,14 +202,14 @@ public class Invoice {
         this.logisticProvider = logisticProvider;
     }
 
-    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
-    public Set<UploadHistory> getUploadHistory() {
-        return uploadHistory;
-    }
-
-    public void setUploadHistory(Set<UploadHistory> uploadHistory) {
-        this.uploadHistory = uploadHistory;
-    }
+//    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
+//    public Set<UploadHistory> getUploadHistory() {
+//        return uploadHistory;
+//    }
+//
+//    public void setUploadHistory(Set<UploadHistory> uploadHistory) {
+//        this.uploadHistory = uploadHistory;
+//    }
     
     
     
