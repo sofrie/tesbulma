@@ -58,4 +58,33 @@ public interface AWBService {
     
     BigDecimal countTotalTagihan();
     
+    Page<AWB> findAllSortByAwbNumberASC(Pageable pageable);
+    Page<AWB> findAllSortByAwbNumberDESC(Pageable pageable);
+    
+    Page<AWB> findMonthSortByAwbNumberASC(String month,Pageable pageable);
+    Page<AWB> findMonthSortByAwbNumberDESC(String month,Pageable pageable);
+    
+    Page<AWB> findYearSortByAwbNumberASC(String year,Pageable pageable);
+    Page<AWB> findYearSortByAwbNumberDESC(String year,Pageable pageable);
+    
+    Page<AWB> findStatusSortByAwbNumberASC(String status,Pageable pageable);
+    Page<AWB> findStatusSortByAwbNumberDESC(String status,Pageable pageable);
+    
+    Page<AWB> findLogisticSortByAwbNumberASC(String logistic,Pageable pageable);
+    Page<AWB> findLogisticSortByAwbNumberDESC(String logistic,Pageable pageable);
+    
+    Page<AWB> findMerchantCodeSortByAwbNumberASC(String merchantCode,Pageable pageable);
+    Page<AWB> findMerchantCodeSortByAwbNumberDESC(String merchantCode,Pageable pageable);
+    
+    List<AWB> findAwbNumberSortByAwbNumberASC(String awbNumber);
+    List<AWB> findAwbNumberSortByAwbNumberDESC(String awbNumber);
+    
+    Page<AWB> findGdnRefSortByAwbNumberASC(String gdnRef,Pageable pageable);
+    Page<AWB> findGdnRefSortByAwbNumberDESC(String gdnRef,Pageable pageable);
+    
+    Page<AWB> filterAllSortByAwbNumberASC(String month, String year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef,Pageable pageable);
+    Page<AWB> filterAllSortByAwbNumberDESC(String month, String year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef,Pageable pageable);
+    
+    Page<AWB> filterByInvoiceSortByAwbNumberASC(String month, String year, String logisticName,Pageable pageable);
+    Page<AWB> filterByInvoiceSortByAwbNumberDESC(String month, String year, String logisticName,Pageable pageable);
 }
