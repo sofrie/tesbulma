@@ -104,8 +104,12 @@ public class UploadHistoryServiceImpl implements UploadHistoryService {
     }
 
     @Override
-    public void updateUploadHistory(UploadHistory a) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void updateUploadHistory(UploadHistoryRequest a) {
+        UploadHistory upload= uploadHistoryRepository.findOne(a.getId());
+        System.out.println("id upload "+ a.getId());
+        System.out.println("status upload "+a.getStatus());
+        upload.setStatus(a.getStatus());
+        uploadHistoryRepository.save(upload);
     }
 
     @Override

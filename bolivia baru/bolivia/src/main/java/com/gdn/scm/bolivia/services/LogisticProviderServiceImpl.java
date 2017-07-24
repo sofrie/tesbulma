@@ -116,4 +116,9 @@ public class LogisticProviderServiceImpl implements LogisticProviderService {
         return logisticProviderRepository.getAllLogistic();
     }
 
+    @Override
+    public LogisticProvider findById(Integer Id) {
+        return logisticProviderRepository.findOne(Id);
+    }
+
 }

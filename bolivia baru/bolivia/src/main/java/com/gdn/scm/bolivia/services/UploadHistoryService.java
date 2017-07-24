@@ -33,7 +33,7 @@ public interface UploadHistoryService {
    
     List<UploadHistory> filterAll(Integer month, Integer year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef);
 
-    void updateUploadHistory(UploadHistory a);
+    void updateUploadHistory(UploadHistoryRequest a);
 
     void deleteUploadHistory(Integer id);
     

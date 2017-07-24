@@ -29,5 +29,25 @@ public class InvoiceRequest {
 
     private Integer year;
 
+    private BigDecimal tagihan;
+
+    private String createdBy;
+    
+    private String statusInvoice;
+
+    private String firstUploadDate;
+
+    private String submitedDate;
+
+    private String confirmedDate;
+
+    private String approvedDate;
+
+    private String lastModified;
+    
     private String logisticName;
+    
+    private LogisticProvider logisticProvider;
+    
+    private Set<UploadHistory> uploadHistory;
 }

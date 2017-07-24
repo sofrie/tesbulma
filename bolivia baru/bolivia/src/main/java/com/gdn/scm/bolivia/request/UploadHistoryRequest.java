@@ -23,9 +23,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UploadHistoryRequest {
+    private Integer id;
+    
     private Integer month;
 
     private Integer year;    
 
     private String logistic;
+    
+    private String status;
 }

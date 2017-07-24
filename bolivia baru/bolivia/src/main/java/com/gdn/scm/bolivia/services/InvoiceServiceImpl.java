@@ -70,7 +70,8 @@ public class InvoiceServiceImpl implements InvoiceService {
             Timestamp timestamp = new Timestamp(today.getTime());
             String date = timestamp.toString();
             System.out.println("Today " + date);
-            invoice.setLastModified(timestamp);
+            invoice.setFirstUploadDate(timestamp.toString());
+            invoice.setLastModified(timestamp.toString());
 
             invoice.setLogisticProvider(logisticProviderRepository.findByLogisticName(invoice.getLogisticName()));
             // invoice.setFirstUploadDate(firstUploadDate);
@@ -109,8 +110,44 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public void updateInvoice(Invoice update) {
+    public void updateInvoice(InvoiceRequest request) {
+        System.out.println("moth : "+request.getMonth());
+        System.out.println("year : "+request.getYear());
+        System.out.println("logistic : "+request.getLogisticName());
+        System.out.println("status : "+request.getStatusInvoice());
+        Invoice update=invoiceRepository.findByMonthAndYearAndLogisticName(request.getMonth(), request.getYear(), request.getLogisticName());
+        System.out.println("id "+update.getId());
+        update.setStatusInvoice(request.getStatusInvoice());
+        
+        //get current date
+        Date today = new Date();
+        Timestamp timestamp = new Timestamp(today.getTime());
+        
+        if(request.getStatusInvoice().equals("Submited"))
+        {
+            update.setSubmitedDate(timestamp.toString());
+            System.out.println("submit");
+        }
+        else if(request.getStatusInvoice().equals("Checked"))
+        {
+            update.setConfirmedDate(timestamp.toString());
+        }
+        else if(request.getStatusInvoice().equals("Approved"))
+        {
+            update.setApprovedDate(timestamp.toString());
+        }        
+        else
+        {
+        System.out.println("fail submit");
+        }
+        update.setLastModified(timestamp.toString());
         invoiceRepository.save(update);
     }
+    
+    @Override
+    public void updateInvoice(Invoice invoice) {  
+        invoiceRepository.save(invoice);
+        
+    }  
 
 }
