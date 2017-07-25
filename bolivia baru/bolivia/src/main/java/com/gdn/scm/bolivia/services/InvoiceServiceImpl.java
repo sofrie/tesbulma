@@ -150,4 +150,19 @@ public class InvoiceServiceImpl implements InvoiceService {
         
     }  
 
+    @Override
+    public List<Invoice> findByLogisticName(String logisticName) {
+        return invoiceRepository.findByLogisticName(logisticName);
+    }
+
+    @Override
+    public List<Invoice> findByStatusInvoice(String statusInvoice) {
+        return invoiceRepository.findByStatusInvoice(statusInvoice);
+    }
+
+    @Override
+    public List<Invoice> findByStatusInvoiceAndLogisticName(String statusInvoice, String logisticName) {
+        return invoiceRepository.findByStatusInvoiceAndLogisticName(statusInvoice, logisticName);
+    }
+
 }

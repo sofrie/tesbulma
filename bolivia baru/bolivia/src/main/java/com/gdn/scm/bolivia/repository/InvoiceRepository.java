@@ -9,6 +9,8 @@ import com.gdn.scm.bolivia.entity.AWB;
 import com.gdn.scm.bolivia.entity.Invoice;
 import com.gdn.scm.bolivia.entity.UploadHistory;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -26,6 +28,16 @@ public interface InvoiceRepository extends JpaRepository<Invoice, String> {
     public List<Invoice> findByYear(Integer year);
     
     public Invoice findTop1ByOrderByLastModifiedDesc();
-
+    
+    public List<Invoice> findByLogisticName(String logisticName);
+    
+    public List<Invoice> findByStatusInvoice(String statusInvoice);
+    
+    public List<Invoice> findByStatusInvoiceAndLogisticName(String statusInvoice,String logisticName);
+    
+    
+//    public Page<Invoice> findByStatusInvoice(String statusInvoice, Pageable pageable);
+//    
+//    public Page<Invoice> findByLogisticName(String logisticName, Pageable pageable);
    
 }

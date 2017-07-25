@@ -50,6 +50,24 @@ public class InvoiceController {
     public void updateInvoice(@RequestBody InvoiceRequest request) {
         invoiceService.updateInvoice(request);
     }
+    
+    @CrossOrigin
+    @RequestMapping(value = "/api/invoice/filterStatus/{status}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Invoice> filterInvoiceByStatus(@PathVariable("status") String status) {
+        return invoiceService.findByStatusInvoice(status);
+    }
+    
+    @CrossOrigin
+    @RequestMapping(value = "/api/invoice/filterLogistic/{logistic}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Invoice> filterInvoiceByLogistic(@PathVariable("logistic") String logistic) {
+        return invoiceService.findByLogisticName(logistic);
+    }
+    
+    @CrossOrigin
+    @RequestMapping(value = "/api/invoice/filter/{status}/{logistic}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Invoice> filterAll(@PathVariable("status") String status, @PathVariable("logistic") String logistic) {
+        return invoiceService.findByStatusInvoiceAndLogisticName(status, logistic);
+    }
 
 //    @CrossOrigin
 //    @RequestMapping(value = "/api/invoice/{month}/{year}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

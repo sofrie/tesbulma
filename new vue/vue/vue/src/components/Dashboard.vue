@@ -11,25 +11,27 @@
                                         Status :
                                     </label>
                                     <div class="col-sm-2">
-                                        <select id="skill" name="skill" class="form-control" v-on:change="changeStatus()" v-model="selectedStatus">
+                                        <select id="skill" name="skill" class="form-control"
+                                                v-on:change="changeStatus()" v-model="selectedStatus">
                                             <option value="Select Status" disabled="" selected="">
                                                 Select Status
                                             </option>
-											<option value="Open">Open</option>
-											<option value="On Process">On Process</option>
-											<option value="Problem Exist">Problem Exist</option>
-											<option value="OK">OK</option>
-											<option value="Submitted">Submitted</option>
-											<option value="Confirmed">Confirmed</option>
-											<option value="Approved">Approved</option>
+                                            <option value="Open">Open</option>
+                                            <option value="On Process">On Process</option>
+                                            <option value="Problem Exist">Problem Exist</option>
+                                            <option value="OK">OK</option>
+                                            <option value="Submitted">Submitted</option>
+                                            <option value="Confirmed">Confirmed</option>
+                                            <option value="Approved">Approved</option>
                                         </select>
                                     </div>
-                                   
+
                                     <label class="col-sm-1 control-label" for="skill">
                                         Logistic :
                                     </label>
                                     <div class="col-sm-2">
-                                        <select id="skill" name="skill" class="form-control" v-on:change="changeLogistic()" v-model="selectedLogistic">
+                                        <select id="skill" name="skill" class="form-control"
+                                                v-on:change="changeLogistic()" v-model="selectedLogistic">
                                             <option value="Select Logistic" disabled="" selected="">
                                                 Select logistic
                                             </option>
@@ -37,16 +39,16 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-1">
-                                        <button type="submit" class="btn btn-effect-ripple btn-primary">Search</button>
+                                        <button type="submit" class="btn btn-effect-ripple btn-primary" v-on:click="search()">Search</button>
                                     </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>                
+                </div>
+
             </div>
-            
         </div>
-    </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="panel ">
@@ -62,7 +64,7 @@
                     <div class="panel-body">
                         <div class="panel-body table-responsive">
                             <table class="table table-striped table-bordered table_width" id="example">
-                            <thead>
+                                <thead>
                                 <tr>
                                     <th>Month</th>
                                     <th>Year</th>
@@ -71,19 +73,19 @@
                                     <th>Status</th>
                                     <th>Last Modified</th>
                                 </tr>
-                            </thead>
-                            <tbody>
-                             <tr v-for="post of posts" v-on:click="setSummary(post)">
-                                <td>{{post.month}}</td>
-                                <td>{{post.year}}</td>
-                                <td>{{post.tagihan}}</td>
-                                <td>{{post.logisticName}}</td>
-                                <td>{{post.statusInvoice}}</td>
-                                <td>{{post.lastModified | formatDate}}</td>
-                              </tr>                                
-                            </tbody>
-                        </table>
-                        </div> 
+                                </thead>
+                                <tbody>
+                                <tr v-for="post of posts" v-on:click="setSummary(post)">
+                                    <td>{{post.month | filtermonth}}</td>
+                                    <td>{{post.year}}</td>
+                                    <td>{{post.tagihan | currency}}</td>
+                                    <td>{{post.logisticName}}</td>
+                                    <td>{{post.statusInvoice}}</td>
+                                    <td>{{post.lastModified }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -92,41 +94,41 @@
     </div>
 </template>
 <script>
-import fileinput from "../vendors/bootstrap-fileinput/js/fileinput.min.js"
-import localforage from 'localforage'
-import { upload } from './file-upload.service.js'
-import axios from 'axios'
-import dt from "datatables.net"
-import datatables_bootstrap from "datatables.net-bs/js/dataTables.bootstrap.js"
-import moment from 'moment'
+    import fileinput from "../vendors/bootstrap-fileinput/js/fileinput.min.js"
+    import localforage from 'localforage'
+    import {upload} from './file-upload.service.js'
+    import axios from 'axios'
+    import dt from "datatables.net"
+    import datatables_bootstrap from "datatables.net-bs/js/dataTables.bootstrap.js"
+    import moment from 'moment'
 
-require("datatables.net-bs/css/dataTables.bootstrap.css");
+    require("datatables.net-bs/css/dataTables.bootstrap.css");
 
-const STATUS_INITIAL = 0
-const STATUS_SAVING = 1
-const STATUS_SUCCESS = 2
-const STATUS_FAILED = 3
-const formData = new window.FormData()
-export default {
-    name: "datatables",
-    data: () => ({
-      posts: [],
-      currentStatus: null,
-      uploadFieldName: 'invoiceFile',
-      selectedStatus: 'Select Status',
-      selectedLogistic: 'Select Logistic',
-	  invoice: null,
-	  listStatus: [],
-      listLogistic: []
-    }
-    ),
-    mounted: function() {
-        "use strict";        
-        $(".content .row").find('input').iCheck({
+    const STATUS_INITIAL = 0
+    const STATUS_SAVING = 1
+    const STATUS_SUCCESS = 2
+    const STATUS_FAILED = 3
+    const formData = new window.FormData()
+    export default {
+        name: "datatables",
+        data: () => ({
+                posts: [],
+                currentStatus: null,
+                uploadFieldName: 'invoiceFile',
+                selectedStatus: 'Select Status',
+                selectedLogistic: 'Select Logistic',
+                invoice: null,
+                listStatus: [],
+                listLogistic: []
+            }
+        ),
+        mounted: function () {
+            "use strict";
+            $(".content .row").find('input').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
-            increaseArea: '20%' // optional
-        });
+                increaseArea: '20%' // optional
+            });
             $("#input-43").fileinput({
                 browseClass: "btn btn-info",
                 showPreview: false,
@@ -145,7 +147,7 @@ export default {
                 allowedFileTypes: ["image", "video"]
             });
             $("#input-40,#input-22").fileinput("enable");
-            $(".btn-modify").on("click", function() {
+            $(".btn-modify").on("click", function () {
 
                 var $btn = $(this);
                 if ($btn.text() == "Modify") {
@@ -199,111 +201,168 @@ export default {
                 maxFileCount: 10,
                 mainClass: "input-group-lg"
             });
-    },
-    destroyed: function() {
-    },
-    filters: {
-        currency: function (value) {
-            return 'Rp. ' + value.toString().replace(/,/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
         },
-        formatDate: function (value) {
-            return moment(String(value)).format('MM/DD/YYYY hh:mm')
+        destroyed: function () {
+        },
+        filters: {
+            currency: function (value) {
+                return 'Rp. ' + value.toString().replace(/,/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            },
+            filtermonth: function (value) {
+                if(value==1)
+                {
+                    return 'Januari'
+                }
+                else if(value==2)
+                {
+                    return 'Februari'
+                }
+                else if(value==3)
+                {
+                    return 'Maret'
+                }
+                else if(value==4)
+                {
+                    return 'April'
+                }
+                else if(value==5)
+                {
+                    return 'Mei'
+                }
+                else if(value==6)
+                {
+                    return 'Juni'
+                }
+                else if(value==7)
+                {
+                    return 'Juli'
+                }
+                else if(value==8)
+                {
+                    return 'Agustus'
+                }
+                else if(value==9)
+                {
+                    return 'September'
+                }
+                else if(value==10)
+                {
+                    return 'Oktober'
+                }
+                else if(value==11)
+                {
+                    return 'November'
+                }
+                else if(value==12)
+                {
+                    return 'Desember'
+                }
+            }
+        },
+        methods: {
+            fetchInvoices() {
+                axios.get(`http://127.0.0.1:8091/api/invoice`)
+                    .then(response => {
+                        // JSON responses are automatically parsed.
+                        this.posts = response.data
+                        this.getLogisticSelectList()
+                    })
+                    .catch(e => {
+                        this.errors.push(e)
+                    })
+            },
+            fetchUsers() {
+                axios.get(`http://127.0.0.1:8091/api/uploadHistory`)
+                    .then(response => {
+                        // JSON responses are automatically parsed.
+                        this.posts = response.data
+                        this.getLogisticSelectList()
+                    })
+                    .catch(e => {
+                        this.errors.push(e)
+                    })
+            },
+            changeStatus () {
+                axios.get('http://127.0.0.1:8091/api/invoice/filterStatus/' + this.selectedStatus)
+                    .then(response => {
+                        // JSON responses are automatically parsed.
+                        this.posts = response.data
+                    })
+                    .catch(e => {
+                        this.errors.push(e)
+                    })
+            },
+            changeLogistic () {
+                axios.get('http://127.0.0.1:8091/api/invoice/filterLogistic/' + this.selectedLogistic)
+                    .then(response => {
+                        // JSON responses are automatically parsed.
+                        this.posts = response.data
+                    })
+                    .catch(e => {
+                        this.errors.push(e)
+                    })
+            },
+            search () {
+                axios.get('http://127.0.0.1:8091/api/invoice/filter/' + this.selectedStatus + '/' +this.selectedLogistic)
+                    .then(response => {
+                        // JSON responses are automatically parsed.
+                        this.posts = response.data
+                    })
+                    .catch(e => {
+                        this.errors.push(e)
+                    })
+            },
+            getLogisticSelectList(){
+                axios.get('http://127.0.0.1:8091/api/logistic/list')
+                    .then(response => {
+                        // JSON responses are automatically parsed.
+                        this.listLogistic = response.data
+                    })
+                    .catch(e => {
+                        this.errors.push(e)
+                    })
+            }
+        },
+        ready() {
+            this.fetchUsers();
+        },
+        computed: {
+            isInitial () {
+                return this.currentStatus === STATUS_INITIAL
+            },
+            isSaving () {
+                return this.currentStatus === STATUS_SAVING
+            },
+            isSuccess () {
+                return this.currentStatus === STATUS_SUCCESS
+            },
+            isFailed () {
+                return this.currentStatus === STATUS_FAILED
+            }
+        },
+        mounted () {
+            $(document).ready(function () {
+                setTimeout(function () {
+                    $('#sample_1').dataTable({
+                        "responsive": true
+                    });
+                    var table = $('#example').DataTable({
+                        "responsive": true
+                    });
+                    $('button.toggle-vis').on('click', function (e) {
+                        e.preventDefault();
+                        // Get the column API object
+                        var column = table.column($(this).attr('data-column'));
+                        // Toggle the visibility
+                        column.visible(!column.visible());
+                    });
+                }, 400);
+            });
+            this.fetchInvoices()
+            selectedStatus: 'Select Status'
+            selectedLogistic: 'Select Logistic'
         }
-    },
-  methods: {
-      fetchInvoices() {
-          axios.get(`http://127.0.0.1:8091/api/invoice`)
-              .then(response => {
-                  // JSON responses are automatically parsed.
-                  this.posts = response.data
-                  this.getLogisticSelectList()
-              })
-              .catch(e => {
-                  this.errors.push(e)
-              })
-      },
-    fetchUsers() {
-        axios.get(`http://127.0.0.1:8091/api/uploadHistory`)
-        .then(response => {
-          // JSON responses are automatically parsed.
-          this.posts = response.data
-		  this.getLogisticSelectList()
-        })
-        .catch(e => {
-          this.errors.push(e)
-        })      
-    },
-      changeStatus () {
-        axios.get('http://127.0.0.1:8091/api/uploadHistory/status/' + this.selectedStatus)
-          .then(response => {
-            // JSON responses are automatically parsed.
-            this.posts = response.data
-          })
-          .catch(e => {
-            this.errors.push(e)
-          })
-      },
-      changeLogistic () {
-        axios.get('http://127.0.0.1:8091/api/uploadHistory/logistic/' + this.selectedLogistic)
-          .then(response => {
-            // JSON responses are automatically parsed.
-            this.posts = response.data
-          })
-          .catch(e => {
-            this.errors.push(e)
-          })
-      },
-    getLogisticSelectList(){
-		axios.get('http://127.0.0.1:8091/api/logistic/list')
-          .then(response => {
-            // JSON responses are automatically parsed.
-            this.listLogistic = response.data
-          })
-          .catch(e => {
-            this.errors.push(e)
-          })
-	  }
-    },
-    ready() {
-        this.fetchUsers();
-    },
-    computed: {
-      isInitial () {
-        return this.currentStatus === STATUS_INITIAL
-        },
-        isSaving () {
-            return this.currentStatus === STATUS_SAVING
-        },
-        isSuccess () {
-            return this.currentStatus === STATUS_SUCCESS
-        },
-        isFailed () {
-            return this.currentStatus === STATUS_FAILED
-        }
-    },
-    mounted () {
-        $(document).ready(function() {
-        setTimeout(function(){
-            $('#sample_1').dataTable({
-                "responsive": true
-            });
-            var table = $('#example').DataTable({
-                "responsive": true
-            });
-            $('button.toggle-vis').on('click', function(e) {
-                e.preventDefault();
-                // Get the column API object
-                var column = table.column($(this).attr('data-column'));
-                // Toggle the visibility
-                column.visible(!column.visible());
-            });
-        },400);
-        });
-        this.fetchInvoices()
-		selectedStatus: 'Select Status'
-      selectedLogistic: 'Select Logistic'
-      }
-}
+    }
 </script>
 <style src="../vendors/bootstrap-fileinput/css/fileinput.min.css"></style>
 <style src="../assets/css/formelements.css"></style>

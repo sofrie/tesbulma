@@ -251,8 +251,10 @@ public class Compare {
                     BigDecimal tagih = awbRepository.countTotalTagihan();
                     try {
                         LogisticProvider logistic=logisticProviderService.findById(currentInvoice.getLogisticProvider().getId());
-                        BigDecimal totalTagihan=aWBService.countTagihan(currentInvoice).add(new BigDecimal (logistic.getVat()/100).multiply(aWBService.countTagihan(currentInvoice))).subtract(new BigDecimal(logistic.getDiscount()/100).multiply(aWBService.countTagihan(currentInvoice)));
-                        
+                        BigDecimal b=aWBService.countTagihan(currentInvoice);
+                        System.out.println("bbbbbb "+b);
+                        BigDecimal totalTagihan=b.add((new BigDecimal (logistic.getVat()).divide(new BigDecimal (100)).multiply(b))).subtract((new BigDecimal(logistic.getDiscount()).divide(new BigDecimal(100)).multiply(b)));
+                        System.out.println("total tagihan "+totalTagihan);
                         upload.setJumlahTagihan(totalTagihan);                        
                         currentInvoice.setTagihan(totalTagihan);
                     } catch (Exception e) {
