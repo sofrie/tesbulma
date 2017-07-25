@@ -201,8 +201,8 @@ public class AWBController {
     }
     
     @CrossOrigin
-    @RequestMapping(value = "/api/awb/filtermonth/{month}/sort/{order}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    Page<AWB> findMonthSortAwbNumber(@PathVariable("order") String order, @PathVariable("month") String month,Pageable pageable) {
+    @RequestMapping(value = "/api/awb/filtermonth/{month}/sort/awb/{order}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    Page<AWB> findMonthSortAwbNumber(@PathVariable("order") String order, @PathVariable("month") Integer month,Pageable pageable) {
         if(order.toLowerCase().equals("asc")){
             awbs = awbService.findMonthSortByAwbNumberASC(month,pageable);
         }
@@ -311,7 +311,7 @@ public class AWBController {
     
     @CrossOrigin
     @RequestMapping(value = "/api/awb/filter/{month}/{year}/{logisticName}/{awbNumber}/{reconStatus}/{merchantCode}/{gdnRef}/sort/{order}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<AWB> filterAllSortByAwbNumber(@PathVariable("month") String month, @PathVariable("year") String year, @PathVariable("logisticName") String logisticName, @PathVariable("awbNumber") String awbNumber, @PathVariable("reconStatus") String reconStatus, @PathVariable("merchantCode") String merchantCode, @PathVariable("gdnRef") String gdnRef, @PathVariable("order") String order, Pageable pageable) {
+    public Page<AWB> filterAllSortByAwbNumber(@PathVariable("month") Integer  month, @PathVariable("year") String year, @PathVariable("logisticName") String logisticName, @PathVariable("awbNumber") String awbNumber, @PathVariable("reconStatus") String reconStatus, @PathVariable("merchantCode") String merchantCode, @PathVariable("gdnRef") String gdnRef, @PathVariable("order") String order, Pageable pageable) {
         if(order.toLowerCase().equals("asc")){
             awbs = awbService.filterAllSortByAwbNumberASC(month, year, logisticName, awbNumber, reconStatus, merchantCode, gdnRef,pageable);
         }
@@ -327,7 +327,7 @@ public class AWBController {
     
     @CrossOrigin
     @RequestMapping(value = "/api/awb/filterinvoice/{month}/{year}/{logisticName}/sort/{order}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<AWB> filterByInvoiceSortByAwbNumber(@PathVariable("month") String month, @PathVariable("year") String year, @PathVariable("logisticName") String logisticName,@PathVariable("order") String order,Pageable pageable) {
+    public Page<AWB> filterByInvoiceSortByAwbNumber(@PathVariable("month") Integer  month, @PathVariable("year") String year, @PathVariable("logisticName") String logisticName,@PathVariable("order") String order,Pageable pageable) {
         
         if(order.toLowerCase().equals("asc")){
             awbs = awbService.filterByInvoiceSortByAwbNumberASC(month, year, logisticName,pageable);
@@ -362,7 +362,7 @@ public class AWBController {
     
     @CrossOrigin
     @RequestMapping(value = "/api/awb/filtermonth/{month}/sort/status/{order}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    Page<AWB> findMonthSortStatus(@PathVariable("order") String order, @PathVariable("month") String month,Pageable pageable) {
+    Page<AWB> findMonthSortStatus(@PathVariable("order") String order, @PathVariable("month") Integer  month,Pageable pageable) {
         if(order.toLowerCase().equals("asc")){
             awbs = awbService.findMonthSortByStatusASC(month,pageable);
         }
@@ -471,7 +471,7 @@ public class AWBController {
     
     @CrossOrigin
     @RequestMapping(value = "/api/awb/filter/{month}/{year}/{logisticName}/{awbNumber}/{reconStatus}/{merchantCode}/{gdnRef}/sort/status/{order}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<AWB> filterAllSortByStatus(@PathVariable("month") String month, @PathVariable("year") String year, @PathVariable("logisticName") String logisticName, @PathVariable("awbNumber") String awbNumber, @PathVariable("reconStatus") String reconStatus, @PathVariable("merchantCode") String merchantCode, @PathVariable("gdnRef") String gdnRef, @PathVariable("order") String order, Pageable pageable) {
+    public Page<AWB> filterAllSortByStatus(@PathVariable("month") Integer  month, @PathVariable("year") String year, @PathVariable("logisticName") String logisticName, @PathVariable("awbNumber") String awbNumber, @PathVariable("reconStatus") String reconStatus, @PathVariable("merchantCode") String merchantCode, @PathVariable("gdnRef") String gdnRef, @PathVariable("order") String order, Pageable pageable) {
         if(order.toLowerCase().equals("asc")){
             awbs = awbService.filterAllSortByStatusASC(month, year, logisticName, awbNumber, reconStatus, merchantCode, gdnRef,pageable);
         }
@@ -487,7 +487,7 @@ public class AWBController {
     
     @CrossOrigin
     @RequestMapping(value = "/api/awb/filterinvoice/{month}/{year}/{logisticName}/sort/status/{order}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<AWB> filterByInvoiceSortByStatus(@PathVariable("month") String month, @PathVariable("year") String year, @PathVariable("logisticName") String logisticName,@PathVariable("order") String order,Pageable pageable) {
+    public Page<AWB> filterByInvoiceSortByStatus(@PathVariable("month") Integer  month, @PathVariable("year") String year, @PathVariable("logisticName") String logisticName,@PathVariable("order") String order,Pageable pageable) {
         
         if(order.toLowerCase().equals("asc")){
             awbs = awbService.filterByInvoiceSortByStatusASC(month, year, logisticName,pageable);
@@ -522,7 +522,7 @@ public class AWBController {
     
     @CrossOrigin
     @RequestMapping(value = "/api/awb/filtermonth/{month}/sort/gdnref/{order}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    Page<AWB> findMonthSortGdnRef(@PathVariable("order") String order, @PathVariable("month") String month,Pageable pageable) {
+    Page<AWB> findMonthSortGdnRef(@PathVariable("order") String order, @PathVariable("month") Integer  month,Pageable pageable) {
         if(order.toLowerCase().equals("asc")){
             awbs = awbService.findMonthSortByGdnRefASC(month,pageable);
         }
@@ -631,7 +631,7 @@ public class AWBController {
     
     @CrossOrigin
     @RequestMapping(value = "/api/awb/filter/{month}/{year}/{logisticName}/{awbNumber}/{reconGdnRef}/{merchantCode}/{gdnRef}/sort/gdnref/{order}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<AWB> filterAllSortByGdnRef(@PathVariable("month") String month, @PathVariable("year") String year, @PathVariable("logisticName") String logisticName, @PathVariable("awbNumber") String awbNumber, @PathVariable("reconStatus") String reconStatus, @PathVariable("merchantCode") String merchantCode, @PathVariable("gdnRef") String gdnRef, @PathVariable("order") String order, Pageable pageable) {
+    public Page<AWB> filterAllSortByGdnRef(@PathVariable("month") Integer  month, @PathVariable("year") String year, @PathVariable("logisticName") String logisticName, @PathVariable("awbNumber") String awbNumber, @PathVariable("reconStatus") String reconStatus, @PathVariable("merchantCode") String merchantCode, @PathVariable("gdnRef") String gdnRef, @PathVariable("order") String order, Pageable pageable) {
         if(order.toLowerCase().equals("asc")){
             awbs = awbService.filterAllSortByGdnRefASC(month, year, logisticName, awbNumber, reconStatus, merchantCode, gdnRef,pageable);
         }
@@ -647,7 +647,7 @@ public class AWBController {
     
     @CrossOrigin
     @RequestMapping(value = "/api/awb/filterinvoice/{month}/{year}/{logisticName}/sort/gdnref/{order}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<AWB> filterByInvoiceSortByGdnRef(@PathVariable("month") String month, @PathVariable("year") String year, @PathVariable("logisticName") String logisticName,@PathVariable("order") String order,Pageable pageable) {
+    public Page<AWB> filterByInvoiceSortByGdnRef(@PathVariable("month") Integer  month, @PathVariable("year") String year, @PathVariable("logisticName") String logisticName,@PathVariable("order") String order,Pageable pageable) {
         
         if(order.toLowerCase().equals("asc")){
             awbs = awbService.filterByInvoiceSortByGdnRefASC(month, year, logisticName,pageable);
@@ -655,6 +655,18 @@ public class AWBController {
         else if(order.toLowerCase().equals("desc")){
             awbs = awbService.filterByInvoiceSortByGdnRefDESC(month, year, logisticName,pageable);
         }
+        pageClass = new PageClass();
+        pageClass.setTotal_page(awbs.getTotalPages());
+        pageClass.setItem_page(awbs.getSize());
+        pageClass.setPage(awbs.getNumber());
+        return awbs;
+    }
+    
+    
+    @CrossOrigin
+    @RequestMapping(value = "/api/awb/filterinvoice/{month}/{year}/{logisticName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Page<AWB> filterByInvoice(@PathVariable("month") Integer month, @PathVariable("year") Integer year, @PathVariable("logisticName") String logisticName,Pageable pageable) {
+        awbs = awbService.filterByInvoice(month, year, logisticName,pageable);
         pageClass = new PageClass();
         pageClass.setTotal_page(awbs.getTotalPages());
         pageClass.setItem_page(awbs.getSize());
