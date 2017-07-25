@@ -20,7 +20,6 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 /**
@@ -111,14 +110,15 @@ public class Receiver {
                 message.setOtherChargeSystem(fromSystem.getOtherChargeSystem());
                 message.setTotalChargeSystem(fromSystem.getTotalChargeSystem());
 
+                System.out.println("message ID "+message.getId());
                 awbRepository.save(message);
                 //Thread.sleep(500);
-                System.out.println("lalalalalaalalalalla");
-                System.out.println("price " + message.getPriceSystem());
-                System.out.println("weight " + message.getWeightSystem());
-                System.out.println("insurance " + message.getInsuranceChargeSystem());
-                System.out.println("other " + message.getOtherChargeSystem());
-                System.out.println("total " + message.getTotalChargeSystem());
+//                System.out.println("lalalalalaalalalalla");
+//                System.out.println("price " + message.getPriceSystem());
+//                System.out.println("weight " + message.getWeightSystem());
+//                System.out.println("insurance " + message.getInsuranceChargeSystem());
+//                System.out.println("other " + message.getOtherChargeSystem());
+//                System.out.println("total " + message.getTotalChargeSystem());
 
                 //untuk perhitungan toleransi
                 BigDecimal tolerancePercent;
@@ -132,8 +132,9 @@ public class Receiver {
                     counterBeda += 1;
                 } else {
                     message.setPriceComment("-");
+                    message.setPriceApplied(message.getPriceLogistic());
                 }
-                System.out.println("maxxxxxxxxxx : "+max);
+//                System.out.println("maxxxxxxxxxx : "+max);
 
                 tolerancePercent = (tolerance.getWeightPercentage().divide(new BigDecimal(100)).multiply(message.getWeightSystem())).add(message.getWeightSystem());
                 toleranceAmount = message.getWeightSystem().add(tolerance.getWeightAmount());
@@ -143,6 +144,7 @@ public class Receiver {
                     counterBeda += 1;
                 } else {
                     message.setWeightComment("-");
+                    message.setWeightApplied(message.getWeightLogistic());
                 }
 
                 tolerancePercent = (tolerance.getInsuranceChargePercentage().divide(new BigDecimal(100)).multiply(message.getInsuranceChargeSystem())).add(message.getInsuranceChargeSystem());
@@ -153,6 +155,7 @@ public class Receiver {
                     counterBeda += 1;
                 } else {
                     message.setInsuranceChargeComment("-");
+                    message.setInsuranceChargeApplied(message.getInsuranceChargeLogistic());
                 }
 
                 tolerancePercent = (tolerance.getOtherChargePercentage().divide(new BigDecimal(100)).multiply(message.getOtherChargeSystem())).add(message.getOtherChargeSystem());
@@ -163,6 +166,7 @@ public class Receiver {
                     counterBeda += 1;
                 } else {
                     message.setOtherChargeComment("-");
+                    message.setOtherChargeApplied(message.getOtherChargeLogistic());
                 }
 
                 tolerancePercent = (tolerance.getTotalShippingPercentage().divide(new BigDecimal(100)).multiply(message.getTotalChargeSystem())).add(message.getTotalChargeSystem());
@@ -173,6 +177,7 @@ public class Receiver {
                     counterBeda += 1;
                 } else {
                     message.setTotalChargeComment("-");
+                    message.setTotalChargeApplied(message.getTotalChargeLogistic());
                 }
 
                 //klo ada data yg beda status si awb nya jadi problem exist, klo ngga berarti OK
@@ -192,7 +197,7 @@ public class Receiver {
             //tambahin ke tagihan   
             
                 String tambah=message.getTotalChargeLogistic().toString();
-                System.out.println("TAGIHANNNNNN "+new BigDecimal(tambah,new MathContext(2)));
+//                System.out.println("TAGIHANNNNNN "+new BigDecimal(tambah,new MathContext(2)));
                 tagihan=tagihan.add(new BigDecimal(tambah,new MathContext(2)));
                 
                 System.out.println("tambah ------------- "+tambah);
@@ -200,6 +205,7 @@ public class Receiver {
                 
             //klo uda dibandingin di save
             awbRepository.save(message);
+            System.out.println("counter "+counterFromCompare);
 //            for (Map.Entry<String, String> entry : compare.map.entrySet()) {
 //                String key = entry.getKey();
 //                if (key.equals(message.getUploadHistoryNumber())) {

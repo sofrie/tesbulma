@@ -33,7 +33,7 @@ public class ProcessService {
     }
 
     public AWB requestProcess(AWB awb) {
-        System.out.println("Reques process" + awb);
+        System.out.println("Reques process" + awb.getId());
         rabbitTemplate.convertAndSend(BoliviaApplication.queueName, awb);
         counter++;
         //System.out.println("counter....................." + counter.toString());

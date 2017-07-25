@@ -23,7 +23,7 @@ import lombok.Setter;
 @Setter
 public class InvoiceRequest {
 
-    private Integer id;
+    private String id;
 
     private Integer month;
 
@@ -32,22 +32,22 @@ public class InvoiceRequest {
     private BigDecimal tagihan;
 
     private String createdBy;
-
+    
     private String statusInvoice;
 
-    private Date firstUploadDate;
+    private String firstUploadDate;
 
-    private Date submitedDate;
+    private String submitedDate;
 
-    private Date confirmedDate;
+    private String confirmedDate;
 
-    private Date approvedDate;
+    private String approvedDate;
 
-    private Date lastModified;
-
-    private LogisticProvider logisticProvider;
-
-    private Set<UploadHistory> uploadHistory;
-
+    private String lastModified;
+    
     private String logisticName;
+    
+    private LogisticProvider logisticProvider;
+    
+    private Set<UploadHistory> uploadHistory;
 }

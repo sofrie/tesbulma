@@ -7,9 +7,11 @@ package com.gdn.scm.bolivia.repository;
 
 import com.gdn.scm.bolivia.entity.AWB;
 import com.gdn.scm.bolivia.entity.Invoice;
+import com.gdn.scm.bolivia.entity.UploadHistory;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -17,17 +19,27 @@ import org.springframework.stereotype.Repository;
  * @author sofrie.zumaytis
  */
 @Repository
-public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
+public interface InvoiceRepository extends JpaRepository<Invoice, String> {
 
-    public List<Invoice> findByMonth(String month);
+    public Invoice findByMonthAndYearAndLogisticName(Integer month, Integer year, String logisticName);
 
-    public List<Invoice> findByYear(String year);
-
-//    @Query("SELECT l.logisticName" +
-//"  FROM Invoice i" +
-//"  JOIN LogisticProvider l" +
-//"  ON l.id=i.blv_logistic_provider_id" +
-//"  WHERE i.id=?")
-//    public List<String> getLogisticName(Integer id);
+    public List<Invoice> findByMonth(Integer month);
+    
+    public List<Invoice> findByYear(Integer year);
+    public Invoice findById(String id);
+    
+    public Invoice findTop1ByOrderByLastModifiedDesc();
+    
+    public List<Invoice> findByLogisticName(String logisticName);
+    
+    public List<Invoice> findByStatusInvoice(String statusInvoice);
+    
+    public List<Invoice> findByStatusInvoiceAndLogisticName(String statusInvoice,String logisticName);
+    
+    
+    
+//    public Page<Invoice> findByStatusInvoice(String statusInvoice, Pageable pageable);
+//    
+//    public Page<Invoice> findByLogisticName(String logisticName, Pageable pageable);
    
 }

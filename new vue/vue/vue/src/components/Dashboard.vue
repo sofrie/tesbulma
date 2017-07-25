@@ -75,7 +75,8 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="post of posts" v-on:click="setSummary(post)">
+								<router-link :to="{path:'/invoicepage/'+post.id}" v-for="post of posts">
+								<tr>
                                     <td>{{post.month | filtermonth}}</td>
                                     <td>{{post.year}}</td>
                                     <td>{{post.tagihan | currency}}</td>
@@ -83,6 +84,8 @@
                                     <td>{{post.statusInvoice}}</td>
                                     <td>{{post.lastModified }}</td>
                                 </tr>
+                            </router-link>
+
                                 </tbody>
                             </table>
                         </div>

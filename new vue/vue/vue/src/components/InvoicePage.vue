@@ -138,7 +138,7 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="submit" class="btn btn-succes"
-                                                                    v-on:click="uploadHistory()" data-dismiss="modal">
+                                                                    v-on:click="uploadInvoice()" data-dismiss="modal">
                                                                 Submit
                                                             </button>
                                                             <button type="reset" class="btn btn-default">Reset</button>
@@ -194,10 +194,11 @@
                             <router-link :to="{path:'/awb/'+invoice.month+'/'+invoice.year+'/'+invoice.logistic}">
                                 <button class="btn btn-primary button_normal">View Data</button>
                             </router-link>
-
-                            <button class="btn btn-primary button_normal">Download</button>
-                            <button class="btn btn-primary button_normal pull-right">Approve</button>
-                            <button class="btn btn-primary button_normal pull-right" v-on:click="uploaded()">Submit
+							
+							<button class="btn btn-primary button_normal" v-on:click="downloadFile()">Download</button>
+                            <button class="btn btn-primary button_normal pull-right" v-on:click="approved()">Approve</button>
+                            <button class="btn btn-primary button_normal pull-right" v-on:click="checked()">Check</button>
+                            <button class="btn btn-primary button_normal pull-right" v-on:click="submited()">Submit</button>
                             </button>
                         </div>
                     </div>
@@ -414,6 +415,70 @@
             }
         },
         methods: {
+			downloadFile () {
+                axios.get(`http://127.0.0.1:8091/api/uploadHistory/download/` + this.invoice.id)
+                    .then(response => {
+                        // JSON responses are automatically parsed.
+                    })
+                    .catch(e => {
+                        this.errors.push(e)
+                    })
+            },
+            updateHistory () {
+                axios.post(`http://127.0.0.1:8091/api/uploadHistory/update`, {
+                    id: this.invoice.id,
+                    status: this.statusUpdate
+                })
+                this.sendMail()
+            },
+            sendMail () {
+                axios.get(`http://127.0.0.1:8091/users/sendmail/` + this.invoice.id)
+                    .then(response => {
+                        // JSON responses are automatically parsed.
+                    })
+                    .catch(e => {
+                        this.errors.push(e)
+                    })
+            },
+            submited () {
+                axios.post(`http://127.0.0.1:8091/api/invoice/update`, {
+                    month: this.invoice.month,
+                    year: this.invoice.year,
+                    logisticName: this.invoice.logistic,
+                    statusInvoice: 'Submited',
+                    id: this.invoice.id
+                })
+                this.statusUpdate = 'Submited'
+                this.updateHistory()
+            },
+            checked () {
+                axios.post(`http://127.0.0.1:8091/api/invoice/update`, {
+                    month: this.invoice.month,
+                    year: this.invoice.year,
+                    logisticName: this.invoice.logistic,
+                    statusInvoice: 'Checked'
+                })
+                this.statusUpdate= 'Checked'
+                this.updateHistory()
+            },
+            approved () {
+                axios.post(`http://127.0.0.1:8091/api/invoice/update`, {
+                    month: this.invoice.month,
+                    year: this.invoice.year,
+                    logisticName: this.invoice.logistic,
+                    statusInvoice: 'Approved'
+                })
+                this.statusUpdate= 'Approved'
+                this.updateHistory()
+            },
+            uploadInvoice () {
+                axios.post(`http://127.0.0.1:8091/api/invoice`, {
+                    month: this.selectedMonth,
+                    year: this.selectedYear,
+                    logisticName: this.selectedLogistic
+                })
+                setTimeout(this.uploadHistory(), 5000);
+            },
             uploadHistory () {
                 axios.post(`http://127.0.0.1:8091/api/uploadHistory`, {
                     month: this.selectedMonth,

@@ -16,6 +16,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AWBRequest {
+    
+    private String id;
+    
     private String awbNumber;
     private String reconStatus;
     private String gdnRef;
@@ -82,8 +85,8 @@ public class AWBRequest {
     
     
 
-    private String month;
-    private String year;
+    private Integer month;
+    private Integer year;
     private String logisticName;
     
     

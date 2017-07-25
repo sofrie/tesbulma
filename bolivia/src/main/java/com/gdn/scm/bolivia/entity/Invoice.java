@@ -44,6 +44,7 @@ public class Invoice {
     public static final String COLUMN_TAGIHAN = "TAGIHAN";
     public static final String COLUMN_CREATED_BY = "CREATED_BY";
     public static final String COLUMN_LOGISTIC_PROVIDER = "LOGISTIC_PROVIDER";
+    public static final String COLUMN_LOGISTIC_NAME = "LOGISTIC_NAME";
     public static final String COLUMN_STATUS_INVOICE = "STATUS_INVOICE";
     public static final String COLUMN_LAST_MODIFIED = "LAST_MODIFIED ";
 
@@ -53,7 +54,7 @@ public class Invoice {
     public static final String COLUMN_APPROVED_DATE = "APPROVED_DATE ";
 
     @Column(name = COLUMN_ID, nullable = false)    
-    private Integer id;
+    private String id;
 
     @Column(name = COLUMN_MONTH, nullable = false)
     private Integer month;
@@ -71,31 +72,33 @@ public class Invoice {
     private String statusInvoice;
 
     @Column(name = COLUMN_FIRST_UPLOAD_DATE, nullable = true)
-    private Date firstUploadDate;
+    private String firstUploadDate;
 
     @Column(name = COLUMN_SUBMITED_DATE, nullable = true)
-    private Date submitedDate;
+    private String submitedDate;
 
     @Column(name = COLUMN_CONFIRMED_DATE, nullable = true)
-    private Date confirmedDate;
+    private String confirmedDate;
 
     @Column(name = COLUMN_APPROVED_DATE, nullable = true)
-    private Date approvedDate;
+    private String approvedDate;
 
     @Column(name = COLUMN_LAST_MODIFIED, nullable = true)
-    private Date lastModified;
+    private String lastModified;
+    
+    @Column(name = COLUMN_LOGISTIC_NAME, nullable = true)
+    private String logisticName;
     
     private LogisticProvider logisticProvider;
     
     private Set<UploadHistory> uploadHistory;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -139,45 +142,54 @@ public class Invoice {
         this.statusInvoice = statusInvoice;
     }
 
-    public Date getFirstUploadDate() {
+    public String getFirstUploadDate() {
         return firstUploadDate;
     }
 
-    public void setFirstUploadDate(Date firstUploadDate) {
+    public void setFirstUploadDate(String firstUploadDate) {
         this.firstUploadDate = firstUploadDate;
     }
 
-    public Date getSubmitedDate() {
+    public String getSubmitedDate() {
         return submitedDate;
     }
 
-    public void setSubmitedDate(Date submitedDate) {
+    public void setSubmitedDate(String submitedDate) {
         this.submitedDate = submitedDate;
     }
 
-    public Date getConfirmedDate() {
+    public String getConfirmedDate() {
         return confirmedDate;
     }
 
-    public void setConfirmedDate(Date confirmedDate) {
+    public void setConfirmedDate(String confirmedDate) {
         this.confirmedDate = confirmedDate;
     }
 
-    public Date getApprovedDate() {
+    public String getApprovedDate() {
         return approvedDate;
     }
 
-    public void setApprovedDate(Date approvedDate) {
+    public void setApprovedDate(String approvedDate) {
         this.approvedDate = approvedDate;
     }
 
-    public Date getLastModified() {
+    public String getLastModified() {
         return lastModified;
     }
 
-    public void setLastModified(Date lastModified) {
+    public void setLastModified(String lastModified) {
         this.lastModified = lastModified;
     }
+
+    public String getLogisticName() {
+        return logisticName;
+    }
+
+    public void setLogisticName(String logisticName) {
+        this.logisticName = logisticName;
+    }
+    
     
 
     @ManyToOne
@@ -190,14 +202,14 @@ public class Invoice {
         this.logisticProvider = logisticProvider;
     }
 
-    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
-    public Set<UploadHistory> getUploadHistory() {
-        return uploadHistory;
-    }
-
-    public void setUploadHistory(Set<UploadHistory> uploadHistory) {
-        this.uploadHistory = uploadHistory;
-    }
+//    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
+//    public Set<UploadHistory> getUploadHistory() {
+//        return uploadHistory;
+//    }
+//
+//    public void setUploadHistory(Set<UploadHistory> uploadHistory) {
+//        this.uploadHistory = uploadHistory;
+//    }
     
     
     

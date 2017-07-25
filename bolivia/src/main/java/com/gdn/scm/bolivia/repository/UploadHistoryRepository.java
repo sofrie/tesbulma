@@ -5,6 +5,7 @@
  */
 package com.gdn.scm.bolivia.repository;
 
+import com.gdn.scm.bolivia.entity.Invoice;
 import com.gdn.scm.bolivia.entity.Tolerance;
 import com.gdn.scm.bolivia.entity.UploadHistory;
 import java.util.List;
@@ -19,13 +20,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UploadHistoryRepository extends JpaRepository<UploadHistory, Integer> {
 
-    public List<UploadHistory> findByMonth(String month);
+    public List<UploadHistory> findByMonth(Integer month);
 
-    public List<UploadHistory> findByYear(String year);
+    public List<UploadHistory> findByYear(Integer year);
 
     public List<UploadHistory> findByLogistic(String logistic);
-    public List<UploadHistory> findByStatus(String status);
     
+    @Query("select a from UploadHistory a where a.invoice = ?")
+    public List<UploadHistory> findByInvoice(Invoice invoice);
        
     @Query("select distinct a.month from UploadHistory a")
     public List<String> getAllMonth();

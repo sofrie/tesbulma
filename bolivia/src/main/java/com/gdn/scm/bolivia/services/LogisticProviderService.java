@@ -25,4 +25,6 @@ public interface LogisticProviderService {
     void setStatusInactive(Integer id);
     void setStatusActive(Integer id);
 //    List<LogisticProvider> GetAllLogisticProvider(Integer merchantid);
+    
+    LogisticProvider findById(Integer Id);
 }

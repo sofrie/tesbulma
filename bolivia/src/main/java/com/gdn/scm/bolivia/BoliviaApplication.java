@@ -2,9 +2,8 @@ package com.gdn.scm.bolivia;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gdn.scm.bolivia.entity.AWB;
-//import com.gdn.scm.bolivia.entity.MailMail;
 import com.gdn.scm.bolivia.receiver.Receiver;
-//import com.gdn.scm.bolivia.services.SimpleOrderManager;
+import com.gdn.scm.bolivia.services.SimpleOrderManager;
 //import com.gdn.x.message.mq.model.MessageEmailRequest;
 //import com.gdn.x.message.service.client.MessageTemplateDeliveryClient;
 import org.springframework.amqp.core.AmqpAdmin;
@@ -22,9 +21,7 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @EnableFeignClients
 @SpringBootApplication
@@ -99,5 +96,6 @@ public class BoliviaApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(BoliviaApplication.class, args);
+        
     }
 }

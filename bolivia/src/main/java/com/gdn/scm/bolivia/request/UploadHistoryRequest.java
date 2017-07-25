@@ -13,42 +13,23 @@ import static com.gdn.scm.bolivia.entity.UploadHistory.COLUMN_PROBLEM_EXIST;
 import static com.gdn.scm.bolivia.entity.UploadHistory.COLUMN_YEAR;
 import java.util.Date;
 import javax.persistence.Column;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
  * @author sofrie.zumaytis
  */
+@Getter
+@Setter
 public class UploadHistoryRequest {
+    private Integer id;
+    
+    private Integer month;
 
-    private String month;
-
-    private String year;    
+    private Integer year;    
 
     private String logistic;
-
-    public String getMonth() {
-        return month;
-    }
-
-    public void setMonth(String month) {
-        this.month = month;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
-    }
-
-    public String getLogistic() {
-        return logistic;
-    }
-
-    public void setLogistic(String logistic) {
-        this.logistic = logistic;
-    }
-
-   
+    
+    private String status;
 }

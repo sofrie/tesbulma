@@ -107,8 +107,9 @@ public class AWB {
     
     
     @Column(name = COLUMN_ID)
-    private Integer id;  
+    private String id;  
   
+    
     @Column(name = COLUMN_AWB_NUMBER, nullable = false)
     private String awbNumber;
 
@@ -229,14 +230,16 @@ public class AWB {
     
 
     @Column(name = COLUMN_MONTH, nullable = false)
-    private String month;
+    private Integer month;
     @Column(name = COLUMN_YEAR, nullable = false)
-    private String year;
+    private Integer year;
     @Column(name = COLUMN_LOGISTIC_NAME, nullable = false)
     private String logisticName;
-    
+       
     
     private Invoice invoice;
+    
+    
 
     public Integer getCounter() {
         return counter;
@@ -646,19 +649,19 @@ public class AWB {
         this.shipCost = shipCost;
     }
 
-    public String getMonth() {
+    public Integer getMonth() {
         return month;
     }
 
-    public void setMonth(String month) {
+    public void setMonth(Integer month) {
         this.month = month;
     }
 
-    public String getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 
@@ -682,12 +685,11 @@ public class AWB {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
     
@@ -697,7 +699,7 @@ public class AWB {
     
 
 
-    public AWB(String month, String year, String logisticName, String awbNumber, String reconStatus, String merchantCode, String gdnRef) {
+    public AWB(Integer month, Integer year, String logisticName, String awbNumber, String reconStatus, String merchantCode, String gdnRef) {
 
         this.month = month;
         this.year = year;

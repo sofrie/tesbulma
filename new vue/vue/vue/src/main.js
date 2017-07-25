@@ -15,6 +15,14 @@ var routes = [{
             breadcrumb: `<li><a href="/"><i class="ti-desktop"></i> Dashboard</a></li>`
         }
     }, {
+        path: 'invoicepage/:id',
+        component: resolve => require(['./components/InvoicePage.vue'], resolve),
+        meta: {
+            title: "Invoice",
+            breadcrumb: `<li><a href="#/index2"><i class="ti-file"></i> Invoice</a></li>`
+        },
+		props: true
+    }, {
         path: 'invoicepage',
         component: resolve => require(['./components/InvoicePage.vue'], resolve),
         meta: {

@@ -22,18 +22,20 @@ public interface UploadHistoryService {
     UploadHistory getById(Integer ID);
 
     List<UploadHistory> getAll();
+    
+    List<UploadHistory> getByInvoice(String invoice);
 
     List<UploadHistory> getByStatus(String status);
     
-    List<UploadHistory> getByYear(String year);
+    List<UploadHistory> getByYear(Integer year);
     
     List<UploadHistory> getByLogisticName (String logisticName);
     
-    List<UploadHistory> getByMonth(String month);    
+    List<UploadHistory> getByMonth(Integer month);    
    
-    List<UploadHistory> filterAll(String month, String year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef);
+    List<UploadHistory> filterAll(Integer month, Integer year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef);
 
-    void updateUploadHistory(UploadHistory a);
+    void updateUploadHistory(UploadHistoryRequest a);
 
     void deleteUploadHistory(Integer id);
     
