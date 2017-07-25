@@ -116,7 +116,7 @@
                                     <th>Year</th>
                                     <th>Logistic</th>
                                     <th v-on:click="sortInit('awb')">AWB <i class="ti ti-exchange-vertical pull-right"></i></th>
-                                    <th>Recon Status <i class="ti ti-exchange-vertical pull-right" v-on:click="sortStatus()"></i></th>
+                                    <th v-on:click="sortInit('status')">Recon Status <i class="ti ti-exchange-vertical pull-right"></i></th>
                                     <th>Merchant Code</th>
                                     <th>GDN Ref <i class="ti ti-exchange-vertical pull-right" v-on:click="sortGdnRef()"></i></th>
                                 </tr>
@@ -432,121 +432,111 @@ export default {
     destroyed: function() {
     },
   methods: { 
-	  sortAllByAWB(){
-		axios.get('http://127.0.0.1:8091/api/awb/sort/' + this.order+'?page='+ this.setPage+'&size='+this.size)
+	  findAllSortAWB(){
+		axios.get('http://127.0.0.1:8091/api/awb/sort/'+this.sortby+'/' + this.order+'?page='+ this.setPage+'&size='+this.size)
           .then(response => {
             // JSON responses are automatically parsed.
             this.posts = response.data.content
 			this.fetchPages()
-			this.sortby='awb'
           })
           .catch(e => {
             this.errors.push(e)
           })
 	  },
-	  sortMonthByAWB(){
-		axios.get('http://127.0.0.1:8091/api/awb/filtermonth/'+this.selectedMonth+'/sort/' + this.order+'?page='+ this.setPage+'&size='+this.size)
+	  findMonthSortAWB(){
+		axios.get('http://127.0.0.1:8091/api/awb/filtermonth/'+this.selectedMonth+'/sort/' +this.sortby+'/' + this.order+'?page='+ this.setPage+'&size='+this.size)
           .then(response => {
             // JSON responses are automatically parsed.
             this.posts = response.data.content
 			this.fetchPages()
-			this.sortby='awb'
           })
           .catch(e => {
             this.errors.push(e)
           })
 	  },
-	  sortYearByAWB(){
-		axios.get('http://127.0.0.1:8091/api/awb/filteryear/'+this.selectedYear+'/sort/' + this.order+'?page='+ this.setPage+'&size='+this.size)
+	  findYearSortAWB(){
+		axios.get('http://127.0.0.1:8091/api/awb/filteryear/'+this.selectedYear+'/sort/' +this.sortby+'/' + this.order+'?page='+ this.setPage+'&size='+this.size)
           .then(response => {
             // JSON responses are automatically parsed.
             this.posts = response.data.content
 			this.fetchPages()
-			this.sortby='awb'
           })
           .catch(e => {
             this.errors.push(e)
           })
 	  },
-	  sortLogisticByAWB(){
-		axios.get('http://127.0.0.1:8091/api/awb/filterlogistic/'+this.selectedLogistic+'/sort/' + this.order+'?page='+ this.setPage+'&size='+this.size)
+	  findLogisticSortAWB(){
+		axios.get('http://127.0.0.1:8091/api/awb/filterlogistic/'+this.selectedLogistic+'/sort/' +this.sortby+'/' + this.order+'?page='+ this.setPage+'&size='+this.size)
           .then(response => {
             // JSON responses are automatically parsed.
             this.posts = response.data.content
 			this.fetchPages()
-			this.sortby='awb'
           })
           .catch(e => {
             this.errors.push(e)
           })
 	  },
-	  sortStatusByAWB(){
-		axios.get('http://127.0.0.1:8091/api/awb/filterstatus/'+this.selectedStatus+'/sort/' + this.order+'?page='+ this.setPage+'&size='+this.size)
+	  findStatusSortAWB(){
+		axios.get('http://127.0.0.1:8091/api/awb/filterstatus/'+this.selectedStatus+'/sort/' +this.sortby+'/' + this.order+'?page='+ this.setPage+'&size='+this.size)
           .then(response => {
             // JSON responses are automatically parsed.
             this.posts = response.data.content
 			this.fetchPages()
-			this.sortby='awb'
           })
           .catch(e => {
             this.errors.push(e)
           })
 	  },
-	  sortAwbNumberByAWB(){
-		axios.get('http://127.0.0.1:8091/api/awb/filterawb/'+this.AwbNumber+'/sort/' + this.order)
+	  findAwbNumberSortAWB(){
+		axios.get('http://127.0.0.1:8091/api/awb/filterawb/'+this.AwbNumber+'/sort/' +this.sortby+'/' + this.order)
           .then(response => {
             // JSON responses are automatically parsed.
             this.posts = response.data
-			this.sortby='awb'
           })
           .catch(e => {
             this.errors.push(e)
           })
 	  },
-	  sortMerchantCodeByAWB(){
-		axios.get('http://127.0.0.1:8091/api/awb/filtermerchant/'+this.MerchantCode+'/sort/' + this.order+'?page='+ this.setPage+'&size='+this.size)
+	  findMerchantCodeSortAWB(){
+		axios.get('http://127.0.0.1:8091/api/awb/filtermerchant/'+this.MerchantCode+'/sort/' +this.sortby+'/' + this.order+'?page='+ this.setPage+'&size='+this.size)
           .then(response => {
             // JSON responses are automatically parsed.
            this.posts = response.data.content
 			this.fetchPages()
-			this.sortby='awb'
           })
           .catch(e => {
             this.errors.push(e)
           })
 	  },
-	  sortGdnRefByAWB(){
-		axios.get('http://127.0.0.1:8091/api/awb/filterGdnRef/'+this.gdnRef+'/sort/' + this.order+'?page='+ this.setPage+'&size='+this.size)
+	  findGdnRefSortAWB(){
+		axios.get('http://127.0.0.1:8091/api/awb/filterGdnRef/'+this.gdnRef+'/sort/' +this.sortby+'/' + this.order+'?page='+ this.setPage+'&size='+this.size)
           .then(response => {
             // JSON responses are automatically parsed.
            this.posts = response.data.content
 			this.fetchPages()
-			this.sortby='awb'
           })
           .catch(e => {
             this.errors.push(e)
           })
 	  },
-	  sortFilterAllByAWB(){
-		axios.get('http://127.0.0.1:8091/api/awb/filter/' + this.selectedMonth + '/' + this.selectedYear + '/' + this.selectedLogistic + '/' + this.AwbNumber + '/' + this.selectedStatus + '/' + this.MerchantCode + '/' + this.gdnRef+'/sort/' + this.order+'?page='+ this.setPage+'&size='+this.size)
+	  filterAllSortAWB(){
+		axios.get('http://127.0.0.1:8091/api/awb/filter/' + this.selectedMonth + '/' + this.selectedYear + '/' + this.selectedLogistic + '/' + this.AwbNumber + '/' + this.selectedStatus + '/' + this.MerchantCode + '/' + this.gdnRef+'/sort/' +this.sortby+'/' + this.order+'?page='+ this.setPage+'&size='+this.size)
           .then(response => {
             // JSON responses are automatically parsed.
             this.posts = response.data.content
 			this.fetchPages()
-			//this.filter='full'
           })
           .catch(e => {
             this.errors.push(e)
           })
 	  },
-	  sortFilterInvoiceByAWB(){
-		axios.get('http://127.0.0.1:8091/api/awb/filterinvoice/' + this.selectedMonth + '/' + this.selectedYear + '/' + this.logistic+'/sort/' + this.order+'?page='+ this.setPage+'&size='+this.size)
+	  filterInvoiceSortAWB(){
+		axios.get('http://127.0.0.1:8091/api/awb/filterinvoice/' + this.selectedMonth + '/' + this.selectedYear + '/' + this.logistic+'/sort/' +this.sortby+'/' + this.order+'?page='+ this.setPage+'&size='+this.size)
           .then(response => {
             // JSON responses are automatically parsed.
             
 			this.posts = response.data.content
 			this.fetchPages()
-			//this.filter='invoice'
           })
           .catch(e => {
             this.errors.push(e)
@@ -561,40 +551,35 @@ export default {
 		}
 	  },
 	  sortFilter(){
-		if(this.sortby==='awb'){
-			this.sortAWB()
-		}
-	  },
-	  sortAWB(){
 		  if(this.filter==='none'){
-			this.sortAllByAWB()
+			this.findAllSortAWB()
 		  }
 			else if(this.filter==='month'){
-				this.sortMonthByAWB()
+				this.findMonthSortAWB()
 			}
 			else if(this.filter==='year'){
-				this.sortYearByAWB()
+				this.findYearSortAWB()
 			}
 			else if(this.filter==='logistic'){
-				this.sortLogisticByAWB()
+				this.findLogisticSortAWB()
 			}
 			else if(this.filter==='status'){
-				this.sortStatusByAWB()
+				this.findStatusSortAWB()
 			}
 			else if(this.filter==='awb'){
-				this.sortAwbNumberByAWB()
+				this.findAwbNumberSortAWB()
 			}
 			else if(this.filter==='merchantcode'){
-				this.sortMerchantCodeByAWB()
+				this.findMerchantCodeSortAWB()
 			}
 			else if(this.filter==='gdnref'){
-				this.sortGdnRefByAWB()
+				this.findGdnRefSortAWB()
 			}
 			else if(this.filter==='full'){
-				this.sortFilterAllByAWB()
+				this.filterAllSortAWB()
 			}
 			else if(this.filter==='invoice'){
-				this.sortFilterInvoiceByAWB()
+				this.filterInvoiceSortAWB()
 			}
 	  },
 	  paginationFilter(){
