@@ -67,6 +67,7 @@ public interface AWBRepository extends JpaRepository<AWB, Integer> {
     public BigDecimal countTotalTagihan();
     
     //sorting by awb
+    
     @Query("select a from AWB a order by a.awbNumber ASC")
     public Page<AWB> findAllSortByAwbNumberASC(Pageable pageable);
     
@@ -134,4 +135,74 @@ public interface AWBRepository extends JpaRepository<AWB, Integer> {
     
     @Query("select a from AWB a where a.month like ? AND a.year like ? AND a.logisticName like ? order by a.awbNumber DESC")
     public Page<AWB> filterByInvoiceSortByAwbNumberDESC(String month, String year, String logisticName,Pageable pageable);
+    
+    //sorting by reconStatus
+    
+    @Query("select a from AWB a order by a.reconStatus ASC")
+    public Page<AWB> findAllSortByReconStatusASC(Pageable pageable);
+    
+    @Query("select a from AWB a order by a.reconStatus DESC")
+    public Page<AWB> findAllSortByReconStatusDESC(Pageable pageable);
+    
+    
+    @Query("select a from AWB a where a.month like ? order by a.reconStatus ASC")
+    public Page<AWB> findMonthSortByReconStatusASC(String month, Pageable pageable);
+    
+    @Query("select a from AWB a where a.month like ? order by a.reconStatus DESC")
+    public Page<AWB> findMonthSortByReconStatusDESC(String month, Pageable pageable);
+    
+    
+    @Query("select a from AWB a where a.reconStatus like ? order by a.reconStatus ASC")
+    public Page<AWB> findReconStatusSortByReconStatusASC(String status, Pageable pageable);
+    
+    @Query("select a from AWB a where a.reconStatus like ? order by a.reconStatus DESC")
+    public Page<AWB> findReconStatusSortByReconStatusDESC(String status, Pageable pageable);
+    
+    @Query("select a from AWB a where a.year like ? order by a.reconStatus ASC")
+    public Page<AWB> findYearSortByReconStatusASC(String year, Pageable pageable);
+    
+    @Query("select a from AWB a where a.year like ? order by a.reconStatus DESC")
+    public Page<AWB> findYearSortByReconStatusDESC(String year, Pageable pageable);
+    
+    @Query("select a from AWB a where a.logisticName like ? order by a.reconStatus ASC")
+    public Page<AWB> findLogisticSortByReconStatusASC(String logistic, Pageable pageable);
+    
+    @Query("select a from AWB a where a.logisticName like ? order by a.reconStatus DESC")
+    public Page<AWB> findLogisticSortByReconStatusDESC(String logistic, Pageable pageable);
+    
+    @Query("select a from AWB a where a.merchantCode like ? order by a.reconStatus ASC")
+    public Page<AWB> findMerchantCodeSortByReconStatusASC(String merchantCode, Pageable pageable);
+    
+    @Query("select a from AWB a where a.merchantCode like ? order by a.reconStatus DESC")
+    public Page<AWB> findMerchantCodeSortByReconStatusDESC(String merchantCode, Pageable pageable);
+    
+    @Query("select a from AWB a where a.awbNumber like ? order by a.reconStatus ASC")
+    public List<AWB> findAwbNumberSortByReconStatusASC(String awbNumber);
+    
+    @Query("select a from AWB a where a.awbNumber like ? order by a.reconStatus DESC")
+    public List<AWB> findAwbNumberSortByReconStatusDESC(String awbNumber);
+    
+    @Query("select a from AWB a where a.gdnRef like ? order by a.reconStatus ASC")
+    public Page<AWB> findGdnRefSortByReconStatusASC(String gdnRef, Pageable pageable);
+    
+    @Query("select a from AWB a where a.gdnRef like ? order by a.reconStatus DESC")
+    public Page<AWB> findGdnRefSortByReconStatusDESC(String gdnRef, Pageable pageable);
+    
+    @Query("select a from AWB a where a.month like ? AND a.year like ? AND a.logisticName like ? AND a.awbNumber like ? AND a.reconStatus like ? AND a.merchantCode like ? AND a.gdnRef like ? order by a.reconStatus ASC")
+    public Page<AWB> filterAllSortByReconStatusASC(String month, String year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef,Pageable pageable);
+
+    @Query("select a from AWB a where a.month like ? AND a.year like ? AND a.logisticName like ? AND a.awbNumber like ? AND a.reconStatus like ? AND a.merchantCode like ? AND a.gdnRef like ? order by a.reconStatus DESC")
+    public Page<AWB> filterAllSortByReconStatusDESC(String month, String year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef,Pageable pageable);
+    
+    @Query("select a from AWB a where a.month like ? AND a.year like ? AND a.logisticName like ? AND a.awbNumber like ? AND a.merchantCode like ? AND a.gdnRef like ? order by a.reconStatus ASC")
+    public Page<AWB> filterAllExceptStatusSortByReconStatusASC(String month, String year, String logisticName, String AwbNumber, String merchantCode, String gdnRef,Pageable pageable);
+    
+    @Query("select a from AWB a where a.month like ? AND a.year like ? AND a.logisticName like ? AND a.awbNumber like ? AND a.merchantCode like ? AND a.gdnRef like ? order by a.reconStatus DESC")
+    public Page<AWB> filterAllExceptStatusSortByReconStatusDESC(String month, String year, String logisticName, String AwbNumber, String merchantCode, String gdnRef,Pageable pageable);
+    
+    @Query("select a from AWB a where a.month like ? AND a.year like ? AND a.logisticName like ? order by a.reconStatus ASC")
+    public Page<AWB> filterByInvoiceSortByReconStatusASC(String month, String year, String logisticName,Pageable pageable);
+    
+    @Query("select a from AWB a where a.month like ? AND a.year like ? AND a.logisticName like ? order by a.reconStatus DESC")
+    public Page<AWB> filterByInvoiceSortByReconStatusDESC(String month, String year, String logisticName,Pageable pageable);
 }

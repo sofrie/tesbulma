@@ -58,6 +58,8 @@ public interface AWBService {
     
     BigDecimal countTotalTagihan();
     
+    //Sort by AWBNumber
+    
     Page<AWB> findAllSortByAwbNumberASC(Pageable pageable);
     Page<AWB> findAllSortByAwbNumberDESC(Pageable pageable);
     
@@ -87,4 +89,36 @@ public interface AWBService {
     
     Page<AWB> filterByInvoiceSortByAwbNumberASC(String month, String year, String logisticName,Pageable pageable);
     Page<AWB> filterByInvoiceSortByAwbNumberDESC(String month, String year, String logisticName,Pageable pageable);
+    
+    //Sort by ReconStatus
+    
+    Page<AWB> findAllSortByStatusASC(Pageable pageable);
+    Page<AWB> findAllSortByStatusDESC(Pageable pageable);
+    
+    Page<AWB> findMonthSortByStatusASC(String month,Pageable pageable);
+    Page<AWB> findMonthSortByStatusDESC(String month,Pageable pageable);
+    
+    Page<AWB> findYearSortByStatusASC(String year,Pageable pageable);
+    Page<AWB> findYearSortByStatusDESC(String year,Pageable pageable);
+    
+    Page<AWB> findStatusSortByStatusASC(String status,Pageable pageable);
+    Page<AWB> findStatusSortByStatusDESC(String status,Pageable pageable);
+    
+    Page<AWB> findLogisticSortByStatusASC(String logistic,Pageable pageable);
+    Page<AWB> findLogisticSortByStatusDESC(String logistic,Pageable pageable);
+    
+    Page<AWB> findMerchantCodeSortByStatusASC(String merchantCode,Pageable pageable);
+    Page<AWB> findMerchantCodeSortByStatusDESC(String merchantCode,Pageable pageable);
+    
+    List<AWB> findAwbNumberSortByStatusASC(String awbNumber);
+    List<AWB> findAwbNumberSortByStatusDESC(String awbNumber);
+    
+    Page<AWB> findGdnRefSortByStatusASC(String gdnRef,Pageable pageable);
+    Page<AWB> findGdnRefSortByStatusDESC(String gdnRef,Pageable pageable);
+    
+    Page<AWB> filterAllSortByStatusASC(String month, String year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef,Pageable pageable);
+    Page<AWB> filterAllSortByStatusDESC(String month, String year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef,Pageable pageable);
+    
+    Page<AWB> filterByInvoiceSortByStatusASC(String month, String year, String logisticName,Pageable pageable);
+    Page<AWB> filterByInvoiceSortByStatusDESC(String month, String year, String logisticName,Pageable pageable);
 }
