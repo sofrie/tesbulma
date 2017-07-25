@@ -11,30 +11,30 @@
                                         Month :
                                     </label>
                                     <div class="col-sm-2">
-                                        <select class="form-control" v-on:change="changeMonth()" v-model="selectedMonth">
+                                        <select class="form-control" v-on:change="setInit('month')" v-model="selectedMonth">
                                             <option value="Select Month" disabled="" selected="">
                                                 Select Month
                                             </option>
 											<!--<option v-for="item of listMonth" v-bind:value="item">{{item}}</option>-->
-											<option value=1>January</option>
-											<option value=2>February</option>
-											<option value=3>Maret</option>
-											<option value=4>April</option>
-											<option value=5>Mei</option>
-											<option value=6>Juni</option>
-											<option value=7>Juli</option>
-											<option value=8>Agustus</option>
-											<option value=9>September</option>
-											<option value=10>Oktober</option>
-											<option value=11>November</option>
-											<option value=12>Desember</option>
+                                            <option value=1>January</option>
+                                            <option value=2>February</option>
+                                            <option value=3>March</option>
+                                            <option value=4>April</option>
+                                            <option value=5>May</option>
+                                            <option value=6>June</option>
+                                            <option value=7>July</option>
+                                            <option value=8>August</option>
+                                            <option value=9>September</option>
+                                            <option value=10>October</option>
+                                            <option value=11>November</option>
+                                            <option value=12>December</option>
                                         </select>
                                     </div>
                                     <label class="col-sm-1 control-label">
                                         Logistic :
                                     </label>
                                     <div class="col-sm-2">
-                                        <select class="form-control" v-on:change="changeLogistic()" v-model="selectedLogistic">
+                                        <select class="form-control" v-on:change="setInit('logistic')" v-model="selectedLogistic">
                                             <option disabled selected value="Select Logistic">Select Logistic</option>
 											<option v-for="item of listLogistic" v-bind:value="item">{{item}}</option>
                                         </select>
@@ -43,12 +43,12 @@
                                         AWB :
                                     </label>
                                     <div class="col-sm-2">
-                                        <input type="text" placeholder="AWB Number" class="form-control" v-model="AwbNumber" v-on:change="changeAwbNumber()">
+                                        <input type="text" placeholder="AWB Number" class="form-control" v-model="AwbNumber" v-on:change="setInit('awb')">
                                     </div>
                                     <label class="col-sm-1 control-label" for="skill">
                                         GDN Ref :</label>
                                     <div class="col-sm-1">
-                                        <input type="text" placeholder="GDN Ref" class="form-control" v-model="gdnRef" v-on:change="changeGdnRef()">
+                                        <input type="text" placeholder="GDN Ref" class="form-control" v-model="gdnRef" v-on:change="setInit('gdnref')">
                                     </div>
                                 </div>
                             </div>
@@ -58,7 +58,7 @@
                                         Year :
                                     </label>
                                     <div class="col-sm-2">
-                                        <select id="skill" name="skill" class="form-control" v-on:change="changeYear()" v-model="selectedYear">
+                                        <select id="skill" name="skill" class="form-control" v-on:change="setInit('year')" v-model="selectedYear">
                                             <option value="Select Year" disabled="" selected="">
                                                 Select year
                                             </option>
@@ -69,23 +69,23 @@
                                         Status :
                                     </label>
                                     <div class="col-sm-2">
-                                        <select class="form-control" v-on:change="changeStatus()" v-model="selectedStatus">
+                                        <select class="form-control" v-on:change="setInit('status')" v-model="selectedStatus">
                                             <option disabled selected value="Select Status">
                                                 Select status
                                             </option>
                                             <option value="All">All</option>
-                                            <option value="Problem Exist">Problem Exist</option>
-                                            <option value="OK">OK</option>
+                                            <option value="Uploaded">Uploaded</option>
+                                            <option value="Done">Done</option>
                                         </select>
                                     </div>      
                                     <label class="col-sm-2 control-label" for="skill">
                                         Merchant Code :
                                     </label>
                                     <div class="col-sm-2">
-                                        <input type="text" placeholder="Merchant Code" class="form-control" v-model="MerchantCode" v-on:change="changeMerchantCode()">
+                                        <input type="text" placeholder="Merchant Code" class="form-control" v-model="MerchantCode" v-on:change="setInit('merchantcode')">
                                     </div>                             
                                     <div class="col-sm-2">
-                                        <a class="btn btn-effect-ripple btn-primary" v-on:click="filterAll()">Search</a>
+                                        <a class="btn btn-effect-ripple btn-primary" v-on:click="setInit('full')">Search</a>
 										<a class="btn btn-effect-ripple btn-primary" v-on:click="clearFilter()">Clear</a>
                                     </div>
                             </div>
@@ -100,7 +100,7 @@
                 <div class="panel ">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            <i class="fa fa-fw ti-menu-alt"></i> List AWB  {{filter}} {{prevpage}}
+                            <i class="fa fa-fw ti-menu-alt"></i> List AWB  {{order}} {{sortby}} {{filter}}
                         </h3>
                         <span class="pull-right">
                             <i class="fa fa-fw ti-angle-up clickable"></i>
@@ -115,10 +115,10 @@
                                     <th>Month</th>
                                     <th>Year</th>
                                     <th>Logistic</th>
-                                    <th>AWB <i class="ti ti-exchange-vertical pull-right"></i></th>
-                                    <th>Recon Status <i class="ti ti-exchange-vertical pull-right"></i></th>
+                                    <th v-on:click="sortInit('awb')">AWB <i class="ti ti-exchange-vertical pull-right"></i></th>
+                                    <th v-on:click="sortInit('status')">Recon Status <i class="ti ti-exchange-vertical pull-right"></i></th>
                                     <th>Merchant Code</th>
-                                    <th>GDN Ref <i class="ti ti-exchange-vertical pull-right"></i></th>
+                                    <th v-on:click="sortInit('gdnref')">GDN Ref <i class="ti ti-exchange-vertical pull-right"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -135,12 +135,12 @@
                         </table>
 						<div class="pull-right" v-if="totalPage>0">
 							<ul class="pagination">
-								<li v-on:click="toPageOne()" v-if="prevpage>0"><a class="noselect">1</a></li>
-								<li class="disabled" v-if="checkedPrevPage()"><a>...</a></li>
+								<li v-on:click="toPageOne()" v-if="prevpage>1"><a class="noselect">1</a></li>
+								<li class="disabled" v-if="checkedPrevPageEllipsis()"><a>...</a></li>
 								<li><a v-on:click="toPrevPage()" v-if="prevpage<page">{{prevpage+1}}</a></li>
 								<li class="active"><a>{{page+1}}</a></li>
-								<li><a v-on:click="toNextPage()" v-if="nextpage+1!=totalPage">{{nextpage+1}}</a></li>
-								<li class="disabled" v-if="checkedNextPage()"><a>...</a></li>
+								<li><a v-on:click="toNextPage()" v-if="checkedNextPage()">{{nextpage+1}}</a></li>
+								<li class="disabled" v-if="checkedNextPageEllipsis()"><a>...</a></li>
 								<li><a v-on:click="toLastPage()" v-if="page<nextpage">{{totalPage}}</a></li>
 							</ul>
 						</div>
@@ -327,7 +327,7 @@ export default {
       selectedLogistic: 'Select Logistic',
       selectedYear: 'Select Year',
         selectedStatus: 'Select Status',
-        MerchantCode: 'a',
+        MerchantCode: '',
         AwbNumber: '',
         gdnRef: '',
 		test: '',
@@ -339,12 +339,14 @@ export default {
 		listMonth: [],
     page: 0,
     size: 10,
-    nextpage: 0,
+    nextpage: 1,
     prevpage: 0,
     totalPage: 0,
     Pages: [],
 	filter: 'none',
-	setPage:0
+	setPage:0,
+	order:'asc',
+	sortby:'none'
     }),
     mounted: function() {
         "use strict";        
@@ -485,47 +487,200 @@ export default {
         }
     },
   methods: { 
+	  findAllSortAWB(){
+		axios.get('http://127.0.0.1:8091/api/awb/sort/'+this.sortby+'/' + this.order+'?page='+ this.setPage+'&size='+this.size)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data.content
+			this.fetchPages()
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+	  },
+	  findMonthSortAWB(){
+		axios.get('http://127.0.0.1:8091/api/awb/filtermonth/'+this.selectedMonth+'/sort/' +this.sortby+'/' + this.order+'?page='+ this.setPage+'&size='+this.size)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data.content
+			this.fetchPages()
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+	  },
+	  findYearSortAWB(){
+		axios.get('http://127.0.0.1:8091/api/awb/filteryear/'+this.selectedYear+'/sort/' +this.sortby+'/' + this.order+'?page='+ this.setPage+'&size='+this.size)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data.content
+			this.fetchPages()
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+	  },
+	  findLogisticSortAWB(){
+		axios.get('http://127.0.0.1:8091/api/awb/filterlogistic/'+this.selectedLogistic+'/sort/' +this.sortby+'/' + this.order+'?page='+ this.setPage+'&size='+this.size)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data.content
+			this.fetchPages()
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+	  },
+	  findStatusSortAWB(){
+		axios.get('http://127.0.0.1:8091/api/awb/filterstatus/'+this.selectedStatus+'/sort/' +this.sortby+'/' + this.order+'?page='+ this.setPage+'&size='+this.size)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data.content
+			this.fetchPages()
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+	  },
+	  findAwbNumberSortAWB(){
+		axios.get('http://127.0.0.1:8091/api/awb/filterawb/'+this.AwbNumber+'/sort/' +this.sortby+'/' + this.order)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+	  },
+	  findMerchantCodeSortAWB(){
+		axios.get('http://127.0.0.1:8091/api/awb/filtermerchant/'+this.MerchantCode+'/sort/' +this.sortby+'/' + this.order+'?page='+ this.setPage+'&size='+this.size)
+          .then(response => {
+            // JSON responses are automatically parsed.
+           this.posts = response.data.content
+			this.fetchPages()
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+	  },
+	  findGdnRefSortAWB(){
+		axios.get('http://127.0.0.1:8091/api/awb/filterGdnRef/'+this.gdnRef+'/sort/' +this.sortby+'/' + this.order+'?page='+ this.setPage+'&size='+this.size)
+          .then(response => {
+            // JSON responses are automatically parsed.
+           this.posts = response.data.content
+			this.fetchPages()
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+	  },
+	  filterAllSortAWB(){
+		axios.get('http://127.0.0.1:8091/api/awb/filter/' + this.selectedMonth + '/' + this.selectedYear + '/' + this.selectedLogistic + '/' + this.AwbNumber + '/' + this.selectedStatus + '/' + this.MerchantCode + '/' + this.gdnRef+'/sort/' +this.sortby+'/' + this.order+'?page='+ this.setPage+'&size='+this.size)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.posts = response.data.content
+			this.fetchPages()
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+	  },
+	  filterInvoiceSortAWB(){
+		axios.get('http://127.0.0.1:8091/api/awb/filterinvoice/' + this.selectedMonth + '/' + this.selectedYear + '/' + this.logistic+'/sort/' +this.sortby+'/' + this.order+'?page='+ this.setPage+'&size='+this.size)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            
+			this.posts = response.data.content
+			this.fetchPages()
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+	  },
+	  changeOrder(){
+		if(this.order==='asc'){
+			this.order='desc'
+		}
+		else{
+			this.order='asc'
+		}
+	  },
+	  sortFilter(){
+		  if(this.filter==='none'){
+			this.findAllSortAWB()
+		  }
+			else if(this.filter==='month'){
+				this.findMonthSortAWB()
+			}
+			else if(this.filter==='year'){
+				this.findYearSortAWB()
+			}
+			else if(this.filter==='logistic'){
+				this.findLogisticSortAWB()
+			}
+			else if(this.filter==='status'){
+				this.findStatusSortAWB()
+			}
+			else if(this.filter==='awb'){
+				this.findAwbNumberSortAWB()
+			}
+			else if(this.filter==='merchantcode'){
+				this.findMerchantCodeSortAWB()
+			}
+			else if(this.filter==='gdnref'){
+				this.findGdnRefSortAWB()
+			}
+			else if(this.filter==='full'){
+				this.filterAllSortAWB()
+			}
+			else if(this.filter==='invoice'){
+				this.filterInvoiceSortAWB()
+			}
+	  },
 	  paginationFilter(){
-		if(this.filter==='none'){
-			this.fetchAll()
+		if(this.sortby==='none'){
+			if(this.filter==='none'){
+				this.fetchAll()
+			}
+			else if(this.filter==='month'){
+				this.changeMonth()
+			}
+			else if(this.filter==='year'){
+				this.changeYear()
+			}
+			else if(this.filter==='logistic'){
+				this.changeLogistic()
+			}
+			else if(this.filter==='status'){
+				this.changeStatus()
+			}
+			else if(this.filter==='awb'){
+				this.changeAwbNumber()
+			}
+			else if(this.filter==='merchantcode'){
+				this.changeMerchantCode()
+			}
+			else if(this.filter==='gdnref'){
+				this.changeGdnRef()
+			}
+			else if(this.filter==='full'){
+				this.filterAll()
+			}
+			else if(this.filter==='invoice'){
+				this.filterByInvoice()
+			}
 		}
-		else if(this.filter==='month'){
-		
-		}
-		else if(this.filter==='year'){
-		
-		}
-		else if(this.filter==='logistic'){
-		
-		}
-		else if(this.filter==='status'){
-		
-		}
-		else if(this.filter==='awb'){
-		
-		}
-		else if(this.filter==='merchantcode'){
-		
-		}
-		else if(this.filter==='gdnref'){
-		
-		}
-		else if(this.filter==='full'){
-		
-		}
-		else if(this.filter==='invoice'){
-		
+		else{
+			this.sortFilter()
 		}
 	  },
 	  toPageOne(){
-		this.nextpage=0
-		this.prevpage=0
-		this.page=0
-		this.fetchNext()
+		this.setPage=0
+		this.paginationFilter()
 	  },
 	  toLastPage(){
-		this.nextpage=this.totalPage-1
-		this.fetchNext()
+		this.setPage=this.totalPage-1
+		this.paginationFilter()
 	  },
 	  toPrevPage(){
 		this.setPage=this.prevpage;
@@ -535,18 +690,34 @@ export default {
 		this.setPage=this.nextpage;
 		this.paginationFilter()
 	  },
-	  checkedNextPage(){
+	  checkedNextPageEllipsis(){
 		return this.nextpage+2!=this.totalPage && this.nextpage+1!=this.totalPage
 	  },
-	  checkedPrevPage(){
+	  checkedNextPage(){
+		return this.nextpage+1!=this.totalPage && this.nextpage>this.page
+	  },
+	  checkedPrevPageEllipsis(){
 		return this.prevpage!=0 && this.prevpage-1!=0
 	  },
-	  setInit(){
-		this.nextpage=0
+	  setInit(filterNow){
+			this.filter=filterNow
+			this.setPage=0
+			this.paginationFilter()
+	  },
+	  sortInit(sortByNow){
+			if(this.sortby===sortByNow){
+				this.changeOrder()
+			}
+			else{
+				this.order='asc'
+			}
+			this.sortby=sortByNow
+			this.setPage=0
+			this.paginationFilter()
 	  },
       changeStatus () {
-		this.setInit()
-        axios.get('http://127.0.0.1:8091/api/awb/filterstatus/' + this.selectedStatus+'?page='+ this.nextpage+'&size='+this.size)
+		
+        axios.get('http://127.0.0.1:8091/api/awb/filterstatus/' + this.selectedStatus+'?page='+ this.setPage+'&size='+this.size)
           .then(response => {
             // JSON responses are automatically parsed.
             this.posts = response.data.content
@@ -558,39 +729,37 @@ export default {
           })
       },
       changeMonth () {
-		this.setInit()
-        axios.get('http://127.0.0.1:8091/api/awb/filtermonth/' + this.selectedMonth+'?page='+ this.nextpage+'&size='+this.size)
+		
+        axios.get('http://127.0.0.1:8091/api/awb/filtermonth/' + this.selectedMonth+'?page='+ this.setPage+'&size='+this.size)
           .then(response => {
             // JSON responses are automatically parsed.
             this.posts = response.data.content
 			this.fetchPages()
-			this.filter='month'
+			//this.filter='month'
           })
           .catch(e => {
             this.errors.push(e)
           })
       },
       changeYear () {
-		this.setInit()
-        axios.get('http://127.0.0.1:8091/api/awb/filteryear/' + this.selectedYear+'?page='+ this.nextpage+'&size='+this.size)
+        axios.get('http://127.0.0.1:8091/api/awb/filteryear/' + this.selectedYear+'?page='+ this.setPage+'&size='+this.size)
           .then(response => {
             // JSON responses are automatically parsed.
             this.posts = response.data.content
 			this.fetchPages()
-			this.filter='year'
+			//this.filter='year'
           })
           .catch(e => {
             this.errors.push(e)
           })
       },
       changeLogistic () {
-		this.setInit()
-        axios.get('http://127.0.0.1:8091/api/awb/filterlogisticName/' + this.selectedLogistic+'?page='+ this.nextpage+'&size='+this.size)
+        axios.get('http://127.0.0.1:8091/api/awb/filterlogisticName/' + this.selectedLogistic+'?page='+ this.setPage+'&size='+this.size)
           .then(response => {
             // JSON responses are automatically parsed.
             this.posts = response.data.content
 			this.fetchPages()
-			this.filter='logistic'
+			//this.filter='logistic'
           })
           .catch(e => {
             this.errors.push(e)
@@ -612,17 +781,16 @@ export default {
           })
       },
       changeMerchantCode () {
-		this.setInit()
 		if(this.MerchantCode===''){
 			this.fetchAll()
 		}
 		else{
-			axios.get('http://127.0.0.1:8091/api/awb/filterMerchantCode/' + this.MerchantCode+'?page='+ this.nextpage+'&size='+this.size)
+			axios.get('http://127.0.0.1:8091/api/awb/filterMerchantCode/' + this.MerchantCode+'?page='+ this.setPage+'&size='+this.size)
 			  .then(response => {
 				// JSON responses are automatically parsed.
 				this.posts = response.data.content
 				this.fetchPages()
-				this.filter='merchantcode'
+				//this.filter='merchantcode'
 			  })
 			  .catch(e => {
 				this.errors.push(e)
@@ -631,31 +799,31 @@ export default {
         
       },
       changeGdnRef () {
-		this.setInit()
-        axios.get('http://127.0.0.1:8091/api/awb/filterGdnRef/' + this.gdnRef+'?page='+ this.nextpage+'&size='+this.size)
+        axios.get('http://127.0.0.1:8091/api/awb/filterGdnRef/' + this.gdnRef+'?page='+ this.setPage+'&size='+this.size)
           .then(response => {
             // JSON responses are automatically parsed.
             this.posts = response.data.content
 			this.fetchPages()
-			this.filter='gdnref'
+			//this.filter='gdnref'
           })
           .catch(e => {
             this.errors.push(e)
           })
       },
       filterAll () {
-        axios.get('http://127.0.0.1:8091/api/awb/filter/' + this.selectedMonth + '/' + this.selectedYear + '/' + this.selectedLogistic + '/' + this.AwbNumber + '/' + this.selectedStatus + '/' + this.MerchantCode + '/' + this.gdnRef)
+        axios.get('http://127.0.0.1:8091/api/awb/filter/' + this.selectedMonth + '/' + this.selectedYear + '/' + this.selectedLogistic + '/' + this.AwbNumber + '/' + this.selectedStatus + '/' + this.MerchantCode + '/' + this.gdnRef+'?page='+ this.setPage+'&size='+this.size)
           .then(response => {
             // JSON responses are automatically parsed.
-            this.posts = response.data
-			this.filter='full'
+            this.posts = response.data.content
+			this.fetchPages()
+			//this.filter='full'
           })
           .catch(e => {
             this.errors.push(e)
           })
       },
 	  clearFilter(){
-		this.nextpage=0
+		this.setPage=0
 		this.selectedLogistic='Select Logistic'
 		this.selectedMonth='Select Month'
 		this.selectedStatus='Select Status'
@@ -666,14 +834,13 @@ export default {
 		this.fetchAll()
 	  },
 	  filterByInvoice () {
-		this.setInit()
-        axios.get('http://127.0.0.1:8091/api/awb/filterinvoice/' + this.selectedMonth + '/' + this.selectedYear + '/' + this.logistic+'?page='+ this.nextpage+'&size='+this.size)
+        axios.get('http://127.0.0.1:8091/api/awb/filterinvoice/' + this.selectedMonth + '/' + this.selectedYear + '/' + this.logistic+'?page='+ this.setPage+'&size='+this.size)
           .then(response => {
             // JSON responses are automatically parsed.
             
 			this.posts = response.data.content
 			this.fetchPages()
-			this.filter='invoice'
+			//this.filter='invoice'
           })
           .catch(e => {
             this.errors.push(e)
@@ -796,7 +963,7 @@ export default {
         else{
 			this.selectedMonth=this.month
 			this.selectedYear=this.year
-			this.filterByInvoice()
+			this.setInit('invoice')
 			
 		}
 		this.getLogisticSelectList()

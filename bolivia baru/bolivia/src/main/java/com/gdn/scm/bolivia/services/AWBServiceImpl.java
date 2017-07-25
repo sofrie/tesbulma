@@ -315,6 +315,126 @@ public class AWBServiceImpl implements AWBService {
     
     
     
+    
+    //sorting by ReconStatus
+    
+    @Override
+    public Page<AWB> findAllSortByStatusASC(Pageable pageable) {
+        return aWBRepository.findAllSortByReconStatusASC(pageable);
+    }
+    @Override
+    public Page<AWB> findAllSortByStatusDESC(Pageable pageable) {
+        return aWBRepository.findAllSortByReconStatusDESC(pageable);
+    }
+    
+    @Override
+    public Page<AWB> findMonthSortByStatusASC(String month,Pageable pageable) {
+        return aWBRepository.findMonthSortByReconStatusASC(month,pageable);
+    }
+    @Override
+    public Page<AWB> findMonthSortByStatusDESC(String month,Pageable pageable) {
+        return aWBRepository.findMonthSortByReconStatusDESC(month,pageable);
+    }
+
+    @Override
+    public Page<AWB> findYearSortByStatusASC(String year, Pageable pageable) {
+        return aWBRepository.findYearSortByReconStatusASC(year,pageable);
+    }
+
+    @Override
+    public Page<AWB> findYearSortByStatusDESC(String year, Pageable pageable) {
+        return aWBRepository.findYearSortByReconStatusDESC(year,pageable);
+    }
+
+    @Override
+    public Page<AWB> findStatusSortByStatusASC(String status, Pageable pageable) {
+        if (status.equals("All")) {
+            return aWBRepository.findAllSortByReconStatusASC(pageable);
+        } else {
+             return aWBRepository.findReconStatusSortByReconStatusASC(status,pageable);
+        }
+       
+    }
+
+    @Override
+    public Page<AWB> findStatusSortByStatusDESC(String status, Pageable pageable) {
+        if (status.equals("All")) {
+            return aWBRepository.findAllSortByReconStatusDESC(pageable);
+        } else {
+             return aWBRepository.findReconStatusSortByReconStatusDESC(status,pageable);
+        }
+    }
+
+    @Override
+    public Page<AWB> findLogisticSortByStatusASC(String logistic, Pageable pageable) {
+        return aWBRepository.findLogisticSortByReconStatusASC(logistic,pageable);
+    }
+
+    @Override
+    public Page<AWB> findLogisticSortByStatusDESC(String logistic, Pageable pageable) {
+        return aWBRepository.findLogisticSortByReconStatusDESC(logistic,pageable);
+    }
+
+    @Override
+    public Page<AWB> findMerchantCodeSortByStatusASC(String merchantCode, Pageable pageable) {
+        return aWBRepository.findMerchantCodeSortByReconStatusASC(merchantCode,pageable);
+    }
+
+    @Override
+    public Page<AWB> findMerchantCodeSortByStatusDESC(String merchantCode, Pageable pageable) {
+        return aWBRepository.findMerchantCodeSortByReconStatusDESC(merchantCode,pageable);
+    }
+
+    @Override
+    public List<AWB> findAwbNumberSortByStatusASC(String awbNumber) {
+        return aWBRepository.findAwbNumberSortByReconStatusASC(awbNumber);
+    }
+
+    @Override
+    public List<AWB> findAwbNumberSortByStatusDESC(String awbNumber) {
+        return aWBRepository.findAwbNumberSortByReconStatusDESC(awbNumber);
+    }
+
+    @Override
+    public Page<AWB> findGdnRefSortByStatusASC(String gdnRef, Pageable pageable) {
+        return aWBRepository.findGdnRefSortByReconStatusASC(gdnRef,pageable);
+    }
+
+    @Override
+    public Page<AWB> findGdnRefSortByStatusDESC(String gdnRef, Pageable pageable) {
+        return aWBRepository.findGdnRefSortByReconStatusDESC(gdnRef,pageable);
+    }
+
+    @Override
+    public Page<AWB> filterAllSortByStatusASC(String month, String year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef, Pageable pageable) {
+        if (reconStatus.equals("All")) {
+            return aWBRepository.filterAllExceptStatusSortByReconStatusASC(month, year, logisticName, AwbNumber, merchantCode, gdnRef,pageable);
+        } else {
+            return aWBRepository.filterAllSortByReconStatusASC(month, year, logisticName, AwbNumber, reconStatus, merchantCode, gdnRef,pageable);
+        }
+    }
+
+    @Override
+    public Page<AWB> filterAllSortByStatusDESC(String month, String year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef, Pageable pageable) {
+        if (reconStatus.equals("All")) {
+            return aWBRepository.filterAllExceptStatusSortByReconStatusDESC(month, year, logisticName, AwbNumber, merchantCode, gdnRef,pageable);
+        } else {
+            return aWBRepository.filterAllSortByReconStatusDESC(month, year, logisticName, AwbNumber, reconStatus, merchantCode, gdnRef,pageable);
+        }
+    }
+
+    @Override
+    public Page<AWB> filterByInvoiceSortByStatusASC(String month, String year, String logisticName, Pageable pageable) {
+        return aWBRepository.filterByInvoiceSortByReconStatusASC(month,year,logisticName,pageable);
+    }
+
+    @Override
+    public Page<AWB> filterByInvoiceSortByStatusDESC(String month, String year, String logisticName, Pageable pageable) {
+        return aWBRepository.filterByInvoiceSortByReconStatusDESC(month,year,logisticName,pageable);
+    }
+    
+    
+    
     //sorting awb by GdnRef
      @Override
     public Page<AWB> findAllSortByGdnRefASC(Pageable pageable) {
@@ -384,12 +504,12 @@ public class AWBServiceImpl implements AWBService {
     }
 
     @Override
-    public List<AWB> findGdnRefSortByGdnRefASC(String awbNumber) {
+    public List<AWB> findAwbNumberSortByGdnRefASC(String awbNumber) {
         return aWBRepository.findGdnRefSortByGdnRefASC(awbNumber);
     }
 
     @Override
-    public List<AWB> findGdnRefSortByGdnRefDESC(String awbNumber) {
+    public List<AWB> findAwbNumberSortByGdnRefDESC(String awbNumber) {
         return aWBRepository.findGdnRefSortByGdnRefDESC(awbNumber);
     }
 
