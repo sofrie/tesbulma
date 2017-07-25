@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import java.io.File;
+import java.io.FileInputStream;
+import org.codehaus.plexus.util.FileUtils;
 
 /**
  *
@@ -61,16 +64,43 @@ public class UploadHistoryController {
     public List<UploadHistory> filterByLogistic(@PathVariable("logistic") String logistic) {
         return uploadHistoryService.getByLogisticName(logistic);
     }
-    
+
     //select list in invoice
     @CrossOrigin
     @RequestMapping(value = "/api/uploadHistory/list/month", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<String> getAllMonth() {
         return uploadHistoryService.getAllMonth();
     }
+
     @CrossOrigin
     @RequestMapping(value = "/api/uploadHistory/list/year", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<String> getAllYear() {
         return uploadHistoryService.getAllYear();
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/api/uploadHistory/update", method = RequestMethod.POST)
+    public void updateUploadHistory(@RequestBody UploadHistoryRequest request) {
+        uploadHistoryService.updateUploadHistory(request);
+        //return logistic;
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/api/uploadHistory/download/{idUpload}", method = RequestMethod.GET)
+    public void downloadUploadHistory(@PathVariable("idUpload") Integer idUpload) {
+        try {
+            UploadHistory history= uploadHistoryService.getById(idUpload);
+            
+            
+            String sourceFileName = history.getNamaFile();
+            File source = new File(sourceFileName);
+            String destFileName = "D:\\Invoice_"+history.getLogistic()+"_"+history.getMonth().toString()+"_"+history.getYear().toString()+"_"+history.getStatus()+".xlsx";
+            File dest = new File(destFileName);
+            FileUtils.copyFile(source, dest);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //return logistic;
     }
 }

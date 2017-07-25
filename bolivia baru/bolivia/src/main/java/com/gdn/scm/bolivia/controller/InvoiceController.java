@@ -44,6 +44,12 @@ public class InvoiceController {
     public List<Invoice> getAllInvoice() {
         return invoiceService.getAll();
     }
+    
+    @CrossOrigin
+    @RequestMapping(value = "/api/invoice/update", method = RequestMethod.POST)
+    public void updateInvoice(@RequestBody InvoiceRequest request) {
+        invoiceService.updateInvoice(request);
+    }
 
 //    @CrossOrigin
 //    @RequestMapping(value = "/api/invoice/{month}/{year}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

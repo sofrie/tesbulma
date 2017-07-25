@@ -72,19 +72,19 @@ public class Invoice {
     private String statusInvoice;
 
     @Column(name = COLUMN_FIRST_UPLOAD_DATE, nullable = true)
-    private Date firstUploadDate;
+    private String firstUploadDate;
 
     @Column(name = COLUMN_SUBMITED_DATE, nullable = true)
-    private Date submitedDate;
+    private String submitedDate;
 
     @Column(name = COLUMN_CONFIRMED_DATE, nullable = true)
-    private Date confirmedDate;
+    private String confirmedDate;
 
     @Column(name = COLUMN_APPROVED_DATE, nullable = true)
-    private Date approvedDate;
+    private String approvedDate;
 
     @Column(name = COLUMN_LAST_MODIFIED, nullable = true)
-    private Date lastModified;
+    private String lastModified;
     
     @Column(name = COLUMN_LOGISTIC_NAME, nullable = true)
     private String logisticName;
@@ -142,43 +142,43 @@ public class Invoice {
         this.statusInvoice = statusInvoice;
     }
 
-    public Date getFirstUploadDate() {
+    public String getFirstUploadDate() {
         return firstUploadDate;
     }
 
-    public void setFirstUploadDate(Date firstUploadDate) {
+    public void setFirstUploadDate(String firstUploadDate) {
         this.firstUploadDate = firstUploadDate;
     }
 
-    public Date getSubmitedDate() {
+    public String getSubmitedDate() {
         return submitedDate;
     }
 
-    public void setSubmitedDate(Date submitedDate) {
+    public void setSubmitedDate(String submitedDate) {
         this.submitedDate = submitedDate;
     }
 
-    public Date getConfirmedDate() {
+    public String getConfirmedDate() {
         return confirmedDate;
     }
 
-    public void setConfirmedDate(Date confirmedDate) {
+    public void setConfirmedDate(String confirmedDate) {
         this.confirmedDate = confirmedDate;
     }
 
-    public Date getApprovedDate() {
+    public String getApprovedDate() {
         return approvedDate;
     }
 
-    public void setApprovedDate(Date approvedDate) {
+    public void setApprovedDate(String approvedDate) {
         this.approvedDate = approvedDate;
     }
 
-    public Date getLastModified() {
+    public String getLastModified() {
         return lastModified;
     }
 
-    public void setLastModified(Date lastModified) {
+    public void setLastModified(String lastModified) {
         this.lastModified = lastModified;
     }
 

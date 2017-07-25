@@ -76,10 +76,10 @@
                              <tr v-for="post of posts" v-on:click="setSummary(post)">
                                 <td>{{post.month}}</td>
                                 <td>{{post.year}}</td>
-                                <td>{{post.jumlahTagihan}}</td>
-                                <td>{{post.logistic}}</td>
-                                <td>{{post.status}}</td>
-                                <td>{{post.last_modified}}</td>
+                                <td>{{post.tagihan}}</td>
+                                <td>{{post.logisticName}}</td>
+                                <td>{{post.statusInvoice}}</td>
+                                <td>{{post.lastModified | formatDate}}</td>
                               </tr>                                
                             </tbody>
                         </table>
@@ -96,8 +96,10 @@ import fileinput from "../vendors/bootstrap-fileinput/js/fileinput.min.js"
 import localforage from 'localforage'
 import { upload } from './file-upload.service.js'
 import axios from 'axios'
-import dt from "datatables.net";
-import datatables_bootstrap from "datatables.net-bs/js/dataTables.bootstrap.js";
+import dt from "datatables.net"
+import datatables_bootstrap from "datatables.net-bs/js/dataTables.bootstrap.js"
+import moment from 'moment'
+
 require("datatables.net-bs/css/dataTables.bootstrap.css");
 
 const STATUS_INITIAL = 0
@@ -200,7 +202,26 @@ export default {
     },
     destroyed: function() {
     },
+    filters: {
+        currency: function (value) {
+            return 'Rp. ' + value.toString().replace(/,/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        },
+        formatDate: function (value) {
+            return moment(String(value)).format('MM/DD/YYYY hh:mm')
+        }
+    },
   methods: {
+      fetchInvoices() {
+          axios.get(`http://127.0.0.1:8091/api/invoice`)
+              .then(response => {
+                  // JSON responses are automatically parsed.
+                  this.posts = response.data
+                  this.getLogisticSelectList()
+              })
+              .catch(e => {
+                  this.errors.push(e)
+              })
+      },
     fetchUsers() {
         axios.get(`http://127.0.0.1:8091/api/uploadHistory`)
         .then(response => {
@@ -278,7 +299,7 @@ export default {
             });
         },400);
         });
-        this.fetchUsers()
+        this.fetchInvoices()
 		selectedStatus: 'Select Status'
       selectedLogistic: 'Select Logistic'
       }
