@@ -123,7 +123,7 @@
                             </thead>
                             <tbody>
                              <tr v-for="post of posts" data-toggle="modal" data-target="#form_modal" v-on:click="openModal(post)">
-                                <td>{{post.month}}</td>
+                                <td>{{post.month | filtermonth}}</td>
                                 <td>{{post.year}}</td>
                                 <td>{{post.logisticName}}</td>
                                 <td>{{post.awbNumber}}</td>
@@ -428,6 +428,61 @@ export default {
 			this.fetchAll()
     },
     destroyed: function() {
+    },
+    filters: {
+        currency: function (value) {
+            return 'Rp. ' + value.toString().replace(/,/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        },
+        filtermonth: function (value) {
+            if(value==1)
+            {
+                return 'Januari'
+            }
+            else if(value==2)
+            {
+                return 'Februari'
+            }
+            else if(value==3)
+            {
+                return 'Maret'
+            }
+            else if(value==4)
+            {
+                return 'April'
+            }
+            else if(value==5)
+            {
+                return 'Mei'
+            }
+            else if(value==6)
+            {
+                return 'Juni'
+            }
+            else if(value==7)
+            {
+                return 'Juli'
+            }
+            else if(value==8)
+            {
+                return 'Agustus'
+            }
+            else if(value==9)
+            {
+                return 'September'
+            }
+            else if(value==10)
+            {
+                return 'Oktober'
+            }
+            else if(value==11)
+            {
+                return 'November'
+            }
+            else if(value==12)
+            {
+                return 'Desember'
+            }
+        }
     },
   methods: { 
 	  paginationFilter(){

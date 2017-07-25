@@ -8,6 +8,8 @@ package com.gdn.scm.bolivia.services;
 import com.gdn.scm.bolivia.entity.Invoice;
 import com.gdn.scm.bolivia.request.InvoiceRequest;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  *
@@ -23,5 +25,8 @@ public interface InvoiceService {
     Invoice findTop1ByOrderByLastModifiedDesc();
     Invoice findByMonthAndYearAndLogisticName (Integer month, Integer year, String logisticName);
     
+    List<Invoice> findByLogisticName(String logisticName);
+    List<Invoice> findByStatusInvoice(String statusInvoice);
+    List<Invoice> findByStatusInvoiceAndLogisticName(String statusInvoice, String logisticName);    
 //    List<String> getLogisticName(String logisticName);
 }

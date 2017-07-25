@@ -17,18 +17,18 @@
                                                 Select month
                                             </option>
                                             <!--<option v-for="item of listMonth" v-bind:value="item">{{item}}</option>-->
-                                            <option value="January">January</option>
-                                            <option value="February">February</option>
-                                            <option value="Maret">Maret</option>
-                                            <option value="April">April</option>
-                                            <option value="Mei">Mei</option>
-                                            <option value="Juni">Juni</option>
-                                            <option value="Juli">Juli</option>
-                                            <option value="Agustus">Agustus</option>
-                                            <option value="September">September</option>
-                                            <option value="Oktober">Oktober</option>
-                                            <option value="November">November</option>
-                                            <option value="Desember">Desember</option>
+                                            <option value=1>January</option>
+                                            <option value=2>February</option>
+                                            <option value=3>Maret</option>
+                                            <option value=4>April</option>
+                                            <option value=5>Mei</option>
+                                            <option value=6>Juni</option>
+                                            <option value=7>Juli</option>
+                                            <option value=8>Agustus</option>
+                                            <option value=9>September</option>
+                                            <option value=10>Oktober</option>
+                                            <option value=11>November</option>
+                                            <option value=12>Desember</option>
                                         </select>
                                     </div>
                                     <label class="col-sm-1 control-label" for="skill">
@@ -193,15 +193,10 @@
                             <router-link :to="{path:'/awb/'+invoice.month+'/'+invoice.year+'/'+invoice.logistic}">
                                 <button class="btn btn-primary button_normal">View Data</button>
                             </router-link>
-
-                            <button class="btn btn-primary button_normal" v-on:click="dowbloadFile()">Download</button>                            <
-                            <button class="btn btn-primary button_normal pull-right" v-on:click="approved()">Approve
-                            </button>
-                            <button class="btn btn-primary button_normal pull-right" v-on:click="checked()">Check
-                            </button>
-                            <button class="btn btn-primary button_normal pull-right" v-on:click="submited()">Submit
-                            </button>
-
+                            <button class="btn btn-primary button_normal" v-on:click="downloadFile()">Download</button>
+                            <button class="btn btn-primary button_normal pull-right" v-on:click="approved()">Approve</button>
+                            <button class="btn btn-primary button_normal pull-right" v-on:click="checked()">Check</button>
+                            <button class="btn btn-primary button_normal pull-right" v-on:click="submited()">Submit</button>
                         </div>
                     </div>
                 </div>
@@ -430,7 +425,7 @@
             }
         },
         methods: {
-            dowbloadFile () {
+            downloadFile () {
                 axios.get(`http://127.0.0.1:8091/api/uploadHistory/download/` + this.invoice.id)
                     .then(response => {
                         // JSON responses are automatically parsed.
