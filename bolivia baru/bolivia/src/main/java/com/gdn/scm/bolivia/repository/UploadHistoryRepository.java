@@ -5,6 +5,7 @@
  */
 package com.gdn.scm.bolivia.repository;
 
+import com.gdn.scm.bolivia.entity.Invoice;
 import com.gdn.scm.bolivia.entity.Tolerance;
 import com.gdn.scm.bolivia.entity.UploadHistory;
 import java.util.List;
@@ -33,4 +34,7 @@ public interface UploadHistoryRepository extends JpaRepository<UploadHistory, In
     public List<String> getAllYear();
        
     public UploadHistory findTop1ByOrderByIdDesc();
+
+    @Query("select a from UploadHistory a where a.invoice = ?")
+    public List<UploadHistory> findByInvoice(Invoice invoice);
 }

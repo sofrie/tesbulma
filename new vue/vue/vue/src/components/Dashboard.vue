@@ -16,6 +16,7 @@
                                             <option value="Select Status" disabled="" selected="">
                                                 Select Status
                                             </option>
+                                            <option value="All">All</option>
                                             <option value="Open">Open</option>
                                             <option value="On Process">On Process</option>
                                             <option value="Problem Exist">Problem Exist</option>
@@ -63,7 +64,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="panel-body table-responsive">
-                            <table class="table table-striped table-bordered table_width" id="example">
+                            <table class="table table-striped table-bordered table_width" >
                                 <thead>
                                 <tr>
                                     <th>Month</th>
@@ -75,8 +76,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-								<router-link :to="{path:'/invoicepage/'+post.id}" v-for="post of posts">
-								<tr>
+                                <tr v-for="post of posts" v-on:click="goToInvoice(post.id)">
                                     <td>{{post.month | filtermonth}}</td>
                                     <td>{{post.year}}</td>
                                     <td>{{post.tagihan | currency}}</td>
@@ -84,10 +84,19 @@
                                     <td>{{post.statusInvoice}}</td>
                                     <td>{{post.lastModified }}</td>
                                 </tr>
-                            </router-link>
-
                                 </tbody>
                             </table>
+                            <div class="pull-right" v-if="totalPage>0">
+                                <ul class="pagination">
+                                    <li v-on:click="toPageOne()" v-if="prevpage>1"><a class="noselect">1</a></li>
+                                    <li class="disabled" v-if="checkedPrevPageEllipsis()"><a>...</a></li>
+                                    <li><a v-on:click="toPrevPage()" v-if="prevpage<page">{{prevpage+1}}</a></li>
+                                    <li class="active"><a>{{page+1}}</a></li>
+                                    <li><a v-on:click="toNextPage()" v-if="checkedNextPage()">{{nextpage+1}}</a></li>
+                                    <li class="disabled" v-if="checkedNextPageEllipsis()"><a>...</a></li>
+                                    <li><a v-on:click="toLastPage()" v-if="page<nextpage">{{totalPage}}</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -122,7 +131,13 @@
                 selectedLogistic: 'Select Logistic',
                 invoice: null,
                 listStatus: [],
-                listLogistic: []
+                listLogistic: [],
+                page: 0,
+                size: 10,
+                nextpage: 1,
+                prevpage: 0,
+                totalPage: 0,
+                setPage:0
             }
         ),
         mounted: function () {
@@ -263,12 +278,60 @@
             }
         },
         methods: {
-            fetchInvoices() {
-                axios.get(`http://127.0.0.1:8091/api/invoice`)
+            goToInvoice(id){
+                window.location.href = '/#/invoicepage/'+id
+            },
+            toPageOne(){
+                this.setPage=0
+                this.fetchInvoices()
+            },
+            toLastPage(){
+                this.setPage=this.totalPage-1
+                this.fetchInvoices()
+            },
+            toPrevPage(){
+                this.setPage=this.prevpage;
+                this.fetchInvoices()
+            },
+            toNextPage(){
+                this.setPage=this.nextpage;
+                this.fetchInvoices()
+            },
+            checkedNextPageEllipsis(){
+                return this.nextpage+2!=this.totalPage && this.nextpage+1!=this.totalPage
+            },
+            checkedNextPage(){
+                return this.nextpage+1!=this.totalPage && this.nextpage>this.page
+            },
+            checkedPrevPageEllipsis(){
+                return this.prevpage!=0 && this.prevpage-1!=0
+            },
+            fetchPageable() {
+                axios.get(`http://127.0.0.1:8091/api/invoice/page`)
                     .then(response => {
                         // JSON responses are automatically parsed.
-                        this.posts = response.data
+                        this.page = response.data.page
+                        this.totalPage = response.data.total_page
+                        this.nextpage=this.page
+                        this.prevpage=this.page
+                        if(this.nextpage+1<this.totalPage) {
+                            this.nextpage = this.nextpage + 1
+                        }
+                        if(this.prevpage-1>=0) {
+                            this.prevpage = this.prevpage - 1
+                        }
+                    })
+                    .catch(e => {
+                        this.errors.push(e)
+                    })
+            },
+            fetchInvoices() {
+                axios.get(`http://127.0.0.1:8091/api/invoice/pageable`+'?page='+ this.setPage+'&size='+this.size)
+                    .then(response => {
+                        // JSON responses are automatically parsed.
+                        this.posts = response.data.content
                         this.getLogisticSelectList()
+                        this.fetchPageable()
                     })
                     .catch(e => {
                         this.errors.push(e)

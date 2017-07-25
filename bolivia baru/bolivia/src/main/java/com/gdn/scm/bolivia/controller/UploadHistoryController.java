@@ -103,4 +103,14 @@ public class UploadHistoryController {
         }
         //return logistic;
     }
+    
+    @CrossOrigin
+    @RequestMapping(value = "/api/uploadHistory/{invoice}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<UploadHistory> filterByInvoice(@PathVariable("invoice") String invoice) {
+        List<UploadHistory> list=uploadHistoryService.getByInvoice(invoice);
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i).getMonth());
+        }
+        return uploadHistoryService.getByInvoice(invoice);
+    }
 }

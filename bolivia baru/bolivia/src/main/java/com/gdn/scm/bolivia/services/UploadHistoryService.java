@@ -43,4 +43,6 @@ public interface UploadHistoryService {
     
     List<String> getAllMonth();
     List<String> getAllYear();
+    
+    List<UploadHistory> getByInvoice(String invoice);
 }

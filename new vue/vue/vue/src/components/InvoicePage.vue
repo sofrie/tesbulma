@@ -194,12 +194,10 @@
                             <router-link :to="{path:'/awb/'+invoice.month+'/'+invoice.year+'/'+invoice.logistic}">
                                 <button class="btn btn-primary button_normal">View Data</button>
                             </router-link>
-							
-							<button class="btn btn-primary button_normal" v-on:click="downloadFile()">Download</button>
+                            <button class="btn btn-primary button_normal" v-on:click="downloadFile()">Download</button>
                             <button class="btn btn-primary button_normal pull-right" v-on:click="approved()">Approve</button>
                             <button class="btn btn-primary button_normal pull-right" v-on:click="checked()">Check</button>
                             <button class="btn btn-primary button_normal pull-right" v-on:click="submited()">Submit</button>
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -269,6 +267,12 @@
     const formData = new window.FormData()
     export default {
         name: "datatables",
+        props: {
+            id: {
+                type: String,
+                default: 'Vue!'
+            }
+        },
         data: () => ({
                 posts: [],
                 uploadedFiles: [],
@@ -415,7 +419,7 @@
             }
         },
         methods: {
-			downloadFile () {
+            downloadFile () {
                 axios.get(`http://127.0.0.1:8091/api/uploadHistory/download/` + this.invoice.id)
                     .then(response => {
                         // JSON responses are automatically parsed.
@@ -450,6 +454,7 @@
                 })
                 this.statusUpdate = 'Submited'
                 this.updateHistory()
+
             },
             checked () {
                 axios.post(`http://127.0.0.1:8091/api/invoice/update`, {
@@ -497,6 +502,22 @@
                         this.getMonthSelectList()
                         this.getYearSelectList()
                         this.getLogisticSelectList()
+                    })
+                    .catch(e => {
+                        this.errors.push(e)
+                    })
+            },
+            fetchInvoice(){
+                axios.get(`http://127.0.0.1:8091/api/uploadHistory/`+this.id)
+                    .then(response => {
+                        // JSON responses are automatically parsed.
+                        this.posts = response.data
+                        this.invoice = this.posts[0]
+                        this.getMonthSelectList()
+                        this.getYearSelectList()
+                        this.getLogisticSelectList()
+                        this.selectedSearchMonth=this.invoice.month
+                        this.selectedSearchYear=this.invoice.year
                     })
                     .catch(e => {
                         this.errors.push(e)
@@ -633,13 +654,13 @@
                     });
                 }, 400);
             });
-            this.fetchUsers()
-            selectedMonth: 'Select Month'
-            selectedLogistic: 'Select Logistic'
-            selectedYear: 'Select Year'
-            selectedSearchMonth: 'Select Month'
-            selectedSearchLogistic: 'Select Logistic'
-            selectedSearchYear: 'Select Year'
+
+            if(this.id==='Vue!'){
+                this.fetchUsers()
+            }
+            else{
+                this.fetchInvoice()
+            }
             this.getYearSelectList()
         }
     }
