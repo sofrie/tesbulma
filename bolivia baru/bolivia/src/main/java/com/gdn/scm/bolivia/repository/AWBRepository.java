@@ -75,6 +75,14 @@ public interface AWBRepository extends JpaRepository<AWB, String> {
 
     @Query("select sum (a.totalChargeLogistic) from AWB a where a.invoice = ?")
     public BigDecimal countTagihan(Invoice invoice);
+    
+    
+    
+    @Query("select sum (a.priceLogistic) from AWB a where a.invoice = ?")
+    public BigDecimal countTotalPriceLogistic(Invoice invoice);
+    
+    @Query("select sum (a.insuranceChargeLogistic) from AWB a where a.invoice = ?")
+    public BigDecimal countTotalInsuranceLogistic(Invoice invoice);
 
     
     //sorting by awb

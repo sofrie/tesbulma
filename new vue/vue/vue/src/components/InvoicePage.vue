@@ -609,7 +609,7 @@
                 this.listYear = years;
             },
             getLogisticSelectList(){
-                axios.get('http://127.0.0.1:8091/api/logistic/list')
+                axios.get('http://127.0.0.1:8091/api/logistics/status/Active')
                     .then(response => {
                         // JSON responses are automatically parsed.
                         this.listLogistic = response.data

@@ -18,10 +18,17 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LogisticProviderRepository extends JpaRepository<LogisticProvider, Integer> {
     public List<LogisticProvider> findByStatus(String status);
+     
     public LogisticProvider findTop1ByOrderByIdDesc();
     
     public LogisticProvider findByLogisticName(String logisticName);
     
     @Query("select distinct a.logisticName from LogisticProvider a")
     public List<String> getAllLogistic();
+    
+    @Query("select distinct a.logisticName from LogisticProvider a where a.status = ?")
+    public List<String> findLogisticNameByStatus(String status);
+    
+//    @Query("SELECT FROM blv_logistic_provider WHERE status = 'Active'")
+//    public List<LogisticProvider> getActiveLogistic();
 }

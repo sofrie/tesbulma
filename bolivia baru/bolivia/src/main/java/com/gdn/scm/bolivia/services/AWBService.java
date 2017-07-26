@@ -61,6 +61,10 @@ public interface AWBService {
     BigDecimal countTagihan(Invoice invoice);
     
     
+    BigDecimal countTotalPriceLogistic(Invoice invoice);
+    BigDecimal countTotalnsuranceLogistic(Invoice invoice);
+    
+    
     
     Page<AWB> getByMerchantCode(String merchantCode,Pageable pageable);
     

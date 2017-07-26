@@ -27,4 +27,7 @@ public interface LogisticProviderService {
 //    List<LogisticProvider> GetAllLogisticProvider(Integer merchantid);
     
     LogisticProvider findById(Integer Id);
+    
+    
+     List<String> findLogisticNameByStatus(String status);
 }

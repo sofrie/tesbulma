@@ -551,4 +551,14 @@ public class AWBServiceImpl implements AWBService {
         return aWBRepository.filterByInvoiceSortByGdnRefDESC(month,year,logisticName,pageable);
     }
 
+    @Override
+    public BigDecimal countTotalPriceLogistic(Invoice invoice) {
+        return aWBRepository.countTotalPriceLogistic(invoice);
+    }
+
+    @Override
+    public BigDecimal countTotalnsuranceLogistic(Invoice invoice) {
+        return aWBRepository.countTotalInsuranceLogistic(invoice);
+    }
+
 }
