@@ -69,4 +69,12 @@ public class LogisticProviderController {
     public void activateLogistic(@PathVariable("id") Integer id) {
         logisticProviderService.setStatusActive(id);
     }
+    
+    
+    //get all name active logistic
+    @CrossOrigin
+    @RequestMapping(value = "/api/logistics/status/Active", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<String> findActiveNameLogistic() {
+        return logisticProviderService.findLogisticNameByStatus("Active");
+    }
 }

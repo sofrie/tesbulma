@@ -18,6 +18,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -50,17 +52,17 @@ public class InvoiceServiceImpl implements InvoiceService {
 //    }
 
     public InvoiceServiceImpl() {
-        isAda=false;
+        isAda = false;
     }
-    
+
     @Override
     public void addInvoice(InvoiceRequest request) {
         Invoice ada = this.findByMonthAndYearAndLogisticName(request.getMonth(), request.getYear(), request.getLogisticName());
         if (ada != null) {
-            isAda=true;
+            isAda = true;
 
         } else {
-            isAda=false;
+            isAda = false;
             Invoice invoice = new Invoice();
             BeanUtils.copyProperties(request, invoice);
             invoice.setId(UUID.randomUUID().toString());
@@ -87,7 +89,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public List<Invoice> getAll() {
-        return invoiceRepository.findAll();
+        return invoiceRepository.findAllOrderByYearAndMonth();
+        //return invoiceRepository.findAll();
     }
 
     @Override
@@ -111,44 +114,37 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public void updateInvoice(InvoiceRequest request) {
-        System.out.println("moth : "+request.getMonth());
-        System.out.println("year : "+request.getYear());
-        System.out.println("logistic : "+request.getLogisticName());
-        System.out.println("status : "+request.getStatusInvoice());
-        Invoice update=invoiceRepository.findByMonthAndYearAndLogisticName(request.getMonth(), request.getYear(), request.getLogisticName());
-        System.out.println("id "+update.getId());
+        System.out.println("moth : " + request.getMonth());
+        System.out.println("year : " + request.getYear());
+        System.out.println("logistic : " + request.getLogisticName());
+        System.out.println("status : " + request.getStatusInvoice());
+        Invoice update = invoiceRepository.findByMonthAndYearAndLogisticName(request.getMonth(), request.getYear(), request.getLogisticName());
+        System.out.println("id " + update.getId());
         update.setStatusInvoice(request.getStatusInvoice());
-        
+
         //get current date
         Date today = new Date();
         Timestamp timestamp = new Timestamp(today.getTime());
-        
-        if(request.getStatusInvoice().equals("Submited"))
-        {
+
+        if (request.getStatusInvoice().equals("Submited")) {
             update.setSubmitedDate(timestamp.toString());
             System.out.println("submit");
-        }
-        else if(request.getStatusInvoice().equals("Checked"))
-        {
+        } else if (request.getStatusInvoice().equals("Checked")) {
             update.setConfirmedDate(timestamp.toString());
-        }
-        else if(request.getStatusInvoice().equals("Approved"))
-        {
+        } else if (request.getStatusInvoice().equals("Approved")) {
             update.setApprovedDate(timestamp.toString());
-        }        
-        else
-        {
-        System.out.println("fail submit");
+        } else {
+            System.out.println("fail submit");
         }
         update.setLastModified(timestamp.toString());
         invoiceRepository.save(update);
     }
-    
+
     @Override
-    public void updateInvoice(Invoice invoice) {  
+    public void updateInvoice(Invoice invoice) {
         invoiceRepository.save(invoice);
-        
-    }  
+
+    }
 
     @Override
     public List<Invoice> findByLogisticName(String logisticName) {
@@ -157,12 +153,26 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public List<Invoice> findByStatusInvoice(String statusInvoice) {
-        return invoiceRepository.findByStatusInvoice(statusInvoice);
+        if (statusInvoice.equals("All")) {
+            return invoiceRepository.findAllOrderByYearAndMonth();
+        } else {
+            return invoiceRepository.findByStatusInvoice(statusInvoice);
+        }
     }
 
     @Override
     public List<Invoice> findByStatusInvoiceAndLogisticName(String statusInvoice, String logisticName) {
         return invoiceRepository.findByStatusInvoiceAndLogisticName(statusInvoice, logisticName);
+    }
+
+    @Override
+    public Page<Invoice> findAllPageable(Pageable pageable) {
+        return invoiceRepository.findAllOrderByYearAndMonth(pageable);
+    }
+
+    @Override
+    public Invoice findById(String Id) {
+        return invoiceRepository.findOne(Id);
     }
 
 }

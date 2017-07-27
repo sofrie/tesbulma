@@ -146,4 +146,10 @@ public class UploadHistoryServiceImpl implements UploadHistoryService {
         return uploadHistoryRepository.getAllYear();
     }
 
+    @Override
+    public List<UploadHistory> getByInvoice(String invoice){
+        Invoice i=invoiceService.findById(invoice);
+        System.out.println(i.getId());
+        return uploadHistoryRepository.findByInvoice(i);
+    }
 }

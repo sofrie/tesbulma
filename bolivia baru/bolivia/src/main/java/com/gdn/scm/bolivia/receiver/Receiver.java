@@ -54,8 +54,8 @@ public class Receiver {
 
     public Integer counter = 0;
     public Integer problem = 0;
-    public Integer counterFromCompare=0;
-    public BigDecimal tagihan=new BigDecimal(0);
+    public Integer counterFromCompare = 0;
+    public BigDecimal tagihan = new BigDecimal(0);
     public Boolean cekupload = false;
 
     public void receiveMessage(Process message) throws InterruptedException {
@@ -81,17 +81,98 @@ public class Receiver {
     }
 
 //    Integer c = 0;
+    public void setAWBSystem(AWB message, AWB fromSystem) {
+        message.setPriceSystem(fromSystem.getPriceSystem());
+        message.setWeightSystem(fromSystem.getWeightSystem());
+        message.setInsuranceChargeSystem(fromSystem.getInsuranceChargeSystem());
+        message.setOtherChargeSystem(fromSystem.getOtherChargeSystem());
+        message.setTotalChargeSystem(fromSystem.getTotalChargeSystem());
+
+    }
+
+    public Integer compareAWB(BigDecimal tolerancePercent, BigDecimal toleranceAmount, BigDecimal max, AWB message, Tolerance tolerance, Integer counterBeda) {
+        tolerancePercent = (tolerance.getPricePercentage().divide(new BigDecimal(100)).multiply(message.getPriceSystem())).add(message.getPriceSystem());
+        toleranceAmount = message.getPriceSystem().add(tolerance.getPriceAmount());
+        max = tolerancePercent.max(toleranceAmount);
+        if (message.getPriceLogistic() != null && message.getPriceLogistic().compareTo(max) > 0) {
+            message.setPriceComment("Beda");
+            counterBeda += 1;
+        } else {
+            message.setPriceComment("-");
+            message.setPriceApplied(message.getPriceLogistic());
+        }
+
+        tolerancePercent = (tolerance.getWeightPercentage().divide(new BigDecimal(100)).multiply(message.getWeightSystem())).add(message.getWeightSystem());
+        toleranceAmount = message.getWeightSystem().add(tolerance.getWeightAmount());
+        max = tolerancePercent.max(toleranceAmount);
+        if (message.getWeightLogistic() != null && message.getWeightLogistic().compareTo(max) > 0) {
+            message.setWeightComment("Beda");
+            counterBeda += 1;
+        } else {
+            message.setWeightComment("-");
+            message.setWeightApplied(message.getWeightLogistic());
+        }
+
+        tolerancePercent = (tolerance.getInsuranceChargePercentage().divide(new BigDecimal(100)).multiply(message.getInsuranceChargeSystem())).add(message.getInsuranceChargeSystem());
+        toleranceAmount = message.getInsuranceChargeSystem().add(tolerance.getInsuranceChargeAmount());
+        max = tolerancePercent.max(toleranceAmount);
+        if (message.getInsuranceChargeLogistic() != null && message.getInsuranceChargeLogistic().compareTo(max) > 0) {
+            message.setInsuranceChargeComment("Beda");
+            counterBeda += 1;
+        } else {
+            message.setInsuranceChargeComment("-");
+            message.setInsuranceChargeApplied(message.getInsuranceChargeLogistic());
+        }
+
+        tolerancePercent = (tolerance.getOtherChargePercentage().divide(new BigDecimal(100)).multiply(message.getOtherChargeSystem())).add(message.getOtherChargeSystem());
+        toleranceAmount = message.getOtherChargeSystem().add(tolerance.getOtherChargeAmount());
+        max = tolerancePercent.max(toleranceAmount);
+        if (message.getOtherChargeLogistic() != null && message.getOtherChargeLogistic().compareTo(max) > 0) {
+            message.setOtherChargeComment("Beda");
+            counterBeda += 1;
+        } else {
+            message.setOtherChargeComment("-");
+            message.setOtherChargeApplied(message.getOtherChargeLogistic());
+        }
+
+        tolerancePercent = (tolerance.getTotalShippingPercentage().divide(new BigDecimal(100)).multiply(message.getTotalChargeSystem())).add(message.getTotalChargeSystem());
+        toleranceAmount = message.getTotalChargeSystem().add(tolerance.getTotalShippingAmount());
+        max = tolerancePercent.max(toleranceAmount);
+        if (message.getTotalChargeLogistic() != null && message.getTotalChargeLogistic().compareTo(max) > 0) {
+            message.setTotalChargeComment("Beda");
+            counterBeda += 1;
+        } else {
+            message.setTotalChargeComment("-");
+            message.setTotalChargeApplied(message.getTotalChargeLogistic());
+        }
+        
+        System.out.println("counter beda "+counterBeda);
+        return counterBeda;
+    }
+
+    public void setReconStatus(Integer counterBeda, AWB message) {
+        System.out.println("recon "+counterBeda);
+        if (counterBeda != 0) {
+            message.setReconStatus("Problem Exist");
+            problem += 1;
+            System.out.println("problemmmmmmm");
+        } else {
+            message.setReconStatus("OK");
+            System.out.println("okkkkkkkkk");
+        }
+        
+    }
+
     public void receiveMessage(AWB message) throws InterruptedException, Exception {
-        if(counter==0)
-        {
-            counterFromCompare=compare.counter;
+        if (counter == 0) {
+            counterFromCompare = compare.counter;
         }
         Integer counterBeda = 0;
         try {
             System.out.println("Received <" + message + ">");
             //awb.addAWB(message);
             counter += 1;
-            counterFromCompare=counterFromCompare-1;
+            counterFromCompare = counterFromCompare - 1;
             Boolean ada = false;
             Integer c = 0;
             cacheSrvice.delete(message.getAwbNumber());
@@ -101,16 +182,18 @@ public class Receiver {
             //get awb from logistic
             AWB fromSystem = awbFeign.getAWBSystem(message.getAwbNumber());
             if (fromSystem != null && fromSystem.getPriceSystem() != null) {
-                System.out.println("AWB------------------" + message.getAwbNumber());
-                System.out.println("from system " + fromSystem);
-                System.out.println("getPrice ----------- " + fromSystem.getPriceSystem());
-                message.setPriceSystem(fromSystem.getPriceSystem());
-                message.setWeightSystem(fromSystem.getWeightSystem());
-                message.setInsuranceChargeSystem(fromSystem.getInsuranceChargeSystem());
-                message.setOtherChargeSystem(fromSystem.getOtherChargeSystem());
-                message.setTotalChargeSystem(fromSystem.getTotalChargeSystem());
+//                System.out.println("AWB------------------" + message.getAwbNumber());
+//                System.out.println("from system " + fromSystem);
+//                System.out.println("getPrice ----------- " + fromSystem.getPriceSystem());
 
-                System.out.println("message ID "+message.getId());
+                setAWBSystem(message, fromSystem);
+//                message.setPriceSystem(fromSystem.getPriceSystem());
+//                message.setWeightSystem(fromSystem.getWeightSystem());
+//                message.setInsuranceChargeSystem(fromSystem.getInsuranceChargeSystem());
+//                message.setOtherChargeSystem(fromSystem.getOtherChargeSystem());
+//                message.setTotalChargeSystem(fromSystem.getTotalChargeSystem());
+
+                System.out.println("message ID " + message.getId());
                 awbRepository.save(message);
                 //Thread.sleep(500);
 //                System.out.println("lalalalalaalalalalla");
@@ -127,85 +210,87 @@ public class Receiver {
                 tolerancePercent = (tolerance.getPricePercentage().divide(new BigDecimal(100)).multiply(message.getPriceSystem())).add(message.getPriceSystem());
                 toleranceAmount = message.getPriceSystem().add(tolerance.getPriceAmount());
                 max = tolerancePercent.max(toleranceAmount);
-                if (message.getPriceLogistic() != null && message.getPriceLogistic().compareTo(max) > 0) {
-                    message.setPriceComment("Beda");
-                    counterBeda += 1;
-                } else {
-                    message.setPriceComment("-");
-                    message.setPriceApplied(message.getPriceLogistic());
-                }
-//                System.out.println("maxxxxxxxxxx : "+max);
-
-                tolerancePercent = (tolerance.getWeightPercentage().divide(new BigDecimal(100)).multiply(message.getWeightSystem())).add(message.getWeightSystem());
-                toleranceAmount = message.getWeightSystem().add(tolerance.getWeightAmount());
-                max = tolerancePercent.max(toleranceAmount);
-                if (message.getWeightLogistic() != null && message.getWeightLogistic().compareTo(max) > 0) {
-                    message.setWeightComment("Beda");
-                    counterBeda += 1;
-                } else {
-                    message.setWeightComment("-");
-                    message.setWeightApplied(message.getWeightLogistic());
-                }
-
-                tolerancePercent = (tolerance.getInsuranceChargePercentage().divide(new BigDecimal(100)).multiply(message.getInsuranceChargeSystem())).add(message.getInsuranceChargeSystem());
-                toleranceAmount = message.getInsuranceChargeSystem().add(tolerance.getInsuranceChargeAmount());
-                max = tolerancePercent.max(toleranceAmount);
-                if (message.getInsuranceChargeLogistic() != null && message.getInsuranceChargeLogistic().compareTo(max) > 0) {
-                    message.setInsuranceChargeComment("Beda");
-                    counterBeda += 1;
-                } else {
-                    message.setInsuranceChargeComment("-");
-                    message.setInsuranceChargeApplied(message.getInsuranceChargeLogistic());
-                }
-
-                tolerancePercent = (tolerance.getOtherChargePercentage().divide(new BigDecimal(100)).multiply(message.getOtherChargeSystem())).add(message.getOtherChargeSystem());
-                toleranceAmount = message.getOtherChargeSystem().add(tolerance.getOtherChargeAmount());
-                max = tolerancePercent.max(toleranceAmount);
-                if (message.getOtherChargeLogistic() != null && message.getOtherChargeLogistic().compareTo(max) > 0) {
-                    message.setOtherChargeComment("Beda");
-                    counterBeda += 1;
-                } else {
-                    message.setOtherChargeComment("-");
-                    message.setOtherChargeApplied(message.getOtherChargeLogistic());
-                }
-
-                tolerancePercent = (tolerance.getTotalShippingPercentage().divide(new BigDecimal(100)).multiply(message.getTotalChargeSystem())).add(message.getTotalChargeSystem());
-                toleranceAmount = message.getTotalChargeSystem().add(tolerance.getTotalShippingAmount());
-                max = tolerancePercent.max(toleranceAmount);
-                if (message.getTotalChargeLogistic() != null && message.getTotalChargeLogistic().compareTo(max) > 0) {
-                    message.setTotalChargeComment("Beda");
-                    counterBeda += 1;
-                } else {
-                    message.setTotalChargeComment("-");
-                    message.setTotalChargeApplied(message.getTotalChargeLogistic());
-                }
+                counterBeda=compareAWB(tolerancePercent, toleranceAmount, max, message, tolerance, counterBeda);
+//                tolerancePercent = (tolerance.getPricePercentage().divide(new BigDecimal(100)).multiply(message.getPriceSystem())).add(message.getPriceSystem());
+//                toleranceAmount = message.getPriceSystem().add(tolerance.getPriceAmount());
+//                max = tolerancePercent.max(toleranceAmount);
+//                if (message.getPriceLogistic() != null && message.getPriceLogistic().compareTo(max) > 0) {
+//                    message.setPriceComment("Beda");
+//                    counterBeda += 1;
+//                } else {
+//                    message.setPriceComment("-");
+//                    message.setPriceApplied(message.getPriceLogistic());
+//                }
+////                System.out.println("maxxxxxxxxxx : "+max);
+//
+//                tolerancePercent = (tolerance.getWeightPercentage().divide(new BigDecimal(100)).multiply(message.getWeightSystem())).add(message.getWeightSystem());
+//                toleranceAmount = message.getWeightSystem().add(tolerance.getWeightAmount());
+//                max = tolerancePercent.max(toleranceAmount);
+//                if (message.getWeightLogistic() != null && message.getWeightLogistic().compareTo(max) > 0) {
+//                    message.setWeightComment("Beda");
+//                    counterBeda += 1;
+//                } else {
+//                    message.setWeightComment("-");
+//                    message.setWeightApplied(message.getWeightLogistic());
+//                }
+//
+//                tolerancePercent = (tolerance.getInsuranceChargePercentage().divide(new BigDecimal(100)).multiply(message.getInsuranceChargeSystem())).add(message.getInsuranceChargeSystem());
+//                toleranceAmount = message.getInsuranceChargeSystem().add(tolerance.getInsuranceChargeAmount());
+//                max = tolerancePercent.max(toleranceAmount);
+//                if (message.getInsuranceChargeLogistic() != null && message.getInsuranceChargeLogistic().compareTo(max) > 0) {
+//                    message.setInsuranceChargeComment("Beda");
+//                    counterBeda += 1;
+//                } else {
+//                    message.setInsuranceChargeComment("-");
+//                    message.setInsuranceChargeApplied(message.getInsuranceChargeLogistic());
+//                }
+//
+//                tolerancePercent = (tolerance.getOtherChargePercentage().divide(new BigDecimal(100)).multiply(message.getOtherChargeSystem())).add(message.getOtherChargeSystem());
+//                toleranceAmount = message.getOtherChargeSystem().add(tolerance.getOtherChargeAmount());
+//                max = tolerancePercent.max(toleranceAmount);
+//                if (message.getOtherChargeLogistic() != null && message.getOtherChargeLogistic().compareTo(max) > 0) {
+//                    message.setOtherChargeComment("Beda");
+//                    counterBeda += 1;
+//                } else {
+//                    message.setOtherChargeComment("-");
+//                    message.setOtherChargeApplied(message.getOtherChargeLogistic());
+//                }
+//
+//                tolerancePercent = (tolerance.getTotalShippingPercentage().divide(new BigDecimal(100)).multiply(message.getTotalChargeSystem())).add(message.getTotalChargeSystem());
+//                toleranceAmount = message.getTotalChargeSystem().add(tolerance.getTotalShippingAmount());
+//                max = tolerancePercent.max(toleranceAmount);
+//                if (message.getTotalChargeLogistic() != null && message.getTotalChargeLogistic().compareTo(max) > 0) {
+//                    message.setTotalChargeComment("Beda");
+//                    counterBeda += 1;
+//                } else {
+//                    message.setTotalChargeComment("-");
+//                    message.setTotalChargeApplied(message.getTotalChargeLogistic());
+//                }
 
                 //klo ada data yg beda status si awb nya jadi problem exist, klo ngga berarti OK
-                if (counterBeda != 0) {
-                    message.setReconStatus("Problem Exist");
-                    problem += 1;
-                } else {
-                    message.setReconStatus("OK");
-                }               
-                
-            }
-            else
-            {
+                setReconStatus(counterBeda, message);
+//                if (counterBeda != 0) {
+//                    message.setReconStatus("Problem Exist");
+//                    problem += 1;
+//                } else {
+//                    message.setReconStatus("OK");
+//                }               
+
+            } else {
                 message.setReconStatus("Not Exist");
             }
-            
+
             //tambahin ke tagihan   
-            
-                String tambah=message.getTotalChargeLogistic().toString();
+            String tambah = message.getTotalChargeLogistic().toString();
 //                System.out.println("TAGIHANNNNNN "+new BigDecimal(tambah,new MathContext(2)));
-                tagihan=tagihan.add(new BigDecimal(tambah,new MathContext(2)));
-                
-                System.out.println("tambah ------------- "+tambah);
-                System.out.println("JUMLAH ------------- "+tagihan);
-                
+//                tagihan=tagihan.add(new BigDecimal(tambah,new MathContext(2)));
+//                
+//                System.out.println("tambah ------------- "+tambah);
+//                System.out.println("JUMLAH ------------- "+tagihan);
+
             //klo uda dibandingin di save
             awbRepository.save(message);
-            System.out.println("counter "+counterFromCompare);
+//            System.out.println("counter "+counterFromCompare);
 //            for (Map.Entry<String, String> entry : compare.map.entrySet()) {
 //                String key = entry.getKey();
 //                if (key.equals(message.getUploadHistoryNumber())) {
