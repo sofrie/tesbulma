@@ -98,8 +98,8 @@ public interface AWBService {
     Page<AWB> filterAllSortByAwbNumberASC(Integer month, String year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef,Pageable pageable);
     Page<AWB> filterAllSortByAwbNumberDESC(Integer month, String year, String logisticName, String AwbNumber, String reconStatus, String merchantCode, String gdnRef,Pageable pageable);
     
-    Page<AWB> filterByInvoiceSortByAwbNumberASC(Integer month, String year, String logisticName,Pageable pageable);
-    Page<AWB> filterByInvoiceSortByAwbNumberDESC(Integer month, String year, String logisticName,Pageable pageable);
+    Page<AWB> filterByInvoiceSortByAwbNumberASC(Integer month, Integer year, String logisticName,Pageable pageable);
+    Page<AWB> filterByInvoiceSortByAwbNumberDESC(Integer month, Integer year, String logisticName,Pageable pageable);
         
     
     

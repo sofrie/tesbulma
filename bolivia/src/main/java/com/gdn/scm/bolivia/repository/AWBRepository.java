@@ -139,10 +139,10 @@ public interface AWBRepository extends JpaRepository<AWB, String> {
     public Page<AWB> filterAllExceptStatusSortByAwbNumberDESC(Integer month, String year, String logisticName, String AwbNumber, String merchantCode, String gdnRef, Pageable pageable);
 
     @Query("select a from AWB a where a.month = ? AND a.year= ? AND a.logisticName like ? order by a.awbNumber ASC")
-    public Page<AWB> filterByInvoiceSortByAwbNumberASC(Integer month, String year, String logisticName, Pageable pageable);
+    public Page<AWB> filterByInvoiceSortByAwbNumberASC(Integer month, Integer year, String logisticName, Pageable pageable);
 
     @Query("select a from AWB a where a.month = ? AND a.year= ? AND a.logisticName like ? order by a.awbNumber DESC")
-    public Page<AWB> filterByInvoiceSortByAwbNumberDESC(Integer month, String year, String logisticName, Pageable pageable);
+    public Page<AWB> filterByInvoiceSortByAwbNumberDESC(Integer month, Integer year, String logisticName, Pageable pageable);
     
     
     //sorting by reconStatus
