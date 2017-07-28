@@ -10,8 +10,6 @@ import com.gdn.scm.bolivia.entity.MailSender;
 import com.gdn.scm.bolivia.entity.PageClass;
 import com.gdn.scm.bolivia.services.AWBPagingService;
 import com.gdn.scm.bolivia.services.AWBService;
-import com.gdn.scm.bolivia.services.SimpleOrderManager;
-import com.gdn.scm.bolivia.services.XMessageService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +35,6 @@ public class AWBController {
     @Autowired
     AWBPagingService awbPagingService;
 
-    @Autowired
-    SimpleOrderManager simpleOrderManager;
-
-    @Autowired
-    XMessageService xMessageService;
 
     @Autowired
     MailSender mail;

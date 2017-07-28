@@ -5,6 +5,7 @@
  */
 package com.gdn.scm.bolivia.controller;
 
+import com.gdn.scm.bolivia.config.CustomUserDetails;
 import com.gdn.scm.bolivia.entity.Invoice;
 import com.gdn.scm.bolivia.entity.PageClass;
 import com.gdn.scm.bolivia.entity.UploadHistory;
@@ -12,12 +13,14 @@ import com.gdn.scm.bolivia.request.InvoiceRequest;
 import com.gdn.scm.bolivia.request.UploadHistoryRequest;
 import com.gdn.scm.bolivia.services.InvoiceService;
 import com.gdn.scm.bolivia.services.UploadHistoryService;
+import com.gdn.scm.bolivia.services.UserService;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,14 +39,17 @@ public class InvoiceController {
     @Autowired
     InvoiceService invoiceService;
     
+    @Autowired
+    UserService userService;
+    
     public Page<Invoice> invoices;
     PageClass pageClass;
 
-    @CrossOrigin
-    @RequestMapping(value = "/api/invoice", method = RequestMethod.POST)
-    public void createInvoice(@RequestBody InvoiceRequest request) {
-        invoiceService.addInvoice(request);
-    }
+//    @CrossOrigin
+//    @RequestMapping(value = "/api/invoice", method = RequestMethod.POST)
+//    public void createInvoice(@RequestBody InvoiceRequest request) {
+//        invoiceService.addInvoice(request);
+//    }
 
     @CrossOrigin
     @RequestMapping(value = "/api/invoice", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -96,6 +102,15 @@ public class InvoiceController {
         return invoiceService.findByStatusInvoiceAndLogisticName(status, logistic);
     }
 
+    @CrossOrigin
+    @RequestMapping(value = "/api/invoice", method = RequestMethod.POST)
+    public String createInvoice(@RequestBody InvoiceRequest request) {
+        CustomUserDetails userDetails=(CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        request.setCreatedBy(userService.getUser(userDetails.getUsername()).getUsername());
+        invoiceService.addInvoice(request);
+        
+        return request.getCreatedBy();
+    }
 //    @CrossOrigin
 //    @RequestMapping(value = "/api/invoice/{month}/{year}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 //    public List<Invoice> getAllByMonthYear(@PathVariable("month") String month) {

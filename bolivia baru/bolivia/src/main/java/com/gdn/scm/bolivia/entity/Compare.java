@@ -117,6 +117,7 @@ public class Compare {
             Invoice currentInvoice;
             currentInvoice = invoiceService.findByMonthAndYearAndLogisticName(upload.getMonth(), upload.getYear(), upload.getLogistic());
             currentInvoice.setStatusInvoice("On Process");
+            currentInvoice.setTagihan(new BigDecimal(0));
             invoiceService.updateInvoice(currentInvoice);
 
             Iterator<Row> itr = sheet1.iterator();

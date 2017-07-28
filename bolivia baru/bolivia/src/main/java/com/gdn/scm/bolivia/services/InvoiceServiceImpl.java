@@ -89,8 +89,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public List<Invoice> getAll() {
-        return invoiceRepository.findAllOrderByYearAndMonth();
-        //return invoiceRepository.findAll();
+//        return invoiceRepository.findAllOrderByYearAndMonth();
+        return invoiceRepository.findAll();
     }
 
     @Override
