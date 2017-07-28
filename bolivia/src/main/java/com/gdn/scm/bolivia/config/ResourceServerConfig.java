@@ -20,7 +20,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/","/home","/register","/login").permitAll()
                 .antMatchers("/private/**").authenticated()
-                .antMatchers("/api/invoice").authenticated()
+                .antMatchers("/api/**").authenticated()
                 .antMatchers("/post/postComment").authenticated()
                 .antMatchers(HttpMethod.DELETE , "/post/**").hasAuthority("ROLE_ADMIN");
     }

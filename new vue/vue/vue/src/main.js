@@ -9,52 +9,36 @@ var routes = [{
     component: resolve => require(['./layout.vue'], resolve),
     children: [{
         path: '',
-        component: resolve => require(['./components/dashboard.vue'], resolve),
+        component: resolve => require(['./components/index.vue'], resolve),
         meta: {
             title: "Dashboard",
-            breadcrumb: `<li><a href="/"><i class="ti-desktop"></i> Dashboard</a></li>`
+            breadcrumb: `<li><a href="/"><i class="ti-home"></i> Dashboard</a></li>`
         }
     }, {
         path: 'invoicepage',
         component: resolve => require(['./components/InvoicePage.vue'], resolve),
         meta: {
             title: "Invoice",
-            breadcrumb: `<li><a href="#/index2"><i class="ti-files"></i> Invoice</a></li>`
+            breadcrumb: `<li><a href="#/index2"><i class="ti-home"></i> Invoice</a></li>`
         }
     }, {
-        path: 'invoicepage/:id',
-        component: resolve => require(['./components/InvoicePage.vue'], resolve),
-        meta: {
-            title: "Invoice",
-            breadcrumb: `<li><a href="#/index2"><i class="ti-file"></i> Invoice</a></li>`
-        },
-		props: true
-    },{
         path: 'awb',
         component: resolve => require(['./components/awb.vue'], resolve),
         meta: {
             title: "AWB",
-            breadcrumb: `<li><a href="#/index2"><i class="ti-file"></i> AWB</a></li>`
+            breadcrumb: `<li><a href="#/index2"><i class="ti-home"></i> AWB</a></li>`
         }
-    }, {
-        path: 'awb/:month/:year/:logistic',
-        component: resolve => require(['./components/awb.vue'], resolve),
-        meta: {
-            title: "AWB",
-            breadcrumb: `<li><a href="#/index2"><i class="ti-file"></i> AWB</a></li>`
-        },
-		props: true
     },{path: 'logistic',
         component: resolve => require(['./components/logistic.vue'], resolve),
         meta: {
             title: "Logistic",
-            breadcrumb: `<li><a href="#/index2"><i class="ti-truck"></i> Logistic</a></li>`
+            breadcrumb: `<li><a href="#/index2"><i class="ti-home"></i> Logistic</a></li>`
         }
     },{path: 'setting',
         component: resolve => require(['./components/setting.vue'], resolve),
         meta: {
             title: "Setting",
-            breadcrumb: `<li><a href="#/index2"><i class="ti-settings"></i> Setting</a></li>`
+            breadcrumb: `<li><a href="#/index2"><i class="ti-home"></i> Setting</a></li>`
         }
     },{
         path: 'index2',
