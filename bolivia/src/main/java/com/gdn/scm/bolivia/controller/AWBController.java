@@ -323,8 +323,8 @@ public class AWBController {
     }
     
     @CrossOrigin
-    @RequestMapping(value = "/api/awb/filterinvoice/{month}/{year}/{logisticName}/sort/{order}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<AWB> filterByInvoiceSortByAwbNumber(@PathVariable("month") Integer  month, @PathVariable("year") String year, @PathVariable("logisticName") String logisticName,@PathVariable("order") String order,Pageable pageable) {
+    @RequestMapping(value = "/api/awb/filterinvoice/{month}/{year}/{logisticName}/sort/awb/{order}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Page<AWB> filterByInvoiceSortByAwbNumber(@PathVariable("month") Integer  month, @PathVariable("year") Integer year, @PathVariable("logisticName") String logisticName,@PathVariable("order") String order,Pageable pageable) {
         
         if(order.toLowerCase().equals("asc")){
             awbs = awbService.filterByInvoiceSortByAwbNumberASC(month, year, logisticName,pageable);

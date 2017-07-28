@@ -304,12 +304,12 @@ public class AWBServiceImpl implements AWBService {
     }
 
     @Override
-    public Page<AWB> filterByInvoiceSortByAwbNumberASC(Integer month, String year, String logisticName, Pageable pageable) {
+    public Page<AWB> filterByInvoiceSortByAwbNumberASC(Integer month, Integer year, String logisticName, Pageable pageable) {
         return aWBRepository.filterByInvoiceSortByAwbNumberASC(month,year,logisticName,pageable);
     }
 
     @Override
-    public Page<AWB> filterByInvoiceSortByAwbNumberDESC(Integer month, String year, String logisticName, Pageable pageable) {
+    public Page<AWB> filterByInvoiceSortByAwbNumberDESC(Integer month, Integer year, String logisticName, Pageable pageable) {
         return aWBRepository.filterByInvoiceSortByAwbNumberDESC(month,year,logisticName,pageable);
     }
     

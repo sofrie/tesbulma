@@ -2,8 +2,15 @@ package com.gdn.scm.bolivia;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gdn.scm.bolivia.entity.AWB;
+import com.gdn.scm.bolivia.entity.Role;
+import com.gdn.scm.bolivia.entity.User;
 import com.gdn.scm.bolivia.receiver.Receiver;
+import com.gdn.scm.bolivia.repository.UserRepository;
 import com.gdn.scm.bolivia.services.SimpleOrderManager;
+import com.gdn.scm.bolivia.services.UserService;
+import config.CustomUserDetails;
+//import config.CustomUserDetails;CustomUserDetails
+import java.util.Arrays;
 //import com.gdn.x.message.mq.model.MessageEmailRequest;
 //import com.gdn.x.message.service.client.MessageTemplateDeliveryClient;
 import org.springframework.amqp.core.AmqpAdmin;
@@ -18,16 +25,34 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableFeignClients
 @SpringBootApplication
 public class BoliviaApplication {
 
     public final static String queueName = "spring-boot";
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    
+    @Autowired
+    public void authenticationManager(AuthenticationManagerBuilder builder,UserRepository repository,UserService service)throws Exception{
+        if(repository.count()==0)
+            service.save(new User("user","password",Arrays.asList(new Role("MAKER"),new Role("CHECKER"),new Role("APPROVER"))));
+        builder.userDetailsService(userDetailsService(repository)).passwordEncoder(passwordEncoder);
+    }
+    
+    private UserDetailsService userDetailsService(final UserRepository repository){
+        return username -> new CustomUserDetails(repository.findByUsername(username));
+    }
 
     @Bean
     Queue queue() {

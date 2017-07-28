@@ -11,10 +11,13 @@ import com.gdn.scm.bolivia.request.InvoiceRequest;
 import com.gdn.scm.bolivia.request.UploadHistoryRequest;
 import com.gdn.scm.bolivia.services.InvoiceService;
 import com.gdn.scm.bolivia.services.UploadHistoryService;
+import com.gdn.scm.bolivia.services.UserService;
+import config.CustomUserDetails;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,10 +35,15 @@ public class InvoiceController {
 
     @Autowired
     InvoiceService invoiceService;
+    
+    @Autowired
+    UserService userService;
 
     @CrossOrigin
     @RequestMapping(value = "/api/invoice", method = RequestMethod.POST)
     public void createInvoice(@RequestBody InvoiceRequest request) {
+        CustomUserDetails userDetails=(CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        request.setCreatedBy(userService.getUser(userDetails.getUsername()).getUsername());
         invoiceService.addInvoice(request);
     }
 
