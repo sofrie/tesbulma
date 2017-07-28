@@ -22,8 +22,6 @@ public interface UploadHistoryService {
     UploadHistory getById(Integer ID);
 
     List<UploadHistory> getAll();
-    
-    List<UploadHistory> getByInvoice(String invoice);
 
     List<UploadHistory> getByStatus(String status);
     
@@ -45,4 +43,6 @@ public interface UploadHistoryService {
     
     List<String> getAllMonth();
     List<String> getAllYear();
+    
+    List<UploadHistory> getByInvoice(String invoice);
 }

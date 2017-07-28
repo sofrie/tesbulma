@@ -5,6 +5,8 @@
  */
 package com.gdn.scm.bolivia.request;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author sofrie.zumaytis
@@ -13,8 +15,8 @@ public class LogisticProviderRequest {
     private String logisticCode;
     private String logisticName;
     private String status;
-    private Long discount;
-    private Long vat;
+    private BigDecimal discount;
+    private BigDecimal vat;
 
     public String getLogisticCode() {
         return logisticCode;
@@ -40,19 +42,19 @@ public class LogisticProviderRequest {
         this.status = status;
     }
 
-    public Long getDiscount() {
+    public BigDecimal getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Long discount) {
+    public void setDiscount(BigDecimal discount) {
         this.discount = discount;
     }
 
-    public Long getVat() {
+    public BigDecimal getVat() {
         return vat;
     }
 
-    public void setVat(Long vat) {
+    public void setVat(BigDecimal vat) {
         this.vat = vat;
     }
     

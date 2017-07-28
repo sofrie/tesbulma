@@ -257,6 +257,7 @@
     import localforage from 'localforage'
     import {upload} from './file-upload.service.js'
     import axios from 'axios'
+	import cookie from 'cookie'
     import dt from "datatables.net";
     import datatables_bootstrap from "datatables.net-bs/js/dataTables.bootstrap.js";
     require("datatables.net-bs/css/dataTables.bootstrap.css");
@@ -508,7 +509,7 @@
                     })
             },
 			fetchInvoice(){
-				axios.get(`http://127.0.0.1:8091/api/uploadHistory/`+this.id)
+				axios.get(`http://127.0.0.1:8091/api/uploadHistory/`+this.id+'?token='+getCookie('access_token'))
                     .then(response => {
                         // JSON responses are automatically parsed.
                         this.posts = response.data

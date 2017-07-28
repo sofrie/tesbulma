@@ -121,4 +121,9 @@ public class LogisticProviderServiceImpl implements LogisticProviderService {
         return logisticProviderRepository.findOne(Id);
     }
 
+    @Override
+    public List<String> findLogisticNameByStatus(String status) {
+        return logisticProviderRepository.findLogisticNameByStatus(status);
+    }
+
 }

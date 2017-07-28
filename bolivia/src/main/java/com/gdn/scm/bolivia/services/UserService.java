@@ -6,13 +6,18 @@
 package com.gdn.scm.bolivia.services;
 
 import com.gdn.scm.bolivia.entity.User;
+import com.gdn.scm.bolivia.request.UserRequest;
+import java.util.List;
 
 /**
  *
- * @author marlina
+ * @author sofrie.zumaytis
  */
 public interface UserService {
+    public void addUser(UserRequest user);
     public void save(User user);
-    
+
     public User getUser(String username);
+
+    public List<User> getAllUsers();
 }

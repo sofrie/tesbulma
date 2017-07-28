@@ -11,14 +11,15 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-xs-12">
-                                <form action="/" id="authentication" method="get" class="login_validator">
+                                <form id="authentication" method="get" class="login_validator">
+								{{token}} {{username}} {{password}}
                                     <div class="form-group">
                                         <label for="email" class="sr-only"> E-mail</label>
-                                        <input type="text" class="form-control  form-control-lg" id="email" name="username" placeholder="E-mail">
+                                        <input type="text" class="form-control form-control-lg" v-model="username" id="email" name="username" placeholder="E-mail">
                                     </div>
                                     <div class="form-group">
                                         <label for="password" class="sr-only">Password</label>
-                                        <input type="password" class="form-control form-control-lg" id="password" name="password" placeholder="Password">
+                                        <input type="password" class="form-control form-control-lg" v-model="password" id="password" name="password" placeholder="Password">
                                     </div>
                                     <!--<div class="form-group checkbox">
                                         <label for="remember">
@@ -26,7 +27,7 @@
                                         </label>
                                     </div>-->
                                     <div class="form-group">
-                                        <input type="submit" value="Sign In" class="btn btn-primary btn-block" />
+                                        <button class="btn btn-primary btn-block" v-on:click="Login">Sign In</button>
                                     </div>
                                     <!--<a href="#/reset_password" id="forgot" class="forgot"> Forgot Password ? </a>
                                     <span class="pull-right sign-up">New ? <a href="#/register">Sign Up</a></span>-->
@@ -64,9 +65,34 @@
     </div>
 </template>
 <script>
+import axios from 'axios'
 import validator from "../vendors/bootstrapvalidator/dist/js/bootstrapValidator.min.js"
+import cookie from '../assets/js/cookie.js';
 export default {
     name: "login",
+	data: () => ({
+			username: '',
+			password: '',
+			token: ''
+    }),
+	methods: {
+		Login() {
+			var params=new URLSearchParams();
+			params.append('grant_type','password');
+			params.append('username',this.username);
+			params.append('password',this.password);
+			axios({
+				method:'post',
+				url:'http://127.0.0.1:8091/oauth/token',
+				auth:{username:'my-trusted-client',password:'secret'},
+				headers: {"Content-type": "application/x-www-form-urlencoded; charset=utf-8"},
+				data:params
+			}).then(response => {
+                // JSON responses are automatically parsed.
+                document.cookie="access_token="+response.data.access_token+";path=/";
+            });
+        }
+	},
     mounted: function() {
         "use strict";
         $(document).ready(function() {
@@ -80,30 +106,6 @@ export default {
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_minimal-blue',
                 increaseArea: '20%' // optional
-            });
-            $("#authentication").bootstrapValidator({
-                fields: {
-                    username: {
-                        validators: {
-                            notEmpty: {
-                                message: 'The email address is required'
-                            },
-                            regexp: {
-                                regexp: /^\S+@\S{1,}\.\S{1,}$/,
-                                message: 'Please enter valid email format'
-                            }
-                        }
-                    },
-                    password: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Password is required'
-                            }
-
-                        }
-                    }
-
-                }
             });
 
         });

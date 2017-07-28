@@ -21,6 +21,7 @@ import slimscroll from "jquery-slimscroll";
 import metisMenu from './assets/js/metisMenu.js';
 import left_menu from './assets/js/custom_js/leftmenu.js';
 import rightside_bar from './assets/js/custom_js/rightside_bar.js';
+import cookie from './assets/js/cookie.js';
 export default {
     name: 'layout1',
     components: {

@@ -37,38 +37,38 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class Compare {
-    
+
     @Autowired
     AWBRepository awbRepository;
-    
+
     @Autowired
     AWBService aWBService;
-    
+
     @Autowired
     InvoiceService invoiceService;
-    
+
     @Autowired
     ProcessService processService;
-    
+
     @Autowired
     private RabbitTemplate rabbitTemplate;
-    
+
     @Autowired
     UploadHistoryService uploadHistoryService;
-    
+
     @Autowired
     ToleranceService toleranceService;
-    
+
     @Autowired
-    LogisticProviderService logisticProviderService; 
-    
+    LogisticProviderService logisticProviderService;
+
     @Autowired
     Receiver receiver;
-    
+
     public Integer counter = 0;
-    
+
     public List<AWB> listAWB = new ArrayList();
-    
+
     RedissonClient redisson = Redisson.create();
     public RMap<String, String> map = redisson.getMap("myMap");
     //public RList<RList<String>> list = redisson.getList("myList");
@@ -105,20 +105,21 @@ public class Compare {
 //            e.printStackTrace();
 //        }
     }
-    
+
     public void Send(XSSFSheet sheet1) {
 //        int firstRow1 = sheet1.getFirstRowNum();
 //        int lastRow1 = sheet1.getLastRowNum();
         String numberAWB = "";
         try {
-            AWB awb = new AWB();
+            AWB awb;
             UploadHistory upload = uploadHistoryService.findTop1ByOrderByIdDesc();
-            
+
             Invoice currentInvoice;
             currentInvoice = invoiceService.findByMonthAndYearAndLogisticName(upload.getMonth(), upload.getYear(), upload.getLogistic());
             currentInvoice.setStatusInvoice("On Process");
+            currentInvoice.setTagihan(new BigDecimal(0));
             invoiceService.updateInvoice(currentInvoice);
-            
+
             Iterator<Row> itr = sheet1.iterator();
             Boolean ada = false;
             while (itr.hasNext() && !ada) {
@@ -133,160 +134,230 @@ public class Compare {
                         } catch (Exception e) {
                             awb = new AWB();
                             awb.setId(UUID.randomUUID().toString());
+                            awb.setAwbNumber(awbNumberCell.getStringCellValue());
                             System.out.println("awb 2 " + awb.getId());
                         }
                         awb.setAwbNumber(awbNumberCell.getStringCellValue());
-                        awb.setReconStatus("OK");
-                        
-                        Cell kodeOriginCell = row.getCell(3);
-                        awb.setKodeOriginAPI(kodeOriginCell.getStringCellValue());
-                        
-                        Cell GDNRef = row.getCell(4);
-                        awb.setGdnRef(NumberToTextConverter.toText(GDNRef.getNumericCellValue()));
-                        System.out.println("GDN REF : " + awb.getGdnRef());
-                        
-                        Cell kodeDestinasiCell = row.getCell(5);
-                        awb.setKodeDestinasiAPI(kodeDestinasiCell.getStringCellValue());
-                        
-                        Cell penerimaCell = row.getCell(6);
-                        awb.setNamaPenerimaAPI(penerimaCell.getStringCellValue());
-                        
-                        Cell weightCell = row.getCell(8);
-                        awb.setWeightLogistic(new BigDecimal(weightCell.getNumericCellValue()));
-                        
-                        Cell awbPricePerKgCell = row.getCell(9);
-                        awb.setPriceLogistic(new BigDecimal(awbPricePerKgCell.getNumericCellValue()).divide(new BigDecimal(weightCell.getNumericCellValue())));
-                        
-                        Cell awbInsuranceChargeCell = row.getCell(10);
-                        awb.setInsuranceChargeLogistic(new BigDecimal(awbInsuranceChargeCell.getNumericCellValue()));
-//                Cell awbGiftWrapChargeCell = row.getCell(5);
-                        awb.setGiftWrapChargeLogistic(new BigDecimal(0));
-                        
-                        Cell awbOtherChargeCell = row.getCell(11);
-                        awb.setOtherChargeLogistic(new BigDecimal(awbOtherChargeCell.getNumericCellValue()));
-                        
-                        Cell awbTotalChargeCell = row.getCell(12);
-                        awb.setTotalChargeLogistic(new BigDecimal(awbTotalChargeCell.getNumericCellValue(), new MathContext(0)));
-                        
-                        awb.setReconStatus("OK");
-                        awb.setMerchantCode("MERCH-CODE-007");
-                        awb.setUploadHistoryNumber(upload.getId().toString());
-                        awb.setMonth(upload.getMonth());
-                        awb.setYear(upload.getYear());
-                        awb.setLogisticName(upload.getLogistic());
-                        
+//                        System.out.println("awb 2 " + awb.getId());
+                        setAWB(awb, row, upload);
+
+//                        awb.setReconStatus("Not Exist");
+//
+//                        Cell kodeOriginCell = row.getCell(3);
+//                        awb.setKodeOriginAPI(kodeOriginCell.getStringCellValue());
+//
+//                        Cell GDNRef = row.getCell(4);
+//                        awb.setGdnRef(NumberToTextConverter.toText(GDNRef.getNumericCellValue()));
+////                        System.out.println("GDN REF : " + awb.getGdnRef());
+//
+//                        Cell kodeDestinasiCell = row.getCell(5);
+//                        awb.setKodeDestinasiAPI(kodeDestinasiCell.getStringCellValue());
+//
+//                        Cell penerimaCell = row.getCell(6);
+//                        awb.setNamaPenerimaAPI(penerimaCell.getStringCellValue());
+//
+//                        Cell weightCell = row.getCell(8);
+//                        awb.setWeightLogistic(new BigDecimal(weightCell.getNumericCellValue()));
+//
+//                        Cell awbPricePerKgCell = row.getCell(9);
+//                        awb.setPriceLogistic(new BigDecimal(awbPricePerKgCell.getNumericCellValue()).divide(new BigDecimal(weightCell.getNumericCellValue())));
+//
+//                        Cell awbInsuranceChargeCell = row.getCell(10);
+//                        awb.setInsuranceChargeLogistic(new BigDecimal(awbInsuranceChargeCell.getNumericCellValue()));
+////                Cell awbGiftWrapChargeCell = row.getCell(5);
+//                        awb.setGiftWrapChargeLogistic(new BigDecimal(0));
+//
+//                        Cell awbOtherChargeCell = row.getCell(11);
+//                        awb.setOtherChargeLogistic(new BigDecimal(awbOtherChargeCell.getNumericCellValue()));
+//
+//                        Cell awbTotalChargeCell = row.getCell(12);
+//                        awb.setTotalChargeLogistic(new BigDecimal(awbTotalChargeCell.getNumericCellValue(), new MathContext(0)));
+//
+//                        awb.setMerchantCode("MERCH-CODE-007");
+//                        awb.setUploadHistoryNumber(upload.getId().toString());
+//                        awb.setMonth(upload.getMonth());
+//                        awb.setYear(upload.getYear());
+//                        awb.setLogisticName(upload.getLogistic());
                         try {
                             awb.setInvoice(currentInvoice);
                         } catch (Exception e) {
                             System.out.println("gagal tambah invoice di AWB");
                             e.printStackTrace();
                         }
-                        //awb.setId(UUID.randomUUID().toString());
                         aWBService.addAWB(awb, false);
 
-//                awb.assignAWB(row);
-//
-//                awb.setMonth("December");
-//                awb.setYear("2017");
-//                awb.setLogisticName("D Logistic");
-//                awb.setReconStatus("OK");
-//                awb.setMerchantCode("MERCH-CODE-007");
-//                Process p = new Process();
                         counter++;
                         awb.setCounter(counter);
-//                awb.setUploadHistoryNumber(id.toString());
                         map.put(awb.getAwbNumber(), awb.getUploadHistoryNumber());
-                        listAWB.add(awb);
-//                map.remove(awb.getAwbNumber(), awb.getUploadHistoryNumber().toString());
-//                map.containsKey(awb.getUploadHistoryNumber().toString());
-//                p.setProccessId(awb.getAwbNumber());                                                                                                                                              
-//                p.setRequestId(id.toString());
-//                p.setCounter(counter);
-//                for (Map.Entry<String, String> entry : map.entrySet()) {
-//                    System.out.println("ooooooooooooooooo"+" "+entry.getKey());
-//                }
-//                        processService.requestProcess(awb);
-                        System.out.println("counterrrrrrrrrrr---------------" + counter);
+                        listAWB.add(awb);//              
+//                        System.out.println("counterrrrrrrrrrr---------------" + counter);
                     } else {
                         ada = true;
                     }
                 }
             }
-//            System.out.println("aaaaaaaaaaaaaaaaaccccccccccccccccccccccdddddddddddd---------------" + counter);
             receiver.cekupload = false;
-            for (int i = 0; i < listAWB.size(); i++) {
-                listAWB.get(i).counter = counter;
-                processService.requestProcess(listAWB.get(i));
-                System.out.println("iiii" + i);
-                System.out.println("id : " + listAWB.get(i).getId());
-//                System.out.println(listAWB.get(i).getAwbNumber());
-                if (i == 0) {
-                    numberAWB = listAWB.get(i).getUploadHistoryNumber();
-                }
-            }
-            listAWB = new ArrayList();
+            numberAWB = listAWB.get(0).getUploadHistoryNumber();
+            sentProcess();
+//            for (int i = 0; i < listAWB.size(); i++) {
+//                listAWB.get(i).counter = counter;
+//                processService.requestProcess(listAWB.get(i));
+////                System.out.println("iiii" + i);
+////                System.out.println("id : " + listAWB.get(i).getId());
+//                if (i == 0) {
+//                    numberAWB = listAWB.get(i).getUploadHistoryNumber();
+//                }
+//            }
+//            listAWB = new ArrayList();
             Integer tmp = receiver.counterFromCompare;
-            while (tmp > 1) {
-                Thread.sleep(500);
-                tmp = receiver.counterFromCompare;
-                System.out.println("tmp " + tmp);
-            }
+            waitUntilDone(tmp);
+//            while (tmp > 1) {
+//                Thread.sleep(500);
+//                tmp = receiver.counterFromCompare;
+//                System.out.println("tmp " + tmp);
+//            }
             Thread.sleep(500);
-            System.out.println("number awb " + numberAWB);
+//            System.out.println("number awb " + numberAWB);
 
-            //UploadHistory upload = uploadHistoryService.getById(Integer.parseInt(numberAWB));
             if (upload != null) {
-                if (upload.getStatus().equals("Uploaded")) {
-                    if (receiver.problem > 0) {
-                        currentInvoice.setStatusInvoice("Problem Exist");
-                        upload.setStatus("Problem Exist");
-                    } else {
-                        upload.setStatus("OK");
-                        currentInvoice.setStatusInvoice("OK");
-                    }
-                    
-                    upload.setProblemExist(receiver.problem.toString());
-                    Integer ok = counter - receiver.problem;
-                    upload.setOk(ok.toString());
-                    BigDecimal tagih = awbRepository.countTotalTagihan();
-                    try {
-                        LogisticProvider logistic=logisticProviderService.findById(currentInvoice.getLogisticProvider().getId());
-                        BigDecimal b=aWBService.countTagihan(currentInvoice);
-                        System.out.println("bbbbbb "+b);
-                        BigDecimal totalTagihan=b.add((new BigDecimal (logistic.getVat()).divide(new BigDecimal (100)).multiply(b))).subtract((new BigDecimal(logistic.getDiscount()).divide(new BigDecimal(100)).multiply(b)));
-                        System.out.println("total tagihan "+totalTagihan);
-                        upload.setJumlahTagihan(totalTagihan);                        
-                        currentInvoice.setTagihan(totalTagihan);
-                    } catch (Exception e) {
-                        System.out.println("gagal tagihan");
-                    }
-                    System.out.println("=======aaaaaaaaaaaaaaaaaaaaaaaa" + receiver.problem + " " + counter);
-                    System.out.println("iiiiddddd" + upload.getId().toString());
-//                        Thread.sleep(500);
-
-                    invoiceService.updateInvoice(currentInvoice);
-                    uploadHistoryService.addUploadHistory(upload);
-//                        Thread.sleep(500);
-                    //    admin.deleteQueue(BoliviaApplication.queueName);
-                    counter = 0;
-                    receiver.counter = 0;
-                    receiver.problem = 0;
-                    receiver.cekupload = true;
-                    System.out.println("Tagihan ----------------- : " + receiver.tagihan);
-                    receiver.tagihan = new BigDecimal(0);
-                }
+                setStatusInvoiceAndUploadHistory( currentInvoice,  upload);
             } else {
-                System.out.println("lllllllllllllllllll");
+//                System.out.println("lllllllllllllllllll");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
     }
-    
+
     public AWB requestProcess(AWB awb) {
         System.out.println("Reques process" + awb);
         rabbitTemplate.convertAndSend(BoliviaApplication.queueName, awb);
+        return awb;
+    }
+
+    public UploadHistory setProblemExistAndOK(UploadHistory upload) {
+        upload.setProblemExist(receiver.problem.toString());
+        Integer ok = counter - receiver.problem;
+        upload.setOk(ok.toString());
+
+        return upload;
+    }
+
+    public void setTagihan(Invoice currentInvoice, UploadHistory upload) {
+        try {
+            LogisticProvider logistic = logisticProviderService.findById(currentInvoice.getLogisticProvider().getId());
+            BigDecimal b = aWBService.countTotalPriceLogistic(currentInvoice);
+            BigDecimal totalTagihan = b.add((logistic.getVat()).divide(new BigDecimal(100)).multiply(b)).subtract((logistic.getDiscount()).divide(new BigDecimal(100)).multiply(b));
+            totalTagihan = totalTagihan.add(aWBService.countTotalnsuranceLogistic(currentInvoice));
+            upload.setJumlahTagihan(totalTagihan);
+            currentInvoice.setTagihan(totalTagihan);
+        } catch (Exception e) {
+            System.out.println("gagal tagihan");
+        }
+    }
+
+    public void reset(Invoice currentInvoice, UploadHistory upload) {
+        invoiceService.updateInvoice(currentInvoice);
+        uploadHistoryService.addUploadHistory(upload);
+        counter = 0;
+        receiver.counter = 0;
+        receiver.problem = 0;
+        receiver.cekupload = true;
+        receiver.tagihan = new BigDecimal(0);
+    }
+
+    public void setStatusInvoiceAndUploadHistory(Invoice currentInvoice, UploadHistory upload) {
+        if (upload.getStatus().equals("Uploaded")) {
+            if (receiver.problem > 0) {
+                currentInvoice.setStatusInvoice("Problem Exist");
+                upload.setStatus("Problem Exist");
+            } else {
+                upload.setStatus("OK");
+                currentInvoice.setStatusInvoice("OK");
+            }
+
+            upload = setProblemExistAndOK(upload);
+            setTagihan(currentInvoice, upload);
+//            try {
+//                LogisticProvider logistic = logisticProviderService.findById(currentInvoice.getLogisticProvider().getId());
+//                BigDecimal b = aWBService.countTotalPriceLogistic(currentInvoice);
+//
+//                BigDecimal totalTagihan = b.add((logistic.getVat()).divide(new BigDecimal(100)).multiply(b)).subtract((logistic.getDiscount()).divide(new BigDecimal(100)).multiply(b));
+//                totalTagihan = totalTagihan.add(aWBService.countTotalnsuranceLogistic(currentInvoice));
+//
+//                upload.setJumlahTagihan(totalTagihan);
+//                currentInvoice.setTagihan(totalTagihan);
+//            } catch (Exception e) {
+//                System.out.println("gagal tagihan");
+//            }
+
+            reset(currentInvoice, upload);
+//            invoiceService.updateInvoice(currentInvoice);
+//            uploadHistoryService.addUploadHistory(upload);
+//            counter = 0;
+//            receiver.counter = 0;
+//            receiver.problem = 0;
+//            receiver.cekupload = true;
+//                    System.out.println("Tagihan ----------------- : " + receiver.tagihan);
+//            receiver.tagihan = new BigDecimal(0);
+        }
+    }
+
+    public void waitUntilDone(Integer tmp) throws InterruptedException {
+        while (tmp > 1) {
+            Thread.sleep(500);
+            tmp = receiver.counterFromCompare;
+            System.out.println("tmp " + tmp);
+        }
+    }
+
+    public void sentProcess() {
+        for (int i = 0; i < listAWB.size(); i++) {
+            listAWB.get(i).counter = counter;
+            processService.requestProcess(listAWB.get(i));
+        }
+        listAWB = new ArrayList();
+    }
+
+    public AWB setAWB(AWB awb, Row row, UploadHistory upload) {
+        awb.setReconStatus("Not Exist");
+
+        Cell kodeOriginCell = row.getCell(3);
+        awb.setKodeOriginAPI(kodeOriginCell.getStringCellValue());
+
+        Cell GDNRef = row.getCell(4);
+        awb.setGdnRef(NumberToTextConverter.toText(GDNRef.getNumericCellValue()));
+
+        Cell kodeDestinasiCell = row.getCell(5);
+        awb.setKodeDestinasiAPI(kodeDestinasiCell.getStringCellValue());
+
+        Cell penerimaCell = row.getCell(6);
+        awb.setNamaPenerimaAPI(penerimaCell.getStringCellValue());
+
+        Cell weightCell = row.getCell(8);
+        awb.setWeightLogistic(new BigDecimal(weightCell.getNumericCellValue()));
+
+        Cell awbPricePerKgCell = row.getCell(9);
+        awb.setPriceLogistic(new BigDecimal(awbPricePerKgCell.getNumericCellValue()).divide(new BigDecimal(weightCell.getNumericCellValue())));
+
+        Cell awbInsuranceChargeCell = row.getCell(10);
+        awb.setInsuranceChargeLogistic(new BigDecimal(awbInsuranceChargeCell.getNumericCellValue()));
+//                Cell awbGiftWrapChargeCell = row.getCell(5);
+        awb.setGiftWrapChargeLogistic(new BigDecimal(0));
+
+        Cell awbOtherChargeCell = row.getCell(11);
+        awb.setOtherChargeLogistic(new BigDecimal(awbOtherChargeCell.getNumericCellValue()));
+
+        Cell awbTotalChargeCell = row.getCell(12);
+        awb.setTotalChargeLogistic(new BigDecimal(awbTotalChargeCell.getNumericCellValue(), new MathContext(0)));
+
+        awb.setMerchantCode("MERCH-CODE-007");
+        awb.setUploadHistoryNumber(upload.getId().toString());
+        awb.setMonth(upload.getMonth());
+        awb.setYear(upload.getYear());
+        awb.setLogisticName(upload.getLogistic());
+
         return awb;
     }
 }

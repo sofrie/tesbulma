@@ -5,6 +5,7 @@
  */
 package com.gdn.scm.bolivia.entity;
 
+import java.math.BigDecimal;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -53,10 +54,10 @@ public class LogisticProvider {
     private String status;
 
     @Column(name = COLUMN_DISCOUNT, nullable = true)
-    private Long discount;
+    private BigDecimal discount;
 
     @Column(name = COLUMN_VAT, nullable = true)
-    private Long vat;
+    private BigDecimal vat;
     
 
     @Id
@@ -93,19 +94,19 @@ public class LogisticProvider {
         this.status = status;
     }
 
-    public Long getDiscount() {
+    public BigDecimal getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Long discount) {
+    public void setDiscount(BigDecimal discount) {
         this.discount = discount;
     }
 
-    public Long getVat() {
+    public BigDecimal getVat() {
         return vat;
     }
 
-    public void setVat(Long vat) {
+    public void setVat(BigDecimal vat) {
         this.vat = vat;
     }
 
@@ -123,7 +124,7 @@ public class LogisticProvider {
     
     
 
-    public LogisticProvider(String logisticCode, String logisticName, String status, Long discount, Long vat) {
+    public LogisticProvider(String logisticCode, String logisticName, String status, BigDecimal discount, BigDecimal vat) {
         this.logisticCode = logisticCode;
         this.logisticName = logisticName;
         this.status = status;

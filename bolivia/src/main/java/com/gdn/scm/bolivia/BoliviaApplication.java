@@ -1,18 +1,14 @@
 package com.gdn.scm.bolivia;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gdn.scm.bolivia.config.CustomUserDetails;
 import com.gdn.scm.bolivia.entity.AWB;
 import com.gdn.scm.bolivia.entity.Role;
 import com.gdn.scm.bolivia.entity.User;
 import com.gdn.scm.bolivia.receiver.Receiver;
 import com.gdn.scm.bolivia.repository.UserRepository;
-import com.gdn.scm.bolivia.services.SimpleOrderManager;
 import com.gdn.scm.bolivia.services.UserService;
-import config.CustomUserDetails;
-//import config.CustomUserDetails;CustomUserDetails
 import java.util.Arrays;
-//import com.gdn.x.message.mq.model.MessageEmailRequest;
-//import com.gdn.x.message.service.client.MessageTemplateDeliveryClient;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -33,26 +29,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import java.util.List;
 
 @EnableFeignClients
 @SpringBootApplication
 public class BoliviaApplication {
 
     public final static String queueName = "spring-boot";
+    @Autowired
+	private PasswordEncoder passwordEncoder;
     
     @Autowired
-    private PasswordEncoder passwordEncoder;
-    
-    @Autowired
-    public void authenticationManager(AuthenticationManagerBuilder builder,UserRepository repository,UserService service)throws Exception{
-        if(repository.count()==0)
-            service.save(new User("user","password",Arrays.asList(new Role("MAKER"),new Role("CHECKER"),new Role("APPROVER"))));
-        builder.userDetailsService(userDetailsService(repository)).passwordEncoder(passwordEncoder);
-    }
-    
-    private UserDetailsService userDetailsService(final UserRepository repository){
-        return username -> new CustomUserDetails(repository.findByUsername(username));
-    }
 
     @Bean
     Queue queue() {
@@ -111,16 +98,25 @@ public class BoliviaApplication {
         return adapter;
     }
     
-//    @Bean
-//    MessageTemplateDeliveryClient template()
-//    {
-//        MessageTemplateDeliveryClient tmp=new MessageTemplateDeliveryClient("no-reply@blibli.com","password","172.17.138.17",5432,"clientId","channelId","storeId",queueName,"haha");
-//        return tmp;
-//    }
     
 
     public static void main(String[] args) {
         SpringApplication.run(BoliviaApplication.class, args);
         
     }
+    @Autowired
+	public void authenticationManager(AuthenticationManagerBuilder builder, UserRepository repository, UserService userService) throws Exception {
+		if (repository.count()==0)
+			userService.save(new User("admin", "adminPassword", Arrays.asList(new Role("USER"), new Role("ACTUATOR") , new Role("ADMIN"))));
+		builder.userDetailsService(userDetailsService(repository)).passwordEncoder(passwordEncoder);
+	}
+
+	/**
+	 * We return an istance of our CustomUserDetails.
+	 * @param repository
+	 * @return
+	 */
+	private UserDetailsService userDetailsService(final UserRepository repository) {
+		return username -> new CustomUserDetails(repository.findByUsername(username));
+	}
 }

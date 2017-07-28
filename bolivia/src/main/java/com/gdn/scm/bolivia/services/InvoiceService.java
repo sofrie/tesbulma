@@ -24,10 +24,13 @@ public interface InvoiceService {
     List<Invoice> findByYear(Integer year);
     Invoice findTop1ByOrderByLastModifiedDesc();
     Invoice findByMonthAndYearAndLogisticName (Integer month, Integer year, String logisticName);
-    Invoice findById(String invoiceid);
     
     List<Invoice> findByLogisticName(String logisticName);
     List<Invoice> findByStatusInvoice(String statusInvoice);
-    List<Invoice> findByStatusInvoiceAndLogisticName(String statusInvoice, String logisticName);    
+    List<Invoice> findByStatusInvoiceAndLogisticName(String statusInvoice, String logisticName); 
+    
+    Page<Invoice> findAllPageable(Pageable pageable); 
+    
+    Invoice findById(String Id);
 //    List<String> getLogisticName(String logisticName);
 }

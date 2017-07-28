@@ -27,7 +27,7 @@
                                     </div>
 
                                     <label class="col-sm-1 control-label" for="skill">
-                                        Logistic :
+                                        Logistic {{parts}}:
                                     </label>
                                     <div class="col-sm-2">
                                         <select id="skill" name="skill" class="form-control"
@@ -54,20 +54,23 @@
                 <div class="panel ">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            <i class="fa fa-fw ti-harddrives"></i> Pending Data
+                            <i class="fa fa-fw ti-harddrives"></i> Pending Data 
+							
                         </h3>
                         <span class="pull-right">
                             <i class="fa fa-fw ti-angle-up clickable"></i>
                             <!--<i class="fa fa-fw ti-close removepanel clickable"></i>-->
                         </span>
                     </div>
-                    <div class="panel-body">
+                                        <div class="panel-body">
                         <div class="panel-body table-responsive">
-                            <table class="table table-striped table-bordered table_width" id="example">
+                            <table class="table table-striped table-bordered table_width">
                                 <thead>
                                 <tr>
                                     <th>Month</th>
                                     <th>Year</th>
+                                    <th>OK</th>
+                                    <th>Problem Exists</th>
                                     <th>Jumlah Tagihan</th>
                                     <th>Logistic</th>
                                     <th>Status</th>
@@ -75,15 +78,15 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="post of posts" v-on:click="goToInvoice(post.id)">
-                                    <td>{{post.month | filtermonth}}</td>
-                                    <td>{{post.year}}</td>
-                                    <td>{{post.tagihan | currency}}</td>
-                                    <td>{{post.logisticName}}</td>
-                                    <td>{{post.statusInvoice}}</td>
-                                    <td>{{post.lastModified }}</td>
-                                </tr>
-                                </tbody>
+									<tr v-for="post of posts.data" v-on:click="goToInvoice(post.id)">
+										<td>{{post.month | filtermonth}}</td>
+										<td>{{post.year}}</td>
+										<td>{{post.tagihan | currency}}</td>
+										<td>{{post.logisticName}}</td>
+										<td>{{post.statusInvoice}}</td>
+										<td>{{post.lastModified }}</td>
+									</tr>
+								</tbody>
                             </table>
                         </div>
                     </div>
@@ -119,7 +122,8 @@
                 selectedLogistic: 'Select Logistic',
                 invoice: null,
                 listStatus: [],
-                listLogistic: []
+                listLogistic: [],
+				parts:''
             }
         ),
         mounted: function () {
@@ -263,8 +267,15 @@
 			goToInvoice(id){
 				window.location.href = '/#/invoicepage/'+id
 			},
+			getCookie(name){
+				var value="; "+document.cookie;
+				this.parts=value.split("; "+name+"=");
+				if(this.parts.length==2)
+				this.parts=this.parts.pop().split(";");
+			},
             fetchInvoices() {
-                axios.get(`http://127.0.0.1:8091/api/invoice`)
+				this.getCookie('access_token')
+                axios.get('http://127.0.0.1:8091/api/invoice?access_token='+this.parts)
                     .then(response => {
                         // JSON responses are automatically parsed.
                         this.posts = response.data

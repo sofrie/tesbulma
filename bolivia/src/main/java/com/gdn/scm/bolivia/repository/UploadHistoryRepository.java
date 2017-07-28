@@ -26,8 +26,6 @@ public interface UploadHistoryRepository extends JpaRepository<UploadHistory, In
 
     public List<UploadHistory> findByLogistic(String logistic);
     
-    @Query("select a from UploadHistory a where a.invoice = ?")
-    public List<UploadHistory> findByInvoice(Invoice invoice);
        
     @Query("select distinct a.month from UploadHistory a")
     public List<String> getAllMonth();
@@ -36,4 +34,7 @@ public interface UploadHistoryRepository extends JpaRepository<UploadHistory, In
     public List<String> getAllYear();
        
     public UploadHistory findTop1ByOrderByIdDesc();
+
+    @Query("select a from UploadHistory a where a.invoice = ?")
+    public List<UploadHistory> findByInvoice(Invoice invoice);
 }

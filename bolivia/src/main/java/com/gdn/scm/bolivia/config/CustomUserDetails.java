@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package config;
+package com.gdn.scm.bolivia.config;
 
 
 import com.gdn.scm.bolivia.entity.Role;
@@ -17,8 +12,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- *
- * @author marlina
+ * Provides a basic implementation of the UserDetails interface
  */
 public class CustomUserDetails implements UserDetails {
 
