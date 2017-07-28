@@ -16,7 +16,7 @@ import javax.persistence.Table;
  * @author sofrie.zumaytis
  */
 @Entity
-@Table(name = User.TABLE_NAME)
+@Table(name = Role.TABLE_NAME)
 public class Role {
 
     public static final String TABLE_NAME = "BLV_ROLE";

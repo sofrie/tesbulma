@@ -9,6 +9,7 @@ import com.gdn.scm.bolivia.config.CustomUserDetails;
 import com.gdn.scm.bolivia.entity.Invoice;
 import com.gdn.scm.bolivia.entity.PageClass;
 import com.gdn.scm.bolivia.entity.UploadHistory;
+import com.gdn.scm.bolivia.entity.User;
 import com.gdn.scm.bolivia.request.InvoiceRequest;
 import com.gdn.scm.bolivia.request.UploadHistoryRequest;
 import com.gdn.scm.bolivia.services.InvoiceService;
@@ -110,6 +111,15 @@ public class InvoiceController {
         invoiceService.addInvoice(request);
         
         return request.getCreatedBy();
+    }
+    
+    @CrossOrigin
+    @RequestMapping(value = "/api/tes", method = RequestMethod.GET)
+    public String tes() {
+        CustomUserDetails userDetails=(CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user=userService.getUser(userDetails.getUsername());
+        
+        return user.getRoles().get(0).getName();
     }
 //    @CrossOrigin
 //    @RequestMapping(value = "/api/invoice/{month}/{year}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
